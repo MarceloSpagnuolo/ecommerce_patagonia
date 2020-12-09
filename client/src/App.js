@@ -1,9 +1,11 @@
-import React from 'react';
-import BeerForm from './components/BeerForm';
+import React from "react";
+import Catalogo from "../src/Components/Catalogo/Catalogo.js";
 
 function App() {
   return (
-  <BeerForm />
+    <div>
+      <Catalogo></Catalogo>
+    </div>
   );
 }
 
