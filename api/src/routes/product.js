@@ -1,13 +1,16 @@
 const server = require("express").Router();
 const { Product, Category } = require("../db.js");
 
+//////////////////// S21 /////////////////////
 server.get("/", (req, res, next) => {
   Product.findAll()
     .then((products) => {
-      res.send(products);
+      res.send(products).status(200);
     })
     .catch(next);
 });
+////////////////////// S21 //////////////////////
+
 /////////////////// S17 //////////////////
 server.post("/:idProducto/category/:idCategoria", async (req, res) => {
   try {
@@ -102,5 +105,7 @@ server.put("/category/:id", (req, res) => {
 
 });
 ////////////////////// S20 //////////////////////
+
+
 
 module.exports = server;
