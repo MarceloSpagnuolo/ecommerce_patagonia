@@ -1,16 +1,30 @@
 #ProductCard-Img {
-    float: left;
-    width: 80px;
-    height: 150px;
-    object-fit: cover;
+  float: left;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: solid DarkGrey 1px;
 }
 
 #ProductName {
-    margin: 0;
-    margin-bottom: 10px;
+  margin: 0;
+  margin-bottom: 10px;
 }
 
 #ProductPrecio {
-    margin: 0;
-    margin-top: 50px;
+  margin: 0;
+  margin-top: 25px;
+}
+
+#ProductCard-Img-Container {
+  margin-left: 50px;
+  margin-right: 125px;
+  margin-bottom: 20px;
+}
+
+.ProductCard-Container {
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
 }
