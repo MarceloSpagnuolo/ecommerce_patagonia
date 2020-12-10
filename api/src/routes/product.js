@@ -43,4 +43,23 @@ server.delete("/:idProducto/category/:idCategoria", async (req, res) => {
   }
 });
 ////////////////////// S17 ///////////////////
+
+///////////////////// S18 ////////////////////
+server.post("/category", async (req, res) => {
+  const { name, desctiption } = req.body;
+
+  const newCategory = await Category.findOrCreate({
+    where: {
+      name,
+    },
+    defaults: {
+      desctiption,
+    },
+  });
+
+  newCategory && res.send("Esa categoria ya existe").status(400); //status 400 BAD REQUEST
+
+  res.sendStatus(200);
+});
+//////////////////// S18 ///////////////////
 module.exports = server;
