@@ -61,5 +61,23 @@ server.post("/category", async (req, res) => {
 
   res.sendStatus(200);
 });
+
 //////////////////// S18 ///////////////////
+
+//////////////////// S19 /////////////////////
+server.delete("/category/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const delCategory = await Category.destroy({
+    where: {
+      id,
+    },
+  });
+
+  delCategory === 0 && res.send("Esa categoria NO existe").status(404); //status 404 NOT FOUND
+
+  res.send("La categoria ha sido eliminada exitosamente").status(200);
+});
+////////////////////// S19 //////////////////////
+
 module.exports = server;
