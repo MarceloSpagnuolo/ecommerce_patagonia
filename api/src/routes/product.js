@@ -137,7 +137,6 @@ server.get("/categoria/:nombreCat", async (req, res, next) => {
 ////////////////////// S23 //////////////////////
 server.get("/search", async (req, res) => {
   const { query } = req.query;
-  console.log(query);
 
   const products = await Product.findAll({
     where: {
@@ -180,5 +179,30 @@ server.get("/:id", async (req, res) => {
   res.json(product);
 });
 ////////////////////// S24 //////////////////////
+
+////////////////////// S25 //////////////////////
+server.post("/", async (req, res) => {
+  const {
+    name,
+    appearance,
+    description,
+    price,
+    stock,
+    volume,
+    thumbnail,
+  } = req.body;
+  !name && !appearance && !price && !volume && res.sendStatus(400);
+  const product = await Product.create({
+    name,
+    appearance,
+    description,
+    price,
+    stock,
+    volume,
+    thumbnail,
+  });
+  res.json(product).status(201);
+});
+////////////////////// S25 //////////////////////
 
 module.exports = server;
