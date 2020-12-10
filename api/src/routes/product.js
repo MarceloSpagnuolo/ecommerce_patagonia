@@ -264,6 +264,7 @@ server.delete("/:id", async (req, res) => {
   //product > 0 && res.sendStatus(200)
   return res.sendStatus(200);
 });
+
 ////////////////////// S27 //////////////////////
 
 module.exports = server;
