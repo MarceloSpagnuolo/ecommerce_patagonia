@@ -81,7 +81,7 @@ server.delete("/category/:id", async (req, res) => {
 ////////////////////// S19 //////////////////////
 
 //////////////////// S20 /////////////////////
-server.put("/category/:id", async (req, res) => {
+server.put("/category/:id", (req, res) => {
   const { id } = req.params;
   const { name, description } = req.body;
 
