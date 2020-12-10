@@ -8,5 +8,28 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    aparencia: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.STRING,
+    },
+    price: {
+      type: DataTypes.DECIMAL(10,2),
+      allowNull: false,
+    },
+    stock: {
+      type: DataTypes.INTEGER,
+      valueDefalut: 0,
+    },
+    volume: {
+      type: DataTypes.ENUM('355 cc', '473 cc', '730 cc'),
+      allowNull: false,
+    },
+    thumbnail: {
+      type: DataTypes.STRING,
+      valueDefalut: '../images/nodisponible.jpg'
+    }
   });
 };
