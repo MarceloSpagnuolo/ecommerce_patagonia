@@ -1,9 +1,10 @@
-import React from 'react';
-
+import React from "react";
+import Catalogo from "../src/Components/Catalogo/Catalogo.js";
 
 function App() {
   return (
-    <div >
+    <div>
+      <Catalogo></Catalogo>
     </div>
   );
 }
