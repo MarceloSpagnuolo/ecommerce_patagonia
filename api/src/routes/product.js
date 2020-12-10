@@ -250,4 +250,20 @@ server.put("/:id", async (req, res) => {
 });
 ////////////////////// S26 //////////////////////
 
+
+////////////////////// S27 //////////////////////
+server.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const product = await Product.destroy({
+    where: {
+      id
+    },
+  }
+  );
+  //product > 0 && res.sendStatus(200)
+  return res.sendStatus(200);
+});
+////////////////////// S27 //////////////////////
+
 module.exports = server;
