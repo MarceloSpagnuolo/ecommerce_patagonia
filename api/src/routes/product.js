@@ -1,5 +1,6 @@
 const server = require("express").Router();
 const { Product, Category } = require("../db.js");
+const { Op } = require("sequelize");
 
 //////////////////// S21 /////////////////////
 server.get("/", (req, res, next) => {
@@ -97,13 +98,12 @@ server.put("/category/:id", async (req, res) => {
       where: {
         id,
       },
-      returning: true
+      returning: true,
     }
-  )
+  );
 
-  !category && res.send('Esa categoria no existe').status(404);
+  !category && res.send("Esa categoria no existe").status(404);
   res.json(category);
-
 });
 ////////////////////// S20 //////////////////////
 
@@ -133,5 +133,52 @@ server.get("/categoria/:nombreCat", async (req, res, next) => {
 });
 
 ////////////////////// S22 //////////////////////
+
+////////////////////// S23 //////////////////////
+server.get("/search", async (req, res) => {
+  const { query } = req.query;
+  console.log(query);
+
+  const products = await Product.findAll({
+    where: {
+      [Op.or]: [
+        {
+          description: { [Op.like]: "%" + query + "%" },
+        },
+        {
+          name: { [Op.like]: "%" + query + "%" },
+        },
+      ],
+    },
+  });
+  res.json(products);
+});
+////////////////////// S23 //////////////////////
+
+////////////////////// S24 //////////////////////
+server.get("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const product = await Product.findOne({
+    where: {
+      id,
+    },
+    attributes: [
+      "name",
+      "appearance",
+      "description",
+      "price",
+      "stock",
+      "volume",
+      "thumbnail",
+    ],
+    include: {
+      model: Category,
+      attributes: ["name", "description"],
+    },
+  });
+  res.json(product);
+});
+////////////////////// S24 //////////////////////
 
 module.exports = server;
