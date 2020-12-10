@@ -1,11 +1,12 @@
 import React from "react";
 import "./ProductCard.css";
+import { connect } from "react-redux";
 
 /* Componente básicamente terminado salvo por el rating. el CSS es bastante estable y adaptable,
 por lo cual no debería traer mayores problemas a la hora de adaptarlo con las props reales 
 de la database */
 
-export default function ProductCard(props) {
+export function ProductCard(props) {
     return (
       <div >
           <div id="ProductCard-Img-Container">
@@ -22,3 +23,5 @@ export default function ProductCard(props) {
       </div>
     );
   }
+
+export default connect(null, null)(ProductCard);

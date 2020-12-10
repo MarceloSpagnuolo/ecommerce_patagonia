@@ -2,13 +2,14 @@ import React from "react";
 import obj from "./ObjetoTemporal.js";
 import ProductCard from "../ProductCard/ProductCard.js"
 import "./Catalogo.css";
+import { connect } from "react-redux";
 
 /* Componente a medio terminar. El CSS de ProductCard es necesario para que se vea bien la Card a la hora
 de renderizar. el CSS de categorías es un poco inestable y es necesario modificarlo cuando se pasen props,
 pero por ahora no quiero renegar mucho más, ya que no tengo idea cuantas categorías van a haber.
 El código y la lógica funcionan bien, salvo por la falta de props en la parte de categorías.*/
 
-export default function Catalogo() {
+export function Catalogo() {
   return (
     <div id="Catalogo-Container">
       <div id="Catalogo-Lista-Container">
@@ -30,3 +31,4 @@ export default function Catalogo() {
     </div>
   );
 }
+export default connect(null, null)(Catalogo);
