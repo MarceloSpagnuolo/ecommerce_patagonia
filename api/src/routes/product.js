@@ -154,4 +154,31 @@ server.get("/search", async (req, res) => {
   res.json(products);
 });
 ////////////////////// S23 //////////////////////
+
+////////////////////// S24 //////////////////////
+server.get("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const product = await Product.findOne({
+    where: {
+      id,
+    },
+    attributes: [
+      "name",
+      "appearance",
+      "description",
+      "price",
+      "stock",
+      "volume",
+      "thumbnail",
+    ],
+    include: {
+      model: Category,
+      attributes: ["name", "description"],
+    },
+  });
+  res.json(product);
+});
+////////////////////// S24 //////////////////////
+
 module.exports = server;
