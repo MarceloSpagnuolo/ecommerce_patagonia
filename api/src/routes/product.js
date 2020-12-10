@@ -106,37 +106,28 @@ server.put("/category/:id", (req, res) => {
 ////////////////////// S20 //////////////////////
 
 ////////////////////// S22 //////////////////////
-server.get("/categoria/:nombreCat", (req, res, next) => {
+server.get("/categoria/:nombreCat", async (req, res, next) => {
   const { nombreCat } = req.params;
 
-  Category.findOne({
-    where: {
-      name: nombreCat,
+  const products = await Product.findAll({
+    attributes: [
+      "name",
+      "appearance",
+      "description",
+      "price",
+      "stock",
+      "volume",
+      "thumbnail",
+    ],
+    include: {
+      model: Category,
+      where: { name: nombreCat },
+      attributes: ["name", "description"],
     },
-  })
-    .then((products) => {
-      const idCat = products.id;
-      Product.findAll({
-        attributes: [
-          "name",
-          "appearance",
-          "description",
-          "price",
-          "stock",
-          "volume",
-          "thumbnail",
-        ],
-        include: {
-          model: Category,
-          where: { id: idCat },
-          attributes: ["name", "description"],
-        },
-      }).then((products) => {
-        res.status(200).send(products);
-      });
-    })
-    .catch(next);
+  });
+  res.json(products);
 });
+
 ////////////////////// S22 //////////////////////
 
 module.exports = server;
