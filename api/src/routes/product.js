@@ -235,7 +235,6 @@ server.put('/:id', async (req, res) => {
     volume,
     thumbnail
   });
-
   res.json(product);
 
 })
