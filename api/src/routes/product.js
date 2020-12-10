@@ -1,6 +1,6 @@
 const server = require("express").Router();
 const { Product, Category } = require("../db.js");
-const { Op, STRING } = require("sequelize");
+const { Op } = require("sequelize");
 
 //////////////////// S21 /////////////////////
 server.get("/", (req, res, next) => {
