@@ -205,39 +205,49 @@ server.post("/", async (req, res) => {
 });
 ////////////////////// S25 //////////////////////
 
-
 ////////////////////// S26 //////////////////////
-server.put('/:id', async (req, res) => {
+server.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { name, appearance, description, price, stock, volume, thumbnail } = req.body;
-
-  var comprobacion = (
-    typeof name === "string" &&
-    typeof appearance === "string" &&
-    typeof description === "string" &&
-    typeof price === "number" &&
-    typeof stock === "number" &&
-    (volume === '355 cc' || volume === '473 cc' || volume === '730 cc') &&
-    typeof thumbnail === "string");
-
-  !comprobacion && res.sendeStatus(400);
-
-
-  const product = await Product.update({
-    where: {
-      id
-    },
+  const {
     name,
     appearance,
     description,
     price,
     stock,
     volume,
-    thumbnail
-  });
-  res.json(product);
+    thumbnail,
+  } = req.body;
 
-})
+  var comprobacion =
+    typeof name === "string" &&
+    typeof appearance === "string" &&
+    typeof description === "string" &&
+    typeof price === "number" &&
+    typeof stock === "number" &&
+    (volume === "355 cc" || volume === "473 cc" || volume === "730 cc") &&
+    typeof thumbnail === "string";
+
+  !comprobacion && res.sendStatus(400);
+
+  const product = await Product.update(
+    {
+      name,
+      appearance,
+      description,
+      price,
+      stock,
+      volume,
+      thumbnail,
+    },
+    {
+      where: {
+        id,
+      },
+      returning: true,
+    }
+  );
+  res.json(product);
+});
 ////////////////////// S26 //////////////////////
 
 module.exports = server;
