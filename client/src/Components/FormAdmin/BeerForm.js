@@ -31,6 +31,14 @@ const BeerForm = (props) => {
                 </div>
 
                 <div className="row">
+                    <label htmlFor="producto">Appearance</label>
+                    <Field as='textarea' name="appearance" className="input" />
+                    <ErrorMessage name="appearance">
+                        {message => <div className="error">{message}</div>}
+                    </ErrorMessage>
+                </div>
+
+                <div className="row">
                     <label htmlFor="producto">Description</label>
                     <Field as='textarea' name="description" className="input" />
                     <ErrorMessage name="description">
@@ -53,7 +61,7 @@ const BeerForm = (props) => {
                 </div>
 
                 <div className="row"> Volumen
-                <Field name="volumen" as="select" className="input">
+                <Field name="volume" as="select" className="input">
                         <option value="355cc">355 cc</option>
                         <option value="473cc">473 cc</option>
                         <option value="730cc">730 cc</option>
@@ -67,8 +75,9 @@ const BeerForm = (props) => {
 
                 <button
                     type="submit"
-                    className={`submit ${isSubmitting || !isValid ? 'disabledd' : ''}`}
+                    className={`submit ${isSubmitting || !isValid ? 'disabled' : ''}`}
                     disabled={isSubmitting || !isValid}
+                // onClick={ () => createBeers(beer) }
                 >Submit</button>
 
             </Form>
@@ -81,10 +90,11 @@ export default withFormik({
     mapPropsToValues(props) {
         return {
             name: '',
+            appearance: '',
             description: '',
             price: '',
             stock: '',
-            volumen: '',
+            volume: '355 cc',
             thumbnail: ''
         }
     },
@@ -99,6 +109,11 @@ export default withFormik({
         } else if (values.description.length < 10) {
             errors.description = 'La descripción tiene que ser mas amplia'
         }
+        if (!values.appearance) {
+            errors.appearance = 'Se tiene que llenar el campo'
+        } else if (values.appearance.length < 5) {
+            errors.appearance = 'La apariencia tiene que ser mas amplia'
+        }
         if (!values.price || isNaN(values.price)) {
             errors.price = 'Debe ingresar un numero'
         }
@@ -112,9 +127,9 @@ export default withFormik({
         return errors;
     },
 
-    handleSubmit(values, formikBag) {
+    handleSubmit(values, { props, formikBag }) {
         console.log(values);
-
+        props.createBeers(values)
         formikBag.setSubmitting(false);
     }
 })(BeerForm);
