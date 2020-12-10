@@ -1,5 +1,6 @@
 const server = require("express").Router();
 const { Product, Category } = require("../db.js");
+const { Op } = require("sequelize");
 
 //////////////////// S21 /////////////////////
 server.get("/", (req, res, next) => {
@@ -134,6 +135,74 @@ server.get("/categoria/:nombreCat", async (req, res, next) => {
 ////////////////////// S22 //////////////////////
 
 ////////////////////// S23 //////////////////////
+server.get("/search", async (req, res) => {
+  const { query } = req.query;
 
+  const products = await Product.findAll({
+    where: {
+      [Op.or]: [
+        {
+          description: { [Op.like]: "%" + query + "%" },
+        },
+        {
+          name: { [Op.like]: "%" + query + "%" },
+        },
+      ],
+    },
+  });
+  res.json(products);
+});
 ////////////////////// S23 //////////////////////
+
+////////////////////// S24 //////////////////////
+server.get("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const product = await Product.findOne({
+    where: {
+      id,
+    },
+    attributes: [
+      "name",
+      "appearance",
+      "description",
+      "price",
+      "stock",
+      "volume",
+      "thumbnail",
+    ],
+    include: {
+      model: Category,
+      attributes: ["name", "description"],
+    },
+  });
+  res.json(product);
+});
+////////////////////// S24 //////////////////////
+
+////////////////////// S25 //////////////////////
+server.post("/", async (req, res) => {
+  const {
+    name,
+    appearance,
+    description,
+    price,
+    stock,
+    volume,
+    thumbnail,
+  } = req.body;
+  !name && !appearance && !price && !volume && res.sendStatus(400);
+  const product = await Product.create({
+    name,
+    appearance,
+    description,
+    price,
+    stock,
+    volume,
+    thumbnail,
+  });
+  res.json(product).status(201);
+});
+////////////////////// S25 //////////////////////
+
 module.exports = server;
