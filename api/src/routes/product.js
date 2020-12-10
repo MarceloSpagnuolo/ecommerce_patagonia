@@ -80,4 +80,27 @@ server.delete("/category/:id", async (req, res) => {
 });
 ////////////////////// S19 //////////////////////
 
+//////////////////// S20 /////////////////////
+server.put("/category/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name, description } = req.body;
+
+  Category.update(
+    {
+      name,
+      description,
+    },
+    {
+      where: {
+        id,
+      },
+    }
+  ).then((chang) => {
+    !chang && res.send('Esa categoria no existe').status(404);
+    res.send('La categoria ha sido modificada').status(200);
+  })
+
+});
+////////////////////// S20 //////////////////////
+
 module.exports = server;
