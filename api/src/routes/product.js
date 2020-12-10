@@ -88,7 +88,7 @@ server.put("/category/:id", (req, res) => {
   const { id } = req.params;
   const { name, description } = req.body;
 
-  Category.update(
+  const category = await Category.update(
     {
       name,
       description,
@@ -97,12 +97,12 @@ server.put("/category/:id", (req, res) => {
       where: {
         id,
       },
+      returning: true
     }
-  ).then((chang) => {
-    !chang && res.send('Esa categoria no existe').status(404);
-    res.send('La categoria ha sido modificada').status(200);
-  })
+  )
 
+  !category && res.send('Esa categoria no existe').status(404);
+  res.json(category);
 });
 ////////////////////// S20 //////////////////////
 
