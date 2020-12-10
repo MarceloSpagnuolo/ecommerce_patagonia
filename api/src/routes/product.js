@@ -109,20 +109,22 @@ server.put("/category/:id", (req, res) => {
 server.get("/categoria/:nombreCat", async (req, res, next) => {
   const { nombreCat } = req.params;
 
-  const products = await Product.findAll({
-    attributes: [
-      "name",
-      "appearance",
-      "description",
-      "price",
-      "stock",
-      "volume",
-      "thumbnail",
-    ],
+  const products = await Category.findAll({
+    where: {
+      name: nombreCat,
+    },
+    attributes: ["name", "description"],
     include: {
-      model: Category,
-      where: { name: nombreCat },
-      attributes: ["name", "description"],
+      model: Product,
+      attributes: [
+        "name",
+        "appearance",
+        "description",
+        "price",
+        "stock",
+        "volume",
+        "thumbnail",
+      ],
     },
   });
   res.json(products);
