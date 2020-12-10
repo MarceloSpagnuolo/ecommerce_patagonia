@@ -8,7 +8,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    aparencia: {
+    appearance: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
     },
     price: {
-      type: DataTypes.DECIMAL(10,2),
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
     stock: {
