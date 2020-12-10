@@ -1,4 +1,3 @@
-
 import { 
     ADD_CATEGORY, GET_CATEGORIES, 
     DELETE_CATEGORY, MODIFY_CATEGORY, 
@@ -25,7 +24,7 @@ import {
           /****************************** PRODUCTS **********************************/
           case GET_PRODUCTS:
               return { ...state, products: action.products }; 
-  
+        default: return state;
       }
   };
   

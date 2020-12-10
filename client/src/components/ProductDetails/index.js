@@ -1,75 +1,86 @@
-import React, { Component, component, Fragment } from 'react';
-import { useState } from 'react';
+import React, { Fragment } from "react";
+import { useState } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
-import './style.css'
+import "./style.css";
 
-//import findCurrentItem from 
-
+//import findCurrentItem from
 
 const Product = ({ titulo, descripcion, referencia, precio, cantidad }) => {
-    
-    const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
+  var sumar = function () {
+    setCount(count + 1);
+  };
+  var restar = function () {
+    if (count > 0) return setCount(count - 1);
+  };
 
- 
-    //const { id } = match.params;
-    const image = 'https://www.thegourmetjournal.com/wp-content/uploads/2020/08/Cerveza.jpg';
-    return (
-        <Fragment >
+  var handleclick = function () {};
 
-            <div className="contenido">
+  //const { id } = match.params;
+  const image =
+    "https://www.thegourmetjournal.com/wp-content/uploads/2020/08/Cerveza.jpg";
+  return (
+    <Fragment>
+      <div className="contenido">
+        <div>
+          <h3 className="Texto">{`Product Name Here` || `${titulo}`}</h3>
 
-
-
-                <div>
-                    <h3>{`${titulo}` || `Product Name Here`}</h3>
-
-
-                    <div
-                        className="item-image"
-                        style={{
-                            backgroundImage: `url(${image})`,
-                        }}
-                    />
-                    {/* <img src="linkdel.com" className="item-image"></img> */}
-
-                    <p>{`${descripcion}` || `description Here`}</p>
-
-                    <h5 id="Prueba">{`${precio}`}</h5>
-
-                    <div className="SubContainer">
-                        <button className="button">Agregar al carrito</button>
-                        <div>
-                            <button className="button" onClick={() => {
-                                setCount(count - 1)
-                            }}>-</button>
-                            {count}
-                           
-                            <button className="button" onClick={() => {
-                                setCount(count + 1)
-                            }}>+</button>
-
-                        </div>
-                        <button className="button"
-
-                            type="button"
-                            color="primary"
-                            onClick={() => alert("click")}
-                        >
-
-                            Back
-                </button></div>
-
-                </div>
-
-
-
-
+            <div id="img-container">
+            <img
+            className="item-image"
+            src={image}
+          />
             </div>
-        </Fragment>
+          
+          {/* <img src="linkdel.com" className="item-image"></img> */}
 
-    );
+          <p className="Texto">{`description Here` || `${descripcion}`}</p>
+
+          <h5 className="Texto">{`Precio Aca` || `${precio}`}</h5>
+
+          <div className="SubContainer">
+            <button className="button">Agregar al carrito</button>
+            <div>Unidades
+              <button
+                className="button"
+                onClick={() => {
+                  restar();
+                }}
+              >
+                -
+              </button>
+              {count}
+
+              <button
+                className="button"
+                onClick={() => {
+                  sumar();
+                }}
+              >
+                +
+              </button>
+
+                                
+              </div>
+              <Link exact to={"/"}>
+              <button
+                className="button2"
+                type="button"
+                // color="primary"
+                onClick={() => handleclick}
+              >
+                Back
+              </button>
+              </Link>
+            </div>
+          
+        </div>
+      </div>
+    </Fragment>
+  );
 };
 
-
-export default Product;
+export default connect(null, null)(Product);
