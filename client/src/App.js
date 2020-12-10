@@ -3,7 +3,7 @@ import Detail from '../../client/src/components/ProductDetails/index'
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Detail></Detail>
     </div>
   );

@@ -1,0 +1,40 @@
+#Catalogo-Container {
+    display: flex;
+}
+
+#Catalogo-Lista {
+    font-size: 40px;
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+
+#ProductCard-Img {
+    float: left;
+    width: 80px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.Catalogo-Lista-Item {
+    font-weight: 300;
+    list-style-type: none;
+    padding: 7px;
+    margin-left: 20px;
+    font-size: 18px;
+}
+
+.Catalogo-btn {
+    background-color: DimGrey;
+    font-size: medium;
+    margin-top: 100px;
+    border: none;
+    color: LightGray;
+    font-weight: 200;
+    padding: 15px 32px;
+    margin-left: 20px;
+}
+
+#Catalogo-Lista-Container {
+    padding-top: 40px;
+    padding-left: 40px;
+    border-right: solid DarkGrey 1px;
+}
