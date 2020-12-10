@@ -1,9 +1,10 @@
 import React from 'react';
-
+import Detail from '../../client/src/components/ProductDetails/index'
 
 function App() {
   return (
-    <div >
+    <div>
+      <Detail></Detail>
     </div>
   );
 }
