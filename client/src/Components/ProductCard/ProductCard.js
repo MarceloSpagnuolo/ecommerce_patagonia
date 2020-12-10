@@ -1,17 +1,23 @@
 import React from "react";
 import "./ProductCard.css";
 
-export default function ProductCard() {
+/* Componente básicamente terminado salvo por el rating. el CSS es bastante estable y adaptable,
+por lo cual no debería traer mayores problemas a la hora de adaptarlo con las props reales 
+de la database */
+
+export default function ProductCard(props) {
     return (
-      <div id="ProductCard-Container">
+      <div >
+          <div id="ProductCard-Img-Container">
         <img
           id="ProductCard-Img"
-          src="https://cdn.shopify.com/s/files/1/1103/5152/products/preview-full-Patagonia_Amber_Lager_1000_x_2048_efb25f80-f87e-49c5-b9d0-8fd0b647a30b_600x.jpg?v=1559755721"
+          src={props.thumbnail}
         alt="Imagen aquí"></img>
-        <div>
-          <h4 id="ProductName">Product Name</h4>
+        </div>
+        <div className="ProductCard-Container">
+          <h4 id="ProductName">{props.name}</h4>
           <span>Ranking</span>
-    <h5 id="ProductPrecio">Precio</h5>
+    <h5 id="ProductPrecio">${props.price}</h5>
         </div>
       </div>
     );

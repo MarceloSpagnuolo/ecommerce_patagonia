@@ -4,14 +4,8 @@
 
 #Catalogo-Lista {
     font-size: 40px;
-    font-family: "Lucida Console", "Courier New", monospace;
-}
-
-#ProductCard-Img {
-    float: left;
-    width: 80px;
-    height: 150px;
-    object-fit: cover;
+    font-family: "Lucida Console", "Courier New", monospace;    
+    border: solid blue 3px;
 }
 
 .Catalogo-Lista-Item {
@@ -37,4 +31,12 @@
     padding-top: 40px;
     padding-left: 40px;
     border-right: solid DarkGrey 1px;
+}
+
+#Catalogo-ProductCard-Container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 30px;
 }
