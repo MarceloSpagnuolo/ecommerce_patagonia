@@ -107,8 +107,7 @@ server.put("/category/:id", (req, res) => {
 
 ////////////////////// S22 //////////////////////
 server.get("/categoria/:nombreCat", (req, res, next) => {
-  var { nombreCat } = req.params;
-  nombreCat = nombreCat.slice(1);
+  const { nombreCat } = req.params;
 
   Category.findOne({
     where: {
