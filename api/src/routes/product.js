@@ -97,13 +97,12 @@ server.put("/category/:id", async (req, res) => {
       where: {
         id,
       },
-      returning: true
+      returning: true,
     }
-  )
+  );
 
-  !category && res.send('Esa categoria no existe').status(404);
+  !category && res.send("Esa categoria no existe").status(404);
   res.json(category);
-
 });
 ////////////////////// S20 //////////////////////
 
@@ -134,4 +133,7 @@ server.get("/categoria/:nombreCat", async (req, res, next) => {
 
 ////////////////////// S22 //////////////////////
 
+////////////////////// S23 //////////////////////
+
+////////////////////// S23 //////////////////////
 module.exports = server;
