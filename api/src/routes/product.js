@@ -99,13 +99,37 @@ server.put("/category/:id", (req, res) => {
       },
     }
   ).then((chang) => {
-    !chang && res.send('Esa categoria no existe').status(404);
-    res.send('La categoria ha sido modificada').status(200);
-  })
-
+    !chang && res.send("Esa categoria no existe").status(404);
+    res.send("La categoria ha sido modificada").status(200);
+  });
 });
 ////////////////////// S20 //////////////////////
 
+////////////////////// S22 //////////////////////
+server.get("/categoria/:nombreCat", async (req, res, next) => {
+  const { nombreCat } = req.params;
 
+  const products = await Category.findAll({
+    where: {
+      name: nombreCat,
+    },
+    attributes: ["name", "description"],
+    include: {
+      model: Product,
+      attributes: [
+        "name",
+        "appearance",
+        "description",
+        "price",
+        "stock",
+        "volume",
+        "thumbnail",
+      ],
+    },
+  });
+  res.json(products);
+});
+
+////////////////////// S22 //////////////////////
 
 module.exports = server;
