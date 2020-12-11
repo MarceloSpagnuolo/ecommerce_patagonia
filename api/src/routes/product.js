@@ -4,11 +4,16 @@ const { Op } = require("sequelize");
 
 //////////////////// S21 /////////////////////
 server.get("/", (req, res, next) => {
-  let { limit, offset, order } = req.query;
+  //Get de todos o un producto específico con sus categorías
+  let { limit, offset, order, where, include } = req.query; //Destructuring del Query
   // order tiene que recibier un array con la columna entre comillas dobles
   // /products/?limit=5&offset=5&order=["name"]
-  order && (order = JSON.parse(order));
-  Product.findAll({ limit, offset, order })
+  order && (order = JSON.parse(order)); // Parseando a Json el string recibido
+  // /products/?where={"id":5}
+  where && (where = JSON.parse(where));
+  // /products/?where={%22id%22:5}&include=[%22categories%22]
+  include && (include = JSON.parse(include));
+  Product.findAll({ limit, offset, order, where, include }) //Pasamos a findAll todos los argumentos
     .then((products) => {
       res.send(products).status(200);
     })
@@ -28,7 +33,7 @@ server.delete("/removeProduct/:id", async (req, res) => {
   res.send("El Producto se eliminó exitosamente");
 });
 
-////////////////////// S22 //////////////////////
+// Muestra todos los productos de una categoría//////////////////////
 server.get("/categoria/:nombreCat", async (req, res, next) => {
   const { nombreCat } = req.params;
 
@@ -55,7 +60,7 @@ server.get("/categoria/:nombreCat", async (req, res, next) => {
 
 ////////////////////// S22 //////////////////////
 
-////////////////////// S23 //////////////////////
+// Busca una cadena en el nombre o descripcion del producto \\\\\
 server.get("/search", async (req, res) => {
   const { query } = req.query;
 
@@ -75,33 +80,7 @@ server.get("/search", async (req, res) => {
 });
 ////////////////////// S23 //////////////////////
 
-////////////////////// S24 //////////////////////
-server.get("/:id", async (req, res) => {
-  const { id } = req.params;
-
-  const product = await Product.findOne({
-    where: {
-      id,
-    },
-    attributes: [
-      "name",
-      "appearance",
-      "description",
-      "price",
-      "stock",
-      "volume",
-      "thumbnail",
-    ],
-    include: {
-      model: Category,
-      attributes: ["name", "description"],
-    },
-  });
-  res.json(product);
-});
-////////////////////// S24 //////////////////////
-
-////////////////////// S25 //////////////////////
+// Inserta un nuevo Producto ////////////////////
 server.post("/", async (req, res) => {
   const {
     name,
@@ -126,7 +105,7 @@ server.post("/", async (req, res) => {
 });
 ////////////////////// S25 //////////////////////
 
-////////////////////// S26 //////////////////////
+// Modifica un producto específico /////////////
 server.put("/:id", async (req, res) => {
   const { id } = req.params;
   const {
