@@ -43,6 +43,7 @@ const inicialState = {
   categories: [],
 };
 
+
 function ReducerProducts(state = inicialState, action) {
   //console.log(action);
   switch (action.type) {
