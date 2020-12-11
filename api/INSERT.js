@@ -1,6 +1,6 @@
 const { conn } = require("./src/db");
 
-conn.query(`
+const query = conn.query(`
 
 INSERT INTO products (name, appearance, description, price, stock, volume, thumbnail, "createdAt", "updatedAt")
 
@@ -106,6 +106,8 @@ VALUES ('2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1, 1),
 ('2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 29, 5);
 `);
 
+module.exports = { query };
+
 // INSERT INTO "users" ("firstName", "lastName", "password", "email", "shippingAdress", "isAdmin", "createdAt", "updatedAt")
 // VALUES ('Admin', 'Admin', '$2b$10$gXEMhz5MUjH4i3V9y8m1oOpYnxKAJbFLR/vKxRlDywjGg2T66VsPy', 'admin@admin.com', 'Administracion', true, '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 // ('Fer', 'Leiva', '$2b$10$x5GQPa0nSnJVMUoKgztYEe0NTLYknYJ5aL.7wFh/Xhk3xay03NU5y', 'efeleiva@gmail.com', 'Chaquito', true, '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00');
@@ -115,5 +117,3 @@ VALUES ('2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1, 1),
 // ('5', 'Lo amo mucho', 'Enamorada del libro', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 4, 3),
 // ('1', 'Horrible', 'Nunca mas compro aca', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 6, 5),
 // ('1', 'VIVA EL SEXO', 'Culo teta pito', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 6, 5);
-
-
