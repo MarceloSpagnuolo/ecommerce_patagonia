@@ -43,8 +43,8 @@ const inicialState = {
   categories: [],
 };
 
-const ReducerProducts = (state = inicialState, action) => {
-  console.log(action);
+function ReducerProducts(state = inicialState, action) {
+  //console.log(action);
   switch (action.type) {
     /****************************** PRODUCTS **********************************/
     case GET_PRODUCTS:
@@ -121,9 +121,8 @@ const ReducerProducts = (state = inicialState, action) => {
       return {};
     case CHECKOUT_END:
       return {};
-    default:
-      return;
   }
-};
+  return state;
+}
 
 export default ReducerProducts;
