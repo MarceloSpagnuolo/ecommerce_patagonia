@@ -64,7 +64,10 @@ function ReducerProducts(state = inicialState, action) {
     case ADD_CATEGORY_PRODUCT:
       return {};
     case ADD_PRODUCT:
-      return {};
+      return { 
+        ...state,
+        products: state.products.concat(action.payload)
+      }
     case ADD_REVIEW:
       return {};
     case ADD_TO_CARD:
@@ -92,7 +95,7 @@ function ReducerProducts(state = inicialState, action) {
     case DELETE_ORDER:
       return {};
     case DELETE_PRODUCT:
-      return {};
+      return state.products.filter((product) => product.id !== action.payload);
     case DELETE_REVIEW:
       return {};
     case DELETE_USER:
@@ -104,7 +107,10 @@ function ReducerProducts(state = inicialState, action) {
     case MODIFY_CATEGORY:
       return {};
     case MODIFY_PRODUCT:
-      return {};
+      return {...state, 
+        products:  state.products.id === action.payload.id ? 
+        state.products.concat(action.payload) : state
+      }
     case CREATE_ORDER:
       return {};
     case CREATE_USER:
