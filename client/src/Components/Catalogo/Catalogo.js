@@ -35,6 +35,7 @@ export function Catalogo(props) {
               name={PC.name}
               thumbnail={PC.thumbnail}
               price={PC.price}
+              volume={PC.volume}
             ></ProductCard>
           </div>
         ))}
