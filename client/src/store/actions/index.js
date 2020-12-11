@@ -40,11 +40,13 @@ import {
   import axios from "axios";
 
   export const getProducts = () => async dispatch => {
+      
     try {
-        const res = await axios.get(`http://localhost:3001/products`)
+        const res = await axios.get(`http://localhost:3001/products`)        
         dispatch( {
             type: GET_PRODUCTS,
-            payload: res.data
+            payload: res.data,
+                    
         })
     }
     catch(e){
@@ -53,7 +55,7 @@ import {
   }
   export const getCategories = () => async dispatch => {
       try {
-          const res = await axios.get(`http://localhost:3001/products/categories`)
+          const res = await axios.get(`http://localhost:3001/products/category`)
         dispatch( {
             type: GET_CATEGORIES,
             payload: res.data
