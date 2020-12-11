@@ -1,6 +1,7 @@
 const { conn } = require("./src/db");
 
-const query = conn.query(`
+const query = () =>
+  conn.query(`
 
 INSERT INTO products (name, appearance, description, price, stock, volume, thumbnail, "createdAt", "updatedAt")
 

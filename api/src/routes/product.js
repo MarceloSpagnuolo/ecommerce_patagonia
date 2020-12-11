@@ -12,6 +12,28 @@ server.get("/", (req, res, next) => {
 });
 ////////////////////// S21 //////////////////////
 
+/////////////////GET A CATEGORIAS ///////////////
+server.get("/categories", (req, res, next) => {
+  Category.findAll()
+    .then((categories) => {
+      res.send(categories).status(200);
+    })
+    .catch(next);
+});
+
+///////////////////delete producto/////////////////
+server.delete("/removeProduct/:id", async (req, res) => {
+  const { id } = req.params;
+  const remove = await Product.destroy({
+    where: {
+      id,
+    },
+  });
+  console.log(remove);
+  remove === 0 && res.sendStatus(404);
+  res.send("El Producto se eliminó exitosamente");
+});
+
 /////////////////// S17 //////////////////
 server.post("/:idProducto/category/:idCategoria", async (req, res) => {
   try {
