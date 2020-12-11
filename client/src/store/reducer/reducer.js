@@ -73,7 +73,10 @@ function ReducerProducts(state = inicialState, action) {
     case ADD_TO_CARD:
       return {};
     case ADD_CATEGORY:
-      return {};
+      return {
+        ...state,
+        categories: state.categories.concat(action.payload)
+      };
     case UPDATE_FROM_CART:
       return {};
     case UPDATE_ORDER_TO_CREATE:
@@ -91,7 +94,7 @@ function ReducerProducts(state = inicialState, action) {
     case DELETE_CART:
       return {};
     case DELETE_CATEGORY:
-      return {};
+      return state.categories.filter((category) => category.id !== action.payload);;
     case DELETE_ORDER:
       return {};
     case DELETE_PRODUCT:
@@ -105,18 +108,36 @@ function ReducerProducts(state = inicialState, action) {
     case REMOVE_FROM_CART:
       return {};
     case MODIFY_CATEGORY:
-      return {};
+      return {
+        ...state,
+        categories: state.categories.map(p => {
+          if (p.id === action.payload.id) {
+            return action.payload
+          } else {
+            return p
+          }
+        })
+      } ;
     case MODIFY_PRODUCT:
-      return {...state, 
-        products:  state.products.id === action.payload.id ? 
-        state.products.concat(action.payload) : state
-      }
+      return {
+          ...state,
+          products: state.products.map(p => {
+            if (p.id === action.payload.id) {
+              return action.payload
+            } else {
+              return p
+            }
+          })
+        } 
+        // {...state,
+        // products:  state.products.id === action.payload.id ? 
+        // state.products.map(action.payload) : state
     case CREATE_ORDER:
       return {};
     case CREATE_USER:
       return {};
     case ERROR_MESSAGE:
-      return {};
+      return alert(message);
     case LOGOUT:
       return {};
     case LOGIN:
