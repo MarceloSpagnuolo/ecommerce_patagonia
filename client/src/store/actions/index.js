@@ -1,65 +1,101 @@
+import axios from 'axios'
+
 import {
-    ADD_CATEGORY,
-    GET_CATEGORIES,
-    DELETE_CATEGORY,
-    MODIFY_CATEGORY,
+    GET_PRODUCTS,
     ERROR_MESSAGE,
+    MODIFY_PRODUCT,
     ADD_PRODUCT,
     DELETE_PRODUCT,
     ADD_CATEGORY_PRODUCT,
     REMOVE_CATEGORY_PRODUCT,
-    GET_PRODUCTS,
-    MODIFY_PRODUCT,
-    GET_PRODUCTS_BY_CATEGORY,
-    ADD_TO_CARD,
-    REMOVE_FROM_CART,
-    GET_ORDERS,
-    UPDATE_FROM_CART,
-    CREATE_USER,
-    GET_USERS,
-    DELETE_USER,
-    UPDATE_USER,
-    DELETE_ORDER,
-    DETAIL_USER,
-    DELETE_CART,
-    LOGIN,
-    LOGIN_ERROR,
-    LOGOUT,
-    ADD_REVIEW,
-    CREATE_ORDER,
-    UPDATE_ORDER_TO_CREATE,
-    UPDATE_ORDER_TO_PROCESS,
-    CHECKOUT_END,
-    UPDATE_ORDER_TO_FULL,
-    UPDATE_ORDER_TO_REJECT,
-    UPDATE_REVIEW,
-    DELETE_REVIEW,
-    GET_USER_REVIEWS,
-    GET_ORDERS_STATUS,
-  } from "../constants/constants";
-  import axios from "axios";
+} from '../constants/constans';
 
-  export const getProducts = () => async dispatch => {
+const url = 'localhost:3001';
+
+export const getproducts = () => async dispatch => {
     try {
-        const res = await axios.get(`http://localhost:3001/products`)
-        dispatch( {
+        const product = await axios.get(`http://${url}/products`)
+        dispatch({
             type: GET_PRODUCTS,
             payload: res.data
+
         })
+    } catch (e) {
+        dispatch(
+            {
+                type: ERROR_MESSAGE,
+                message: "Error al mostrar productos"
+            }
+        )
+
     }
-    catch(e){
-        console.log(e)
-    }
-  }
-  export const getCategories = () => async dispatch => {
-      try {
-          const res = await axios.get(`http://localhost:3001/products/categories`)
-        dispatch( {
-            type: GET_CATEGORIES,
+}
+//agregar producto
+//pasar parametro catIds 
+export const addProduct = (payload) => async (dispatch) => {
+    try {
+        const product = await axios.post(`http://${url}/products/`, payload)
+        dispatch({
+            type: ADD_PRODUCT,
             payload: res.data
         })
-        }
-        catch(e){
-            console.log(e)
-        }
-  }
+
+    } catch (e) {
+        dispatch({
+            type: ERROR_MESSAGE,
+            message: 'Error al añadir categoría(s) al producto'
+        })
+
+    }
+                // catIds.forEach(catId => {
+                //     axios.put(`http://${url}/products/${productId}/category/${catId}`)
+                //         .then(res => {
+                //             if (res.status === 200) {
+                //                 dispatch({
+                //                     type: ADD_CATEGORY_PRODUCT,
+                //                     product: res.data.data
+                //                 })
+                //             }
+                //             else {
+                //                 dispatch({
+                //                     type: ERROR_MESSAGE,
+                //                     message: 'Error al añadir categoría(s) al producto'
+                //                 })
+                //             }
+                //         })
+                // })
+
+}
+
+//ACTUALIZAR PRODUCTO
+export const updProduct=(dat)=>  async (dispatch) => {
+
+    try{
+        const actualizarProducto = await axios.put(`http://${url}/products/${dat.id}`, dat)
+        dispatch({
+            type: MODIFY_PRODUCT,
+            payload: res.data
+        })
+    }catch(e){
+        dispatch({
+            type: ERROR_MESSAGE,
+            message: 'Error al actualizar producto'
+        })
+    }        
+}
+
+export const deltProduct=(id)=>  async (dispatch) => {
+
+    try{
+        const eliminarProducto = await axios.delete(`http://${url}/products/${id}`)
+        dispatch({
+            type: DELETE_PRODUCT
+
+        })
+    }catch(e){
+        dispatch({
+            type: ERROR_MESSAGE,
+            message: 'Error al eliminar el producto'
+        })
+    }        
+}
