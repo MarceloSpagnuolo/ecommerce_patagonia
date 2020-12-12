@@ -12,10 +12,10 @@ server.post("/:idProducto/category/:idCategoria", async (req, res) => {
     const category = await Category.findByPk(idCategoria);
     !category && res.sendStatus(404);
 
-    product.addCategory(category);
+    await product.addCategory(category);
     res.send(product).status(200);
-  } catch {
-    res.sendStatus(500);
+  } catch (e) {
+    res.send(e).status(500);
   }
 });
 
@@ -29,10 +29,10 @@ server.delete("/:idProducto/category/:idCategoria", async (req, res) => {
     const category = await Category.findByPk(idCategoria);
     !category && res.sendStatus(404);
 
-    product.removeCategory(category);
+    await product.removeCategory(category);
     res.sendStatus(200);
-  } catch {
-    res.sendStatus(500);
+  } catch (e) {
+    res.send(e).status(500);
   }
 });
 ////////////////////// S17 ///////////////////

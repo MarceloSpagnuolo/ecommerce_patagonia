@@ -8,6 +8,7 @@ server.get("/", (req, res, next) => {
   let { limit, offset, order, where, include } = req.query; //Destructuring del Query
   // order tiene que recibier un array con la columna entre comillas dobles
   // /products/?limit=5&offset=5&order=["name"]
+  // /products/?order=["id"]
   order && (order = JSON.parse(order)); // Parseando a Json el string recibido
   // /products/?where={"id":5}
   where && (where = JSON.parse(where));
@@ -29,8 +30,8 @@ server.delete("/removeProduct/:id", async (req, res) => {
       id,
     },
   });
-  remove === 0 && res.sendStatus(404);
-  res.send("El Producto se eliminó exitosamente");
+  remove === 0 ? res.sendStatus(404) : res.send("El Producto se eliminó exitosamente");
+
 });
 
 // Muestra todos los productos de una categoría//////////////////////
@@ -55,7 +56,10 @@ server.get("/categoria/:nombreCat", async (req, res, next) => {
       ],
     },
   });
-  res.json(products);
+
+  !products ? res.sendStatus(404) : res.json(products);
+
+
 });
 
 ////////////////////// S22 //////////////////////
@@ -76,7 +80,8 @@ server.get("/search", async (req, res) => {
       ],
     },
   });
-  res.json(products);
+  !products ? res.sendStatus(404) : res.json(products);
+
 });
 ////////////////////// S23 //////////////////////
 
@@ -91,7 +96,7 @@ server.post("/", async (req, res) => {
     volume,
     thumbnail,
   } = req.body;
-  !name && !appearance && !price && !volume && res.sendStatus(400);
+  (!name || !appearance || !price || !volume) && res.sendStatus(400);
   const product = await Product.create({
     name,
     appearance,
@@ -101,7 +106,8 @@ server.post("/", async (req, res) => {
     volume,
     thumbnail,
   });
-  res.json(product).status(201);
+  !product ? res.sendStatus(400) :
+    res.json(product).status(201);
 });
 ////////////////////// S25 //////////////////////
 
@@ -118,16 +124,18 @@ server.put("/:id", async (req, res) => {
     thumbnail,
   } = req.body;
 
-  var comprobacion =
-    typeof name === "string" &&
-    typeof appearance === "string" &&
-    typeof description === "string" &&
-    typeof price === "number" &&
-    typeof stock === "number" &&
-    (volume === "355 cc" || volume === "473 cc" || volume === "730 cc") &&
-    typeof thumbnail === "string";
 
-  !comprobacion && res.sendStatus(400);
+  // var comprobacion =
+  //   typeof name === "string" &&
+  //   typeof appearance === "string" &&      //ERROR parseInt() BUG JAVASCRIPT, COMPROBACION EN FRONT
+  //   typeof description === "string" &&     //DEVUELVE NaN PERO typeof LO TOMA COMO "number"
+  //   typeof parseInt(price) === "number" &&         //viene como string por body entonces lo parseamos
+  //   typeof parseInt(stock) === "number" &&
+  //   (volume === "355 cc" || volume === "473 cc" || volume === "730 cc") &&
+  //   typeof thumbnail === "string";
+
+  // console.log(comprobacion)
+  // !comprobacion && res.sendStatus(400);
 
   const product = await Product.update(
     {
@@ -146,7 +154,8 @@ server.put("/:id", async (req, res) => {
       returning: true,
     }
   );
-  res.json(product);
+  !product ? res.sendStatus(400) : res.json(product);
+
 });
 ////////////////////// S26 //////////////////////
 

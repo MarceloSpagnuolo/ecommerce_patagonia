@@ -13,20 +13,20 @@ server.get("/", (req, res, next) => {
 
 ///////////////////// S18 ////////////////////
 server.post("/", async (req, res) => {
-  const { name, desctiption } = req.body;
+  const { name, description } = req.body;
 
   const newCategory = await Category.findOrCreate({
     where: {
       name,
     },
     defaults: {
-      description,
+      description
     },
+
   });
+  // console.log(newCategory[1], 'ACA ESTOY')
+  !newCategory[1] ? res.sendStatus(404) : res.sendStatus(200); //status 400 BAD REQUEST
 
-  newCategory && res.send("Esa categoria ya existe").status(400); //status 400 BAD REQUEST
-
-  res.sendStatus(200);
 });
 
 //////////////////// S18 ///////////////////
