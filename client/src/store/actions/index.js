@@ -13,6 +13,7 @@ import {
     MODIFY_CATEGORY,
     DELETE_CATEGORY,
     GET_PRODUCTS_BY_CATEGORY,
+    SEARCH_PRODUCT,
 } from '../constants/constants.js';
 
 const url = 'http://localhost:3001/';
@@ -192,5 +193,27 @@ export const getProductByCategory=(catName) => async dispatch => {
             type: ERROR_MESSAGE,
             message: "Error al encontrar categoría"
         })
+    }
+}
+
+export const searchProduct = (productName) => async dispatch =>{
+    try{
+        const res = await axios.get(`${url}products/search?query=${productName}`)
+        dispatch(
+            {
+                type:SEARCH_PRODUCT,
+                payload:res.data
+
+            }
+        )
+    }catch (e){
+        dispatch(
+            {
+                type:ERROR_MESSAGE,
+                message:"Error al buscar el producto"
+
+            }
+        )
+
     }
 }
