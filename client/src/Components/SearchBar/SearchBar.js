@@ -7,38 +7,23 @@ import { searchProduct} from "../../store/actions/index";
 import  './SearchBar.css';
 
 function SearchBar(props) {
-	const url ='localhost:3000'
 	const [product, setProduct] = useState('');
-	let { onSearch } = props;
-
-	const handlerInput = (e) => {
-		console.log(e.target.value);
-		if (e.target.value === '') {
-			setProduct('');
-		}
+	let history = useHistory();
+	const handlerInput = (e) => {			
 		setProduct(e.target.value);
 	};
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		
-		//onSearch(product);
-		props.searchProduct(e.target.value);
-		let textInput = document.getElementById('inlineFormInputGroup');
-		textInput.value = '';
-		setProduct(textInput.value);
-		
-		//window.location.href = `http://${url}/products/catalogo`
+		props.searchProduct(product);		
 		history.push(`/products/search?query=${product}`);	
-		e.target.value = '';
-
 	};
-	let history = useHistory();
+	
 	return (
-		<form onSubmit={onSubmit}>
+		<form onSubmit={(e) => onSubmit(e)}>
 			<div className={`d-flex`}>
 				{/* Input buscador */}
-				<input type="search" id='inlineFormInputGroup' placeholder='Busca algo aqui...' onChange={handlerInput} />{' '}
+				<input name="Buscador" type="search" id='inlineFormInputGroup' placeholder='Busca algo aqui...' onChange={ (e) => handlerInput(e)} />{' '}
 				<div>
 					<button variant='primary' type='submit' >
 						buscar
@@ -51,7 +36,6 @@ function SearchBar(props) {
 function mapStateToProps(state) {
 	return {
 	  products: state.products
-	  
 	};
   }
   
@@ -63,4 +47,3 @@ function mapStateToProps(state) {
   }
   
   export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
-  
