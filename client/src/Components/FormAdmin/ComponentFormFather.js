@@ -1,68 +1,57 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import BeerForm from './BeerForm';
-import dataBeer from './Mocks';
 import Table from './Table';
+import { connect } from 'react-redux'
+import { getProducts } from "../../store/actions/index";
 
 
-const ComponentFormFather = () => {
+
+
+const ComponentFormFather = (props) => {
     const [display, setDisplay] = useState(false);
     const [beers, setBeers] = useState([]);
     const [edit, setEdit] = useState(false)
+    const [beer, setBeer] = useState();
+
     useEffect(() => {
         //Axios backend listar
-        setBeers(dataBeer)
+        props.getProducts()
+        setBeers(props.products)
     }, [])
 
-    //Axios backend borrar   
-    const removeBeers = (id) => {
-        setBeers(
-            beers.filter(beer => beer.id !== id)
-        )
-    }
 
-    //Axios backend editar
-    const editBeers = (beer) => {
-        beers.map(b => {
-            if (b.id === beer.id) {
-                return beer
-            } else {
-                return b
-            }
-        })
-        setEdit(false)
-    }
     const seteadora = (set, state) => {
-        if (!state) {
-            set(true)
-        } else {
-            set(false)
-        }
-    }
-    
-    //Axios backend crear
-    const createBeers = (newBeer) => {
-        setBeers(beers.concat({ ...newBeer, id: beers.length + 1 }))
-        setDisplay(false)
+        set(!state)
     }
 
     return (
-        <Fragment>
-            <button onClick={() => {seteadora(setDisplay, display)}
+        <>
+            <button onClick={() => { seteadora(setDisplay, display) }
             }>New</button>
-            {display ? <BeerForm createBeers={createBeers} /> : null}
-            {edit ? <BeerForm editBeers={editBeers} /> : null}
-            <Table beers={beers}
-                removeBeers={removeBeers}
-                seteadora={seteadora}
-                estados={ [ edit, setEdit ]}
+            {display ? <BeerForm seteadora={{ seteadora, display, setDisplay }} /> : null}
+            {edit ? <BeerForm data={beer} seteadora={{ seteadora, edit, setEdit }} /> : null}
+            <Table seteadora={seteadora}
+                estados={[edit, setEdit]}
+                onUpdate={setBeer}
             />
-
-
-        </Fragment>
+        </>
     )
 
 }
 
 
 
-export default ComponentFormFather;
+function mapStateToProps(state) {
+    return {
+        products: state.products,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getProducts: () => dispatch(getProducts()),
+    };
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ComponentFormFather);

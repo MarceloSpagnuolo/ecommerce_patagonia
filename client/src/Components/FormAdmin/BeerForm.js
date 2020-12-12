@@ -1,94 +1,18 @@
-import React, { Fragment } from 'react';
-import { withFormik, Form, Field, ErrorMessage } from 'formik';
+import React from 'react';
+import { Form, Field, ErrorMessage, Formik } from 'formik';
 import './BeerForm.css'
+import { connect } from 'react-redux';
+import { addProduct, modifyProduct } from '../../store/actions/index'
 
 
-/*
-Primera parte del formulario del administrdor de productos.
-Solo se implemento la funcionalidad "C" del CRUD, esta tiene ya
-tiene validaciones a la hora de ingresar informacion a los campos
-Los estilos son provisionales y para nada definitivos, solo se crearon para generar mas intuicion.
-*/
 
-//La constante cerveza se usa para tener una imagen predeterminada si no se agrega una al formulario
-const cerveza = "https://cdn.shopify.com/s/files/1/1103/5152/products/preview-full-Patagonia_Amber_Lager_1000_x_2048_efb25f80-f87e-49c5-b9d0-8fd0b647a30b_600x.jpg?v=1559755721"
+const cerveza = "https://bosquelya.com/img/not-available.png"
 
 const BeerForm = (props) => {
-    const {
-        isSubmitting,
-        isValid
-    } = props
+    console.log(props)
+
     return (
-        <Fragment>
-            <h1>Administrador de Productos</h1>
-            <Form className="form">
-                <div className="row">
-                    <label htmlFor="producto">Nombre</label>
-                    <Field name="name" className="input" />
-                    <ErrorMessage name="name">
-                        {message => <div className="error">{message}</div>}
-                    </ErrorMessage>
-                </div>
-
-                <div className="row">
-                    <label htmlFor="producto">Appearance</label>
-                    <Field as='textarea' name="appearance" className="input" />
-                    <ErrorMessage name="appearance">
-                        {message => <div className="error">{message}</div>}
-                    </ErrorMessage>
-                </div>
-
-                <div className="row">
-                    <label htmlFor="producto">Description</label>
-                    <Field as='textarea' name="description" className="input" />
-                    <ErrorMessage name="description">
-                        {message => <div className="error">{message}</div>}
-                    </ErrorMessage>
-                </div>
-
-                <div className="row">Price
-                <Field name="price" className="input" />
-                    <ErrorMessage name="price">
-                        {message => <div className="error">{message}</div>}
-                    </ErrorMessage>
-                </div>
-
-                <div className="row"> Stock
-                <Field name="stock" className="input" />
-                    <ErrorMessage name="stock">
-                        {message => <div className="error">{message}</div>}
-                    </ErrorMessage>
-                </div>
-
-                <div className="row"> Volumen
-                <Field name="volume" as="select" className="input">
-                        <option value="355cc">355 cc</option>
-                        <option value="473cc">473 cc</option>
-                        <option value="730cc">730 cc</option>
-                    </Field>
-
-                </div>
-
-                <div className="row"> Image
-                <Field name="thumbnail" className="input" />
-                </div>
-
-                <button
-                    type="submit"
-                    className={`submit ${isSubmitting || !isValid ? 'disabled' : ''}`}
-                    disabled={isSubmitting || !isValid}
-                // onClick={ () => createBeers(beer) }
-                >Submit</button>
-
-            </Form>
-        </Fragment>
-    )
-}
-
-
-export default withFormik({
-    mapPropsToValues(props) {
-        return {
+        <Formik initialValues={props.data || {
             name: '',
             appearance: '',
             description: '',
@@ -96,40 +20,125 @@ export default withFormik({
             stock: '',
             volume: '355 cc',
             thumbnail: ''
-        }
-    },
+        }} validate={(values) => {
+            const errors = {};
+            if (!values.name) {
+                errors.name = 'Se tiene que llenar el campo'
+            }
+            if (!values.description) {
+                errors.description = 'Se tiene que llenar el campo'
+            } else if (values.description.length < 10) {
+                errors.description = 'La descripción tiene que ser mas amplia'
+            }
+            if (!values.appearance) {
+                errors.appearance = 'Se tiene que llenar el campo'
+            } else if (values.appearance.length < 5) {
+                errors.appearance = 'La apariencia tiene que ser mas amplia'
+            }
+            if (!values.price || isNaN(values.price)) {
+                errors.price = 'Debe ingresar un numero'
+            }
+            if (!values.stock || isNaN(values.stock)) {
+                errors.stock = 'Debe ingresar un numero'
+            }
+            if (!values.thumbnail) {
+                values.thumbnail = cerveza;
+            }
 
-    validate(values) {
-        const errors = {};
-        if (!values.name) {
-            errors.name = 'Se tiene que llenar el campo'
-        }
-        if (!values.description) {
-            errors.description = 'Se tiene que llenar el campo'
-        } else if (values.description.length < 10) {
-            errors.description = 'La descripción tiene que ser mas amplia'
-        }
-        if (!values.appearance) {
-            errors.appearance = 'Se tiene que llenar el campo'
-        } else if (values.appearance.length < 5) {
-            errors.appearance = 'La apariencia tiene que ser mas amplia'
-        }
-        if (!values.price || isNaN(values.price)) {
-            errors.price = 'Debe ingresar un numero'
-        }
-        if (!values.stock || isNaN(values.stock)) {
-            errors.stock = 'Debe ingresar un numero'
-        }
-        if (!values.thumbnail) {
-            values.thumbnail = cerveza;
-        }
+            return errors;
+        }} onSubmit={(values) => {
+            if (props.data) {               
+                props.modifyProduct(props.data.id, values)
+                props.seteadora.seteadora(props.seteadora.setEdit, props.seteadora.edit)
+            } else {
+                //Logica de crear (POST)
+                props.addProduct(values)
+                props.seteadora.seteadora(props.seteadora.setDisplay, props.seteadora.display)
+            }
+        }}>{({
+            isSubmitting,
+            isValid
+        }) => (
+            <>
+                <h1>Administrador de Productos</h1>
+                <Form className="form">
+                    <div className="row">
+                        <label htmlFor="producto">Nombre</label>
+                        <ErrorMessage name="name">
+                            {message => <div className="error">{message}</div>}
+                        </ErrorMessage>
+                        <Field name="name" className="input" />
+                    </div>
 
-        return errors;
-    },
+                    <div className="row">
+                        <label htmlFor="producto">Appearance</label>
+                        <ErrorMessage name="appearance">
+                            {message => <div className="error">{message}</div>}
+                        </ErrorMessage>
+                        <Field as='textarea' name="appearance" className="input" />
+                    </div>
 
-    handleSubmit(values, { props, formikBag }) {
-        console.log(values);
-        props.createBeers(values)
-        formikBag.setSubmitting(false);
-    }
-})(BeerForm);
+                    <div className="row">
+                        <label htmlFor="producto">Description</label>
+                        <ErrorMessage name="description">
+                            {message => <div className="error">{message}</div>}
+                        </ErrorMessage>
+                        <Field as='textarea' name="description" className="input" />
+                    </div>
+
+                    <div className="row">Price
+                        <ErrorMessage name="price">
+                            {message => <div className="error">{message}</div>}
+                        </ErrorMessage>
+                <Field name="price" className="input" />
+                    </div>
+
+                    <div className="row"> Stock
+                        <ErrorMessage name="stock">
+                            {message => <div className="error">{message}</div>}
+                        </ErrorMessage>
+                <Field name="stock" className="input" />
+                    </div>
+
+                    <div className="row"> Volumen
+                <Field name="volume" as="select" className="input">
+                            <option value="355 cc">355 cc</option>
+                            <option value="473 cc">473 cc</option>
+                            <option value="730 cc">730 cc</option>
+                        </Field>
+
+                    </div>
+
+                    <div className="row"> Image
+                <Field name="thumbnail" className="input" />
+                    </div>
+
+                    <button
+                        type="submit"
+                        className={`submit ${isSubmitting || !isValid ? 'disabled' : ''}`}
+                        disabled={isSubmitting || !isValid}
+                    >Submit</button>
+
+                </Form>
+            </>
+        )}
+        </Formik >
+
+    )
+}
+
+function mapStateToProps(state) {
+    return {
+        products: state.products,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        addProduct: (producto) => dispatch(addProduct(producto)),
+        modifyProduct: (id, producto) => dispatch(modifyProduct(id, producto))
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BeerForm);
+
