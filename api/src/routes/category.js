@@ -41,9 +41,9 @@ server.delete("/:id", async (req, res) => {
     },
   });
 
-  delCategory === 0 && res.send("Esa categoria NO existe").status(404); //status 404 NOT FOUND
+  delCategory === 0 ? res.send("Esa categoria NO existe").status(404) : //status 404 NOT FOUND
+    res.send("La categoria ha sido eliminada exitosamente").status(200);
 
-  res.send("La categoria ha sido eliminada exitosamente").status(200);
 });
 ////////////////////// S19 //////////////////////
 
@@ -65,8 +65,8 @@ server.put("/:id", async (req, res) => {
     }
   );
 
-  !category && res.send("Esa categoria no existe").status(404);
-  res.json(category);
+  !category ? res.send("Esa categoria no existe").status(404) :
+    res.json(category);
 });
 ////////////////////// S20 //////////////////////
 
