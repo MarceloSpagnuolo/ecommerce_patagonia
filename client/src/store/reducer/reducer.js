@@ -36,6 +36,7 @@ import {
   DELETE_REVIEW,
   GET_USER_REVIEWS,
   GET_ORDERS_STATUS,
+  SEARCH_PRODUCT,
 } from "../constants/constants";
 
 const inicialState = {
@@ -49,6 +50,8 @@ function ReducerProducts(state = inicialState, action) {
     /****************************** PRODUCTS **********************************/
     case GET_PRODUCTS:
       return { ...state, products: action.payload };
+    case SEARCH_PRODUCT:
+      return{...state, products:action.payload};
     case GET_CATEGORIES:
       return { ...state, categories: action.payload };
     case GET_ORDERS:

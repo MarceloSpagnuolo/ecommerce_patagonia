@@ -1,0 +1,12 @@
+#inlineFormInputGroup{
+    border: 1px dotted #999;
+    border-radius: 0;
+
+    -webkit-appearance: none;
+}
+.button:hover,
+button:focus {
+  outline   : none;
+  background: #000;
+  color   : #FFF;
+}
