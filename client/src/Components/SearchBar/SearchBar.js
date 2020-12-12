@@ -22,8 +22,6 @@ function SearchBar(props) {
 	const onSubmit = (e) => {
 		e.preventDefault();
 		
-		alert('OK funciona Search');
-		
 		//onSearch(product);
 		props.searchProduct(e.target.value);
 		let textInput = document.getElementById('inlineFormInputGroup');
@@ -31,7 +29,7 @@ function SearchBar(props) {
 		setProduct(textInput.value);
 		
 		//window.location.href = `http://${url}/products/catalogo`
-		history.push(`http://${url}/products/search?query=${product}`);	
+		history.push(`/products/search?query=${product}`);	
 		e.target.value = '';
 
 	};

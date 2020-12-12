@@ -57,7 +57,7 @@ function Catalogo(props) {
       <div id="Catalogo-ProductCard-Container">
         {props.products.map((prod) => (
           <div>
-            <Link target="_blank" to={`/products/${prod.id}`}>
+            <Link target="_blank" to={`products/?where={"id":${prod.id}}`}>
               <ProductCard
                 /* id={prod.id} */
                 name={prod.name}
