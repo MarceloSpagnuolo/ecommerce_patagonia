@@ -22,6 +22,15 @@ server.get("/", (req, res, next) => {
 });
 ////////////////////// S21 //////////////////////
 
+
+/////////////////Porcut ID////////////////////////
+server.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const producto = await Product.findByPk(id)
+  producto ? res.json(producto).status(200) : res.send("Ese Id de Producto no existe").status(404);
+}
+//////////////////////////////////////////////////
+
 ///////////////////delete producto/////////////////
 server.delete("/removeProduct/:id", async (req, res) => {
   const { id } = req.params;
