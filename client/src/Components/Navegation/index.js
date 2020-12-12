@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import React from 'react'
+import SearchBar from "../SearchBar/SearchBar.js"
+
  const Home = () =>
     <div className="home">
         <h1>Ecommerce Patagonia</h1>
@@ -8,6 +10,7 @@ import React from 'react'
             <Link to="/categories">Categorias </Link>
             <Link to="/products">Productos </Link>
             <Link to="/contact">Contactenos </Link>
+            <SearchBar></SearchBar>
         </nav>
     </div>
 

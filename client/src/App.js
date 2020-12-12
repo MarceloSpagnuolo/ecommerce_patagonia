@@ -11,7 +11,7 @@ function App() {
     <Route exact path={["/products", "/products/categoria/:nombreCat"]}  component={Catalogo} />
     <Route exact path="/about" />
     <Route exact path="/categories"/>
-    <Route exact path="/products/:id" component={ProductDetails} />
+    <Route exact path={`/products/where={"id":id}`} component={ProductDetails} />
     </React.Fragment>
   );
 }
