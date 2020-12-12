@@ -37,6 +37,7 @@ import {
   GET_USER_REVIEWS,
   GET_ORDERS_STATUS,
   SEARCH_PRODUCT,
+  GET_PRODUCT_BY_ID,
 } from "../constants/constants";
 
 const inicialState = {
@@ -51,7 +52,7 @@ function ReducerProducts(state = inicialState, action) {
     case GET_PRODUCTS:
       return { ...state, products: action.payload };
     case SEARCH_PRODUCT:
-      return{...state, products:action.payload};
+      return { ...state, products: action.payload };
     case GET_CATEGORIES:
       return { ...state, categories: action.payload };
     case GET_ORDERS:
@@ -63,6 +64,8 @@ function ReducerProducts(state = inicialState, action) {
         ...state,
         products: action.payload[0].products
       };
+    case GET_PRODUCT_BY_ID:
+      return { ...state, products: action.payload };
     case GET_USERS:
       return {};
     case GET_USER_REVIEWS:
@@ -70,7 +73,7 @@ function ReducerProducts(state = inicialState, action) {
     case ADD_CATEGORY_PRODUCT:
       return {};
     case ADD_PRODUCT:
-      return { 
+      return {
         ...state,
         products: state.products.concat(action.payload)
       }
@@ -123,21 +126,21 @@ function ReducerProducts(state = inicialState, action) {
             return p
           }
         })
-      } ;
+      };
     case MODIFY_PRODUCT:
       return {
-          ...state,
-          products: state.products.map(p => {
-            if (p.id === action.payload.id) {
-              return action.payload
-            } else {
-              return p
-            }
-          })
-        } 
-        // {...state,
-        // products:  state.products.id === action.payload.id ? 
-        // state.products.map(action.payload) : state
+        ...state,
+        products: state.products.map(p => {
+          if (p.id === action.payload.id) {
+            return action.payload
+          } else {
+            return p
+          }
+        })
+      }
+    // {...state,
+    // products:  state.products.id === action.payload.id ? 
+    // state.products.map(action.payload) : state
     case CREATE_ORDER:
       return {};
     case CREATE_USER:
@@ -154,8 +157,8 @@ function ReducerProducts(state = inicialState, action) {
       return {};
     case CHECKOUT_END:
       return {};
-      default:
-        return state
+    default:
+      return state
   }
 }
 

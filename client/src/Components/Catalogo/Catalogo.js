@@ -6,6 +6,7 @@ import {
   getProducts,
   getCategories,
   getProductByCategory,
+  getProductById,
 } from "../../store/actions/index";
 import { Link } from "react-router-dom";
 
@@ -18,7 +19,7 @@ function Catalogo(props) {
   useEffect(() => {
     props.getProducts();
     props.getCategories();
-    return function cleanup() {};
+    return function cleanup() { };
   }, []);
 
   function handleClick(catName) {
@@ -57,7 +58,7 @@ function Catalogo(props) {
       <div id="Catalogo-ProductCard-Container">
         {props.products.map((prod) => (
           <div>
-            <Link target="_blank" to={`products/?where={"id":${prod.id}}`}>
+            <Link target="_blank" to={`products/${prod.id}`}>
               <ProductCard
                 /* id={prod.id} */
                 name={prod.name}
@@ -85,6 +86,7 @@ function mapDispatchToProps(dispatch) {
     getProducts: () => dispatch(getProducts()),
     getCategories: () => dispatch(getCategories()),
     getProductByCategory: (catName) => dispatch(getProductByCategory(catName)),
+    getProductById: (id) => dispatch(getProductById(id)),
   };
 }
 
