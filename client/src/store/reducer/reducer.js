@@ -43,7 +43,6 @@ const inicialState = {
   categories: [],
 };
 
-
 function ReducerProducts(state = inicialState, action) {
   //console.log(action);
   switch (action.type) {
@@ -57,7 +56,10 @@ function ReducerProducts(state = inicialState, action) {
     case GET_ORDERS_STATUS:
       return {};
     case GET_PRODUCTS_BY_CATEGORY:
-      return {};
+      return {
+        ...state,
+        products: action.payload[0].products
+      };
     case GET_USERS:
       return {};
     case GET_USER_REVIEWS:
@@ -138,7 +140,7 @@ function ReducerProducts(state = inicialState, action) {
     case CREATE_USER:
       return {};
     case ERROR_MESSAGE:
-      return alert(message);
+      return alert(action.message);
     case LOGOUT:
       return {};
     case LOGIN:
@@ -149,8 +151,9 @@ function ReducerProducts(state = inicialState, action) {
       return {};
     case CHECKOUT_END:
       return {};
+      default:
+        return state
   }
-  return state;
 }
 
 export default ReducerProducts;
