@@ -25,6 +25,7 @@
     font-weight: 200;
     padding: 15px 32px;
     margin-left: 20px;
+    cursor: pointer;
 }
 
 #Catalogo-Lista-Container {
