@@ -1,43 +1,62 @@
 #Catalogo-Container {
-    display: flex;
+  display: flex;
+  height: 100%;
 }
 
 #Catalogo-Lista {
-    font-size: 40px;
-    font-family: "Lucida Console", "Courier New", monospace;    
-    border: solid blue 3px;
+  font-size: 25px;
+  font-family: "Lucida Console", "Courier New", monospace;
+  padding: 5px;
+  border: solid blue 3px;
 }
 
 .Catalogo-Lista-Item {
-    font-weight: 300;
-    list-style-type: none;
-    padding: 7px;
-    margin-left: 20px;
-    font-size: 18px;
+  text-decoration: none;
+  font-weight: 300;
+  list-style-type: none;
+  padding: 5px;
+  margin-left: 20px;
+  font-size: 20px;
+  margin-top: 10px;
 }
 
 .Catalogo-btn {
-    background-color: DimGrey;
-    font-size: medium;
-    margin-top: 100px;
-    border: none;
-    color: LightGray;
-    font-weight: 200;
-    padding: 15px 32px;
-    margin-left: 20px;
-    cursor: pointer;
+  background-color: DimGrey;
+  font-size: medium;
+  margin-top: 100px;
+  border: none;
+  color: LightGray;
+  font-weight: 200;
+  padding: 15px 32px;
+  margin-left: 20px;
+  cursor: pointer;
 }
 
 #Catalogo-Lista-Container {
-    padding-top: 40px;
-    padding-left: 40px;
-    border-right: solid DarkGrey 1px;
+  padding-top: 40px;
+  padding-left: 40px;
+  border-right: solid rgb(232, 242, 214) 3px;
+  width: 250px;
+  background: linear-gradient(to right, white, rgb(242, 248, 224));
+  margin-top: 30px;
 }
 
 #Catalogo-ProductCard-Container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 100%;
-    margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 30px;
+  background: linear-gradient(to left, white, rgb(242, 248, 224));
+}
+
+a:any-link {
+  color: black;
+  text-decoration: none;
+}
+
+a:-webkit-any-link :hover {
+  background-color: khaki;
+  transition: all 0.8s;
+  border-radius: 10px;
 }
