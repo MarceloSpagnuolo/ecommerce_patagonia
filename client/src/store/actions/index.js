@@ -14,6 +14,7 @@ import {
     DELETE_CATEGORY,
     GET_PRODUCTS_BY_CATEGORY,
     SEARCH_PRODUCT,
+    GET_PRODUCT_BY_ID,
 } from '../constants/constants.js';
 
 const url = 'http://localhost:3001/';
@@ -53,59 +54,59 @@ export const addProduct = (payload) => async (dispatch) => {
         })
 
     }
-                // catIds.forEach(catId => {
-                //     axios.put(`http://${url}/products/${productId}/category/${catId}`)
-                //         .then(res => {
-                //             if (res.status === 200) {
-                //                 dispatch({
-                //                     type: ADD_CATEGORY_PRODUCT,
-                //                     product: res.data.data
-                //                 })
-                //             }
-                //             else {
-                //                 dispatch({
-                //                     type: ERROR_MESSAGE,
-                //                     message: 'Error al añadir categoría(s) al producto'
-                //                 })
-                //             }
-                //         })
-                // })
+    // catIds.forEach(catId => {
+    //     axios.put(`http://${url}/products/${productId}/category/${catId}`)
+    //         .then(res => {
+    //             if (res.status === 200) {
+    //                 dispatch({
+    //                     type: ADD_CATEGORY_PRODUCT,
+    //                     product: res.data.data
+    //                 })
+    //             }
+    //             else {
+    //                 dispatch({
+    //                     type: ERROR_MESSAGE,
+    //                     message: 'Error al añadir categoría(s) al producto'
+    //                 })
+    //             }
+    //         })
+    // })
 
 }
 
 //ACTUALIZAR PRODUCTO
-export const updateProduct=(dat)=>  async (dispatch) => {
+export const updateProduct = (dat) => async (dispatch) => {
 
-    try{
+    try {
         const res = await axios.put(`${url}products/${dat.id}`, dat)
         dispatch({
             type: MODIFY_PRODUCT,
             payload: res.data
         })
-    }catch(e){
+    } catch (e) {
         dispatch({
             type: ERROR_MESSAGE,
             message: 'Error al actualizar producto'
         })
-    }        
+    }
 }
 
 //Borra un producto
-export const deleteProduct=(id)=>  async (dispatch) => {
+export const deleteProduct = (id) => async (dispatch) => {
 
-    try{
+    try {
         const res = await axios.delete(`${url}products/${id}`)
         dispatch({
             type: DELETE_PRODUCT,
             payload: id
 
         })
-    }catch(e){
+    } catch (e) {
         dispatch({
             type: ERROR_MESSAGE,
             message: 'Error al eliminar el producto'
         })
-    }        
+    }
 }
 
 //Trae todas las categorias
@@ -147,48 +148,49 @@ export const addCategory = (payload) => async (dispatch) => {
 }
 
 // Modifica una categoría
-export const updateCategory=(dat)=>  async (dispatch) => {
+export const updateCategory = (dat) => async (dispatch) => {
 
-    try{
+    try {
         const res = await axios.put(`${url}categories/${dat.id}`, dat)
         dispatch({
             type: MODIFY_CATEGORY,
             payload: res.data
         })
-    }catch(e){
+    } catch (e) {
         dispatch({
             type: ERROR_MESSAGE,
             message: 'Error al actualizar producto'
         })
-    }        
+    }
 }
 
 // Borra una categoría
-export const deleteCategory=(id)=>  async (dispatch) => {
+export const deleteCategory = (id) => async (dispatch) => {
 
-    try{
+    try {
         const res = await axios.delete(`${url}categories/${id}`)
         dispatch({
             type: DELETE_CATEGORY,
             payload: id
 
         })
-    }catch(e){
+    } catch (e) {
         dispatch({
             type: ERROR_MESSAGE,
             message: 'Error al eliminar el producto'
         })
-    }        
+    }
 }
 
-export const getProductByCategory=(catName) => async dispatch => {
+// Trae LOS productos por la categoria
+export const getProductByCategory = (catName) => async dispatch => {
     try {
         const res = await axios.get(`${url}products/categoria/${catName}`)
         dispatch({
-            type:GET_PRODUCTS_BY_CATEGORY,
+            type: GET_PRODUCTS_BY_CATEGORY,
             payload: res.data
         })
-    }catch(e){
+    } catch (e) {
         dispatch({
             type: ERROR_MESSAGE,
             message: "Error al encontrar categoría"
@@ -196,24 +198,46 @@ export const getProductByCategory=(catName) => async dispatch => {
     }
 }
 
-export const searchProduct = (productName) => async dispatch =>{
-    try{
+//Funcion de SearchBar Busca por nombre
+export const searchProduct = (productName) => async dispatch => {
+    try {
         const res = await axios.get(`${url}products/search?query=${productName}`)
         dispatch(
             {
-                type:SEARCH_PRODUCT,
-                payload:res.data
+                type: SEARCH_PRODUCT,
+                payload: res.data
 
             }
         )
-    }catch (e){
+    } catch (e) {
         dispatch(
             {
-                type:ERROR_MESSAGE,
-                message:"Error al buscar el producto"
+                type: ERROR_MESSAGE,
+                message: "Error al buscar el producto"
 
             }
         )
 
+    }
+}
+
+
+// Trae producto por id
+export const getProductById = (id) => async dispatch => {
+    try {
+        const res = await axios.get(`${url}products/${id}`)
+        dispatch(
+            {
+                type: GET_PRODUCT_BY_ID,
+                payload: res.data
+            }
+        )
+    } catch (e) {
+        dispatch(
+            {
+                type: ERROR_MESSAGE,
+                message: "Ese id no existe"
+            }
+        )
     }
 }
