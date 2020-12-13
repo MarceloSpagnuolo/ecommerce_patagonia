@@ -2,6 +2,30 @@ const server = require("express").Router();
 const { Product, Category } = require("../db.js");
 const { Op } = require("sequelize");
 
+
+// Busca una cadena en el nombre o descripcion del producto \\\\\
+
+//Preguntar porque el flow de las rutas hace que unas no se ejecuten dependiendo del orden de las mismas.
+server.get("/search", async (req, res) => {
+  const { query } = req.query;
+
+  const products = await Product.findAll({
+    where: {
+      [Op.or]: [
+        {
+          description: { [Op.like]: "%" + query + "%" },
+        },
+        {
+          name: { [Op.like]: "%" + query + "%" },
+        },
+      ],
+    },
+  });
+  !products ? res.sendStatus(404) : res.json(products);
+
+});
+////////////////////// S23 //////////////////////
+
 //////////////////// S21 /////////////////////
 server.get("/", (req, res, next) => {
   //Get de todos o un producto específico con sus categorías
@@ -73,26 +97,6 @@ server.get("/categoria/:nombreCat", async (req, res, next) => {
 
 ////////////////////// S22 //////////////////////
 
-// Busca una cadena en el nombre o descripcion del producto \\\\\
-server.get("/search", async (req, res) => {
-  const { query } = req.query;
-
-  const products = await Product.findAll({
-    where: {
-      [Op.or]: [
-        {
-          description: { [Op.like]: "%" + query + "%" },
-        },
-        {
-          name: { [Op.like]: "%" + query + "%" },
-        },
-      ],
-    },
-  });
-  !products ? res.sendStatus(404) : res.json(products);
-
-});
-////////////////////// S23 //////////////////////
 
 // Inserta un nuevo Producto ////////////////////
 server.post("/", async (req, res) => {
