@@ -1,0 +1,29 @@
+img {
+  width: 100%;
+  border-bottom: solid 3px lightcoral;
+}
+
+p {
+  margin-bottom: -25px;
+}
+
+.manifiesto {
+  display: flex;
+  /* flex-direction: row; */
+  background-color: rgb(22, 61, 52);
+  color: white;
+  margin-top: -4px;
+  border-bottom: solid 3px lightcoral;
+}
+
+.titulo {
+  font-size: 30px;
+  font-family: cursive;
+  padding: 60px 60px 30px 60px;
+}
+
+.texto {
+  font-size: 25px;
+  font-family: cursive;
+  padding: 30px 300px 100px 100px;
+}
