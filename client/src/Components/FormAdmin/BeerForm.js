@@ -6,7 +6,7 @@ import { addProduct, modifyProduct } from '../../store/actions/index'
 
 
 
-const cerveza = "https://bosquelya.com/img/not-available.png"
+const cerveza = "http://localhost:3001/images/nodisponible.jpg"
 
 const BeerForm = (props) => {
     console.log(props)
