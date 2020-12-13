@@ -9,14 +9,16 @@
     border-bottom: solid 3px lightcoral;
 }
 
+@keyframes Logo {from{transform: rotateY(0deg)} to {transform: rotateY(360deg)}}
+
 .logo {
     height: 100px;
-    margin-top: 10px;    
+    margin-top: 10px;   
+    animation: Logo infinite 5s linear;
 }
 
 .logo:hover {
-    transition: all 2s;
-    transform: rotateY(360deg);
+  animation-play-state: paused; 
 }
 
 .navegacion {

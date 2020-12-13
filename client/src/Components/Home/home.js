@@ -4,10 +4,10 @@ import "./home.css";
 function Home() {
   return (
     <div>
-      <img className="imagen" src="http://www.limbos.org/wp-content/uploads/2019/08/7-datos-curiosos-sobre-la-patagonia-monta%C3%B1a.jpg" />
-      <div className="manifiesto">
-        <div className="titulo">NUESTRO MANIFIESTO</div>
-        <div className="texto">
+      <img className="home-imagen" src="http://www.limbos.org/wp-content/uploads/2019/08/7-datos-curiosos-sobre-la-patagonia-monta%C3%B1a.jpg" />
+      <div className="home-manifiesto">
+        <div className="home-titulo">NUESTRO MANIFIESTO</div>
+        <div className="home-texto">
           <p>
             En la patagonia necesitamos menos cosas. 
           </p>

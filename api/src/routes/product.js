@@ -79,6 +79,7 @@ server.get("/categoria/:nombreCat", async (req, res, next) => {
     include: {
       model: Product,
       attributes: [
+        "id",
         "name",
         "appearance",
         "description",
