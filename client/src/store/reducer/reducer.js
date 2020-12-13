@@ -103,11 +103,15 @@ function ReducerProducts(state = inicialState, action) {
     case DELETE_CART:
       return {};
     case DELETE_CATEGORY:
-      return state.categories.filter((category) => category.id !== action.payload);;
+      return {
+        ...state,
+        categories: state.categories.filter((category) => category.id !== action.payload)}
     case DELETE_ORDER:
       return {};
     case DELETE_PRODUCT:
-      return state.products.filter((product) => product.id !== action.payload);
+      return {
+        ...state,
+        products: state.products.filter((product) => product.id !== action.payload)}
     case DELETE_REVIEW:
       return {};
     case DELETE_USER:

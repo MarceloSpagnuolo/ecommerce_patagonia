@@ -3,6 +3,8 @@ import Catalogo from "../src/Components/Catalogo/Catalogo.js";
 import Navegation from "../src/Components/Navegation/index";
 import { Route } from 'react-router-dom';
 import ProductDetails from "../src/Components/ProductDetails/index.js"
+import ComponentFormFather from "../src/Components/FormAdmin/ComponentFormFather"
+import CategoryView from "../src/Components/CategoryForm/CategoryView"
 
 function App() {
   return (
@@ -10,7 +12,9 @@ function App() {
       <Navegation />
       <Route path={"/products"} component={Catalogo} />
       <Route exact path="/about" />
+      <Route exact path="/admin" component={ComponentFormFather} />
       <Route exact path="/categories" />
+      <Route exact path="/cat" component={CategoryView} />
       <Route exact path={[`/product/:id`]} component={ProductDetails} />
     </React.Fragment>
   );

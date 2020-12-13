@@ -75,13 +75,13 @@ export const addProduct = (payload) => async (dispatch) => {
 }
 
 //ACTUALIZAR PRODUCTO
-export const updateProduct = (dat) => async (dispatch) => {
+export const modifyProduct = (id, producto) => async (dispatch) => {
 
     try {
-        const res = await axios.put(`${url}products/${dat.id}`, dat)
+        const res = await axios.put(`${url}products/${id}`, producto)
         dispatch({
             type: MODIFY_PRODUCT,
-            payload: res.data
+            payload: res.data[1][0]
         })
     } catch (e) {
         dispatch({
@@ -148,13 +148,13 @@ export const addCategory = (payload) => async (dispatch) => {
 }
 
 // Modifica una categoría
-export const updateCategory = (dat) => async (dispatch) => {
+export const updateCategory = (id, category) => async (dispatch) => {
 
     try {
-        const res = await axios.put(`${url}categories/${dat.id}`, dat)
+        const res = await axios.put(`${url}categories/${id}`, category)
         dispatch({
             type: MODIFY_CATEGORY,
-            payload: res.data
+            payload: res.data[1][0]
         })
     } catch (e) {
         dispatch({
