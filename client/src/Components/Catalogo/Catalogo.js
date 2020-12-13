@@ -40,7 +40,10 @@ function Catalogo(props) {
         {props.categories &&
           props.categories.map((cat) => (
             <Link
-              to={`/products/categoria/`}
+
+              className = "catalogoLink"
+              to={`/products/categoria/${cat.name}`}
+
               onClick={() => handleClick(cat.name)}
             >
               <li className="Catalogo-Lista-Item">{cat.name}</li>
@@ -59,7 +62,9 @@ function Catalogo(props) {
       <div id="Catalogo-ProductCard-Container">
         {props.products && props.products.map((prod) => (
           <div>
-            <Link target="_blank" to={`/product/${prod.id}`}>
+
+            <Link className="catalogoLink" target="_blank" to={`products/${prod.id}`}>
+
               <ProductCard
                 /* id={prod.id} */
                 name={prod.name}

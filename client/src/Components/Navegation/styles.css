@@ -1,0 +1,60 @@
+.home {
+    display:flex;
+    align-items: stretch;
+    padding-left: 50px;
+    background-color:orange;
+    opacity: 0.8;
+    position:sticky;
+    top: 0; 
+    border-bottom: solid 3px lightcoral;
+}
+
+.logo {
+    height: 100px;
+    margin-top: 10px;    
+}
+
+.logo:hover {
+    transition: all 2s;
+    transform: rotateY(360deg);
+}
+
+.navegacion {
+    display: flex;
+    justify-content:space-between;
+    width: 100%;
+}
+
+.segundo {
+    width: 50%;
+}
+
+.titleEcom {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: rgb(2, 85, 2);
+}
+
+/* a:any-link {
+  color:  rgb(2, 85, 2);
+  text-decoration: none;
+  font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
+}
+
+a:-webkit-any-link :hover {
+  background-color: khaki;
+  transition: all 0.5s;
+  border-radius: 10px;
+} */
+
+.btnMenu {
+  color:  rgb(2, 85, 2);
+  text-decoration: none;
+  font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;  
+  padding: 0 5px 0 5px;
+}
+
+.btnMenu:hover {
+  background-color: khaki;
+  transition: all 0.5s;
+  border-radius: 5px;
+}

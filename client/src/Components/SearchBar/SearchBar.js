@@ -26,7 +26,7 @@ function SearchBar(props) {
 				<input name="Buscador" type="search" id='inlineFormInputGroup' placeholder='Busca algo aqui...' onChange={ (e) => handlerInput(e)} />{' '}
 				<div>
 					<button variant='primary' type='submit' >
-						buscar
+						Buscar
 					</button>
 				</div>
 			</div>
