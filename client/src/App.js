@@ -16,7 +16,7 @@ function App() {
       <Route exact path="/admin" component={ComponentFormFather} />
       <Route exact path="/categories" />
       <Route exact path="/cat" component={CategoryView} />
-      <Route exact path={[`/product/:id`]} component={ProductDetails} />
+      <Route exact path="/product/:id" component={ProductDetails} />
       <Route exact path="/" component={Home} />
     </React.Fragment>
   );

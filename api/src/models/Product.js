@@ -29,7 +29,7 @@ module.exports = (sequelize) => {
     },
     thumbnail: {
       type: DataTypes.STRING,
-      valueDefalut: '../images/nodisponible.jpg'
+      valueDefalut: 'http://localhost:3001/images/nodisponible.jpg'
     }
   });
 };
