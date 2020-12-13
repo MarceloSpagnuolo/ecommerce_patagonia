@@ -17,10 +17,13 @@ El código y la lógica funcionan bien, salvo por la falta de props en la parte 
 
 function Catalogo(props) {
   useEffect(() => {
-    props.getProducts();
+    if(props.history.location.pathname === "/products/search") {
+          } else {      props.getProducts();}
     props.getCategories();
     return function cleanup() { };
   }, []);
+
+  console.log(props)
 
   function handleClick(catName) {
     props.getProductByCategory(catName);
@@ -37,8 +40,10 @@ function Catalogo(props) {
         {props.categories &&
           props.categories.map((cat) => (
             <Link
+
               className = "catalogoLink"
               to={`/products/categoria/${cat.name}`}
+
               onClick={() => handleClick(cat.name)}
             >
               <li className="Catalogo-Lista-Item">{cat.name}</li>
@@ -49,17 +54,17 @@ function Catalogo(props) {
         </li>
         <li className="Catalogo-Lista-Item">Category</li>
         <li className="Catalogo-Lista-Item">Category</li> */}
-        <Link to={`/products`}>
           <button onClick={() => handleClickAll()} className="Catalogo-btn">
             Browse All
           </button>
-        </Link>
       </div>
 
       <div id="Catalogo-ProductCard-Container">
-        {props.products.map((prod) => (
+        {props.products && props.products.map((prod) => (
           <div>
+
             <Link className="catalogoLink" target="_blank" to={`products/${prod.id}`}>
+
               <ProductCard
                 /* id={prod.id} */
                 name={prod.name}
