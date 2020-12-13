@@ -60,7 +60,7 @@ const BeerForm = (props) => {
             isValid
         }) => (
             <>
-                <h1>Administrador de Productos</h1>
+                <h1 className="tbeer">Administrador de Productos</h1>
                 <Form className="form">
                     <div className="row">
                         <label htmlFor="producto">Nombre</label>

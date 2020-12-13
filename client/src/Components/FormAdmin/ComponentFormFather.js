@@ -3,6 +3,7 @@ import BeerForm from './BeerForm';
 import Table from './Table';
 import { connect } from 'react-redux'
 import { getProducts } from "../../store/actions/index";
+import "./ComponentFormFather.css"
 
 
 
@@ -26,14 +27,16 @@ const ComponentFormFather = (props) => {
 
     return (
         <>
-            <button onClick={() => { seteadora(setDisplay, display) }
-            }>New</button>
-            {display ? <BeerForm seteadora={{ seteadora, display, setDisplay }} /> : null}
-            {edit ? <BeerForm data={beer} seteadora={{ seteadora, edit, setEdit }} /> : null}
-            <Table seteadora={seteadora}
-                estados={[edit, setEdit]}
-                onUpdate={setBeer}
-            />
+            <div className="prueba">               
+                <button className="new" onClick={() => { seteadora(setDisplay, display) }
+                }>New</button>
+                {display ? <BeerForm seteadora={{ seteadora, display, setDisplay }} /> : null}
+                {edit ? <BeerForm data={beer} seteadora={{ seteadora, edit, setEdit }} /> : null}
+                <Table seteadora={seteadora}
+                    estados={[edit, setEdit]}
+                    onUpdate={setBeer}
+                />
+            </div>
         </>
     )
 
