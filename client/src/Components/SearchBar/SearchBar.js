@@ -16,7 +16,7 @@ function SearchBar(props) {
 	const onSubmit = (e) => {
 		e.preventDefault();
 		props.searchProduct(product);		
-		history.push(`/products/search?query=${product}`);	
+		history.push(`/products/search`);	
 	};
 	
 	return (

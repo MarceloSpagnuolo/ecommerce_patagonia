@@ -8,10 +8,10 @@ function App() {
   return (
     <React.Fragment>
       <Navegation />
-      <Route exact path={["/products", "/products/categoria/:nombreCat", `/products/search?query=product`]} component={Catalogo} />
+      <Route path={"/products"} component={Catalogo} />
       <Route exact path="/about" />
       <Route exact path="/categories" />
-      <Route exact path={[`/products/:id`]} component={ProductDetails} />
+      <Route exact path={[`/product/:id`]} component={ProductDetails} />
     </React.Fragment>
   );
 }
