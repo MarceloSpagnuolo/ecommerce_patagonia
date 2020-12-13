@@ -1,6 +1,7 @@
 import React from "react";
 import Catalogo from "../src/Components/Catalogo/Catalogo.js";
 import Navegation from "../src/Components/Navegation/index";
+import Home from "../src/Components/Home/home"
 import { Route } from 'react-router-dom';
 import ProductDetails from "../src/Components/ProductDetails/index.js"
 import ComponentFormFather from "../src/Components/FormAdmin/ComponentFormFather"
@@ -16,6 +17,7 @@ function App() {
       <Route exact path="/categories" />
       <Route exact path="/cat" component={CategoryView} />
       <Route exact path={[`/product/:id`]} component={ProductDetails} />
+      <Route exact path="/" component={Home} />
     </React.Fragment>
   );
 }
