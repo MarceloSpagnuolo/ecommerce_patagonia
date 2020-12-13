@@ -9,16 +9,16 @@ import CategoryView from "../src/Components/CategoryForm/CategoryView"
 
 function App() {
   return (
-    <React.Fragment>
+    <>
       <Navegation />
-      <Route path={"/products"} component={Catalogo} />
+      <Route path="/products" component={Catalogo} />
       <Route exact path="/about" />
       <Route exact path="/admin" component={ComponentFormFather} />
       <Route exact path="/categories" />
       <Route exact path="/cat" component={CategoryView} />
       <Route exact path="/product/:id" component={ProductDetails} />
       <Route exact path="/" component={Home} />
-    </React.Fragment>
+    </>
   );
 }
 
