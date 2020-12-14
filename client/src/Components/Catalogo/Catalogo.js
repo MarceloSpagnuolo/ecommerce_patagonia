@@ -16,13 +16,23 @@ El código y la lógica funcionan bien, salvo por la falta de props en la parte 
 
 function Catalogo(props) {
   useEffect(() => {
-    if(props.history.location.pathname === "/products/search") {
-          } else {      props.getProducts();}
-    props.getCategories();
-    return function cleanup() { };
-  }, []);
+    var temp = props.history.location.pathname;
+    temp = temp.split("/");
 
-  console.log(props)
+
+    if (props.history.location.pathname === "/products") {
+      props.getProducts();
+    } if (props.history.location.pathname === `/products/categoria/${temp[3]}`) {
+      props.getProductByCategory(temp[3]);
+    }
+
+
+    
+
+
+    props.getCategories();
+    return function cleanup() {};
+  }, []);
 
   function handleClick(catName) {
     props.getProductByCategory(catName);
@@ -39,10 +49,8 @@ function Catalogo(props) {
         {props.categories &&
           props.categories.map((cat) => (
             <Link
-
-              className = "catalogoLink"
+              className="catalogoLink"
               to={`/products/categoria/${cat.name}`}
-
               onClick={() => handleClick(cat.name)}
             >
               <li className="Catalogo-Lista-Item">{cat.name}</li>
@@ -61,21 +69,20 @@ function Catalogo(props) {
       </div>
 
       <div id="Catalogo-ProductCard-Container">
-        {props.products && props.products.map((prod) => (
-          <div>
-
-            <Link className="catalogoLink" target="_blank" to={`/product/${prod.id}`}>
-
-              <ProductCard
-                /* id={prod.id} */
-                name={prod.name}
-                thumbnail={prod.thumbnail}
-                price={prod.price}
-                volume={prod.volume}
-              ></ProductCard>
-            </Link>
-          </div>
-        ))}
+        {props.products.length > 0 &&
+          props.products.map((prod) => (
+            <div>
+              <Link className="catalogoLink" to={`/product/${prod.id}`}>
+                <ProductCard
+                  /* id={prod.id} */
+                  name={prod.name}
+                  thumbnail={prod.thumbnail}
+                  price={prod.price}
+                  volume={prod.volume}
+                ></ProductCard>
+              </Link>
+            </div>
+          ))}
       </div>
     </div>
   );

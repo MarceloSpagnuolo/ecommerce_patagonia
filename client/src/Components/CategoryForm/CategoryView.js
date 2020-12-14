@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { getCategories } from "../../store/actions/index";
 
 const CategoryView = (props) => {
+    const [category, setCategories] = useState([]);
     const [display, setDisplay] = useState(false);
     const [cat, setCat] = useState();
     const [edit, setEdit] = useState(false)
@@ -12,6 +13,7 @@ const CategoryView = (props) => {
     useEffect(() => {
         //Axios backend listar
         props.getCategories()
+        setCategories(props.categories)
     }, [])
 
     const seteadora = (set, state) => {
