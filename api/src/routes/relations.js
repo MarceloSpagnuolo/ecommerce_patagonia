@@ -30,6 +30,12 @@ server.delete("/:idProducto/category/:idCategoria", async (req, res) => {
     !category && res.sendStatus(404);
 
     await product.removeCategory(category);
+    // const productJoinCategory = await Product.findOne(id,
+    //   {
+    //   include: {
+    //     Category,
+    //   }
+    // });
     res.sendStatus(200);
   } catch (e) {
     res.send(e).status(500);

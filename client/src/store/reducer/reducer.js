@@ -38,6 +38,9 @@ import {
   GET_ORDERS_STATUS,
   SEARCH_PRODUCT,
   GET_PRODUCT_BY_ID,
+  GET_PRODUCT_JOIN_CATEGORY,
+  POST_PRODUCT_JOIN_CATEGORY,
+  DELETE_PRODUCT_JOIN_CATEGORY,
 } from "../constants/constants";
 
 const inicialState = {
@@ -46,7 +49,6 @@ const inicialState = {
 };
 
 function ReducerProducts(state = inicialState, action) {
-  //console.log(action);
   switch (action.type) {
     /****************************** PRODUCTS **********************************/
     case GET_PRODUCTS:
@@ -70,6 +72,8 @@ function ReducerProducts(state = inicialState, action) {
       return {};
     case GET_USER_REVIEWS:
       return {};
+    case GET_PRODUCT_JOIN_CATEGORY:
+      return { ...state, products: action.payload }
     case ADD_CATEGORY_PRODUCT:
       return {};
     case ADD_PRODUCT:
@@ -105,13 +109,15 @@ function ReducerProducts(state = inicialState, action) {
     case DELETE_CATEGORY:
       return {
         ...state,
-        categories: state.categories.filter((category) => category.id !== action.payload)}
+        categories: state.categories.filter((category) => category.id !== action.payload)
+      }
     case DELETE_ORDER:
       return {};
     case DELETE_PRODUCT:
       return {
         ...state,
-        products: state.products.filter((product) => product.id !== action.payload)}
+        products: state.products.filter((product) => product.id !== action.payload)
+      }
     case DELETE_REVIEW:
       return {};
     case DELETE_USER:
@@ -161,6 +167,11 @@ function ReducerProducts(state = inicialState, action) {
       return {};
     case CHECKOUT_END:
       return {};
+    case POST_PRODUCT_JOIN_CATEGORY:
+      return { ...state, products: [...state.products, action.payload] };
+    case DELETE_PRODUCT_JOIN_CATEGORY:
+      console.log(action.payload, "VENGO DEL REDUCER")
+      return { ...state };
     default:
       return state
   }
