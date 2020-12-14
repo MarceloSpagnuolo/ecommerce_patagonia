@@ -1,6 +1,7 @@
 const { conn } = require("./src/db");
 
-conn.query(`
+const query = () =>
+  conn.query(`
 
 INSERT INTO products (name, appearance, description, price, stock, volume, thumbnail, "createdAt", "updatedAt")
 
@@ -19,17 +20,17 @@ VALUES ('Amber Lager', 'Color ambar, rojjos brillantes, espuma blanca.', 'Sabor 
 ('Kúne', 'Color bronce claro con espuma clara cremosa, de claridad brillante', 'Amargo suave con notas leves a caramelo de la malta.', 155, 20, '473 cc', 'https://www.bessaudiovideo.com/produtos_img/1/4/5/4/5/8/IMG_145458_1.JPG', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('Kúne', 'Color bronce claro con espuma clara cremosa, de claridad brillante', 'Amargo suave con notas leves a caramelo de la malta.', 130, 70, '355 cc', 'https://www.superseis.com.py/images/thumbs/0209226.jpeg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('Porter', 'Color marron oscuro espuma color canela persistente y cremosa', 'Tostado, con un amargo del lúpulo que acompaña para darle un ﬁnal seco.', 180, 70, '730 cc', 'https://d26lpennugtm8s.cloudfront.net/stores/861/458/products/335371-d5bb01fa338479e48115671048376584-640-0.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
-('Porter', 'Color marron oscuro espuma color canela persistente y cremosa', 'Tostado, con un amargo del lúpulo que acompaña para darle un ﬁnal seco.', 140, 60, '473 cc', '../images/nodisponible.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
-('Porter', 'Color marron oscuro espuma color canela persistente y cremosa', 'Tostado, con un amargo del lúpulo que acompaña para darle un ﬁnal seco.', 110, 50, '355 cc', '../images/nodisponible.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
+('Porter', 'Color marron oscuro espuma color canela persistente y cremosa', 'Tostado, con un amargo del lúpulo que acompaña para darle un ﬁnal seco.', 140, 60, '473 cc', 'http://localhost:3001/images/nodisponible.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
+('Porter', 'Color marron oscuro espuma color canela persistente y cremosa', 'Tostado, con un amargo del lúpulo que acompaña para darle un ﬁnal seco.', 110, 50, '355 cc', 'http://localhost:3001/images/nodisponible.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('Weisse', 'Color pajizo opalesente de espuma densa y cremosa', 'Muy refrescante, cítrico y cuerpo liviano.', 170, 50, '730 cc', 'https://emporiodacerveja.vteximg.com.br/arquivos/ids/173977-1000-1000/patagonia-weisse-nacional-740ml.jpg?v=636996792682870000', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('Weisse', 'Color pajizo opalesente de espuma densa y cremosa', 'Muy refrescante, cítrico y cuerpo liviano.', 130, 50, '473 cc', 'https://elmundodelasado.com/285-large_default/patagonia-weisse-lata-473ml.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('Weisse', 'Color pajizo opalesente de espuma densa y cremosa', 'Muy refrescante, cítrico y cuerpo liviano.', 100, 0, '355 cc', 'https://emporiodacerveja.vtexassets.com/arquivos/ids/176100-800-auto?width=800&height=auto&aspect=true', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
-('Fernandez IPA', 'Color cobrizo anaranjado levemente opalescente, de espuma consistente', 'Se percibe la frescura del lúpulo recién cosechado, con un amargo elegante y bien presente.', 200, 0, '730 cc', '../images/nodisponible.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
+('Fernandez IPA', 'Color cobrizo anaranjado levemente opalescente, de espuma consistente', 'Se percibe la frescura del lúpulo recién cosechado, con un amargo elegante y bien presente.', 200, 0, '730 cc', 'http://localhost:3001/images/nodisponible.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('Fernandez IPA', 'Color cobrizo anaranjado levemente opalescente, de espuma consistente', 'Se percibe la frescura del lúpulo recién cosechado, con un amargo elegante y bien presente.', 160, 5, '473 cc', 'https://cdn.shopify.com/s/files/1/1103/5152/products/Patagonia_IPA_Fernandez_1000_x_2048_grande.jpg?v=1556030993', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
-('Fernandez IPA', 'Color cobrizo anaranjado levemente opalescente, de espuma consistente', 'Se percibe la frescura del lúpulo recién cosechado, con un amargo elegante y bien presente.', 130, 0, '355 cc', '../images/nodisponible.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
+('Fernandez IPA', 'Color cobrizo anaranjado levemente opalescente, de espuma consistente', 'Se percibe la frescura del lúpulo recién cosechado, con un amargo elegante y bien presente.', 130, 0, '355 cc', 'http://localhost:3001/images/nodisponible.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('OCTUBREFEST', 'Color ambar cobrizo', 'Un sabor que parece empezar levemente dulce maltoso para terminar con un ﬁnal seco limpio.', 200, 5, '730 cc', 'https://www.clubcervecero.com.py/tienda/web/imagen.php?src=assets/images/productos/PATAGONIA-OCTUBREFEST-BOTELLA-730ML_jlu0ece6.jpg&x=632&y=948&r=0&c=1&v=1&e=1', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('OCTUBREFEST', 'Color ambar cobrizo', 'Un sabor que parece empezar levemente dulce maltoso para terminar con un ﬁnal seco limpio.', 160, 5, '473 cc', 'https://images-ti-vm1.tiendainglesa.com.uy/medium/P449301-1.jpg?20181207102259,Cerveza-PATAGONIA-Octubrefest-lata-473ml-en-Tienda-Inglesa', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
-('OCTUBREFEST', 'Color ambar cobrizo', 'Un sabor que parece empezar levemente dulce maltoso para terminar con un ﬁnal seco limpio.', 140, 0, '355 cc', '../images/nodisponible.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
+('OCTUBREFEST', 'Color ambar cobrizo', 'Un sabor que parece empezar levemente dulce maltoso para terminar con un ﬁnal seco limpio.', 140, 0, '355 cc', 'http://localhost:3001/images/nodisponible.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('Sendero Sur', 'Color dorado claro', 'Su amargo medio, pero presente equilibra la suave maltosidad de nuestra malta Pilsen orgánica con el ligero aroma cítrico y afrutado del lúpulo, que recuerda a la cáscara de pomelo. El maqui aporta un final ligeramente seco y ácido.', 130, 30, '473 cc', 'https://http2.mlstatic.com/D_NQ_NP_770719-MLA43699688782_102020-O.webp', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('Abraso De OSO', 'Color dorado profundo aspecto levemente opalescente, espuma blanca persistente', 'De sabores a cereal, grano, con un toque dulce por la miel. Refrescante, de cuerpo medio-liviano.', 120, 30, '473 cc', 'https://www.comprasparaguai.com.br/media/fotos/modelos/cerveja_patagonia_abrazo_de_oso_473ml_119781_550x550.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('VeraIPA', 'Dorado/anaranjado profundo espuma blanca persistente, y opalescencia caracteristica', 'Muy suave lupulado en hervor que le da un amargor bajo, con intenso de sabor cítrico y a frutas tropicales, gracias al agregado de lúpulos aromáticos en Dry Hopping. De cuerpo medio y muy refrescante.', 125, 20, '473 cc', 'https://www.boulevard-sa.com.ar/Site/img/products/patagonia/Patagonia-vera-ipa-473-L.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00');
@@ -106,6 +107,8 @@ VALUES ('2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1, 1),
 ('2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 29, 5);
 `);
 
+module.exports = { query };
+
 // INSERT INTO "users" ("firstName", "lastName", "password", "email", "shippingAdress", "isAdmin", "createdAt", "updatedAt")
 // VALUES ('Admin', 'Admin', '$2b$10$gXEMhz5MUjH4i3V9y8m1oOpYnxKAJbFLR/vKxRlDywjGg2T66VsPy', 'admin@admin.com', 'Administracion', true, '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 // ('Fer', 'Leiva', '$2b$10$x5GQPa0nSnJVMUoKgztYEe0NTLYknYJ5aL.7wFh/Xhk3xay03NU5y', 'efeleiva@gmail.com', 'Chaquito', true, '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00');
@@ -115,5 +118,3 @@ VALUES ('2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1, 1),
 // ('5', 'Lo amo mucho', 'Enamorada del libro', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 4, 3),
 // ('1', 'Horrible', 'Nunca mas compro aca', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 6, 5),
 // ('1', 'VIVA EL SEXO', 'Culo teta pito', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 6, 5);
-
-

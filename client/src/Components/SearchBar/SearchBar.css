@@ -1,0 +1,16 @@
+#inlineFormInputGroup{
+    border: 1px dotted #999;
+    border-radius: 0;
+
+    -webkit-appearance: none;
+}
+/* .search-button:hover {
+  outline   : none;
+  background: #000;
+  color   : #FFF;
+} */
+
+.d-flex {
+  display: flex;
+  margin-left: 50px;
+}

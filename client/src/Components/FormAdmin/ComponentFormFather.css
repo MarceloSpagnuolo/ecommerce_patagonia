@@ -1,0 +1,32 @@
+
+
+
+
+.prueba { 
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    
+    
+}
+.new{   
+    width: 70%;
+    margin-top: 20px;
+    margin-bottom: -15px;
+    height: height;
+    padding: 8px;
+    font-size: 0.8rem;
+    font-weight: 900;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 0 0 1px inset rgba(white, 0.3);
+    position: relative;
+    box-shadow: 0 0 0 1px 
+}
+
+.new:hover{
+    color: white;
+    background-color: brown;
+}

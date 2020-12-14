@@ -18,13 +18,34 @@
 
 #ProductCard-Img-Container {
   margin-left: 50px;
-  margin-right: 125px;
-  margin-bottom: 20px;
+  /* margin-right: 125px; */
+  margin: 20px;
 }
 
-.ProductCard-Container {
+.ProductCard-Props {
   padding-left: 10px;
   display: flex;
   flex-direction: column;
   flex-basis: 100%;
+  justify-content: left;
+}
+
+#ProductCard-Container {
+  display: flex;
+  /* background-color: white; */
+  padding: 20px 0px 10px 0px;
+  margin: 20px 10px 0px 10px;
+  height: 100px;
+  width: 350px;
+  align-items: center;
+  justify-items: self-start;
+  box-shadow: 10px 10px 10px black;
+  border: solid 1px rgb(202, 204, 199);
+  border-radius: 10px;
+}
+
+#ProductCard-Container:hover {
+  transform: scale(1.03) translate(5px, 5px);
+  background-color:  rgb(238, 211, 162);
+  transition: all 0.5s;
 }

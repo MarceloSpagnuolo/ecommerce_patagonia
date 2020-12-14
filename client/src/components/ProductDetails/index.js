@@ -1,86 +1,91 @@
-import React, { Fragment } from "react";
-import { useState } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-
+import React from "react";
+import { useState, useEffect } from "react";
 import "./style.css";
+import { connect } from "react-redux";
+import { getProductById } from '../../store/actions/index.js';
+import { useHistory } from "react-router-dom";
 
-//import findCurrentItem from
+const Product = (props) => {
+  const [count, setCount] = useState(1);
+  const history = useHistory();
 
-const Product = ({ titulo, descripcion, referencia, precio, cantidad }) => {
-  const [count, setCount] = useState(0);
+  useEffect(() => {
+    props.match.params.id && props.getProductById(props.match.params.id)
+    return function cleanup() { };
+  }, []);
 
-  var sumar = function () {
-    setCount(count + 1);
-  };
-  var restar = function () {
-    if (count > 0) return setCount(count - 1);
-  };
 
-  var handleclick = function () {};
-
-  //const { id } = match.params;
-  const image =
-    "https://www.thegourmetjournal.com/wp-content/uploads/2020/08/Cerveza.jpg";
   return (
-    <Fragment>
+    <>
       <div className="contenido">
-        <div>
-          <h3 className="Texto">{`Product Name Here` || `${titulo}`}</h3>
+        <h3 id="Product-Name">{props.products.name || "Product Name"}</h3>
 
-            <div id="img-container">
-            <img
-            className="item-image"
-            src={image}
-          />
-            </div>
-          
-          {/* <img src="linkdel.com" className="item-image"></img> */}
+        <img
+          className="item-image"
+          src={props.products.thumbnail} alt="Imagen Aquí">
+          {/*   src="https://image.shutterstock.com/image-vector/image-not-found-grayscale-photo-600w-1737334631.jpg"
+           alt="Imagen Aquí" */}
+        </img>
 
-          <p className="Texto">{`description Here` || `${descripcion}`}</p>
+        <p id="Description">{props.products.description || "Product Description"}</p>
 
-          <h5 className="Texto">{`Precio Aca` || `${precio}`}</h5>
+        <div id="Precio-Container">
+          <h5 id="Precio">Total: ${props.products.price * count}</h5>
+          <h5 id="Precio">Precio Unitario: ${props.products.price}</h5>
+        </div>
 
-          <div className="SubContainer">
-            <button className="button">Agregar al carrito</button>
-            <div>Unidades
-              <button
-                className="button"
-                onClick={() => {
-                  restar();
-                }}
-              >
-                -
-              </button>
-              {count}
+        <div className="SubContainer">
+          <button className="productDetail-button" id="productDetailCarrito">Agregar al carrito</button>
 
-              <button
-                className="button"
-                onClick={() => {
-                  sumar();
-                }}
-              >
-                +
-              </button>
+          <button
+            className="productDetail-button"
+            id="Sumar-Restar"
+            onClick={() => {
+              count > 1 && setCount(count - 1);
+            }}
+          >
+            -
+            </button>
 
-                                
-              </div>
-              <Link exact to={"/"}>
-              <button
-                className="button2"
-                type="button"
-                // color="primary"
-                onClick={() => handleclick}
-              >
-                Back
-              </button>
-              </Link>
-            </div>
-          
+
+          <span>Cantidad: {count}</span>
+
+
+          <button
+            className="productDetail-button"
+            id="Sumar-Restar"
+            onClick={() => {
+              setCount(count + 1);
+            }}
+          >
+            +
+            </button>
+
+          <button
+            className="productDetail-button"
+            type="button"
+            color="primary"
+            onClick={() => history.goBack()}
+          >
+            Volver
+          </button>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 };
 
-export default connect(null, null)(Product);
+function mapStateToProps(state) {
+  return {
+    products: state.products,
+    categories: state.categories,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getProductById: (id) => dispatch(getProductById(id)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product);
