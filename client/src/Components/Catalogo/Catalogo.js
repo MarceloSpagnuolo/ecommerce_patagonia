@@ -20,6 +20,7 @@ function Catalogo(props) {
     var temp = props.history.location.pathname;
     temp = temp.split("/");
 
+
     if (props.history.location.pathname === "/products") {
       props.getProducts();
     } 
@@ -31,8 +32,6 @@ function Catalogo(props) {
     props.getCategories();
     return function cleanup() {};
   }, []);
-
-  console.log(props)
 
   function handleClick(catName) {
     props.getProductByCategory(catName);
@@ -49,7 +48,9 @@ function Catalogo(props) {
         {props.categories &&
           props.categories.map((cat) => (
             <Link
+
               className = "catalogo-Link"
+
               to={`/products/categoria/${cat.name}`}
               onClick={() => handleClick(cat.name)}
             >
@@ -69,6 +70,7 @@ function Catalogo(props) {
       </div>
 
       <div id="Catalogo-ProductCard-Container">
+
         {props.products.length > 0 && props.products.map((prod) => (
           <div>
 
@@ -85,6 +87,7 @@ function Catalogo(props) {
             </Link>
           </div>
         ))}
+
       </div>
     </div>
   );
