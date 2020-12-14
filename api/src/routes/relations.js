@@ -7,13 +7,19 @@ server.post("/:idProducto/category/:idCategoria", async (req, res) => {
     const { idProducto, idCategoria } = req.params;
 
     const product = await Product.findByPk(idProducto);
+    console.log(product, "SOY EL PRODUCTO DEL BACK")
     !product && res.sendStatus(404);
 
     const category = await Category.findByPk(idCategoria);
     !category && res.sendStatus(404);
 
     await product.addCategory(category);
-    res.send(product).status(200);
+    const products = await Product.findAll({
+      include: {
+        model: Category
+      }
+    })
+    res.json(products);
   } catch (e) {
     res.send(e).status(500);
   }
@@ -30,13 +36,13 @@ server.delete("/:idProducto/category/:idCategoria", async (req, res) => {
     !category && res.sendStatus(404);
 
     await product.removeCategory(category);
-    // const productJoinCategory = await Product.findOne(id,
-    //   {
-    //   include: {
-    //     Category,
-    //   }
-    // });
-    res.sendStatus(200);
+
+    const products = await Product.findAll({
+      include: {
+        model: Category
+      }
+    })
+    res.json(products);
   } catch (e) {
     res.send(e).status(500);
   }

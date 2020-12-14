@@ -148,9 +148,6 @@ function ReducerProducts(state = inicialState, action) {
           }
         })
       }
-    // {...state,
-    // products:  state.products.id === action.payload.id ? 
-    // state.products.map(action.payload) : state
     case CREATE_ORDER:
       return {};
     case CREATE_USER:
@@ -168,10 +165,9 @@ function ReducerProducts(state = inicialState, action) {
     case CHECKOUT_END:
       return {};
     case POST_PRODUCT_JOIN_CATEGORY:
-      return { ...state, products: [...state.products, action.payload] };
+      return { ...state, products: action.payload };
     case DELETE_PRODUCT_JOIN_CATEGORY:
-      console.log(action.payload, "VENGO DEL REDUCER")
-      return { ...state };
+      return { ...state, products: action.payload }
     default:
       return state
   }
