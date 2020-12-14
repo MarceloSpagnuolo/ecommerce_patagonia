@@ -15,6 +15,7 @@ pero por ahora no quiero renegar mucho más, ya que no tengo idea cuantas catego
 El código y la lógica funcionan bien, salvo por la falta de props en la parte de categorías.*/
 
 function Catalogo(props) {
+  
   useEffect(() => {
     var temp = props.history.location.pathname;
     temp = temp.split("/");
@@ -22,13 +23,11 @@ function Catalogo(props) {
 
     if (props.history.location.pathname === "/products") {
       props.getProducts();
-    } if (props.history.location.pathname === `/products/categoria/${temp[3]}`) {
+    } 
+    
+    if (props.history.location.pathname === `/products/categoria/${temp[3]}`) {
       props.getProductByCategory(temp[3]);
     }
-
-
-    
-
 
     props.getCategories();
     return function cleanup() {};
@@ -49,7 +48,9 @@ function Catalogo(props) {
         {props.categories &&
           props.categories.map((cat) => (
             <Link
-              className="catalogoLink"
+
+              className = "catalogo-Link"
+
               to={`/products/categoria/${cat.name}`}
               onClick={() => handleClick(cat.name)}
             >
@@ -63,26 +64,30 @@ function Catalogo(props) {
         <li className="Catalogo-Lista-Item">Category</li> */}
         <Link to="/products">
           <button onClick={() => handleClickAll()} className="Catalogo-btn">
-            Browse All
+            Ver Todos
           </button>
         </Link>
       </div>
 
       <div id="Catalogo-ProductCard-Container">
-        {props.products.length > 0 &&
-          props.products.map((prod) => (
-            <div>
-              <Link className="catalogoLink" to={`/product/${prod.id}`}>
-                <ProductCard
-                  /* id={prod.id} */
-                  name={prod.name}
-                  thumbnail={prod.thumbnail}
-                  price={prod.price}
-                  volume={prod.volume}
-                ></ProductCard>
-              </Link>
-            </div>
-          ))}
+
+        {props.products.length > 0 && props.products.map((prod) => (
+          <div>
+
+            <Link className="catalogo-Link" to={`/product/${prod.id}`}>
+
+              <ProductCard
+                /* id={prod.id} */
+                name={prod.name}
+                thumbnail={prod.thumbnail}
+                price={prod.price}
+                volume={prod.volume}
+              ></ProductCard>
+
+            </Link>
+          </div>
+        ))}
+
       </div>
     </div>
   );
