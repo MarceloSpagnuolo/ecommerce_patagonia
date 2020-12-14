@@ -13,10 +13,10 @@ server.get("/search", async (req, res) => {
     where: {
       [Op.or]: [
         {
-          description: { [Op.like]: "%" + query + "%" },
+          description: { [Op.iLike]: "%" + query + "%" },
         },
         {
-          name: { [Op.like]: "%" + query + "%" },
+          name: { [Op.iLike]: "%" + query + "%" },
         },
       ],
     },

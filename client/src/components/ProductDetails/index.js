@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 import "./style.css";
 import { connect } from "react-redux";
 import { getProductById } from '../../store/actions/index.js';
+import { useHistory } from "react-router-dom";
 
 const Product = (props) => {
   const [count, setCount] = useState(1);
+  const history = useHistory();
 
   useEffect(() => {
     props.match.params.id && props.getProductById(props.match.params.id)
@@ -33,10 +35,10 @@ const Product = (props) => {
         </div>
 
         <div className="SubContainer">
-          <button className="button">Agregar al carrito</button>
+          <button className="productDetail-button" id="productDetailCarrito">Agregar al carrito</button>
 
           <button
-            className="button"
+            className="productDetail-button"
             id="Sumar-Restar"
             onClick={() => {
               count > 1 && setCount(count - 1);
@@ -50,7 +52,7 @@ const Product = (props) => {
 
 
           <button
-            className="button"
+            className="productDetail-button"
             id="Sumar-Restar"
             onClick={() => {
               setCount(count + 1);
@@ -60,12 +62,12 @@ const Product = (props) => {
             </button>
 
           <button
-            className="button"
+            className="productDetail-button"
             type="button"
             color="primary"
-            onClick={() => window.close()}
+            onClick={() => history.goBack()}
           >
-            Close
+            Volver
           </button>
         </div>
       </div>

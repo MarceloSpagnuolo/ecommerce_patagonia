@@ -4,12 +4,11 @@
 
     -webkit-appearance: none;
 }
-.button:hover,
-button:focus {
+/* .search-button:hover {
   outline   : none;
   background: #000;
   color   : #FFF;
-}
+} */
 
 .d-flex {
   display: flex;

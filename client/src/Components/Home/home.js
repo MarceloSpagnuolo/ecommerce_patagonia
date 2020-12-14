@@ -4,7 +4,7 @@ import "./home.css";
 function Home() {
   return (
     <div>
-      <img className="home-imagen" src="http://www.limbos.org/wp-content/uploads/2019/08/7-datos-curiosos-sobre-la-patagonia-monta%C3%B1a.jpg" />
+      <img className="home-imagen" src="https://i.pinimg.com/originals/9e/8b/66/9e8b66b9bcc4b6619fc51917ad14ca54.jpg" />
       <div className="home-manifiesto">
         <div className="home-titulo">NUESTRO MANIFIESTO</div>
         <div className="home-texto">

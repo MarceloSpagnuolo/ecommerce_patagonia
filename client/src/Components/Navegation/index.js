@@ -11,7 +11,7 @@ const Home = () => (
     <div className="segundo">
       <h1 className="titleEcom">Ecommerce Patagonia</h1>
       <nav className="navegacion">
-        <Link className="btnMenu" to="/">Home </Link>
+        <Link className="btnMenu" to="/">Inicio </Link>
         <Link className="btnMenu" to="/categories">Categorias </Link>
         <Link className="btnMenu" to="/products">Productos </Link>
         <Link className="btnMenu" to="/contact">Contáctenos </Link>

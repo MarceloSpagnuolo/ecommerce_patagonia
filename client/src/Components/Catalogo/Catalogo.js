@@ -15,11 +15,21 @@ pero por ahora no quiero renegar mucho más, ya que no tengo idea cuantas catego
 El código y la lógica funcionan bien, salvo por la falta de props en la parte de categorías.*/
 
 function Catalogo(props) {
+  
   useEffect(() => {
-    if(props.history.location.pathname === "/products/search") {
-          } else {      props.getProducts();}
+    var temp = props.history.location.pathname;
+    temp = temp.split("/");
+
+    if (props.history.location.pathname === "/products") {
+      props.getProducts();
+    } 
+    
+    if (props.history.location.pathname === `/products/categoria/${temp[3]}`) {
+      props.getProductByCategory(temp[3]);
+    }
+
     props.getCategories();
-    return function cleanup() { };
+    return function cleanup() {};
   }, []);
 
   console.log(props)
@@ -39,10 +49,8 @@ function Catalogo(props) {
         {props.categories &&
           props.categories.map((cat) => (
             <Link
-
-              className = "catalogoLink"
+              className = "catalogo-Link"
               to={`/products/categoria/${cat.name}`}
-
               onClick={() => handleClick(cat.name)}
             >
               <li className="Catalogo-Lista-Item">{cat.name}</li>
@@ -55,16 +63,16 @@ function Catalogo(props) {
         <li className="Catalogo-Lista-Item">Category</li> */}
         <Link to="/products">
           <button onClick={() => handleClickAll()} className="Catalogo-btn">
-            Browse All
+            Ver Todos
           </button>
         </Link>
       </div>
 
       <div id="Catalogo-ProductCard-Container">
-        {props.products && props.products.map((prod) => (
+        {props.products.length > 0 && props.products.map((prod) => (
           <div>
 
-            <Link className="catalogoLink" target="_blank" to={`/product/${prod.id}`}>
+            <Link className="catalogo-Link" to={`/product/${prod.id}`}>
 
               <ProductCard
                 /* id={prod.id} */
@@ -73,6 +81,7 @@ function Catalogo(props) {
                 price={prod.price}
                 volume={prod.volume}
               ></ProductCard>
+
             </Link>
           </div>
         ))}

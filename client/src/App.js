@@ -13,11 +13,11 @@ function App() {
     <>
       <Navegation />
       <Route path="/products" component={Catalogo} />
-      <Route path="/rs" component={Relationship} />
+      <Route path="/admin/relations" component={Relationship} />
       <Route exact path="/about" />
-      <Route exact path="/admin" component={ComponentFormFather} />
+      <Route exact path="/admin/products" component={ComponentFormFather} />
       <Route exact path="/categories" />
-      <Route exact path="/cat" component={CategoryView} />
+      <Route exact path="/admin/categories" component={CategoryView} />
       <Route exact path="/product/:id" component={ProductDetails} />
       <Route exact path="/" component={Home} />
     </>

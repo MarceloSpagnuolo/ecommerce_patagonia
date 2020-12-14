@@ -7,7 +7,8 @@
   font-size: 25px;
   font-family: "Lucida Console", "Courier New", monospace;
   padding: 5px;
-  border: solid blue 3px;
+  border: solid rgb(221, 235, 194) 3px;
+  border-radius: 10px;
 }
 
 .Catalogo-Lista-Item {
@@ -20,16 +21,28 @@
   margin-top: 10px;
 }
 
+.Catalogo-Lista-Item:hover {
+  transition: all 0.8s;
+  background-color: rgb(238, 211, 162) ;
+  border-radius: 10px;
+}
+
 .Catalogo-btn {
-  background-color: DimGrey;
+  background-color: goldenrod;
   font-size: medium;
   margin-top: 100px;
   border: none;
-  color: LightGray;
+  color: black;
   font-weight: 200;
   padding: 15px 32px;
   margin-left: 20px;
   cursor: pointer;
+  border-radius: 10px;
+}
+
+.Catalogo-btn:hover {
+  transition: all 0.3s;
+  box-shadow: 3px 3px 10px black;
 }
 
 #Catalogo-Lista-Container {
@@ -50,13 +63,8 @@
   background: linear-gradient(to left, white, rgb(242, 248, 224));
 }
 
-.catalogoLink {
+.catalogo-Link {
   color: black;
   text-decoration: none;
 }
 
-.catalogoLink:hover {
-  background-color:lightcoral ;
-  transition: all 0.8s;
-  border-radius: 10px;
-}
