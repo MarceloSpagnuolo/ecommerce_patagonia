@@ -6,8 +6,6 @@ import {
     MODIFY_PRODUCT,
     ADD_PRODUCT,
     DELETE_PRODUCT,
-    ADD_CATEGORY_PRODUCT,
-    REMOVE_CATEGORY_PRODUCT,
     ADD_CATEGORY,
     GET_CATEGORIES,
     MODIFY_CATEGORY,
@@ -125,7 +123,7 @@ export const getCategories = () => async dispatch => {
         dispatch(
             {
                 type: ERROR_MESSAGE,
-                message: "Error al mostrar productos"
+                message: "Error al mostrar categorías"
             }
         )
 
@@ -144,7 +142,7 @@ export const addCategory = (payload) => async (dispatch) => {
     } catch (e) {
         dispatch({
             type: ERROR_MESSAGE,
-            message: 'Error al añadir producto'
+            message: 'Error al añadir categoría'
         })
 
     }
@@ -162,7 +160,7 @@ export const updateCategory = (id, category) => async (dispatch) => {
     } catch (e) {
         dispatch({
             type: ERROR_MESSAGE,
-            message: 'Error al actualizar producto'
+            message: 'Error al actualizar una categoría'
         })
     }
 }
@@ -180,7 +178,7 @@ export const deleteCategory = (id) => async (dispatch) => {
     } catch (e) {
         dispatch({
             type: ERROR_MESSAGE,
-            message: 'Error al eliminar el producto'
+            message: 'Error al eliminar la categoría'
         })
     }
 }
@@ -196,7 +194,7 @@ export const getProductByCategory = (catName) => async dispatch => {
     } catch (e) {
         dispatch({
             type: ERROR_MESSAGE,
-            message: "Error al encontrar categoría"
+            message: "Error al encontrar los productos"
         })
     }
 }

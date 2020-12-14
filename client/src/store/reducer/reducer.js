@@ -6,8 +6,6 @@ import {
   ERROR_MESSAGE,
   ADD_PRODUCT,
   DELETE_PRODUCT,
-  ADD_CATEGORY_PRODUCT,
-  REMOVE_CATEGORY_PRODUCT,
   GET_PRODUCTS,
   MODIFY_PRODUCT,
   GET_PRODUCTS_BY_CATEGORY,
@@ -41,6 +39,8 @@ import {
   GET_PRODUCT_JOIN_CATEGORY,
   POST_PRODUCT_JOIN_CATEGORY,
   DELETE_PRODUCT_JOIN_CATEGORY,
+  ADD_CATEGORY_PRODUCT,
+  REMOVE_CATEGORY_PRODUCT,
 } from "../constants/constants";
 
 const inicialState = {
@@ -153,7 +153,8 @@ function ReducerProducts(state = inicialState, action) {
     case CREATE_USER:
       return {};
     case ERROR_MESSAGE:
-      return alert(action.message);
+      alert(action.message);
+      return {...state}
     case LOGOUT:
       return {};
     case LOGIN:

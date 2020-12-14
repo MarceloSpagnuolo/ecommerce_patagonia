@@ -6,6 +6,13 @@ import './Table.css'
 // beers, removeBeers, seteadora, estados, onUpdate,
 const Table = (props) => {
 
+    function handleClick(cat) {
+
+        var result = window.confirm("Want to delete?");
+        if (result) {
+          props.deleteCategory(cat.id);
+        }
+      }
 
     const handleOnUpdate = useCallback(async (category) => {
         // La llamada a Axios        
@@ -35,7 +42,7 @@ const Table = (props) => {
                                 <td>{c.name}</td>
                                 <td>{c.description}</td>
                                 <td><button className="edit" onClick={() => { props.seteadora(props.estados[1], props.estados[0]); handleOnUpdate(c); }}>edit</button></td>
-                                <td><button className="x" onClick={() => { props.deleteCategory(c.id); }}>x</button></td>
+                                <td><button className="x" onClick={() => handleClick(c)}>x</button></td>
                             </tr>
                         ))
                         }
