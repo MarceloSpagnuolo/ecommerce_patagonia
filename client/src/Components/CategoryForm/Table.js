@@ -30,7 +30,7 @@ const Table = (props) => {
                             <th></th>
                         </tr>
                         {props.categories.map((c) => (
-                            <tr key={c.id} p={console.log(c)}>
+                            <tr key={c.id} >
                                 <td>{c.id}</td>
                                 <td>{c.name}</td>
                                 <td>{c.description}</td>
