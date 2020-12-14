@@ -15,6 +15,9 @@ import {
     GET_PRODUCTS_BY_CATEGORY,
     SEARCH_PRODUCT,
     GET_PRODUCT_BY_ID,
+    GET_PRODUCT_JOIN_CATEGORY,
+    POST_PRODUCT_JOIN_CATEGORY,
+    DELETE_PRODUCT_JOIN_CATEGORY,
 } from '../constants/constants.js';
 
 const url = 'http://localhost:3001/';
@@ -135,7 +138,7 @@ export const addCategory = (payload) => async (dispatch) => {
         const res = await axios.post(`${url}categories/`, payload)
         dispatch({
             type: ADD_CATEGORY,
-            payload: res.data
+            payload: res.data[0]
         })
 
     } catch (e) {
@@ -237,6 +240,68 @@ export const getProductById = (id) => async dispatch => {
             {
                 type: ERROR_MESSAGE,
                 message: "Ese id no existe"
+            }
+        )
+    }
+}
+
+// Trae todos los productos con sus respectivas categorias
+export const getProductJoinCategory = () => async dispatch => {
+    try {
+        const res = await axios.get(`${url}products/?include="categories"`)
+        dispatch(
+            {
+                type: GET_PRODUCT_JOIN_CATEGORY,
+                payload: res.data
+            }
+        )
+    } catch (e) {
+        dispatch(
+            {
+                type: ERROR_MESSAGE,
+                message: "Problemas al encontrar los productos con sus categorias"
+            }
+        )
+    }
+}
+
+
+// Agrega una categoria a un producto
+export const postProductJoinCategory = (idProd, idCat) => async dispatch => {
+    try {
+        const res = await axios.post(`${url}relations/${idProd}/category/${idCat}`)
+        dispatch(
+            {
+                type: POST_PRODUCT_JOIN_CATEGORY,
+                payload: res.data
+            }
+        )
+    } catch (e) {
+        dispatch(
+            {
+                type: ERROR_MESSAGE,
+                message: "Problemas al agregar categoria a un producto"
+            }
+        )
+    }
+}
+
+// Elimina una categoria a un producto
+export const deleteProductJoinCategory = (idProd, idCat) => async dispatch => {
+    try {
+        const res = await axios.delete(`${url}relations/${idProd}/category/${idCat}`)
+        console.log(res.data, "VENGO DEL ACTIONS")
+        dispatch(
+            {
+                type: DELETE_PRODUCT_JOIN_CATEGORY,
+                payload: res.data
+            }
+        )
+    } catch (e) {
+        dispatch(
+            {
+                type: ERROR_MESSAGE,
+                message: "Problemas al eliminar categoria de un producto"
             }
         )
     }
