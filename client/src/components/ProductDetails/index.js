@@ -26,6 +26,7 @@ const Product = (props) => {
           {/*   src="https://image.shutterstock.com/image-vector/image-not-found-grayscale-photo-600w-1737334631.jpg"
            alt="Imagen Aquí" */}
         </img>
+        {props.products.stock === 0 && (<h3 id="ProductDetail-NoDisponible">No disponible</h3>)}
 
         <p id="Description">{props.products.description || "Product Description"}</p>
 
@@ -39,7 +40,8 @@ const Product = (props) => {
             className={props.products.stock > 0 ? "productDetail-button" : "productDetail-button-disable"} 
             disabled={!(props.stock > 0)}>Agregar al carrito</button>
           <button
-            className="productDetail-button"
+            className={props.products.stock > 0 ? "productDetail-button" : "productDetail-button-disable"}
+            disabled={!(props.stock > 0)}
             id="Sumar-Restar"
             onClick={() => {
               count > 1 && setCount(count - 1);
@@ -53,8 +55,9 @@ const Product = (props) => {
 
 
           <button
-            className="productDetail-button"
+            className={props.products.stock > 0 ? "productDetail-button" : "productDetail-button-disable"}
             id="Sumar-Restar"
+            disabled={!(props.stock > 0)}
             onClick={() => {
               setCount(count + 1);
             }}
