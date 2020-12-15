@@ -35,8 +35,9 @@ const Product = (props) => {
         </div>
 
         <div className="SubContainer">
-          <button className="productDetail-button" id="productDetailCarrito">Agregar al carrito</button>
-
+          <button 
+            className={props.products.stock > 0 ? "productDetail-button" : "productDetail-button-disable"} 
+            disabled={!(props.stock > 0)}>Agregar al carrito</button>
           <button
             className="productDetail-button"
             id="Sumar-Restar"

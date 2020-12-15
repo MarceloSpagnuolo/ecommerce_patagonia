@@ -98,3 +98,18 @@
   background-color: rgb(81, 195, 81);
   box-shadow: 3px 3px 10px black;
 }
+
+.productDetail-button-disable {
+  width: 10%;
+  justify-content: center;
+  align-items: center;
+  background-color: gray;
+  font-size: medium;
+  border: none;
+  color: black;
+  font-weight: 600;
+  cursor: pointer;
+  height: 38px;
+  border-radius: 7px;
+  outline: none;
+}
