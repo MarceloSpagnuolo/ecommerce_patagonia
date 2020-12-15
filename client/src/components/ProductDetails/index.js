@@ -14,7 +14,6 @@ const Product = (props) => {
     return function cleanup() { };
   }, []);
 
-
   return (
     <>
       <div className="contenido">
@@ -38,10 +37,10 @@ const Product = (props) => {
         <div className="SubContainer">
           <button 
             className={props.products.stock > 0 ? "productDetail-button" : "productDetail-button-disable"} 
-            disabled={!(props.stock > 0)}>Agregar al carrito</button>
+            disabled={props.products.stock === 0}>Agregar al carrito</button>
           <button
             className={props.products.stock > 0 ? "productDetail-button" : "productDetail-button-disable"}
-            disabled={!(props.stock > 0)}
+            disabled={props.products.stock === 0}
             id="Sumar-Restar"
             onClick={() => {
               count > 1 && setCount(count - 1);
@@ -57,7 +56,7 @@ const Product = (props) => {
           <button
             className={props.products.stock > 0 ? "productDetail-button" : "productDetail-button-disable"}
             id="Sumar-Restar"
-            disabled={!(props.stock > 0)}
+            disabled={props.products.stock === 0}
             onClick={() => {
               setCount(count + 1);
             }}

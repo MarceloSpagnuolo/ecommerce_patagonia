@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ProductCard from "../ProductCard/ProductCard.js";
 import "./Catalogo.css";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import {
   getProducts,
   getCategories,
@@ -15,14 +15,17 @@ pero por ahora no quiero renegar mucho más, ya que no tengo idea cuantas catego
 El código y la lógica funcionan bien, salvo por la falta de props en la parte de categorías.*/
 
 function Catalogo(props) {
-  
+    const dispatch = useDispatch()
+    const { categories } = useSelector(state => state)
+
   useEffect(() => {
     var temp = props.history.location.pathname;
     temp = temp.split("/");
 
 
     if (props.history.location.pathname === "/products") {
-      props.getProducts();
+      /* props.getProducts(); */
+      dispatch(getProducts())
     } 
     
     if (props.history.location.pathname === `/products/categoria/${temp[3]}`) {
@@ -45,8 +48,8 @@ function Catalogo(props) {
     <div id="Catalogo-Container">
       <div id="Catalogo-Lista-Container">
         <lu id="Catalogo-Lista">Categorias</lu>
-        {props.categories &&
-          props.categories.map((cat) => (
+        {categories &&
+          categories.map((cat) => (
             <Link
 
               className = "catalogo-Link"
