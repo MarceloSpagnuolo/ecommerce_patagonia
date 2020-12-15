@@ -15,7 +15,7 @@ export default function ProductCard(props) {
       </div>
       <div className="ProductCard-Props">
         <h3 id="ProductName">{props.name}</h3>
-        {props.stock === 0 && (<h4 id="ProductCart-NoDisponible">No disponible</h4>)}
+        {props.stock === 0 && (<h4 id="ProductCart-NoDisponible">No Disponible</h4>)}
         <span>{props.volume}</span>
         <h5 id="ProductPrecio">${props.price}</h5>
       </div>

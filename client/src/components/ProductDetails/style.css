@@ -7,7 +7,6 @@
   margin-top: 50px;
   border-radius: 25px;
   background: linear-gradient(to left, white, rgb(242, 248, 224));
-  
 }
 
 #Product-Name {
@@ -112,4 +111,13 @@
   height: 38px;
   border-radius: 7px;
   outline: none;
+}
+
+#ProductDetail-NoDisponible {
+  display: flex;
+  color: white;
+  background-color: red;
+  width: 251px;
+  justify-content: center;
+  margin: 0 auto -5px auto;
 }

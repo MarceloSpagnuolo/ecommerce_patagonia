@@ -62,5 +62,5 @@
   background-color: red;
   color: white;
   padding: 0 20px 0 20px;
-  background: linear-gradient(-45deg, red 90%, rgba(255, 255, 255, 0) 10%); 
+  background: linear-gradient(-45deg, red 90%, transparent 10%); 
 }
