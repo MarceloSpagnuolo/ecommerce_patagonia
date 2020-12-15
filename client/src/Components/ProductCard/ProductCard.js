@@ -7,17 +7,15 @@ por lo cual no debería traer mayores problemas a la hora de adaptarlo con las p
 de la database */
 
 export default function ProductCard(props) {
+  console.log(props.name, props.stock);
   return (
     <div id="ProductCard-Container">
       <div id="ProductCard-Img-Container">
-        {/* <Link target="_blank" to={`/products/${props.id}`}> */}
         <img id="ProductCard-Img" src={props.thumbnail} alt="Imagen aquí"></img>
-        {/*  </Link> */}
       </div>
       <div className="ProductCard-Props">
-        {/* <Link target="_blank" to={`/products/${props.id}`}> */}
         <h3 id="ProductName">{props.name}</h3>
-        {/* </Link> */}
+        {props.stock === 0 && (<h4 id="ProductCart-NoDisponible">No disponible</h4>)}
         <span>{props.volume}</span>
         <h5 id="ProductPrecio">${props.price}</h5>
       </div>

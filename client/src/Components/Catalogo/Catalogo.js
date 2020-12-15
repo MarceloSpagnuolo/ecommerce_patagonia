@@ -80,6 +80,7 @@ function Catalogo(props) {
                 /* id={prod.id} */
                 name={prod.name}
                 thumbnail={prod.thumbnail}
+                stock={prod.stock}
                 price={prod.price}
                 volume={prod.volume}
               ></ProductCard>

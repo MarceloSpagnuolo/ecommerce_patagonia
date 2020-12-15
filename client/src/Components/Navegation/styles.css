@@ -8,6 +8,7 @@
     position:sticky;
     top: 0; 
     border-bottom: solid 3px lightcoral;
+    z-index: 2;
 }
 
 @keyframes Logo {from{transform: rotateY(0deg)} to {transform: rotateY(360deg)}}
