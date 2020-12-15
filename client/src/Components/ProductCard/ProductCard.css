@@ -64,3 +64,33 @@
   padding: 0 20px 0 20px;
   background: linear-gradient(-45deg, red 90%, transparent 10%); 
 }
+
+#ProductCard-btnAddCarr {
+  display:inline;
+  width:60px;
+  background-color: goldenrod;
+  margin-right: 10px;
+  padding-left: 10px;
+  color: white;
+  border-radius: 5px;
+}
+
+#ProductCard-btnAddCarr:hover {
+  box-shadow: 3px 3px 10px black;
+}
+
+#ProductCard-btnContainer {
+  display: flex;
+  align-items:flex-start;
+  justify-content: space-between;
+}
+
+#ProductCard-btnAddCarr-Disabled {
+  display:inline;
+  width:60px;
+  background-color: lightgray;
+  margin-right: 10px;
+  padding-left: 10px;
+  color: gray;
+  border-radius: 5px;
+}

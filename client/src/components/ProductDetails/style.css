@@ -102,10 +102,10 @@
   width: 10%;
   justify-content: center;
   align-items: center;
-  background-color: gray;
+  background-color: lightgray;
   font-size: medium;
   border: none;
-  color: black;
+  color: gray;
   font-weight: 600;
   cursor: pointer;
   height: 38px;
