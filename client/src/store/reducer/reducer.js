@@ -41,11 +41,15 @@ import {
   DELETE_PRODUCT_JOIN_CATEGORY,
   ADD_CATEGORY_PRODUCT,
   REMOVE_CATEGORY_PRODUCT,
+  GET_CART_BY_IDUSER,
+  POST_CREATE_CART
 } from "../constants/constants";
 
 const inicialState = {
   products: [],
   categories: [],
+  idUserCurrent: null,
+  order: [],
 };
 
 function ReducerProducts(state = inicialState, action) {
@@ -68,6 +72,8 @@ function ReducerProducts(state = inicialState, action) {
       };
     case GET_PRODUCT_BY_ID:
       return { ...state, products: action.payload };
+    case GET_CART_BY_IDUSER:
+      return { ...state, order: action.payload };
     case GET_USERS:
       return {};
     case GET_USER_REVIEWS:
@@ -154,7 +160,7 @@ function ReducerProducts(state = inicialState, action) {
       return {};
     case ERROR_MESSAGE:
       alert(action.message);
-      return {...state}
+      return { ...state }
     case LOGOUT:
       return {};
     case LOGIN:
@@ -169,6 +175,8 @@ function ReducerProducts(state = inicialState, action) {
       return { ...state, products: action.payload };
     case DELETE_PRODUCT_JOIN_CATEGORY:
       return { ...state, products: action.payload }
+    case POST_CREATE_CART:
+      return { ...state, order: action.payload };
     default:
       return state
   }

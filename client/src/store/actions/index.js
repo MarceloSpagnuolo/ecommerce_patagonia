@@ -16,6 +16,8 @@ import {
     GET_PRODUCT_JOIN_CATEGORY,
     POST_PRODUCT_JOIN_CATEGORY,
     DELETE_PRODUCT_JOIN_CATEGORY,
+    GET_CART_BY_IDUSER,
+    POST_CREATE_CART,
 } from '../constants/constants.js';
 
 const url = 'http://localhost:3001/';
@@ -300,6 +302,48 @@ export const deleteProductJoinCategory = (idProd, idCat) => async dispatch => {
             {
                 type: ERROR_MESSAGE,
                 message: "Problemas al eliminar categoria de un producto"
+            }
+        )
+    }
+}
+
+
+//Trae el carrito del usuario con sus productos agregados
+export const getCartByUser = (idUser) => async dispatch => {
+    try {
+        const res = await axios.get(`${url}users/?where={"id":${idUser}}&include=[{model: "carrito", where:{order_status:"carrito"}},
+        {model: "products"}]`)
+        dispatch(
+            {
+                type: GET_CART_BY_IDUSER,
+                payload: res.data
+            }
+        )
+    } catch (e) {
+        dispatch(
+            {
+                type: ERROR_MESSAGE,
+                message: "Problemas para acceder al carrito"
+            }
+        )
+    }
+}
+
+//Crea un carrito para un usuario 
+export const postCreateCart = (idUser) => async dispatch => {
+    try {
+        const res = await axios.post(`${url}orders/${idUser}`)
+        dispatch(
+            {
+                type: POST_CREATE_CART,
+                payload: res.data
+            }
+        )
+    } catch (e) {
+        dispatch(
+            {
+                type: ERROR_MESSAGE,
+                message: "Problemas para crear el carrito"
             }
         )
     }
