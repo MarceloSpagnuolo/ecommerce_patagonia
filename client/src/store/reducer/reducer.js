@@ -11,29 +11,21 @@ import {
   GET_PRODUCTS_BY_CATEGORY,
   ADD_TO_CART,
   REMOVE_FROM_CART,
-  GET_ORDERS,
   UPDATE_FROM_CART,
   CREATE_USER,
   GET_USERS,
   DELETE_USER,
   UPDATE_USER,
-  DELETE_ORDER,
   DETAIL_USER,
   DELETE_CART,
   LOGIN,
   LOGIN_ERROR,
   LOGOUT,
   ADD_REVIEW,
-  CREATE_ORDER,
-  UPDATE_ORDER_TO_CREATE,
-  UPDATE_ORDER_TO_PROCESS,
   CHECKOUT_END,
-  UPDATE_ORDER_TO_FULL,
-  UPDATE_ORDER_TO_REJECT,
   UPDATE_REVIEW,
   DELETE_REVIEW,
   GET_USER_REVIEWS,
-  GET_ORDERS_STATUS,
   SEARCH_PRODUCT,
   GET_PRODUCT_BY_ID,
   GET_PRODUCT_JOIN_CATEGORY,
@@ -44,6 +36,15 @@ import {
   GET_CART_BY_IDUSER,
   POST_CREATE_CART,
   PUT_CHANGE_QUANTITY,
+  GET_ORDERS,
+  GET_ORDERS_STATUS,
+  GET_ORDER_BY_USER,
+  CREATE_ORDER,
+  DELETE_ORDER,
+  UPDATE_ORDER_TO_CREATE,
+  UPDATE_ORDER_TO_PROCESS,
+  UPDATE_ORDER_TO_FULL,
+  UPDATE_ORDER_TO_REJECT,
 } from "../constants/constants";
 
 const inicialState = {
@@ -62,8 +63,8 @@ function ReducerProducts(state = inicialState, action) {
       return { ...state, products: action.payload };
     case GET_CATEGORIES:
       return { ...state, categories: action.payload };
-    case GET_ORDERS:
-      return {};
+    case GET_FULL_ORDERS:
+      return { ...state, order: action.payload };
     case GET_ORDERS_STATUS:
       return {};
     case GET_PRODUCTS_BY_CATEGORY:

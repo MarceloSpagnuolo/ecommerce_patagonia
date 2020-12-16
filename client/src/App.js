@@ -15,17 +15,17 @@ function App() {
   return (
     <>
       <Navegation />
-      <Route path="/products" component={Catalogo} />
-      <Route path="/admin/relations" component={Relationship} />
-      <Route exact path="/about" />
-      <Route exact path="/admin/products" component={ComponentFormFather} />
-      <Route exact path="/categories" />
-      <Route exact path="/admin/categories" component={CategoryView} />
-      <Route exact path="/product/:id" component={ProductDetails} />
       <Route exact path="/" component={Home} />
-      <Route exact path="/cart" component={Carrito} />
-      <Route exact path="/admin/order/:id"  component={orderDetail} />
+      <Route path="/products" component={Catalogo} />
+      <Route exact path="/product/:id" component={ProductDetails} />
+      <Route path="/admin/relations" component={Relationship} />
+      <Route exact path="/admin/products" component={ComponentFormFather} />
+      <Route exact path="/admin/categories" component={CategoryView} />
+      <Route exact path="/admin/order/:id" component={orderDetail} />
       <Route exact path="/admin/order" component={TableOrders} />
+      <Route exact path="/about" />
+      <Route exact path="/categories" />
+      <Route exact path="/cart" component={Carrito} />
     </>
   );
 }
