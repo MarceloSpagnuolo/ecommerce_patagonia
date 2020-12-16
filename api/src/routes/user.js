@@ -1,5 +1,6 @@
 const server = require("express").Router();
-const { User } = require("../db.js");
+const { User, Product, Order, Order_products } = require("../db.js");
+const { Op } = require('sequelize');
 
 
 
@@ -92,6 +93,97 @@ server.get("/", (req, res, next) => {
         .catch(next);
 });
 
+/////////////// Creacion de carrito /////////////////////
+server.post("/:userId/cart", async (req, res) => {
+    const { userId } = req.params;
+    const {
+        total,
+        date,
+        status,
+    } = req.body;
+    (!total || !date || !userId) && res.sendStatus(400);
 
+    const order = await Order.create({
+        total,
+        date,
+        status,
+        userId
+    })
+
+    // const user2 = await User.findAll({
+    //     where: {
+    //       id: userId,
+    //     },
+    //     include: [{model: Order, include: [Product]}],
+    //   });
+
+
+    !order ? res.sendStatus(404) : res.json(order);
+})
+
+
+/////////////////// S38 /////////////////////////////
+server.post('/:orderId/order_products/:productId', async (req, res) => {
+    const { orderId, productId } = req.params;
+    const {
+        cantidad,
+        precio_unitario,
+    } = req.body;
+    (!orderId || !productId || !cantidad || !precio_unitario) && res.sendStatus(400);
+
+    const order = await Order.findByPk(orderId)
+    console.log(order, "esto es null??")
+    const product = await Product.findByPk(productId)
+    console.log(product)
+
+    await order.addProduct(product, { through: { cantidad, precio_unitario } })
+    const pepito = await Order.findAll({
+        include: {
+            model: Product
+        }
+    })
+    console.log(pepito, "pepito prueba")
+    !pepito ? res.sendStatus(404) : res.json(pepito);
+})
+
+
+//////////////////// S39 //////////////////////////
+server.get('/:userId/cart', async (req, res) => {
+    const { userId } = req.params;
+    const user = await User.findByPk(userId, {
+        include: {
+            model: Order,
+            where: {
+                [Op.or]: [
+                    {
+                        status: "carrito",
+                    }, {
+                        status: "creada",
+                    },
+                ],
+            }
+        }
+    })
+    const orders = await user.getOrders({
+        where: {
+            [Op.or]: [
+                {
+                    status: "carrito",
+                }, {
+                    status: "creada",
+                },
+            ],
+        }
+    })
+    let arr = []
+    for( let o of orders) {
+        const pepito = await o.getProducts()
+        arr.push(pepito)
+    }
+
+    res.json(arr)
+
+
+})
 
 module.exports = server;

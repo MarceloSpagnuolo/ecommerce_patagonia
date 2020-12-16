@@ -7,7 +7,7 @@ import ProductDetails from "../src/Components/ProductDetails/index.js"
 import ComponentFormFather from "../src/Components/FormAdmin/ComponentFormFather"
 import CategoryView from "../src/Components/CategoryForm/CategoryView"
 import Relationship from "../src/Components/AdminRelaciones/RelationshipViews"
- 
+
 function App() {
   return (
     <>
