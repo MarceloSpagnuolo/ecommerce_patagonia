@@ -1,0 +1,91 @@
+.Carrito-Container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.Carrito-Imagen {
+  height: 100px;
+  width: 100px;
+}
+
+.Carrito-Producto {
+  display: flex;
+  border-bottom: solid lightgray 1px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+.Carrito-Detalles {
+  display: flex;
+  width: 70%;
+}
+
+.Carrito-Cantidad-Precio {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 30%;
+}
+
+.Carrito-Boton-Cantidad {
+  display: flex;
+  align-items: center;
+}
+
+.Carrito-Btn-Menos {
+  height: 42px;
+  width: 26px;
+  border: solid lightgray 1px;
+}
+
+.Carrito-Btn-Menos:hover {
+  cursor: pointer;
+}
+
+.Carrito-Btn-Mas {
+  height: 42px;
+  width: 26px;
+  border: solid lightgray 1px;
+}
+
+.Carrito-Btn-Mas:hover {
+  cursor: pointer;
+}
+
+.Carrito-Cantidad {
+  height: 30px;
+  padding: 0 20px 0 20px;
+  border-top: solid lightgray 1px;
+  border-bottom: solid lightgray 1px;
+  padding-top: 10px;
+}
+
+.Carrito-Total {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 70%;
+  width: 30%;
+  border-bottom: solid lightgray 1px;
+}
+
+.Carrito-Comprar {
+  margin-left: auto;
+}
+
+.Carrito-Continuar {
+  width: 200px;
+  height: 60px;
+  border: none;
+  background-color: goldenrod;
+  color: white;
+  font-size: 18px;
+  margin-top: 30px;
+}
+
+.Carrito-Continuar:hover {
+  box-shadow: 3px 3px 10px black;
+  cursor: pointer;
+}
