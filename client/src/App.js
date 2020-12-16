@@ -1,6 +1,7 @@
 import React from "react";
 import Catalogo from "../src/Components/Catalogo/Catalogo.js";
 import Navegation from "../src/Components/Navegation/index";
+
 import Home from "../src/Components/Home/home";
 import { Route } from "react-router-dom";
 import ProductDetails from "../src/Components/ProductDetails/index.js";
@@ -10,6 +11,7 @@ import Relationship from "../src/Components/AdminRelaciones/RelationshipViews";
 import Carrito from "../src/Components/carrito/Carrito";
 import orderDetail from "../src/Components/FormAdmin/orderDetail"
 import TableOrders from "./Components/FormAdmin/tableOrders.js";
+
 
 function App() {
   return (
