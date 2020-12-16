@@ -1,6 +1,5 @@
 const server = require("express").Router();
 const { User } = require("../db.js");
-const { Op } = require("sequelize");
 
 
 
@@ -13,6 +12,10 @@ server.post("/", async (req, res) => {
         lastname,
         email,
         hashedpassword,
+        city,
+        adress,
+        phone,
+        postal,
         role
     } = req.body;
     (!name || !lastName || !email || !hashedpassword || !role) && res.sendStatus(400);
@@ -21,6 +24,10 @@ server.post("/", async (req, res) => {
         lastname,
         email,
         hashedpassword,
+        city,
+        adress,
+        phone,
+        postal,
         role
     });
     !user ? res.sendStatus(400) :
@@ -36,6 +43,10 @@ server.put("/:id", async (req, res) => {
         lastname,
         email,
         hashedpassword,
+        city,
+        adress,
+        phone,
+        postal,
         role
     } = req.body;
 
@@ -45,6 +56,10 @@ server.put("/:id", async (req, res) => {
             lastname,
             email,
             hashedpassword,
+            city,
+            adress,
+            phone,
+            postal,
             role
         },
         {
@@ -71,11 +86,11 @@ server.get("/", (req, res, next) => {
     // /products/?where={%22id%22:5}&include=[%22categories%22]
     include && (include = JSON.parse(include));
     User.findAll({ limit, offset, order, where, include }) //Pasamos a findAll todos los argumentos
-      .then((users) => {
-        res.send(users).status(200);
-      })
-      .catch(next);
-  });
+        .then((users) => {
+            res.send(users).status(200);
+        })
+        .catch(next);
+});
 
 
 

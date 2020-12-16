@@ -22,10 +22,22 @@ module.exports = (sequelize) => {
             validate: {
                 isEmail: true
             }
-        },  
+        },
         hashedpassword: {
             type: DataTypes.STRING(64),
             is: /^[0-9a-f]{64}$/i
+        },
+        city: {
+            type: DataTypes.STRING,
+        },
+        adress: {
+            type: DataTypes.STRING,
+        },
+        phone: {
+            type: DataTypes.STRING,
+        },
+        postal: {
+            type: DataTypes.STRING,
         },
         role: {
             type: DataTypes.ENUM('user', 'admin'),
@@ -45,8 +57,7 @@ module.exports = (sequelize) => {
     //     const salt = await bcrypt.genSaltSync(8);
     //     user.hashedPassword = await bcrypt.hashSync(user.hashedPassword, salt);
     // });
-    
+
     // User.addHook('beforeValiate', async (hashedPassword) => {
     //     return await bcrypt.compare(hashedPassword, this.hashedPassword);
     // });
-    
