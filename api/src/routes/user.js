@@ -148,41 +148,119 @@ server.post('/:orderId/order_products/:productId', async (req, res) => {
 
 
 //////////////////// S39 //////////////////////////
+
+// Por ahora devuelve todos los items de todas las Order que tienen status "carrito" y "creada".
+// La tarea dice que debe devolver el ULTIMO Order abierto (sea lo que signifique eso). Se puede discutir a ver que
+// es lo que se interpreta por "el último Order abierto" para ver que cosa más específica queremos devolver.
+
+
 server.get('/:userId/cart', async (req, res) => {
     const { userId } = req.params;
     const user = await User.findByPk(userId, {
-        include: {
+        include: [{
+            model: Order,
+            include: [{
+                model: Product
+            }],
+            where: {
+                [Op.or]: [
+                    {
+                        status: "carrito",
+                    },
+                ],
+            }
+        }]
+    })
+
+
+    // const orders = await user.getOrders({
+    //     where: {
+    //         [Op.or]: [
+    //             {
+    //                 status: "carrito",
+    //             }, {
+    //                 status: "creada",
+    //             },
+    //         ],
+    //     }
+    // })
+
+    // let arr = []
+    // for( let o of orders) {
+    //     const pepito = await o.getProducts()
+    //     arr.push(pepito)
+    // }
+
+    // console.log(user)
+    res.json(user)
+
+
+})
+
+/////////////////S40///////////////
+
+
+server.get('/cart/:userId', async (req, res) => {
+    const { userId } = req.params;
+
+    const user = await User.findByPk(userId, {
+        include: [{
             model: Order,
             where: {
                 [Op.or]: [
                     {
                         status: "carrito",
-                    }, {
-                        status: "creada",
                     },
                 ],
             }
-        }
+        }]
     })
-    const orders = await user.getOrders({
-        where: {
-            [Op.or]: [
-                {
-                    status: "carrito",
-                }, {
-                    status: "creada",
-                },
-            ],
-        }
+
+    const orderId = user.orders[0].id;
+
+    const order = await Order.findByPk(orderId);
+   
+
+    const orderFinal = await order.setProducts([])
+
+//     const prueba = await Order.findAll({
+//         where: {
+//             id: orderId
+//         },
+//         include: {model: Product}
+//     })
+// console.log(prueba)
+
+
+    res.json(orderFinal)
+
+})
+
+
+/////////////////////////S41///////////////////
+
+server.put('/:userId/cart/otracosa', async (req, res) => {
+    const { userId } = req.params;
+    const { productId, cantidad} = req.body;
+    const user = await User.findByPk(userId, {
+        include: [{
+            model: Order,
+            include: [{
+                model: Product
+            }],
+            where: {
+                [Op.or]: [
+                    {
+                        status: "carrito",
+                    },
+                ],
+            }
+        }]
     })
-    let arr = []
-    for( let o of orders) {
-        const pepito = await o.getProducts()
-        arr.push(pepito)
-    }
 
-    res.json(arr)
-
+    console.log(user.orders[0].products[0])
+    res.status(200)
+   
 
 })
 
