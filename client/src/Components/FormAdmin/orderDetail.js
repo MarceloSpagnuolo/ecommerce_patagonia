@@ -1,22 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 
-function TableOrders(props) { 
-    const dispatch = useDispatch();
+function TableOrders(props) {
+    // const dispatch = useDispatch();
     const { order } = useSelector((state) => state);
     const history = useHistory();
+    const [total, setTotal] = useState(0);
+
 
     useEffect(() => {
-        //dispatch(getOrder())
-    },[])
+        var currentOrder = order.filter((ord) => ord.id === props.id)
+    }, [])
 
     return (
         <div>
             <h2>Detalle de Orden </h2>
-            <h4>Estado: {props.status}</h4>
-            <h4>Fecha: {props.date}</h4>
             <h4>Usuario: {props.users.name}</h4>
+            <h4>Fecha: {props.date}</h4>
+            <h4>Estado: {props.status}</h4>
             <table>
                 <thead>
                     <tr className="orderDetail-titulos">
@@ -28,19 +30,22 @@ function TableOrders(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {props.map((ord) => (
-                    <tr className="OrderDetail-Datos">
-                        <td>{props.products.id}</td>
-                        <td>{props.products.name}</td>
-                        <td>{props.products.precio}</td>
-                        <td>{props.products.quantity}</td>
-                        <td>{props.order.total}</td>
-                    </tr>
+                    {currentOrder[0].products.map((prod) => (
+                        <tr className="OrderDetail-Datos">
+                            <td>{prod.id}</td>
+                            <td>{prod.name}</td>
+                            <td>{prod.order.price}</td>
+                            <td>{prod.order.quantity}</td>
+                            <td>{prod.order.price * prod.order.quantity}</td>
+                        </tr>
                     ))}
+
                 </tbody>
             </table>
+            <h3>Total</h3>
+            <h3></h3>
             <button onClick={() => history.goBack()}>Volver</button>
-        </div> 
+        </div>
     )
 
 

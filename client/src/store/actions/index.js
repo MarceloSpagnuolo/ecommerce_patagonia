@@ -19,6 +19,7 @@ import {
   GET_CART_BY_IDUSER,
   POST_CREATE_CART,
   PUT_CHANGE_QUANTITY,
+  GET_FULL_ORDERS,
 } from "../constants/constants.js";
 
 const url = "http://localhost:3001/";
@@ -301,9 +302,10 @@ export const postCreateCart = (idUser) => async (dispatch) => {
   }
 };
 
+//Cambia el stock de productos en el store
 export const putQuantity = (idUser, idOrder, idProduct, cant) => async (dispatch) => {
   try {
-    const res = await axios.put(`${url}users/${idUser}/cart`, idOrder, idProduct, cant );
+    const res = await axios.put(`${url}users/${idUser}/cart`, idOrder, idProduct, cant);
     dispatch({
       type: PUT_CHANGE_QUANTITY,
       payload: res.data,
@@ -311,7 +313,24 @@ export const putQuantity = (idUser, idOrder, idProduct, cant) => async (dispatch
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas para modificar la cantidad dle producto",
+      message: "Problemas para modificar la cantidad del producto",
     });
   }
 };
+
+//Trae todas las ordenes de compras con sus usuarios y sus productos
+export const getFullOrders = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${url}orders/?include=["users", "products"]`);
+    dispatch({
+      type: GET_FULL_ORDERS,
+      payload: res.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Problemas para traer las ordenes de compra",
+    });
+  }
+};
+
