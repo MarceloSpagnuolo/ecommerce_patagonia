@@ -20,6 +20,7 @@ import {
   POST_CREATE_CART,
   PUT_CHANGE_QUANTITY,
   GET_FULL_ORDERS,
+  GET_ORDER_BY_ID,
 } from "../constants/constants.js";
 
 const url = "http://localhost:3001/";
@@ -321,7 +322,7 @@ export const putQuantity = (idUser, idOrder, idProduct, cant) => async (dispatch
 //Trae todas las ordenes de compras con sus usuarios y sus productos
 export const getFullOrders = () => async (dispatch) => {
   try {
-    const res = await axios.get(`${url}orders/?include=["users", "products"]`);
+    const res = await axios.get(`${url}orders/filter`);
     dispatch({
       type: GET_FULL_ORDERS,
       payload: res.data,
@@ -334,3 +335,18 @@ export const getFullOrders = () => async (dispatch) => {
   }
 };
 
+export const getOrderById = (orderId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${url}orders/${orderId}`);
+    console.log(res.data, "Vengo de Actions")
+    dispatch({
+      type: GET_ORDER_BY_ID,
+      payload: res.data,
+    })
+  } catch(e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Problemas para traer la órden de compra",
+    });
+  }
+}

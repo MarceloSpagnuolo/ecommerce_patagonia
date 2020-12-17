@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getFullOrders } from '../../store/actions';
 
-function TableOrders() {
+function TableOrders(props) {
     const dispatch = useDispatch();
-    const { order } = useSelector((state) => state);
+    const { order } = useSelector(state => state)
 
     useEffect(() => {
-        dispatch(getFullOrders())
-    }, [])
+        dispatch(getFullOrders());
+        return function cleanup() { }; 
+    },[])
 
     return (
         <div>
@@ -22,17 +23,18 @@ function TableOrders() {
                         <th>Fecha</th>
                         <th>Estado</th>
                         <th>Total</th>
+                        <th>Detalles</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {order.map((ord) => (
+                    {order.length > 0 && order.map((ord) => (
                         <tr className="ordersUsers-Datos">
                             <td>{ord.id}</td>
-                            <td>{ord.user}</td>
+                            <td>{ord.user.name+" "+ord.user.lastname}</td>
                             <td>{ord.date}</td>
                             <td>{ord.status}</td>
                             <td>{ord.total}</td>
-                            <Link to={`/admin/order/${ord.id}`}>
+                            <Link to={`/admin/orders/${ord.id}`}>
                                 <button>Ver Orden</button>
                             </Link>
                         </tr>
@@ -44,6 +46,5 @@ function TableOrders() {
 
 
 }
-
 
 export default TableOrders;
