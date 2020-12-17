@@ -1,5 +1,5 @@
 const server = require("express").Router();
-const { Order, Order_products } = require("../db.js");
+const { Order, Order_products, User, Product } = require("../db.js");
 
 
 
@@ -44,10 +44,77 @@ server.post('/:orderId/order_products/:productsId', async (req, res) => {
 })
 
 
+//// 'Get Orders' route in '/'
+server.get("/", (req, res, next) => {
+    //Get de todos o un producto específico con sus categorías
+    let { limit, offset, order, where, include } = req.query; //Destructuring del Query
+    // order tiene que recibier un array con la columna entre comillas dobles
+    // /products/?limit=5&offset=5&order=["name"]
+    // /products/?order=["id"]
+    order && (order = JSON.parse(order)); // Parseando a Json el string recibido
+    // /products/?where={"id":5}
+    where && (where = JSON.parse(where));
+    // /products/?where={%22id%22:5}&include=[%22categories%22]
+    include && (include = JSON.parse(include));
+    Order.findAll({ limit, offset, order, where, include }) //Pasamos a findAll todos los argumentos
+      .then((products) => {
+        res.send(products).status(200);
+      })
+      .catch(next);
+  });
 
 
+// get orders)filter se pasa el filtro de busqueda en el body 
+server.get('/filter', async (req, res) => {
+
+	const {status} = req.query;
+	let parametrosQuery;
+	//console.log('el estado es ', status);
+
+    if (!status){
+        parametrosQuery = {
+            include: [ { 
+                model: User
+            },{
+                model: Product
+            }]
+        }
+    }else{
+        parametrosQuery = { 
+            where: { status }, 
+            include: [ { 
+                model: User}, 
+                {model: Product}] 
+            }
+    } 
+
+	const orderFilter= await Order.findAll(parametrosQuery)	
+	orderFilter ? res.json(orderFilter).status(200) : res.send("Ha ocurrido un error en el filtrado de ordenes").status(404);
+});
 
 
+///////////////////47////////////////
 
+server.put(`/:id`, async (req, res) => {
+    const { id } = req.params
+
+    const {total, date, status} = req.body
+
+    const update = await Order.update(
+        {
+          total,
+          date,
+          status
+        },
+        {
+          where: {
+            id,
+          },
+          returning: true,
+        }
+      );
+
+      !update ? res.sendStatus(400) : res.json(update);
+})
 
 module.exports = server;
