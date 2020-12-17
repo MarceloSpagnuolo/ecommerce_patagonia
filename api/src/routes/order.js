@@ -93,7 +93,7 @@ server.get('/filter', async (req, res) => {
 });
 
 
-///////////////////47////////////////
+///////////////////47/////////////////
 
 server.put(`/:id`, async (req, res) => {
     const { id } = req.params
@@ -116,5 +116,19 @@ server.put(`/:id`, async (req, res) => {
 
       !update ? res.sendStatus(400) : res.json(update);
 })
+
+///////////////Ruta que busca por ID incluyendo user y product////////////
+
+server.get("/:orderId", async(req, res) => {
+    const { orderId } = req.params;
+    const order = await Order.findOne({
+        where: {
+            id: orderId
+        },
+        include: [User,Product]
+    });
+    !order ? res.sendStatus(400) : res.json(order);
+})
+
 
 module.exports = server;
