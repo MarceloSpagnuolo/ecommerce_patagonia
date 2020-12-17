@@ -185,40 +185,41 @@ server.get("/:userId/cart", async (req, res) => {
 
 /////////////////S40///////////////
 
-server.get("/cart/:userId", async (req, res) => {
+server.get('/:userId/product/cart', async (req, res) => {
   const { userId } = req.params;
-
   const user = await User.findByPk(userId, {
-    include: [
-      {
-        model: Order,
-        where: {
-          [Op.or]: [
-            {
-              status: "carrito",
-            },
-          ],
+    include: {
+      model: Order,
+      where: {
+        [Op.or]: [
+          {
+            status: "carrito",
+          }, {
+            status: "creada",
+          },
+        ],
+      }
+    }
+  })
+  const orders = await user.getOrders({
+    where: {
+      [Op.or]: [
+        {
+          status: "carrito",
+        }, {
+          status: "creada",
         },
-      },
-    ],
-  });
-
-  const orderId = user.orders[0].id;
-
-  const order = await Order.findByPk(orderId);
-
-  const orderFinal = await order.setProducts([]);
-
-  //     const prueba = await Order.findAll({
-  //         where: {
-  //             id: orderId
-  //         },
-  //         include: {model: Product}
-  //     })
-  // console.log(prueba)
-
-  res.json(orderFinal);
-});
+      ],
+    }
+  })
+  let arr = []
+  for (let o of orders) {
+    const pepito = await o.getProducts()
+    console.log(pepito, "miau")
+    arr.push(pepito)
+  }
+  res.json(arr)
+})
 
 /////////////////////////S41///////////////////
 
@@ -226,9 +227,10 @@ server.put("/:userId/cart/otracosa", async (req, res) => {
   const { userId } = req.params;
   const { productId, cantidad } = req.body;
   const user = await User.findAll(
-    {where: {
+    {
+      where: {
         id: userId,
-    },
+      },
       include: [
         {
           model: Order,
@@ -249,42 +251,91 @@ server.put("/:userId/cart/otracosa", async (req, res) => {
   );
 
 
-// const resultado = await user[0].orders[0].products.updateAttributes({cantidad: 200})
-// user.updateAttributes({cantidad: cantidad})
-//   user.orders.pro.updateAttributes(updateProfile)
+  // const resultado = await user[0].orders[0].products.updateAttributes({cantidad: 200})
+  // user.updateAttributes({cantidad: cantidad})
+  //   user.orders.pro.updateAttributes(updateProfile)
 
-//   const cambio = await User.update(
-//     {cantidad: cantidad,
-//         include: [
-//         {cantidad: cantidad,
-//           model: Order,
-//           cantidad: cantidad,
-//           include: [
-//             {cantidad: cantidad,
-//               model: Product,
-//               cantidad: cantidad,
-//               where: {
-//                 id: productId,
-//               },
-//               cantidad: cantidad,
-//             },
-//           ],cantidad: cantidad,
-//           where: {
-//             status: "carrito",
-//           },cantidad: cantidad,
-//         },
-//       ],cantidad: cantidad,},{cantidad: cantidad,
-//         where: {
-//             id: userId,
-//         },cantidad: cantidad,
-//         returning: true,
-//     }
-//   );
+  //   const cambio = await User.update(
+  //     {cantidad: cantidad,
+  //         include: [
+  //         {cantidad: cantidad,
+  //           model: Order,
+  //           cantidad: cantidad,
+  //           include: [
+  //             {cantidad: cantidad,
+  //               model: Product,
+  //               cantidad: cantidad,
+  //               where: {
+  //                 id: productId,
+  //               },
+  //               cantidad: cantidad,
+  //             },
+  //           ],cantidad: cantidad,
+  //           where: {
+  //             status: "carrito",
+  //           },cantidad: cantidad,
+  //         },
+  //       ],cantidad: cantidad,},{cantidad: cantidad,
+  //         where: {
+  //             id: userId,
+  //         },cantidad: cantidad,
+  //         returning: true,
+  //     }
+  //   );
 
-
-
+  ///////////////////////////
+ 
   console.log(resultado);
   res.json(user);
 });
+
+server.put('/:userId/product/cart', async (req, res) => {
+  const { userId } = req.params;
+  const { productId, cantidad } = req.body;
+
+  const product = await Product.findByPk(productId);
+  console.log(product);
+
+  const order = await Order.findOne({
+    where: {
+      userId,
+      [Op.or]: [
+        {
+          status: "carrito",
+        },
+      ],
+    },
+
+  })
+  await order.setProducts(product, { through: { cantidad } });
+  console.log(order)
+
+  const ordep = await Order_products.findAll(
+    {
+      where: {
+        orderId: order.id,
+        productId
+      }
+    })
+  res.json(ordep)
+})
+
+server.delete('/:orderId/order/:productId', async (req, res) => {
+  const { orderId, productId } = req.params;
+
+  const product = await Product.findByPk(productId);
+  console.log(product);
+
+  
+  const ordep = await Order_products.destroy({
+      where: {
+          orderId,
+          productId
+      },
+    }
+    );
+  res.json(ordep)
+})
+
 
 module.exports = server;
