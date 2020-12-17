@@ -39,12 +39,14 @@ import {
   GET_ORDERS,
   GET_ORDERS_STATUS,
   GET_ORDER_BY_USER,
+  GET_ORDER_BY_ID,
   CREATE_ORDER,
   DELETE_ORDER,
   UPDATE_ORDER_TO_CREATE,
   UPDATE_ORDER_TO_PROCESS,
   UPDATE_ORDER_TO_FULL,
   UPDATE_ORDER_TO_REJECT,
+  GET_FULL_ORDERS,
 } from "../constants/constants";
 
 const inicialState = {
@@ -64,6 +66,8 @@ function ReducerProducts(state = inicialState, action) {
     case GET_CATEGORIES:
       return { ...state, categories: action.payload };
     case GET_FULL_ORDERS:
+      return { ...state, order: action.payload };
+    case GET_ORDER_BY_ID:
       return { ...state, order: action.payload };
     case GET_ORDERS_STATUS:
       return {};
