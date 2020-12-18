@@ -4,12 +4,11 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
     sequelize.define('Order_products', {
-        cantidad: {
+        quantity: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: 1
         },
-        preciounitario: {
+        unitprice: {
             type: DataTypes.FLOAT,
             allowNull: false,
         },     
@@ -23,15 +22,15 @@ module.exports = (sequelize) => {
 Order_products id=1
 orderid = 1 (status=carrito)
 productid= 1
-cantidad = 2
-precio_unitario = producto.precio
+quantity = 2
+unitprice = producto.precio
 
 
 Order_products id=2
 orderid = 1 (status=carrito)
 productid = 2
-cantidad = 2
-precio_unitario = producto.precio
+quantity = 2
+unitprice = producto.precio
 
 
 comprar

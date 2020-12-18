@@ -1,134 +1,172 @@
 const server = require("express").Router();
-const { Order, Order_products, User, Product } = require("../db.js");
+const db = require("../db.js");
+const { Order, Order_products, User, Product } = db
+
+/*inc debería venir un array. Debemos contestar con un array del modelo.
+caso base: inc = ["algo", "otra cosa"] => response =  ["algo", "otra cosa"]
+caso inc es objeto = [{model: "algo"}] */
+
+/*
+function getIncludes(inc){
+    let response = [];
+    for(const value of inc){
+        if(typeof value === "string") {
+            response.push(db[value])
+            // puede ser que sea con punto (db.[inc])
+            } else {
+                let result = {
+                    model: db[value.model]
+                }
+                value.include && (result.include = getIncludes(value.include))
+                response.push(result);
+            }
+    }   
+    return response;
+}
+
+Esta función por ahora la comento pero va a ser la que eventualmente vamos a usar en todos los llamados
+get que tengan limit,where, etc. para hacerlas super dinámicas.
+*/
 
 
-
+//model order = total tiene default value al igual que carrito
+//ergo = no es necesario mandarlos por body ni hacer comprobaciones
+//(initial values: 0 y "carrito" respectivamente)
 ////////////CREACION MANUAL DE CARRITO (para cuando haga click en agregar carrito)////////////////
 server.post("/:userId", async (req, res) => {
-    const { userId } = req.params;
-    const {
-        total,
-        date,
-        status,
-    } = req.body;
-    (!total || !date || !userId) && res.sendStatus(400);
-    const order = await Order.create({
-        total,
-        date,
-        status,
-        userId
-    });
-    !order ? res.sendStatus(400) :
-        res.json(order).status(201);
+  const { userId } = req.params;
+  const { total, date, status } = req.body;
 
-})
+  (!date || !userId) && res.send("Falta el valor de fecha o userid").status(400);
 
-
-//////////////////S38//////////////
-server.post('/:orderId/order_products/:productsId', async (req, res) => {
-    const { orderId, productsId } = req.params;
-    const {
-        cantidad,
-        precio_unitario,
-    } = req.body;
-    (!orderId || !productsId || !cantidad || !precio_unitario) && res.sendStatus(400);
-
-    const orderProducts = await Order_products.create({
-        orderId,
-        productsId,
-        cantidad,
-        precio_unitario
-    });
-    !orderProducts ? res.sendStatus(400) :
-    res.json(orderProducts)
-})
-
-
-//// 'Get Orders' route in '/'
-server.get("/", (req, res, next) => {
-    //Get de todos o un producto específico con sus categorías
-    let { limit, offset, order, where, include } = req.query; //Destructuring del Query
-    // order tiene que recibier un array con la columna entre comillas dobles
-    // /products/?limit=5&offset=5&order=["name"]
-    // /products/?order=["id"]
-    order && (order = JSON.parse(order)); // Parseando a Json el string recibido
-    // /products/?where={"id":5}
-    where && (where = JSON.parse(where));
-    // /products/?where={%22id%22:5}&include=[%22categories%22]
-    include && (include = JSON.parse(include));
-    Order.findAll({ limit, offset, order, where, include }) //Pasamos a findAll todos los argumentos
-      .then((products) => {
-        res.send(products).status(200);
-      })
-      .catch(next);
+  const order = await Order.create({
+    total,
+    date,
+    status,
+    userId,
   });
 
+  !order ? res.sendStatus(400) : res.json(order).status(201);
+});
 
-// get orders)filter se pasa el filtro de busqueda en el body 
-server.get('/filter', async (req, res) => {
+//////////////////S38////////////// Agregar item al carrito. No se puede agregar un producto que ya existe.
+//Se cambió la ruta para que sea /order/1/cart/1 por ejemplo. Más limpia y legible a simple vista.
+server.post("/:orderId/cart/:productId", async (req, res) => {
+  const { orderId, productId } = req.params;
+  const { quantity, unitprice } = req.body;
 
-	const {status} = req.query;
-	let parametrosQuery;
-	//console.log('el estado es ', status);
+  (!orderId || !productId || !quantity || !unitprice) && res.send("Falta orderid, productid, quantity o unitprice").status(400);
 
-    if (!status){
-        parametrosQuery = {
-            include: [ { 
-                model: User
-            },{
-                model: Product
-            }]
-        }
-    }else{
-        parametrosQuery = { 
-            where: { status }, 
-            include: [ { 
-                model: User}, 
-                {model: Product}] 
-            }
-    } 
+  console.log(productId, "SOY EL ID DE PRODUCTOS")
 
-	const orderFilter= await Order.findAll(parametrosQuery)	
-	orderFilter ? res.json(orderFilter).status(200) : res.send("Ha ocurrido un error en el filtrado de ordenes").status(404);
+  const orderProducts = await Order_products.create({
+    orderId,
+    productId,
+    quantity,
+    unitprice,
+  });
+  !orderProducts ? res.sendStatus(400) : res.json(orderProducts).status(201);
+});
+
+////////////////S44////////////////
+//// 'Get Orders' route = '/'
+server.get("/", async (req, res, next) => {
+  //Get de todas o una orden específica con sus productos
+  let { limit, offset, order, where, include } = req.query; //Destructuring del Query
+  // order tiene que recibier un array con la columna entre comillas dobles
+  // /products/?limit=5&offset=5&order=["name"]
+  // /products/?order=["id"]
+  order && (order = JSON.parse(order)); // Parseando a Json el string recibido
+  // /products/?where={"id":5}
+  where && (where = JSON.parse(where));
+  // /products/?where={%22id%22:5}&include=[%22categories%22] El valor de include debe ir en minúscula y plural
+//   if(include) {
+//        (include = JSON.parse(include));
+//        include = getIncludes(include)
+//     }
+    include && (include = JSON.parse(include));
+
+  const orders = await Order.findAll({ limit, offset, order, where, include }) //Pasamos a findAll todos los argumentos
+    
+  !orders ? res.sendStatus(400) : res.json(orders).status(200);
 });
 
 
-///////////////////47/////////////////
+//////////RUTA EXTRA///////////////
+// get orders/filter se pasa el filtro de busqueda en el query. Acepta ?status=valor
+// siendo valor = "carrito", "creada", "procesando", "cancelada", "completa"
+// incluye Order con el modelo User y Products
+server.get("/filter/", async (req, res) => {
+  const { status } = req.query;
+  let parametrosQuery;
 
-server.put(`/:id`, async (req, res) => {
-    const { id } = req.params
-
-    const {total, date, status} = req.body
-
-    const update = await Order.update(
+  !status ?
+    parametrosQuery = {
+        order: ['id'],
+      include: [
         {
-          total,
-          date,
-          status
+          model: User,
         },
         {
-          where: {
-            id,
-          },
-          returning: true,
-        }
-      );
+          model: Product,
+        },
+      ],
+    }
+  : 
+    parametrosQuery = {
+        order: ['id'],
+      where: { status },
+      include: [
+        {
+          model: User,
+        },
+        { model: Product },
+      ],
+    }; 
 
-      !update ? res.sendStatus(400) : res.json(update);
-})
+  const orderFilter = await Order.findAll(parametrosQuery);
+  !orderFilter ? res.sendStatus(400) : res.json(orderFilter).status(200);
+});
+
+///////////////////S47/////////////////
+//Considerando que se actualiza el carrito, se pide que obligatoriamente manden id, total, date y status
+//Si sólo quieren cambiar un parámetro, deben mandar todos manteniendo el valor los que no quieran que se cambien.
+//Puede devolver undefined si la oden a modificar no existe.
+server.put(`/:id`, async (req, res) => {
+  const { id } = req.params;
+
+  const { total, date, status } = req.body;
+
+  (!date || !id || !total || !status) && res.send("Falta valor date, id, total o status").status(400);
+
+  const update = await Order.update(
+    {
+      total,
+      date,
+      status,
+    },
+    {
+      where: {
+        id,
+      },
+      returning: true,
+    }
+  );
+
+  !update ? res.sendStatus(400) : res.json(update[1][0]);
+});
 
 ///////////////Ruta que busca por ID incluyendo user y product////////////
 
-server.get("/:orderId", async(req, res) => {
-    const { orderId } = req.params;
-    const order = await Order.findOne({
-        where: {
-            id: orderId
-        },
-        include: [User,Product]
-    });
-    !order ? res.sendStatus(400) : res.json(order);
-})
-
+server.get("/:orderId", async (req, res) => {
+  const { orderId } = req.params;
+  const order = await Order.findOne({
+    where: {
+      id: orderId,
+    },
+    include: [User, Product],
+  });
+  !order ? res.sendStatus(400) : res.json(order);
+});
 
 module.exports = server;

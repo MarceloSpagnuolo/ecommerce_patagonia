@@ -3,6 +3,8 @@ const { User, Product, Order, Order_products } = require("../db.js");
 const { Op } = require("sequelize");
 
 /////////// S34 ///////////////////
+//Creación de usuario. City, adress, phone y postal no son obligatorios.
+//Si ingresa un mail repetido, manda un status 400 con un mensaje de email repetido.
 server.post("/", async (req, res) => {
   const {
     name,
@@ -15,23 +17,28 @@ server.post("/", async (req, res) => {
     postal,
     role,
   } = req.body;
-  (!name || !lastName || !email || !hashedpassword || !role) &&
-    res.sendStatus(400);
-  const user = await User.create({
-    name,
-    lastname,
-    email,
-    hashedpassword,
-    city,
-    adress,
-    phone,
-    postal,
-    role,
-  });
-  !user ? res.sendStatus(400) : res.json(user).status(201);
+  (!name || !lastname || !email || !hashedpassword || !role) && res.send("Falta valor name, lastname, email, pass o role").status(400);
+  try {
+    const user = await User.create({
+      name,
+      lastname,
+      email,
+      hashedpassword,
+      city,
+      adress,
+      phone,
+      postal,
+      role,
+    });
+    !user ? res.sendStatus(400) : res.json(user).status(201);
+  } catch (error) {
+    res.send("Ese email ya existe").status(400)   
+  }
+  
 });
 
 ////////////// S35 ///////////////////
+//Puede devolver undefined si no existe ningún usuario con ese id.
 server.put("/:id", async (req, res) => {
   const { id } = req.params;
   const {
@@ -65,7 +72,8 @@ server.put("/:id", async (req, res) => {
       returning: true,
     }
   );
-  !user ? res.sendStatus(400) : res.json(user);
+ 
+  !user ? res.sendStatus(400) : res.json(user[1][0]);
 });
 
 //////////////// 36 /////////////////////////
@@ -88,54 +96,45 @@ server.get("/", (req, res, next) => {
     .catch(next);
 });
 
-/////////////// Creacion de carrito /////////////////////
+/////////////////// S38 /////////////////////////////
+// MUCHO OJO. SI MANDAN 2 VECES EL MISMO PRODUCTO CON DIFERENTE VALORES
+//COMO PUEDE SER QUANTITY LA SEGUNDA LO UPDATEA Y EL JSON DEVUELVE UN 1!
 server.post("/:userId/cart", async (req, res) => {
   const { userId } = req.params;
-  const { total, date, status } = req.body;
-  (!total || !date || !userId) && res.sendStatus(400);
+  //orderId
+  const { productId, quantity, unitprice } = req.body;
+  (!userId || !productId || !quantity || !unitprice) && res.send("Falta valor userId, productId, quantity o unitprice").status(400);
 
-  const order = await Order.create({
-    total,
-    date,
-    status,
-    userId,
-  });
+  const user = await User.findByPk(userId, {include: Order});
+const orderId = user.orders[0].dataValues.id // saco el id del order.
 
-  // const user2 = await User.findAll({
-  //     where: {
-  //       id: userId,
-  //     },
-  //     include: [{model: Order, include: [Product]}],
-  //   });
+const order = await Order.findByPk(orderId)
+const product = await Product.findByPk(productId)
+const orderProduct = await order.setProduct(product, { through: { quantity, unitprice } }) //Agrega el producto
 
-  !order ? res.sendStatus(404) : res.json(order);
-});
 
-/////////////////// S38 /////////////////////////////
-server.post("/:orderId/order_products/:productId", async (req, res) => {
-  const { orderId, productId } = req.params;
-  const { cantidad, precio_unitario } = req.body;
-  (!orderId || !productId || !cantidad || !precio_unitario) &&
-    res.sendStatus(400);
+!orderProduct ? res.sendStatus(400) : res.json(orderProduct);
+})
 
-  const order = await Order.findByPk(orderId);
-  console.log(order, "esto es null??");
-  const product = await Product.findByPk(productId);
-  console.log(product);
+    //////////////METODO ANTERIOR/////////////
+//   const order = await Order.findByPk(orderId);
+//   console.log(order, "esto es null??");
+//   const product = await Product.findByPk(productId);
+//   console.log(product);
 
-  await order.addProduct(product, { through: { cantidad, precio_unitario } });
-  const pepito = await Order.findAll({
-    include: {
-      model: Product,
-    },
-  });
-  console.log(pepito, "pepito prueba");
-  !pepito ? res.sendStatus(404) : res.json(pepito);
-});
+//   await order.addProduct(product, { through: { quantity, unitprice } });
+//   const pepito = await Order.findAll({
+//     include: {
+//       model: Product,
+//     },
+//   });
+//   console.log(pepito, "pepito prueba");
+//   !pepito ? res.sendStatus(404) : res.json(pepito);
+// });
 
 //////////////////// S39 //////////////////////////
 
-// Por ahora devuelve todos los items de todas las Order que tienen status "carrito" y "creada".
+// Por ahora devuelve todos los items de todas las Order que tienen status "carrito".
 // La tarea dice que debe devolver el ULTIMO Order abierto (sea lo que signifique eso). Se puede discutir a ver que
 // es lo que se interpreta por "el último Order abierto" para ver que cosa más específica queremos devolver.
 
@@ -225,7 +224,7 @@ server.get('/:userId/product/cart', async (req, res) => {
 
 server.put("/:userId/cart/otracosa", async (req, res) => {
   const { userId } = req.params;
-  const { productId, cantidad } = req.body;
+  const { productId, quantity } = req.body;
   const user = await User.findAll(
     {
       where: {
@@ -251,37 +250,7 @@ server.put("/:userId/cart/otracosa", async (req, res) => {
   );
 
 
-  // const resultado = await user[0].orders[0].products.updateAttributes({cantidad: 200})
-  // user.updateAttributes({cantidad: cantidad})
-  //   user.orders.pro.updateAttributes(updateProfile)
-
-  //   const cambio = await User.update(
-  //     {cantidad: cantidad,
-  //         include: [
-  //         {cantidad: cantidad,
-  //           model: Order,
-  //           cantidad: cantidad,
-  //           include: [
-  //             {cantidad: cantidad,
-  //               model: Product,
-  //               cantidad: cantidad,
-  //               where: {
-  //                 id: productId,
-  //               },
-  //               cantidad: cantidad,
-  //             },
-  //           ],cantidad: cantidad,
-  //           where: {
-  //             status: "carrito",
-  //           },cantidad: cantidad,
-  //         },
-  //       ],cantidad: cantidad,},{cantidad: cantidad,
-  //         where: {
-  //             id: userId,
-  //         },cantidad: cantidad,
-  //         returning: true,
-  //     }
-  //   );
+ 
 
   ///////////////////////////
  
@@ -291,7 +260,7 @@ server.put("/:userId/cart/otracosa", async (req, res) => {
 
 server.put('/:userId/product/cart', async (req, res) => {
   const { userId } = req.params;
-  const { productId, cantidad } = req.body;
+  const { productId, quantity } = req.body;
 
   const product = await Product.findByPk(productId);
   console.log(product);
@@ -307,7 +276,7 @@ server.put('/:userId/product/cart', async (req, res) => {
     },
 
   })
-  await order.setProducts(product, { through: { cantidad } });
+  await order.setProducts(product, { through: { quantity } });
   console.log(order)
 
   const ordep = await Order_products.findAll(

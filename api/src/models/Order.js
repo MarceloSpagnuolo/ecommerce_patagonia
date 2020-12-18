@@ -8,6 +8,7 @@ module.exports = (sequelize) => {
         total: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            defaultValue: 0
         },
         date: {
             type: DataTypes.DATE,
@@ -21,6 +22,8 @@ module.exports = (sequelize) => {
 };
 
 
-
+//model order = total tiene default value al igual que carrito
+//ergo = no es necesario mandarlos por body ni hacer comprobaciones
+//(initial values: 0 y "carrito" respectivamente)
 
 

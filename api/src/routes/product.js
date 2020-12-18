@@ -36,8 +36,9 @@ server.get("/", (req, res, next) => {
   order && (order = JSON.parse(order)); // Parseando a Json el string recibido
   // /products/?where={"id":5}
   where && (where = JSON.parse(where));
-  // /products/?where={%22id%22:5}&include=[%22categories%22]
+  // /products/?where={%22id%22:5}&include=[%22categories%22] El valor de include debe ir en minúscula y plural
   include && (include = JSON.parse(include));
+
   Product.findAll({ limit, offset, order, where, include }) //Pasamos a findAll todos los argumentos
     .then((products) => {
       res.send(products).status(200);
@@ -47,7 +48,7 @@ server.get("/", (req, res, next) => {
 ////////////////////// S21 //////////////////////
 
 
-/////////////////Porcut ID////////////////////////
+/////////////////Product ID////////////////////////
 server.get("/:id", async (req, res) => {
   const { id } = req.params;
   const producto = await Product.findByPk(id);
