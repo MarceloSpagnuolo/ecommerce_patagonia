@@ -54,6 +54,7 @@ const inicialState = {
   categories: [],
   idUserCurrent: null,
   order: [],
+  users: []
 };
 
 function ReducerProducts(state = inicialState, action) {
@@ -172,7 +173,7 @@ function ReducerProducts(state = inicialState, action) {
     case CREATE_ORDER:
       return {};
     case CREATE_USER:
-      return {};
+      return {...state, users: action.payload};
     case ERROR_MESSAGE:
       alert(action.message);
       return { ...state };
