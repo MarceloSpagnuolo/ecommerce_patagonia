@@ -32,9 +32,9 @@ server.post("/", async (req, res) => {
     });
     !user ? res.sendStatus(400) : res.json(user).status(201);
   } catch (error) {
-    res.send("Ese email ya existe").status(400)   
+    res.send("Ese email ya existe").status(400)
   }
-  
+
 });
 
 ////////////// S35 ///////////////////
@@ -72,7 +72,7 @@ server.put("/:id", async (req, res) => {
       returning: true,
     }
   );
- 
+
   !user ? res.sendStatus(400) : res.json(user[1][0]);
 });
 
@@ -101,22 +101,21 @@ server.get("/", (req, res, next) => {
 //COMO PUEDE SER QUANTITY LA SEGUNDA LO UPDATEA Y EL JSON DEVUELVE UN 1!
 server.post("/:userId/cart", async (req, res) => {
   const { userId } = req.params;
-  //orderId
   const { productId, quantity, unitprice } = req.body;
   (!userId || !productId || !quantity || !unitprice) && res.send("Falta valor userId, productId, quantity o unitprice").status(400);
 
-  const user = await User.findByPk(userId, {include: Order});
-const orderId = user.orders[0].dataValues.id // saco el id del order.
+  const user = await User.findByPk(userId, { include: Order });
+  const orderId = user.orders[0].dataValues.id // saco el id del order.
 
-const order = await Order.findByPk(orderId)
-const product = await Product.findByPk(productId)
-const orderProduct = await order.setProduct(product, { through: { quantity, unitprice } }) //Agrega el producto
+  const order = await Order.findByPk(orderId)
+  const product = await Product.findByPk(productId)
+  const orderProduct = await order.addProduct(product, { through: { quantity, unitprice } }) //Agrega el producto
 
 
-!orderProduct ? res.sendStatus(400) : res.json(orderProduct);
+  !orderProduct ? res.sendStatus(400) : res.json(orderProduct);
 })
 
-    //////////////METODO ANTERIOR/////////////
+//////////////METODO ANTERIOR/////////////
 //   const order = await Order.findByPk(orderId);
 //   console.log(order, "esto es null??");
 //   const product = await Product.findByPk(productId);
@@ -160,104 +159,37 @@ server.get("/:userId/cart", async (req, res) => {
     ],
   });
 
-  // const orders = await user.getOrders({
-  //     where: {
-  //         [Op.or]: [
-  //             {
-  //                 status: "carrito",
-  //             }, {
-  //                 status: "creada",
-  //             },
-  //         ],
-  //     }
-  // })
-
-  // let arr = []
-  // for( let o of orders) {
-  //     const pepito = await o.getProducts()
-  //     arr.push(pepito)
-  // }
-
-  // console.log(user)
-  res.json(user);
+  !user ? res.sendStatus(404) : res.json(user);
 });
+/////////// Solo los productos /////////////
+/* 
+   Hay otro modelo que trae unicamente los productos en el res.data,
+   por espacio no se agrega abajo pero esta guardado por si surge
+   la necesidad.
+   Se recomienda optar en la practica por el que resulte mas conveniente.
+*/
 
-/////////////////S40///////////////
+///////////////// S40 ///////////////////
+// Es un delete normal. El res.Json devuelve el item
+// que es igual a 1, no influye porque la accion se efectua
+// pero puede devolver un message de confirmación de delete si se desea
+server.delete('/:orderId/cart/:productId', async (req, res) => {
+  const { orderId, productId } = req.params;
 
-server.get('/:userId/product/cart', async (req, res) => {
-  const { userId } = req.params;
-  const user = await User.findByPk(userId, {
-    include: {
-      model: Order,
-      where: {
-        [Op.or]: [
-          {
-            status: "carrito",
-          }, {
-            status: "creada",
-          },
-        ],
-      }
-    }
-  })
-  const orders = await user.getOrders({
-    where: {
-      [Op.or]: [
-        {
-          status: "carrito",
-        }, {
-          status: "creada",
-        },
-      ],
-    }
-  })
-  let arr = []
-  for (let o of orders) {
-    const pepito = await o.getProducts()
-    console.log(pepito, "miau")
-    arr.push(pepito)
+  const itemDelete = await Order_products.destroy({          //Se preguntaran porque usamos la tabla de relacion directamente
+    where: {                                                 // No les voy a mentir....
+      orderId,
+      productId
+    },
   }
-  res.json(arr)
+  );
+  !itemDelete ? res.sendStatus(404) : res.json(itemDelete)
 })
 
-/////////////////////////S41///////////////////
-
-server.put("/:userId/cart/otracosa", async (req, res) => {
-  const { userId } = req.params;
-  const { productId, quantity } = req.body;
-  const user = await User.findAll(
-    {
-      where: {
-        id: userId,
-      },
-      include: [
-        {
-          model: Order,
-          include: [
-            {
-              model: Product,
-              where: {
-                id: productId,
-              },
-            },
-          ],
-          where: {
-            status: "carrito",
-          },
-        },
-      ],
-    },
-  );
-
-
- 
-
-  ///////////////////////////
- 
-  console.log(resultado);
-  res.json(user);
-});
-
+///////////////////////// S41 /////////////////////
+// En la logica se considera que solo se puede modificar una orden
+// solo cuando se encuentra en estado "carrito", por eso solo se trabajan en estas
+// recibe solo "producto" y "quantity" del body ya que son las unicas modificables por el "USER"
 server.put('/:userId/product/cart', async (req, res) => {
   const { userId } = req.params;
   const { productId, quantity } = req.body;
@@ -265,10 +197,10 @@ server.put('/:userId/product/cart', async (req, res) => {
   const product = await Product.findByPk(productId);
   console.log(product);
 
-  const order = await Order.findOne({
-    where: {
-      userId,
-      [Op.or]: [
+  const order = await Order.findOne({         // nos traemos solo la orden con status "carrito"
+    where: {                                  // y que coincida con idUser
+      userId,                                 // al considerarse que un user solo puede tener una "order"
+      [Op.or]: [                              // en status "carrito", se utiliza el metodo "findOne"
         {
           status: "carrito",
         },
@@ -276,35 +208,19 @@ server.put('/:userId/product/cart', async (req, res) => {
     },
 
   })
-  await order.setProducts(product, { through: { quantity } });
-  console.log(order)
+  await order.setProducts(product, { through: { quantity } });  // aca se updatea los datos
 
-  const ordep = await Order_products.findAll(
+  const orderUpdate = await Order_products.findAll(       // se crea una const para devolverlo en el json
     {
       where: {
         orderId: order.id,
         productId
       }
     })
-  res.json(ordep)
+  !orderUpdate ? res.sendStatus(404) : res.json(orderUpdate)
 })
 
-server.delete('/:orderId/order/:productId', async (req, res) => {
-  const { orderId, productId } = req.params;
-
-  const product = await Product.findByPk(productId);
-  console.log(product);
-
-  
-  const ordep = await Order_products.destroy({
-      where: {
-          orderId,
-          productId
-      },
-    }
-    );
-  res.json(ordep)
-})
+/////////////// Fin de rutas en Users ///////////////
 
 
 module.exports = server;
