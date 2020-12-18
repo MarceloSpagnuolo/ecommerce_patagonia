@@ -112,7 +112,9 @@ VALUES ('Pepito', 'Pon', 'pepito22@gmail.com', 'pepito21', 'user','2017-08-09 07
 ('Ultimate', 'Marvel', 'Marve_16160@gmail.com', 'spiderman', 'admin','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('Juan', 'Cho', 'talarga@gmail.com', 'gatoloco', 'user','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('Tobey', 'Maguire', 'spider@gmail.com', 'bailenegro', 'admin','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
-('Pepardo', 'Bondon', 'bondi@gmail.com', 'pepito222', 'user','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00');
+('Pepardo', 'Bondon', 'bondi@gmail.com', 'pepito222', 'user','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
+('Pepon', 'Sodom', 'pepon@gmail.com', 'sacalamanodeahi', 'user','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
+('Armando', 'Esteban', 'quito@gmail.com', 'yonimelaslavo', 'user','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00');
 
 
 INSERT INTO Orders (total, date, status, "createdAt", "updatedAt", "userId")
@@ -123,7 +125,7 @@ VALUES (100 ,'2017-08-09 07:00:00 -7:00', 'carrito', '2017-08-09 07:00:00 -7:00'
 (100 ,'2017-08-09 07:00:00 -7:00', 'creada', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1),
 (100 ,'2017-08-09 07:00:00 -7:00', 'cancelada', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1);
 
-INSERT INTO "Order_products" (cantidad, preciounitario,  "createdAt", "updatedAt", "orderId", "productId" )
+INSERT INTO "Order_products" (quantity, unitprice,  "createdAt", "updatedAt", "orderId", "productId" )
 VALUES (10 ,1000, '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1, 1),
 (10 ,1000, '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1, 3),
 (5 ,750, '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 2, 3),
