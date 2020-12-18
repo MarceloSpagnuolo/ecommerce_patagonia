@@ -26,9 +26,9 @@ import {
 const url = "http://localhost:3001/";
 
 //Trae todos los productos
-export const getProducts = () => async (dispatch) => {
+export const getProducts = (limite,jump) => async (dispatch) => {
   try {
-    const res = await axios.get(`${url}products`);
+    const res = await axios.get(`${url}products/?limit=${limite}&offset=${jump}`);
     dispatch({
       type: GET_PRODUCTS,
       payload: res.data,

@@ -30,7 +30,7 @@ function Home(props) {
           </Link>
           <Link
             className="btnMenu"
-            to="/products"
+            to="/products/?page=1"
             onClick={() => handleClick()}
           >
             Productos{" "}
