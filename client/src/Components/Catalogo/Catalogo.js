@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ProductCard from "../ProductCard/ProductCard.js";
 import "./Catalogo.css";
-import { connect, useDispatch, useSelector } from "react-redux";
+import {connect, useDispatch, useSelector } from "react-redux";
 import {
   getProducts,
   getCategories,
   getProductByCategory,
 } from "../../store/actions/index";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 /* Componente a medio terminar. El CSS de ProductCard es necesario para que se vea bien la Card a la hora
 de renderizar. el CSS de categorías es un poco inestable y es necesario modificarlo cuando se pasen props,
@@ -17,24 +17,28 @@ El código y la lógica funcionan bien, salvo por la falta de props en la parte 
 function Catalogo(props) {
     const dispatch = useDispatch()
     const { categories } = useSelector(state => state)
+    const [ jump, setJump ] = useState(0)
 
-  useEffect(() => {
+ useEffect(() => {
+    var tempQuery = props.location.search
     var temp = props.history.location.pathname;
     temp = temp.split("/");
+    tempQuery && (tempQuery = tempQuery.split("="))
 
-
-    if (props.history.location.pathname === "/products") {
-      /* props.getProducts(); */
-      dispatch(getProducts())
+    if(tempQuery) {
+      let salto = tempQuery[1] > 0 ? (tempQuery[1]-1) * 12 : 0;
+      setJump(salto)
+      dispatch(getProducts(12,salto));
+    } else if (props.history.location.pathname === "/products") {
+      dispatch(getProducts(12,0))
     } 
-    
     if (props.history.location.pathname === `/products/categoria/${temp[3]}`) {
       props.getProductByCategory(temp[3]);
     }
 
     props.getCategories();
     return function cleanup() {};
-  }, []);
+  }, [jump]);
 
   function handleClick(catName) {
     props.getProductByCategory(catName);
@@ -44,6 +48,15 @@ function Catalogo(props) {
     props.getProducts();
   }
 
+  function handleNext() {
+    setJump(jump + 12);
+    //dispatch(getProducts(jump));
+  }
+
+  function handlePrev() {
+    setJump(jump - 12);
+    //dispatch(getProducts(jump));
+  }
   return (
     <div id="Catalogo-Container">
       <div id="Catalogo-Lista-Container">
@@ -51,9 +64,7 @@ function Catalogo(props) {
         {categories &&
           categories.map((cat) => (
             <Link
-
               className = "catalogo-Link"
-
               to={`/products/categoria/${cat.name}`}
               onClick={() => handleClick(cat.name)}
             >
@@ -92,6 +103,16 @@ function Catalogo(props) {
           </div>
         ))}
 
+      </div>
+      <div>
+        <Link to={`/products/?page=${(jump)/12}`}>
+            <button onClick={() => handlePrev()}
+            disabled={(jump/12) < 1}>Anterior</button>
+        </Link>
+        <Link to={`/products/?page=${((jump)/12)+2}`}>
+            <button onClick={() => handleNext() }
+            disabled={props.products.length < 12}>Siguiente</button>
+        </Link>
       </div>
     </div>
   );
