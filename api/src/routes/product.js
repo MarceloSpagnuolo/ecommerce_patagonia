@@ -4,6 +4,11 @@ const { Op } = require("sequelize");
 
 
 // Busca una cadena en el nombre o descripcion del producto \\\\\
+///////////////Busqueda con count para hacer la paginación////////////
+server.get("/count", async (req, res) => {
+  const count = await Product.findAndCountAll()
+  count ? res.send(count).status(200) : res.sendStatus(400);
+})
 
 //Preguntar porque el flow de las rutas hace que unas no se ejecuten dependiendo del orden de las mismas.
 server.get("/search", async (req, res) => {
