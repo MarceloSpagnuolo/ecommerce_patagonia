@@ -21,6 +21,7 @@ import {
   PUT_CHANGE_QUANTITY,
   GET_FULL_ORDERS,
   GET_ORDER_BY_ID,
+  CREATE_USER,
 } from "../constants/constants.js";
 
 const url = "http://localhost:3001/";
@@ -338,13 +339,27 @@ export const getFullOrders = () => async (dispatch) => {
 export const getOrderById = (orderId) => async (dispatch) => {
   try {
     const res = await axios.get(`${url}orders/${orderId}`);
-    console.log(res.data, "Vengo de Actions")
     dispatch({
       type: GET_ORDER_BY_ID,
       payload: res.data,
     })
   } catch(e) {
     dispatch({
+      type: ERROR_MESSAGE,
+      message: "Problemas para traer la órden de compra",
+    });
+  }
+}
+
+export const createUser = (payload) => async (dispatch) => {
+  try {
+    const res = await axios.post(`${url}users/`, payload)
+    dispatch({
+      type: CREATE_USER,
+      payload: res.data,
+    })
+  } catch(e) {
+     dispatch({
       type: ERROR_MESSAGE,
       message: "Problemas para traer la órden de compra",
     });
