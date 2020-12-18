@@ -7,7 +7,7 @@ import { getCategories, getProducts } from "../../store/actions/index.js";
 
 function Home(props) {
   function handleClick() {
-    props.getProducts();
+    props.getProducts(12,0);
     props.getCategories();
   }
 
@@ -58,7 +58,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getProducts: () => dispatch(getProducts()),
+    getProducts: (limit, offset) => dispatch(getProducts(limit, offset)),
     getCategories: () => dispatch(getCategories()),
   };
 }

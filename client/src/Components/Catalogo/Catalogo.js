@@ -7,7 +7,8 @@ import {
   getCategories,
   getProductByCategory,
 } from "../../store/actions/index";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 /* Componente a medio terminar. El CSS de ProductCard es necesario para que se vea bien la Card a la hora
 de renderizar. el CSS de categorías es un poco inestable y es necesario modificarlo cuando se pasen props,
@@ -18,13 +19,21 @@ function Catalogo(props) {
     const dispatch = useDispatch()
     const { categories } = useSelector(state => state)
     const [ jump, setJump ] = useState(0)
+    const [ count, setCount] = useState(0)
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/products/count")  
+       .then((res) => {
+     setCount(res.data.count)
+    })
+  },[])
 
  useEffect(() => {
     var tempQuery = props.location.search
     var temp = props.history.location.pathname;
     temp = temp.split("/");
     tempQuery && (tempQuery = tempQuery.split("="))
-
+    
     if(tempQuery) {
       let salto = tempQuery[1] > 0 ? (tempQuery[1]-1) * 12 : 0;
       setJump(salto)
@@ -45,7 +54,7 @@ function Catalogo(props) {
   }
 
   function handleClickAll() {
-    props.getProducts();
+    props.getProducts(12,0);
   }
 
   function handleNext() {
@@ -111,7 +120,7 @@ function Catalogo(props) {
         </Link>
         <Link to={`/products/?page=${((jump)/12)+2}`}>
             <button onClick={() => handleNext() }
-            disabled={props.products.length < 12}>Siguiente</button>
+            disabled={((jump/12)+1)*12 >= count}>Siguiente</button>
         </Link>
       </div>
     </div>
@@ -127,7 +136,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getProducts: () => dispatch(getProducts()),
+    getProducts: (limit, offset) => dispatch(getProducts(limit, offset)),
     getCategories: () => dispatch(getCategories()),
     getProductByCategory: (catName) => dispatch(getProductByCategory(catName)),
   };
