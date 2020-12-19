@@ -91,10 +91,10 @@ function Catalogo(props) {
           </button>
         </Link>
       </div>
+      <div className="Catalogo-Products-Pagination">
+        <div id="Catalogo-ProductCard-Container">
 
-      <div id="Catalogo-ProductCard-Container">
-
-        {props.products.length > 0 && props.products.map((prod) => (
+          {props.products.length > 0 && props.products.map((prod) => (
           <div>
 
             <Link className="catalogo-Link" to={`/product/${prod.id}`}>
@@ -108,21 +108,22 @@ function Catalogo(props) {
                 volume={prod.volume}
               ></ProductCard>
 
-            </Link>
-          </div>
-        ))}
+              </Link>
+            </div>
+          ))}
 
-      </div>
-      <div>
+        </div>
+      <div className="Catalago-Pagination">
         <Link to={`/products/?page=${(jump)/12}`}>
-            <button onClick={() => handlePrev()}
+            <button className="Catalogo-Btn-Prev" onClick={() => handlePrev()}
             disabled={(jump/12) < 1}>Anterior</button>
         </Link>
         <Link to={`/products/?page=${((jump)/12)+2}`}>
-            <button onClick={() => handleNext() }
+            <button className="Catalogo-Btn-Next" onClick={() => handleNext() }
             disabled={((jump/12)+1)*12 >= count}>Siguiente</button>
         </Link>
       </div>
+    </div>
     </div>
   );
 }

@@ -7,7 +7,6 @@ server.post("/:idProducto/category/:idCategoria", async (req, res) => {
     const { idProducto, idCategoria } = req.params;
 
     const product = await Product.findByPk(idProducto);
-    console.log(product, "SOY EL PRODUCTO DEL BACK")
     !product && res.sendStatus(404);
 
     const category = await Category.findByPk(idCategoria);
@@ -15,6 +14,7 @@ server.post("/:idProducto/category/:idCategoria", async (req, res) => {
 
     await product.addCategory(category);
     const products = await Product.findAll({
+      order: ["id"],
       include: {
         model: Category
       }
@@ -38,6 +38,7 @@ server.delete("/:idProducto/category/:idCategoria", async (req, res) => {
     await product.removeCategory(category);
 
     const products = await Product.findAll({
+      order: ["id"],
       include: {
         model: Category
       }

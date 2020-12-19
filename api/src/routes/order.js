@@ -57,8 +57,6 @@ server.post("/:orderId/cart/:productId", async (req, res) => {
 
   (!orderId || !productId || !quantity || !unitprice) && res.send("Falta orderid, productid, quantity o unitprice").status(400);
 
-  console.log(productId, "SOY EL ID DE PRODUCTOS")
-
   const orderProducts = await Order_products.create({
     orderId,
     productId,

@@ -6,8 +6,6 @@ import './Table.css'
 // beers, removeBeers, seteadora, estados, onUpdate,
 const Table = (props) => {
     
-    // console.log(props, 'de taablita')
-    
     // const handleOnUpdate = useCallback(async (category) => {
     //     // La llamada a Axios        
     //     props.onUpdate({
@@ -34,7 +32,6 @@ const Table = (props) => {
                             let newArr = [];
                             for (let i = 0; i < c.categories.length; i++) {
                                 let id =c.categories[i].id
-                                console.log(id)
                                 newArr.push(
                                     <tr key={Math.random()+c.id}>
                                         <td>{c.name}</td>

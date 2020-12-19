@@ -258,7 +258,6 @@ export const deleteProductJoinCategory = (idProd, idCat) => async (
     const res = await axios.delete(
       `${url}relations/${idProd}/category/${idCat}`
     );
-    console.log(res.data, "VENGO DEL ACTIONS");
     dispatch({
       type: DELETE_PRODUCT_JOIN_CATEGORY,
       payload: res.data,

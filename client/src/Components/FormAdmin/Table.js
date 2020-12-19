@@ -26,11 +26,11 @@ const Table = (props) => {
         stock: beer.stock,
         volume: beer.volume,
         thumbnail: beer.thumbnail,
+        categories: beer.categories,
       });
     },
     [props.onUpdate]
   );
-  console.log(props, "de la tabla");
   return (
     <>
       <div className="contenedor">

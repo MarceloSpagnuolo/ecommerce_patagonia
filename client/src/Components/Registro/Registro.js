@@ -29,7 +29,6 @@ export default function Registro() {
            
             return errors
        }} onSubmit={(values) => {
-        console.log(values);
         dispatch(createUser(values));
        }}>{({
            isSubmitting,
