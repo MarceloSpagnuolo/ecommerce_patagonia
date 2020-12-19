@@ -24,7 +24,6 @@ server.post("/", async (req, res) => {
     },
 
   });
-  // console.log(newCategory[1], 'ACA ESTOY')
   !newCategory[1] ? res.sendStatus(404) : res.json(newCategory); //status 400 BAD REQUEST
 
 });

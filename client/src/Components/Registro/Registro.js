@@ -35,13 +35,13 @@ export default function Registro() {
             if (!regPass) { errors.hashedpassword = "Debe ingresar su contraseña" }
 
             return errors
-        }} onSubmit={(values) => {
-            console.log(values);
-            dispatch(createUser(values));
-        }}>{({
-            isSubmitting,
-            isValid
-        }) => (
+
+       }} onSubmit={(values) => {
+        dispatch(createUser(values));
+       }}>{({
+           isSubmitting,
+           isValid
+       }) => (
             <>
                 <h1>Registro de Usuario</h1>
                 <Form>

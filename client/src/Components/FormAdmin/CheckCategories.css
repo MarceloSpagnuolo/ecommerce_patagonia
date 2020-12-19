@@ -1,0 +1,9 @@
+.CheckCategories-Checkboxs {
+    margin-top: 10px;
+    display: flex;
+    justify-content:space-evenly wrap;
+}
+
+.CheckCategories-Check {
+    margin-left: 20px;
+}

@@ -154,9 +154,6 @@ server.put("/:id", async (req, res) => {
   //   (volume === "355 cc" || volume === "473 cc" || volume === "730 cc") &&
   //   typeof thumbnail === "string";
 
-  // console.log(comprobacion)
-  // !comprobacion && res.sendStatus(400);
-
   const product = await Product.update(
     {
       name,

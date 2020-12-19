@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import BeerForm from './BeerForm';
 import Table from './Table';
 import { connect } from 'react-redux'
-import { getProducts } from "../../store/actions/index";
+import { getProductJoinCategory } from "../../store/actions/index";
 import "./ComponentFormFather.css"
-
-
-
+import Checkcat from "../../Components/FormAdmin/CheckCategories"
 
 const ComponentFormFather = (props) => {
     const [display, setDisplay] = useState(false);
@@ -16,10 +14,9 @@ const ComponentFormFather = (props) => {
 
     useEffect(() => {
         //Axios backend listar
-        props.getProducts()
+        props.getProductJoinCategory()
         setBeers(props.products)
-    }, [])
-
+    }, [edit])
 
     const seteadora = (set, state) => {
         set(!state)
@@ -32,6 +29,7 @@ const ComponentFormFather = (props) => {
                 }>New</button>
                 {display ? <BeerForm seteadora={{ seteadora, display, setDisplay }} /> : null}
                 {edit ? <BeerForm data={beer} seteadora={{ seteadora, edit, setEdit }} /> : null}
+                {edit ? <Checkcat data={beer}/> : null}
                 <Table seteadora={seteadora}
                     estados={[edit, setEdit]}
                     onUpdate={setBeer}
@@ -39,10 +37,7 @@ const ComponentFormFather = (props) => {
             </div>
         </>
     )
-
 }
-
-
 
 function mapStateToProps(state) {
     return {
@@ -52,9 +47,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getProducts: () => dispatch(getProducts()),
+        getProductJoinCategory: () => dispatch(getProductJoinCategory()),
     };
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(ComponentFormFather);

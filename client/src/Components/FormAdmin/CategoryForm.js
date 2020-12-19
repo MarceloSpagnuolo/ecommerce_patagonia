@@ -5,7 +5,6 @@ import { addCategory, updateCategory } from '../../store/actions/index'
 
 
 const CategoryForm = (props) => {
-    console.log(props, "de categorias form")
     return (
         <Formik initialValues={props.data || {
             name: '',
