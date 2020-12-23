@@ -10,20 +10,20 @@ server.post("/", async (req, res) => {
     name,
     lastname,
     email,
-    hashedpassword,
+    password,
     city,
     adress,
     phone,
     postal,
     role,
   } = req.body;
-  (!name || !lastname || !email || !hashedpassword || !role) && res.send("Falta valor name, lastname, email, pass o role").status(400);
+  (!name || !lastname || !email || !password || !role) && res.send("Falta valor name, lastname, email, pass o role").status(400);
   try {
     const user = await User.create({
       name,
       lastname,
       email,
-      hashedpassword,
+      password,
       city,
       adress,
       phone,
@@ -45,7 +45,7 @@ server.put("/:id", async (req, res) => {
     name,
     lastname,
     email,
-    hashedpassword,
+    password,
     city,
     adress,
     phone,
@@ -58,7 +58,7 @@ server.put("/:id", async (req, res) => {
       name,
       lastname,
       email,
-      hashedpassword,
+      password,
       city,
       adress,
       phone,
@@ -89,11 +89,16 @@ server.get("/", (req, res, next) => {
   where && (where = JSON.parse(where));
   // /products/?where={%22id%22:5}&include=[%22categories%22]
   include && (include = JSON.parse(include));
-  User.findAll({ limit, offset, order, where, include }) //Pasamos a findAll todos los argumentos
+  if(req.user) {
+
+    User.findAll({ limit, offset, order, where, include }) //Pasamos a findAll todos los argumentos
     .then((users) => {
       res.send(users).status(200);
     })
     .catch(next);
+  } else {
+    res.sendStatus(401);
+  }
 });
 
 /////////////////// S38 /////////////////////////////

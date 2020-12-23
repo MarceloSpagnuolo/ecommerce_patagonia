@@ -37,7 +37,7 @@ server.post("/:userId", async (req, res) => {
   const { userId } = req.params;
   const { total, date, status } = req.body;
 
-  (!date || !userId) && res.send("Falta el valor de fecha o userid").status(400);
+  // (!date || !userId) && res.send("Falta el valor de fecha o userid").status(400);
 
   const order = await Order.create({
     total,

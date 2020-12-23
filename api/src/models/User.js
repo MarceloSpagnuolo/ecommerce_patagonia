@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt")
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
     // defino el modelo
-    sequelize.define('user', {
+    const User = sequelize.define('user', {
         name: {
             type: DataTypes.STRING,
             allowNull: false
@@ -17,15 +17,18 @@ module.exports = (sequelize) => {
         },
         email: {
             type: DataTypes.STRING,
-            allowNull: false,
-            unique: true,
-            validate: {
-                isEmail: true
-            }
+            allowNull: true,
+            unique: true,            
         },
-        hashedpassword: {
-            type: DataTypes.STRING(64),
-            is: /^[0-9a-f]{64}$/i
+        password: {
+            type: DataTypes.STRING,
+            set(value) {
+                if(value) {
+                    const salt = bcrypt.genSaltSync(10)
+                    const hash = bcrypt.hashSync(value, salt)
+                    this.setDataValue("password", hash)
+                }
+            }
         },
         city: {
             type: DataTypes.STRING,
@@ -44,20 +47,9 @@ module.exports = (sequelize) => {
             allowNull: false,
         }
     });
+    User.prototype.compare = function(pass){
+        return bcrypt.compareSync(pass, this.password)
+    }
+
+    return User;
 };
-
-
-
-
-
-// user.beforeCreate((user) => {
-//     user.hashedPassword = "12345"
-// })
-//User.addHook('beforeCreate', async (user) => {
-    //     const salt = await bcrypt.genSaltSync(8);
-    //     user.hashedPassword = await bcrypt.hashSync(user.hashedPassword, salt);
-    // });
-
-    // User.addHook('beforeValiate', async (hashedPassword) => {
-    //     return await bcrypt.compare(hashedPassword, this.hashedPassword);
-    // });
