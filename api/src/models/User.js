@@ -7,11 +7,11 @@ const bcrypt = require("bcrypt")
 module.exports = (sequelize) => {
     // defino el modelo
     const User = sequelize.define('user', {
-        name: {
+        givenname: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        lastname: {
+        familyname: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -30,6 +30,14 @@ module.exports = (sequelize) => {
                 }
             }
         },
+        googleID: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        photoURL: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
         city: {
             type: DataTypes.STRING,
         },
@@ -45,6 +53,7 @@ module.exports = (sequelize) => {
         role: {
             type: DataTypes.ENUM('user', 'admin'),
             allowNull: false,
+            defaultValue: "user"
         }
     });
     User.prototype.compare = function(pass){

@@ -7,8 +7,8 @@ const { Op } = require("sequelize");
 //Si ingresa un mail repetido, manda un status 400 con un mensaje de email repetido.
 server.post("/", async (req, res) => {
   const {
-    name,
-    lastname,
+    givenname,
+    familyname,
     email,
     password,
     city,
@@ -17,11 +17,11 @@ server.post("/", async (req, res) => {
     postal,
     role,
   } = req.body;
-  (!name || !lastname || !email || !password || !role) && res.send("Falta valor name, lastname, email, pass o role").status(400);
+  (!givenname || !familyname || !email || !password || !role) && res.send("Falta valor name, lastname, email, pass o role").status(400);
   try {
     const user = await User.create({
-      name,
-      lastname,
+      givenname,
+      familyname,
       email,
       password,
       city,
@@ -42,8 +42,8 @@ server.post("/", async (req, res) => {
 server.put("/:id", async (req, res) => {
   const { id } = req.params;
   const {
-    name,
-    lastname,
+    givenname,
+    familyname,
     email,
     password,
     city,
@@ -55,8 +55,8 @@ server.put("/:id", async (req, res) => {
 
   const user = await User.update(
     {
-      name,
-      lastname,
+      givenname,
+      familyname,
       email,
       password,
       city,

@@ -106,7 +106,7 @@ VALUES ('2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1, 1),
 ('2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 29, 3),
 ('2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 29, 5);
 
-INSERT INTO users (name, lastname, email, password, role, "createdAt", "updatedAt")
+INSERT INTO users (givenname, familyname, email, password, role, "createdAt", "updatedAt")
 
 VALUES ('Pepito', 'Pon', 'pepito22@gmail.com', 'pepito21', 'user','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('Ultimate', 'Marvel', 'Marve_16160@gmail.com', 'spiderman', 'admin','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
