@@ -76,6 +76,7 @@
 .Catalago-Pagination {
   display: flex;
   justify-content:flex-end;
+  margin-left:auto;
   margin-right: 13%;
   margin-top: 20px;
 }

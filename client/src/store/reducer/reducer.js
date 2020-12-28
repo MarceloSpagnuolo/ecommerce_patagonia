@@ -47,14 +47,18 @@ import {
   UPDATE_ORDER_TO_FULL,
   UPDATE_ORDER_TO_REJECT,
   GET_FULL_ORDERS,
+  GET_USER_CART,
+  POST_PRODUCT_TO_CART,
+  GET_USER_BY_ID,
+  DEL_PRODUCT_TO_CART,
+  EMPTY_ALL_PRODUCTS_OF_CART,
 } from "../constants/constants";
 
 const inicialState = {
   products: [],
   categories: [],
-  idUserCurrent: null,
   order: [],
-  users: []
+  users: {}
 };
 
 function ReducerProducts(state = inicialState, action) {
@@ -75,7 +79,7 @@ function ReducerProducts(state = inicialState, action) {
     case GET_PRODUCTS_BY_CATEGORY:
       return {
         ...state,
-        products: action.payload[0].products,
+        products: action.payload,
       };
     case GET_PRODUCT_BY_ID:
       return { ...state, products: action.payload };
@@ -193,6 +197,16 @@ function ReducerProducts(state = inicialState, action) {
       return { ...state, products: action.payload };
     case POST_CREATE_CART:
       return { ...state, order: action.payload };
+    case GET_USER_CART:
+      return { ...state, users: action.payload};
+    case POST_PRODUCT_TO_CART:
+      return { ...state, order: action.payload};
+    case GET_USER_BY_ID:
+      return { ...state, users: action.payload};
+    case DEL_PRODUCT_TO_CART:
+      return { ...state, order: action.payload};
+    case EMPTY_ALL_PRODUCTS_OF_CART:
+      return { ...state, order: action.payload};
     default:
       return state;
   }

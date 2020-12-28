@@ -10,33 +10,30 @@ import {
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+/* Componente a medio terminar. El CSS de ProductCard es necesario para que se vea bien la Card a la hora
+de renderizar. el CSS de categorías es un poco inestable y es necesario modificarlo cuando se pasen props,
+pero por ahora no quiero renegar mucho más, ya que no tengo idea cuantas categorías van a haber.
+El código y la lógica funcionan bien, salvo por la falta de props en la parte de categorías.*/
 
 function Catalogo(props) {
-  const [ pagina, setPagina ] = useState(0);
   const dispatch = useDispatch();
   const { categories } = useSelector(state => state);
   const [ jump, setJump ] = useState(0);
   const [ count, setCount] = useState(0);
-  
-  useEffect(() => {
-    //debería contar o todos los productos o por categoria
-    axios.get("http://localhost:3001/products/count")  
-    .then((res) => {
-      setCount(res.data.count)
-    })
-  },[])
-  
-  useEffect(() => {
-    var page = props.location.search.split("=")[1];
-    console.log(page,"Page");
-    setPagina(page);
-  
+
+useEffect(() => {
+  //debería contar o todos los productos o por categoria
+  axios.get("http://localhost:3001/products/count")  
+     .then((res) => {
+   setCount(res.data.count)
+  })
+},[])
+
+useEffect(() => {
   var tempQuery = props.location.search
-  console.log(tempQuery);
   tempQuery = tempQuery.split("=")
-  
+
   var temp = props.history.location.pathname;
-  console.log(temp)
   temp = temp.split("/");
   
   if(tempQuery) {
@@ -53,10 +50,6 @@ function Catalogo(props) {
   props.getCategories();
   return function cleanup() {};
 }, [jump]);
-
-useEffect(() => {
-  console.log(pagina,"Pagina")
-},[pagina])
 
 function handleClick(catName) {
   props.getProductByCategory(catName);
@@ -78,10 +71,10 @@ function handlePrev() {
 return (
   <div id="Catalogo-Container">
     <div id="Catalogo-Lista-Container">
-      <ul id="Catalogo-Lista">Categorias</ul>
+      <lu id="Catalogo-Lista">Categorias</lu>
       {categories &&
         categories.map((cat) => (
-          <Link key={cat.id}
+          <Link
             className = "catalogo-Link"
             //debería ser a /products/categoria/?page=1
             to={`/products/categoria/${cat.name}`}
@@ -100,7 +93,7 @@ return (
       <div id="Catalogo-ProductCard-Container">
 
         {props.products.length > 0 && props.products.map((prod) => (
-        <div key={prod.id}>
+        <div>
 
           {/* <Link className="catalogo-Link" to={`/product/${prod.id}`}> */}
 
@@ -112,7 +105,6 @@ return (
               stock={prod.stock}
               price={prod.price}
               volume={prod.volume}
-              categorias={prod.categories}
             ></ProductCard>
 
             {/* </Link> */}

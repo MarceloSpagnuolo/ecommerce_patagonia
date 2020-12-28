@@ -77,7 +77,16 @@ server.delete("/removeProduct/:id", async (req, res) => {
 server.get("/categoria/:nombreCat", async (req, res, next) => {
   const { nombreCat } = req.params;
 
-  const products = await Category.findAll({
+  const products = await Product.findAll({
+    include: {
+      model: Category,
+      where: {
+        name: nombreCat,
+      },
+    }
+  })
+
+  /* const products = await Category.findAll({
     where: {
       name: nombreCat,
     },
@@ -94,8 +103,9 @@ server.get("/categoria/:nombreCat", async (req, res, next) => {
         "volume",
         "thumbnail",
       ],
+      model: Category,
     },
-  });
+  }); */
 
   !products ? res.sendStatus(404) : res.json(products);
 

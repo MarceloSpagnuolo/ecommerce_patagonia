@@ -28,6 +28,18 @@ Esta función por ahora la comento pero va a ser la que eventualmente vamos a us
 get que tengan limit,where, etc. para hacerlas super dinámicas.
 */
 
+server.get("/:userId/cart", async (req, res) => {
+  const { userId } = req.params;
+  const order = await Order.findOne({
+    where: {
+      userId,
+      status: "carrito"
+    },
+    include: [Product]
+  })
+  console.log(order)
+  !order ?  res.sendStatus(400) : res.json(order);
+})
 
 //model order = total tiene default value al igual que carrito
 //ergo = no es necesario mandarlos por body ni hacer comprobaciones
@@ -37,7 +49,7 @@ server.post("/:userId", async (req, res) => {
   const { userId } = req.params;
   const { total, date, status } = req.body;
 
-  (!date || !userId) && res.send("Falta el valor de fecha o userid").status(400);
+  (!userId) && res.send("Falta el valor de fecha o userid").status(400);
 
   const order = await Order.create({
     total,
@@ -54,16 +66,49 @@ server.post("/:userId", async (req, res) => {
 server.post("/:orderId/cart/:productId", async (req, res) => {
   const { orderId, productId } = req.params;
   const { quantity, unitprice } = req.body;
+  //console.log("Order: ",orderId, "Product: ", productId)
 
   (!orderId || !productId || !quantity || !unitprice) && res.send("Falta orderid, productid, quantity o unitprice").status(400);
 
-  const orderProducts = await Order_products.create({
-    orderId,
-    productId,
-    quantity,
-    unitprice,
+
+  //Primero vamos a ver si ya se encuentra el producto agregado al carrito
+  const producto = await Order_products.findOne({
+    where: {
+      orderId,
+      productId
+    }
   });
-  !orderProducts ? res.sendStatus(400) : res.json(orderProducts).status(201);
+  //console.log("producto: ", producto)
+
+  if(producto) {    //Si el producto ya está agregado al carrito
+    const cantidad = producto.quantity + quantity;
+    console.log("Cantidad: ", cantidad)
+    const sumado = await Order_products.update({
+      quantity: cantidad},
+      {where: {
+        orderId,
+        productId
+      }
+    })
+  } else {    //Si el producto no estaba agregado al carrito
+    const agregado = await Order_products.create({
+      orderId,
+      productId,
+      quantity,
+      unitprice,
+    });
+    console.log("Agregado: ", agregado)
+  }
+
+  const order = await Order.findOne({
+    where: {
+      id: orderId
+    },
+    include: [ Product ]
+  })
+  
+  //console.log(order, "Esta es la orden con el producto agregado");
+  !order ? res.sendStatus(400) : res.json(order).status(200);
 });
 
 ////////////////S44////////////////
@@ -86,6 +131,7 @@ server.get("/", async (req, res, next) => {
 
   const orders = await Order.findAll({ limit, offset, order, where, include }) //Pasamos a findAll todos los argumentos
     
+  console.log(orders, "Vengo de la ruta del back");
   !orders ? res.sendStatus(400) : res.json(orders).status(200);
 });
 
@@ -164,6 +210,41 @@ server.get("/:orderId", async (req, res) => {
     },
     include: [User, Product],
   });
+  !order ? res.sendStatus(400) : res.json(order);
+});
+
+//eliminar un producto del carrito
+server.delete("/:orderId/cart/:productId", async (req, res) => {
+  const { orderId, productId } = req.params;
+  await Order_products.destroy({
+    where: {
+      orderId,
+      productId
+    }
+  });
+  const order = await Order.findOne({
+    where: {
+      id: orderId
+    },
+    include: [ Product ]
+  })
+  !order ? res.sendStatus(400) : res.json(order);
+});
+
+//vaciar el carrito
+server.delete("/:orderId/products", async (req, res) => {
+  const { orderId } = req.params;
+  await Order_products.destroy({
+    where: {
+      orderId
+    }
+  });
+  const order = await Order.findOne({
+    where: {
+      id: orderId
+    },
+    include: [ Product ]
+  })
   !order ? res.sendStatus(400) : res.json(order);
 });
 

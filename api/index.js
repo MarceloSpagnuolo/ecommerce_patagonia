@@ -21,7 +21,7 @@ const server = require("./src/app.js");
 const { conn } = require("./src/db.js");
 const { query } = require("./INSERT");
 // Syncing all the models at once.
-const force = true;
+const force = false;
 conn.sync({ force }).then(() => {
   if (force) {
     query();

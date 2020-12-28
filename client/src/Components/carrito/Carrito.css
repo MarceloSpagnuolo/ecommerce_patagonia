@@ -17,6 +17,7 @@
   border-bottom: solid lightgray 1px;
   margin-bottom: 10px;
   padding-bottom: 10px;
+  align-items: center;
 }
 .Carrito-Detalles {
   display: flex;
@@ -28,6 +29,7 @@
   justify-content: space-between;
   align-items: center;
   width: 30%;
+  margin-left: 10px;
 }
 
 .Carrito-Boton-Cantidad {
@@ -83,9 +85,28 @@
   color: white;
   font-size: 18px;
   margin-top: 30px;
+  margin-left: 5px;
 }
 
 .Carrito-Continuar:hover {
   box-shadow: 3px 3px 10px black;
+  cursor: pointer;
+}
+
+.Carrito-Continuar:disabled {
+  background-color: lightgray;
+  color: gray;
+  cursor: no-drop;
+  box-shadow: none;
+}
+
+.Carrito-Btn-Cancel {
+  height: 30px;
+}
+
+.Carrito-Btn-Cancel:hover {
+  background-color: red;
+  color: white;
+  border-radius: 5px;
   cursor: pointer;
 }
