@@ -12,69 +12,67 @@ import axios from "axios";
 
 
 function Catalogo(props) {
-  const [ pagina, setPagina ] = useState(0);
   const dispatch = useDispatch();
   const { categories } = useSelector(state => state);
-  const [ jump, setJump ] = useState(0);
+  const [ categ, setCateg ] = useState("");
   const [ count, setCount] = useState(0);
+  const [ pagina, setPagina ] = useState(1);
   
   useEffect(() => {
-    //debería contar o todos los productos o por categoria
-    axios.get("http://localhost:3001/products/count")  
-    .then((res) => {
-      setCount(res.data.count)
-    })
-  },[])
-  
-  useEffect(() => {
-    var page = props.location.search.split("=")[1];
-    console.log(page,"Page");
-    setPagina(page);
-  
-  var tempQuery = props.location.search
-  console.log(tempQuery);
-  tempQuery = tempQuery.split("=")
-  
-  var temp = props.history.location.pathname;
-  console.log(temp)
-  temp = temp.split("/");
-  
-  if(tempQuery) {
-    let salto = tempQuery[1] > 0 ? (tempQuery[1]-1) * 12 : 0;
-    setJump(salto)
-    dispatch(getProducts(12,salto));
-  } else if (props.history.location.pathname === "/products") {
-    dispatch(getProducts(12,0))
-  } 
-  if (props.history.location.pathname === `/products/categoria/${temp[3]}`) {
-    props.getProductByCategory(temp[3]);
-  }
+    //Primero comprueba si estamos viendo productos por categoría
+    if(props.history.location.pathname.includes("categoria")) {
+      //Si es asi asigna a "categ" el nombre de la categoría
+      const categ = props.history.location.pathname.split("/")[3];
+      //Manda a llamar directamente la ruta que trae la cantidad de
+      //productos es esa categoria
+      axios.get("http://localhost:3001/products/count/"+categ)
+      .then((res) => {
+        //Setea en count la cantidad de productos de la categoría
+        setCount(res.data.count);
+      })
+    } else {
+      //Si no se están mostrando los productos por categoría, manda a llamar
+      //la misma ruta pero con el prefijo "all" que indica que se necesita
+      //que se cuenten todos los productos
+      axios.get("http://localhost:3001/products/count/all")  
+      .then((res) => {
+        //Setea count con todos los productos
+        setCount(res.data.count);
+      })
+    }
+  },[categ]) //se ejecuta cuando categ cambia
 
-  props.getCategories();
-  return function cleanup() {};
-}, [jump]);
+    useEffect(() => {
+      const page = props.location.search.split("=")[1];
 
-useEffect(() => {
-  console.log(pagina,"Pagina")
-},[pagina])
+      if(props.history.location.pathname.includes("categoria")) {
+        const categ = props.history.location.pathname.split("/")[3];
+        dispatch(getProductByCategory(categ,12,(page-1)*12));
+      } else {
+        dispatch(getProducts(12,(page-1)*12));
+      }
+  
+      dispatch(getCategories());
+      return function cleanup() {};
+}, [pagina, categ]); // Este useEffect se ejecuta cuando cambia la página
 
-function handleClick(catName) {
-  props.getProductByCategory(catName);
+function handleClick(cat) {
+  setCateg(cat);
 }
 
 function handleClickAll() {
-  props.getProducts(12,0);
+  setPagina(1);
+  setCateg("");
 }
 
 function handleNext() {
-  setJump(jump + 12);
-  //dispatch(getProducts(jump));
+  setPagina(pagina + 1);
 }
 
 function handlePrev() {
-  setJump(jump - 12);
-  //dispatch(getProducts(jump));
+  setPagina(pagina - 1);
 }
+
 return (
   <div id="Catalogo-Container">
     <div id="Catalogo-Lista-Container">
@@ -83,8 +81,7 @@ return (
         categories.map((cat) => (
           <Link key={cat.id}
             className = "catalogo-Link"
-            //debería ser a /products/categoria/?page=1
-            to={`/products/categoria/${cat.name}`}
+            to={`/products/categoria/${cat.name}/?page=1`}
             onClick={() => handleClick(cat.name)}
           >
             <li className="Catalogo-Lista-Item">{cat.name}</li>
@@ -102,10 +99,7 @@ return (
         {props.products.length > 0 && props.products.map((prod) => (
         <div key={prod.id}>
 
-          {/* <Link className="catalogo-Link" to={`/product/${prod.id}`}> */}
-
             <ProductCard
-              /* id={prod.id} */
               id={prod.id}
               name={prod.name}
               thumbnail={prod.thumbnail}
@@ -115,19 +109,18 @@ return (
               categorias={prod.categories}
             ></ProductCard>
 
-            {/* </Link> */}
           </div>
         ))}
 
       </div>
     <div className="Catalago-Pagination">
-      <Link to={`/products/?page=${(jump)/12}`}>
+      <Link to={`${props.history.location.pathname}?page=${pagina-1}`}>
           <button className="Catalogo-Btn-Prev" onClick={() => handlePrev()}
-          disabled={(jump/12) < 1}>Anterior</button>
+          disabled={pagina === 1}>Anterior</button>
       </Link>
-      <Link to={`/products/?page=${((jump)/12)+2}`}>
+      <Link to={`${props.history.location.pathname}?page=${pagina+1}`}>
           <button className="Catalogo-Btn-Next" onClick={() => handleNext() }
-          disabled={((jump/12)+1)*12 >= count}>Siguiente</button>
+          disabled={(pagina*12) >= count}>Siguiente</button>
       </Link>
     </div>
   </div>
@@ -146,7 +139,6 @@ function mapDispatchToProps(dispatch) {
 return {
   getProducts: (limit, offset) => dispatch(getProducts(limit, offset)),
   getCategories: () => dispatch(getCategories()),
-  getProductByCategory: (catName) => dispatch(getProductByCategory(catName)),
 };
 }
 

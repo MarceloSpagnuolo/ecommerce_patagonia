@@ -5,8 +5,21 @@ const { Op } = require("sequelize");
 
 // Busca una cadena en el nombre o descripcion del producto \\\\\
 ///////////////Busqueda con count para hacer la paginación////////////
-server.get("/count", async (req, res) => {
-  const count = await Product.findAndCountAll()
+server.get("/count/:nameCat", async (req, res) => {
+  const { nameCat } = req.params;
+
+  if(nameCat === "all") {
+    count = await Product.findAndCountAll()
+  } else {
+    count = await Product.findAndCountAll({
+      include: {
+        model: Category,
+        where: {
+          name: nameCat,
+        }
+      }
+    })
+  }
   count ? res.send(count).status(200) : res.sendStatus(400);
 })
 
@@ -52,6 +65,24 @@ server.get("/", (req, res, next) => {
 });
 ////////////////////// S21 //////////////////////
 
+// Muestra todos los productos de una categoría//////////////////////
+server.get("/categoria/", async (req, res) => {
+  const { nameCat, limit, offset } = req.query;
+
+  const products = await Product.findAll({
+    limit,
+    offset,
+    include: {
+      model: Category,
+      where: {
+        name: nameCat,
+      },
+    }
+  })
+
+  !products ? res.sendStatus(404) : res.json(products);
+
+});
 
 /////////////////Product ID////////////////////////
 server.get("/:id", async (req, res) => {
@@ -73,44 +104,6 @@ server.delete("/removeProduct/:id", async (req, res) => {
 
 });
 
-// Muestra todos los productos de una categoría//////////////////////
-server.get("/categoria/:nombreCat", async (req, res, next) => {
-  const { nombreCat } = req.params;
-
-  const products = await Product.findAll({
-    include: {
-      model: Category,
-      where: {
-        name: nombreCat,
-      },
-    }
-  })
-
-  /* const products = await Category.findAll({
-    where: {
-      name: nombreCat,
-    },
-    attributes: ["name", "description"],
-    include: {
-      model: Product,
-      attributes: [
-        "id",
-        "name",
-        "appearance",
-        "description",
-        "price",
-        "stock",
-        "volume",
-        "thumbnail",
-      ],
-      model: Category,
-    },
-  }); */
-
-  !products ? res.sendStatus(404) : res.json(products);
-
-
-});
 
 ////////////////////// S22 //////////////////////
 

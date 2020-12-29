@@ -33,9 +33,9 @@
 #ProductCard-Container {
   display: flex;
   /* background-color: white; */
-  padding: 20px 0px 10px 0px;
+  /*padding: 20px 0px 10px 0px; */
   margin: 20px 10px 0px 10px;
-  height: 100px;
+  height: 140px;
   width: 350px;
   align-items: center;
   justify-items: self-start;

@@ -176,9 +176,9 @@ export const deleteCategory = (id) => async (dispatch) => {
 };
 
 // Trae LOS productos por la categoria
-export const getProductByCategory = (catName) => async (dispatch) => {
+export const getProductByCategory = (nameCat, limit, offset) => async (dispatch) => {
   try {
-    const res = await axios.get(`${url}products/categoria/${catName}`);
+    const res = await axios.get(`${url}products/categoria/?nameCat=${nameCat}&limit=${limit}&offset=${offset}`);
     dispatch({
       type: GET_PRODUCTS_BY_CATEGORY,
       payload: res.data,

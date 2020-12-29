@@ -37,7 +37,6 @@ server.get("/:userId/cart", async (req, res) => {
     },
     include: [Product]
   })
-  console.log(order)
   !order ?  res.sendStatus(400) : res.json(order);
 })
 
@@ -66,7 +65,6 @@ server.post("/:userId", async (req, res) => {
 server.post("/:orderId/cart/:productId", async (req, res) => {
   const { orderId, productId } = req.params;
   const { quantity, unitprice } = req.body;
-  //console.log("Order: ",orderId, "Product: ", productId)
 
   (!orderId || !productId || !quantity || !unitprice) && res.send("Falta orderid, productid, quantity o unitprice").status(400);
 
@@ -78,11 +76,9 @@ server.post("/:orderId/cart/:productId", async (req, res) => {
       productId
     }
   });
-  //console.log("producto: ", producto)
 
   if(producto) {    //Si el producto ya está agregado al carrito
     const cantidad = producto.quantity + quantity;
-    console.log("Cantidad: ", cantidad)
     const sumado = await Order_products.update({
       quantity: cantidad},
       {where: {
@@ -97,7 +93,6 @@ server.post("/:orderId/cart/:productId", async (req, res) => {
       quantity,
       unitprice,
     });
-    console.log("Agregado: ", agregado)
   }
 
   const order = await Order.findOne({
@@ -107,7 +102,6 @@ server.post("/:orderId/cart/:productId", async (req, res) => {
     include: [ Product ]
   })
   
-  //console.log(order, "Esta es la orden con el producto agregado");
   !order ? res.sendStatus(400) : res.json(order).status(200);
 });
 
@@ -131,7 +125,6 @@ server.get("/", async (req, res, next) => {
 
   const orders = await Order.findAll({ limit, offset, order, where, include }) //Pasamos a findAll todos los argumentos
     
-  console.log(orders, "Vengo de la ruta del back");
   !orders ? res.sendStatus(400) : res.json(orders).status(200);
 });
 

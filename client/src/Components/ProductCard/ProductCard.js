@@ -26,7 +26,7 @@ export default function ProductCard(props) {
           <img id="ProductCard-Img" src={props.thumbnail} alt="Imagen aquí"></img>
         </Link>
         {props.categorias && props.categorias.map((elem) => (
-          <span className="nameCategorias">{elem.name}</span>
+          <span className="nameCategorias">{elem.name.replace(" ","_")}</span>
         ))}
       </div>
       <div className="ProductCard-Props">

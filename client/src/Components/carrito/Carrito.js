@@ -7,6 +7,10 @@ function Carrito() {
   const [total, setTotal] = useState(0);
   const { order } = useSelector(state => state);
   const dispatch = useDispatch();
+  const [ modal1, setModal1 ] = useState(false);
+  const [ modal2, setModal2 ] = useState(false);
+  const [produ, setProdu] = useState({});
+  const [ cart, setCart ] = useState(0);
 
   useEffect(() => {
     var cal = 0;
@@ -27,17 +31,35 @@ function Carrito() {
   }
 
   function deleteProduct(orderId, prodId, prodName, prodVol) {
-    var opcion = window.confirm("Desea eliminar "+prodName+" de "+prodVol+" ?");
-    if(opcion) {
-      dispatch(delProductToCart(orderId, prodId));
-    }
+    setProdu({orderId, prodId, prodName, prodVol})
+    setModal1(true);
+  }
+
+  function confirmDelProd(){
+    dispatch(delProductToCart(produ.orderId, produ.prodId));
+    setModal1(false);
+  }
+
+  function cancelDelProd(){
+    setModal1(false);
   }
 
   function emptyCart(orderId) {
-    var opcion = window.confirm("Seguro que quiere vaciar el carrito ?");
+    setCart(orderId);
+    setModal2(true);
+    /* var opcion = window.confirm("Seguro que quiere vaciar el carrito ?");
     if(opcion) {
       dispatch(emptyAllProductsOfCart(orderId));
-    }
+    } */
+  }
+
+  function confirmEmptyCart() {
+    dispatch(emptyAllProductsOfCart(cart))
+    setModal2(false);
+  }
+
+  function cancelEmptyCart() {
+    setModal2(false);
   }
 
   return (
@@ -92,7 +114,43 @@ function Carrito() {
         <button className="Carrito-Continuar"
           disabled={order.products && order.products.length === 0}>Continuar compra</button>
       </div> 
-
+      <div className="Modal-Container" id={modal1 ? "modal1" : null}>
+        <div className="Modal-Content">
+          <header className="Modal-Header">
+            Eliminar un producto
+          </header>
+          <section className="Modal-Section">
+            <img src="http://localhost:3001/images/question.png" className="Modal-Imagen" />
+            <h3>¿ Quiere Eliminar la {produ.prodName} de {produ.prodVol} ?</h3>
+          </section>
+          <footer className="Modal-Footer">
+            <button className="Modal-Botones"
+              onClick={() => cancelDelProd()}>Cancelar</button>
+            <button className="Modal-Botones"
+              onClick={() => confirmDelProd()}>Eliminar</button>
+          </footer>
+        </div>
+      </div>
+      <div className="Modal-Container" id={modal2 ? "modal1" : null}>
+        <div className="Modal-Content">
+          <header className="Modal-Header">
+            Vaciar el Carrito
+          </header>
+          <section className="Modal-Section">
+            <img src="http://localhost:3001/images/exclamation.png" className="Modal-Imagen" />
+            <div className="Modal-Leyenda">
+              <h3>Está por vaciar completamente su carrito</h3>
+              <h3>¿ Desea continuar ?</h3>
+            </div>
+          </section>
+          <footer className="Modal-Footer">
+            <button className="Modal-Botones"
+              onClick={() => cancelEmptyCart()}>Cancelar</button>
+            <button className="Modal-Botones"
+              onClick={() => confirmEmptyCart()}>Vaciar Carrito</button>
+          </footer>
+        </div>
+      </div>
     </div> 
   );
 }

@@ -12,11 +12,9 @@ function Home(props) {
   useEffect(() => {
     if (!props.users.id) {
       var user = JSON.parse(localStorage.getItem("user"));
-      console.log(user,"Este es el user devuelto por localStorage")
       if(!user) {
         props.createUser({name: "guess", lastname: "guess", role: "guess"});
       } else {
-        console.log(user.id);
         props.getUserById(user.id);
         props.getCartByUser(user.id);
       }

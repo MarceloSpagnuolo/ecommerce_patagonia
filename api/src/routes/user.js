@@ -79,7 +79,6 @@ server.put("/:id", async (req, res) => {
   
   server.get("/:userId/cart", async (req, res) => {
     const { userId } = req.params;
-    console.log(userId, "userId de la ruta user")
     const user = await User.findOne({
       where: {
         id: userId
@@ -102,7 +101,6 @@ server.put("/:id", async (req, res) => {
         },
       ],
     });
-    console.log(user)
     !user ? res.sendStatus(404) : res.json(user);
   });
 
@@ -110,7 +108,6 @@ server.put("/:id", async (req, res) => {
 server.get("/:userId", async (req, res) => {
   const { userId } = req.params;
   const usuario = await User.findByPk(userId)
-  console.log(usuario, "Viene de la ruta del back sin la funcion especial")
   usuario ? res.json(usuario).status(200) : res.sendStatus(400);
 })
 //////////////// 36 /////////////////////////
@@ -209,7 +206,6 @@ server.put('/:userId/product/cart', async (req, res) => {
   const { productId, quantity } = req.body;
 
   const product = await Product.findByPk(productId);
-  console.log(product);
 
   const order = await Order.findOne({         // nos traemos solo la orden con status "carrito"
     where: {                                  // y que coincida con idUser
