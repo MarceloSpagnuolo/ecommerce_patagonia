@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const routes = require('./routes/index.js');
 const cors = require('cors');
 const passport = require("./routes/passport");
+const cookieSession = require("cookie-session")
 
 require('./db.js');
 
@@ -25,7 +26,14 @@ server.use((req, res, next) => {
   next();
 });
 
+server.use(cookieSession({
+  maxAge: 24 * 60 * 60 * 1000,
+  keys: ["secretooo"]
+}))
+
 server.use(passport.initialize());
+
+server.use(passport.session())
 
 server.all('*', function(req,res,next) {
   passport.authenticate('bearer', function(error,user){
@@ -36,6 +44,7 @@ server.all('*', function(req,res,next) {
     return next();
   })(req,res,next)
 })
+
 
 server.use('/', routes);
 
