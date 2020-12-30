@@ -4,6 +4,7 @@ const BearerStrategy = require("passport-http-bearer").Strategy;
 const { User } = require("../db.js");
 const jwt = require("jsonwebtoken");
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
+const GitHubStrategy = require( 'passport-github2' ).Strategy;
 
 passport.serializeUser(function(user, done) {
     done(null, user.id);
@@ -56,6 +57,28 @@ async function(request, accessToken, refreshToken, profile, done) {
   }); done(null, usuario[0])
 }
 ));
+
+
+passport.use(new GitHubStrategy({
+  clientID: "0d14b759471f535ef16a",
+  clientSecret: "ebd4d25aefe97acc2b6c9fc09293534f7268dfc4",
+  callbackURL: "/auth/github/callback"
+},
+async function(accessToken, refreshToken, profile, done) {
+  console.log(profile, "soy el profile de github")
+  const usuario = await User.findOrCreate({ 
+    where: {
+      githubID: profile.id
+     },
+     defaults: {
+      givenname: "profile.given_name",
+      familyname: "profile.family_name",
+       email: profile.emails[0].value,
+       githubID: profile.id,
+     }
+   }); done(null, usuario[0])
+ }
+ ));
 
 
 passport.use(

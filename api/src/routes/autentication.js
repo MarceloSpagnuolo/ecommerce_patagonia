@@ -50,7 +50,15 @@ server.get('/success', function(req, res) {
 })
 // ${req.user.email}
 
+server.get('/github',
+  passport.authenticate('github', { scope: [ 'user' ] }));
 
+server.get('/github/callback', 
+  passport.authenticate('github', { failureRedirect: '/products' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/categories');
+  });
 
 
 module.exports = server;

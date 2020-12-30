@@ -34,6 +34,10 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: true,
         },
+        githubID: {
+            type: DataTypes.STRING,
+            allowNull: true, 
+        },
         photoURL: {
             type: DataTypes.STRING,
             allowNull: true,
