@@ -2,6 +2,9 @@
 .contenedor {
     margin: 15px auto;
     width: 70%;
+    height: 700px;
+    overflow: hidden;
+    overflow-y: scroll;
 }
 
 table {

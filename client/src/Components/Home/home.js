@@ -1,6 +1,5 @@
 import React from "react";
 import "./home.css";
-import modal from "../Modal/Modal"
 
 function Home() {
   return (
@@ -36,7 +35,6 @@ function Home() {
             explorar, a buscar nuevas experiencias y a proponernos cosas tan
             desafiantes como hacer la mejor cerveza del mundo.
           </p>
-          <button onClick={() => modal()}>Prueba</button>
         </div>
       </div>
     </div>

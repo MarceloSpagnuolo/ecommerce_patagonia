@@ -40,10 +40,10 @@ function Home(props) {
     }
   },[props.order])
 
-  function handleClick() {
+/*   function handleClick() {
     props.getProducts(12,0);
     props.getCategories();
-  }
+  } */
 
   return (
     <div className="home">
@@ -65,7 +65,6 @@ function Home(props) {
           <Link
             className="btnMenu"
             to="/products/?page=1"
-            onClick={() => handleClick()}
           >
             Productos{" "}
           </Link>
