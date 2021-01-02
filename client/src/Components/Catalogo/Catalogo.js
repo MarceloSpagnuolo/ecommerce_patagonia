@@ -55,6 +55,7 @@ function Catalogo(props) {
       dispatch(getProducts(12,(page-1)*12));
     }
     page && setPagina(parseInt(page))
+    
     dispatch(getCategories());
     return function cleanup() {};
   }, [pagina, categ, props.location.search]); // Este useEffect se ejecuta cuando cambia la página

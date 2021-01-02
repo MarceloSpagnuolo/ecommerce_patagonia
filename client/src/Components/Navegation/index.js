@@ -10,10 +10,10 @@ function Home(props) {
   const [ total, setTotal] = useState(0);
 
   useEffect(() => {
-    if (!props.users.id) {
+    if (!props.user.id) {
       var user = JSON.parse(localStorage.getItem("user"));
       if(!user) {
-        props.createUser({name: "guess", lastname: "guess", role: "guess"});
+        props.createUser({name: "guest", lastname: "guest", role: "guest"});
       } else {
         props.getUserById(user.id);
         props.getCartByUser(user.id);
@@ -22,17 +22,17 @@ function Home(props) {
   },[])
   
   useEffect(() => {
-    if(props.users.id) {
+    if(props.user.id) {
       var user = JSON.parse(localStorage.getItem("user"));
       if(!user) {
-        props.postCreateCart(props.users.id)
+        props.postCreateCart(props.user.id)
       }
-      localStorage.setItem("user",JSON.stringify(props.users));
+      localStorage.setItem("user",JSON.stringify(props.user));
     }
     if(props.order.products) {
       setTotal(props.order.products.length)
     }
-  },[props.users])
+  },[props.user])
 
   useEffect(() => {
     if(props.order.products) {
@@ -93,7 +93,7 @@ function mapStateToProps(state) {
   return {
     products: state.products,
     categories: state.categories,
-    users: state.users,
+    user: state.user,
     order: state.order,
   };
 }
