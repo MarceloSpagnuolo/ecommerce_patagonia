@@ -26,6 +26,11 @@ server.post("/login", function(req, res, next) {
     })(req, res, next)
 })
 
+server.get("/logout", function(req,res,next) {
+    req.logout();
+    res.redirect("/")
+})
+
 //login de google
 server.get('/google',
   passport.authenticate('google', { scope:
