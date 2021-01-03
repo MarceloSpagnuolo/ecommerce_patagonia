@@ -1,111 +1,150 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ProductCard from "../ProductCard/ProductCard.js";
 import "./Catalogo.css";
-import { connect } from "react-redux";
+import {connect, useDispatch, useSelector } from "react-redux";
 import {
   getProducts,
   getCategories,
   getProductByCategory,
 } from "../../store/actions/index";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-/* Componente a medio terminar. El CSS de ProductCard es necesario para que se vea bien la Card a la hora
-de renderizar. el CSS de categorías es un poco inestable y es necesario modificarlo cuando se pasen props,
-pero por ahora no quiero renegar mucho más, ya que no tengo idea cuantas categorías van a haber.
-El código y la lógica funcionan bien, salvo por la falta de props en la parte de categorías.*/
 
 function Catalogo(props) {
-  
+  const dispatch = useDispatch();
+  const { categories } = useSelector(state => state);
+  const [ categ, setCateg ] = useState("");
+  const [ count, setCount] = useState(0);
+  const [ pagina, setPagina ] = useState(1);
+
   useEffect(() => {
-    var temp = props.history.location.pathname;
-    temp = temp.split("/");
-
-
-    if (props.history.location.pathname === "/products") {
-      props.getProducts();
-    } 
-    
-    if (props.history.location.pathname === `/products/categoria/${temp[3]}`) {
-      props.getProductByCategory(temp[3]);
+    //Primero comprueba si estamos viendo productos por categoría
+    if(props.history.location.pathname.includes("categoria")) {
+      //Si es asi asigna a "categ" el nombre de la categoría
+      const categ = props.history.location.pathname.split("/")[3];
+      //Manda a llamar directamente la ruta que trae la cantidad de
+      //productos es esa categoria
+      axios.get("http://localhost:3001/products/count/"+categ)
+      .then((res) => {
+        //Setea en count la cantidad de productos de la categoría
+        setCount(res.data.count);
+      })
+    } else if (props.history.location.pathname == "/products/search") {
+        setCount(props.products.length)
+    } else {
+      //Si no se están mostrando los productos por categoría, manda a llamar
+      //la misma ruta pero con el prefijo "all" que indica que se necesita
+      //que se cuenten todos los productos
+      axios.get("http://localhost:3001/products/count/all")  
+      .then((res) => {
+        //Setea count con todos los productos
+        setCount(res.data.count);
+      })
     }
+  },[categ,props.location.search,props.history.location.pathname]) //se ejecuta cuando categ cambia
 
-    props.getCategories();
+  useEffect(() => {
+    const page = props.location.search.split("=")[1];
+
+    if(props.history.location.pathname.includes("categoria")) {
+      const categ = props.history.location.pathname.split("/")[3];
+      dispatch(getProductByCategory(categ,12,(page-1)*12));
+    } else if (props.history.location.pathname == "/products/search") {
+    } else {
+      dispatch(getProducts(12,(page-1)*12));
+    }
+    page && setPagina(parseInt(page))
+    
+    dispatch(getCategories());
     return function cleanup() {};
-  }, []);
+  }, [pagina, categ, props.location.search,props.history.location.pathname]); // Este useEffect se ejecuta cuando cambia la página
 
-  function handleClick(catName) {
-    props.getProductByCategory(catName);
-  }
+function handleClick(cat) {
+  setCateg(cat);
+  setPagina(1);
+}
 
-  function handleClickAll() {
-    props.getProducts();
-  }
+function handleClickAll() {
+  setPagina(1);
+  setCateg("");
+}
 
-  return (
-    <div id="Catalogo-Container">
-      <div id="Catalogo-Lista-Container">
-        <lu id="Catalogo-Lista">Categorias</lu>
-        {props.categories &&
-          props.categories.map((cat) => (
-            <Link
+function handleNext() {
+  setPagina(pagina + 1);
+}
 
-              className = "catalogo-Link"
+function handlePrev() {
+  setPagina(pagina - 1);
+}
 
-              to={`/products/categoria/${cat.name}`}
-              onClick={() => handleClick(cat.name)}
-            >
-              <li className="Catalogo-Lista-Item">{cat.name}</li>
-            </Link>
-          ))}
-        {/* <li className="Catalogo-Lista-Item" style={{ marginTop: 30 }}>
-          Category
-        </li>
-        <li className="Catalogo-Lista-Item">Category</li>
-        <li className="Catalogo-Lista-Item">Category</li> */}
-        <Link to="/products">
-          <button onClick={() => handleClickAll()} className="Catalogo-btn">
-            Ver Todos
-          </button>
-        </Link>
-      </div>
-
+return (
+  <div id="Catalogo-Container">
+    <div id="Catalogo-Lista-Container">
+      <ul id="Catalogo-Lista">Categorias</ul>
+      {categories &&
+        categories.map((cat) => (
+          <Link key={cat.id}
+            className = "catalogo-Link"
+            to={`/products/categoria/${cat.name}/?page=1`}
+            onClick={() => handleClick(cat.name)}
+          >
+            <li className="Catalogo-Lista-Item">{cat.name}</li>
+          </Link>
+        ))}
+      <Link to="/products/?page=1">
+        <button onClick={() => handleClickAll()} className="Catalogo-btn">
+          Ver Todos
+        </button>
+      </Link>
+    </div>
+    <div className="Catalogo-Products-Pagination">
       <div id="Catalogo-ProductCard-Container">
 
-        {props.products.length > 0 && props.products.map((prod) => (
-          <div>
+        {props.products.length > 0 ? props.products.map((prod) => (
+        <div key={prod.id}>
 
-            <Link className="catalogo-Link" to={`/product/${prod.id}`}>
+            <ProductCard
+              id={prod.id}
+              name={prod.name}
+              thumbnail={prod.thumbnail}
+              stock={prod.stock}
+              price={prod.price}
+              volume={prod.volume}
+              categorias={prod.categories}
+            ></ProductCard>
 
-              <ProductCard
-                /* id={prod.id} */
-                name={prod.name}
-                thumbnail={prod.thumbnail}
-                price={prod.price}
-                volume={prod.volume}
-              ></ProductCard>
-
-            </Link>
           </div>
-        ))}
+        )) : <h2>No se encontraron productos que coincidan con esa búsqueda</h2>}
 
       </div>
+    <div className="Catalago-Pagination">
+      <Link to={`${props.history.location.pathname}?page=${pagina-1}`}>
+          <button className="Catalogo-Btn-Prev" onClick={() => handlePrev()}
+          disabled={pagina === 1}>Anterior</button>
+      </Link>
+      <Link to={`${props.history.location.pathname}?page=${pagina+1}`}>
+          <button className="Catalogo-Btn-Next" onClick={() => handleNext() }
+          disabled={(pagina*12) >= count}>Siguiente</button>
+      </Link>
     </div>
-  );
+  </div>
+  </div>
+);
 }
 
 function mapStateToProps(state) {
-  return {
-    products: state.products,
-    categories: state.categories,
-  };
+return {
+  products: state.products,
+  categories: state.categories,
+};
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    getProducts: () => dispatch(getProducts()),
-    getCategories: () => dispatch(getCategories()),
-    getProductByCategory: (catName) => dispatch(getProductByCategory(catName)),
-  };
+return {
+  getProducts: (limit, offset) => dispatch(getProducts(limit, offset)),
+  getCategories: () => dispatch(getCategories()),
+};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Catalogo);

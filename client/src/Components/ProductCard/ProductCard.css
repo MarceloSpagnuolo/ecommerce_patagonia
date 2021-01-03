@@ -33,19 +33,68 @@
 #ProductCard-Container {
   display: flex;
   /* background-color: white; */
-  padding: 20px 0px 10px 0px;
+  /*padding: 20px 0px 10px 0px; */
   margin: 20px 10px 0px 10px;
-  height: 100px;
+  height: 140px;
   width: 350px;
   align-items: center;
   justify-items: self-start;
-  box-shadow: 10px 10px 10px black;
+  box-shadow: 5px 5px 10px black;
   border: solid 1px rgb(202, 204, 199);
   border-radius: 10px;
+  position: relative;
+  z-index: 1;
 }
 
-#ProductCard-Container:hover {
-  transform: scale(1.03) translate(5px, 5px);
-  background-color:  rgb(238, 211, 162);
-  transition: all 0.5s;
+#ProductCart-NoDisponible {
+  position: absolute;
+  transform: rotate(-45deg);
+  top: 24px;
+  left: -26px;
+  background-color: red;
+  color: white;
+  padding: 0 20px 0 20px;
+  background: linear-gradient(-45deg, red 90%, transparent 10%); 
+}
+
+#ProductCard-btnAddCarr {
+  display:inline;
+  width:70px;
+  background-color: goldenrod;
+  margin-right: 10px;
+  padding-left: 10px;
+  color: white;
+  border-radius: 5px;
+  border: none;
+}
+
+#ProductCard-btnAddCarr:hover {
+  box-shadow: 3px 3px 10px black;
+  cursor: pointer;
+  border: none;
+}
+
+#ProductCard-btnAddCarr:disabled {
+  display:inline;
+  width:70px;
+  background-color: lightgray;
+  margin-right: 10px;
+  padding-left: 10px;
+  color: gray;
+  border-radius: 5px;
+  cursor:no-drop;
+}
+
+#ProductCard-btnContainer {
+  display: flex;
+  align-items:flex-start;
+  justify-content: space-between;
+}
+
+.nameCategorias {
+  background-color: lightslategray;
+  color:white;
+  font-size: 12px;
+  padding: 0 5px 0 5px;
+  margin-right: 5px;
 }

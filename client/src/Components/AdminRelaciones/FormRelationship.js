@@ -6,7 +6,6 @@ import { Form, Field, ErrorMessage, Formik } from 'formik';
 
 const Relationship = (props) => {
     let arr = [];
-    console.log(props, "Form")
     return (
         <Formik initialValues={props.data || {
             idP: '',
@@ -25,7 +24,6 @@ const Relationship = (props) => {
                 props.updateCategory(props.data.id, values)
                 props.seteadora.seteadora(props.seteadora.setEdit, props.seteadora.edit)
             } else {
-                console.log(values)
                 props.postProductJoinCategory(values.idP, values.idG)
                 props.seteadora.seteadora(props.seteadora.setDisplay, props.seteadora.display)
             }

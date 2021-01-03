@@ -4,6 +4,24 @@ const { Op } = require("sequelize");
 
 
 // Busca una cadena en el nombre o descripcion del producto \\\\\
+///////////////Busqueda con count para hacer la paginación////////////
+server.get("/count/:nameCat", async (req, res) => {
+  const { nameCat } = req.params;
+
+  if(nameCat === "all") {
+    count = await Product.findAndCountAll()
+  } else {
+    count = await Product.findAndCountAll({
+      include: {
+        model: Category,
+        where: {
+          name: nameCat,
+        }
+      }
+    })
+  }
+  count ? res.send(count).status(200) : res.sendStatus(400);
+})
 
 //Preguntar porque el flow de las rutas hace que unas no se ejecuten dependiendo del orden de las mismas.
 server.get("/search", async (req, res) => {
@@ -36,8 +54,9 @@ server.get("/", (req, res, next) => {
   order && (order = JSON.parse(order)); // Parseando a Json el string recibido
   // /products/?where={"id":5}
   where && (where = JSON.parse(where));
-  // /products/?where={%22id%22:5}&include=[%22categories%22]
+  // /products/?where={%22id%22:5}&include=[%22categories%22] El valor de include debe ir en minúscula y plural
   include && (include = JSON.parse(include));
+
   Product.findAll({ limit, offset, order, where, include }) //Pasamos a findAll todos los argumentos
     .then((products) => {
       res.send(products).status(200);
@@ -46,8 +65,26 @@ server.get("/", (req, res, next) => {
 });
 ////////////////////// S21 //////////////////////
 
+// Muestra todos los productos de una categoría//////////////////////
+server.get("/categoria/", async (req, res) => {
+  const { nameCat, limit, offset } = req.query;
 
-/////////////////Porcut ID////////////////////////
+  const products = await Product.findAll({
+    limit,
+    offset,
+    include: {
+      model: Category,
+      where: {
+        name: nameCat,
+      },
+    }
+  })
+
+  !products ? res.sendStatus(404) : res.json(products);
+
+});
+
+/////////////////Product ID////////////////////////
 server.get("/:id", async (req, res) => {
   const { id } = req.params;
   const producto = await Product.findByPk(id);
@@ -67,34 +104,6 @@ server.delete("/removeProduct/:id", async (req, res) => {
 
 });
 
-// Muestra todos los productos de una categoría//////////////////////
-server.get("/categoria/:nombreCat", async (req, res, next) => {
-  const { nombreCat } = req.params;
-
-  const products = await Category.findAll({
-    where: {
-      name: nombreCat,
-    },
-    attributes: ["name", "description"],
-    include: {
-      model: Product,
-      attributes: [
-        "id",
-        "name",
-        "appearance",
-        "description",
-        "price",
-        "stock",
-        "volume",
-        "thumbnail",
-      ],
-    },
-  });
-
-  !products ? res.sendStatus(404) : res.json(products);
-
-
-});
 
 ////////////////////// S22 //////////////////////
 
@@ -147,9 +156,6 @@ server.put("/:id", async (req, res) => {
   //   typeof parseInt(stock) === "number" &&
   //   (volume === "355 cc" || volume === "473 cc" || volume === "730 cc") &&
   //   typeof thumbnail === "string";
-
-  // console.log(comprobacion)
-  // !comprobacion && res.sendStatus(400);
 
   const product = await Product.update(
     {

@@ -6,46 +6,60 @@ import {
   ERROR_MESSAGE,
   ADD_PRODUCT,
   DELETE_PRODUCT,
-  ADD_CATEGORY_PRODUCT,
-  REMOVE_CATEGORY_PRODUCT,
   GET_PRODUCTS,
   MODIFY_PRODUCT,
   GET_PRODUCTS_BY_CATEGORY,
-  ADD_TO_CARD,
+  ADD_TO_CART,
   REMOVE_FROM_CART,
-  GET_ORDERS,
   UPDATE_FROM_CART,
   CREATE_USER,
   GET_USERS,
   DELETE_USER,
   UPDATE_USER,
-  DELETE_ORDER,
   DETAIL_USER,
   DELETE_CART,
   LOGIN,
   LOGIN_ERROR,
   LOGOUT,
   ADD_REVIEW,
-  CREATE_ORDER,
-  UPDATE_ORDER_TO_CREATE,
-  UPDATE_ORDER_TO_PROCESS,
   CHECKOUT_END,
-  UPDATE_ORDER_TO_FULL,
-  UPDATE_ORDER_TO_REJECT,
   UPDATE_REVIEW,
   DELETE_REVIEW,
   GET_USER_REVIEWS,
-  GET_ORDERS_STATUS,
   SEARCH_PRODUCT,
   GET_PRODUCT_BY_ID,
   GET_PRODUCT_JOIN_CATEGORY,
   POST_PRODUCT_JOIN_CATEGORY,
   DELETE_PRODUCT_JOIN_CATEGORY,
+  ADD_CATEGORY_PRODUCT,
+  REMOVE_CATEGORY_PRODUCT,
+  GET_CART_BY_IDUSER,
+  POST_CREATE_CART,
+  PUT_CHANGE_QUANTITY,
+  GET_ORDERS,
+  GET_ORDERS_STATUS,
+  GET_ORDER_BY_USER,
+  GET_ORDER_BY_ID,
+  CREATE_ORDER,
+  DELETE_ORDER,
+  UPDATE_ORDER_TO_CREATE,
+  UPDATE_ORDER_TO_PROCESS,
+  UPDATE_ORDER_TO_FULL,
+  UPDATE_ORDER_TO_REJECT,
+  GET_FULL_ORDERS,
+  GET_USER_CART,
+  POST_PRODUCT_TO_CART,
+  GET_USER_BY_ID,
+  DEL_PRODUCT_TO_CART,
+  EMPTY_ALL_PRODUCTS_OF_CART,
 } from "../constants/constants";
 
 const inicialState = {
   products: [],
   categories: [],
+  order: [],
+  users: {},
+  user: {}
 };
 
 function ReducerProducts(state = inicialState, action) {
@@ -57,38 +71,42 @@ function ReducerProducts(state = inicialState, action) {
       return { ...state, products: action.payload };
     case GET_CATEGORIES:
       return { ...state, categories: action.payload };
-    case GET_ORDERS:
-      return {};
+    case GET_FULL_ORDERS:
+      return { ...state, order: action.payload };
+    case GET_ORDER_BY_ID:
+      return { ...state, order: action.payload };
     case GET_ORDERS_STATUS:
       return {};
     case GET_PRODUCTS_BY_CATEGORY:
       return {
         ...state,
-        products: action.payload[0].products
+        products: action.payload,
       };
     case GET_PRODUCT_BY_ID:
       return { ...state, products: action.payload };
+    case GET_CART_BY_IDUSER:
+      return { ...state, order: action.payload };
     case GET_USERS:
       return {};
     case GET_USER_REVIEWS:
       return {};
     case GET_PRODUCT_JOIN_CATEGORY:
-      return { ...state, products: action.payload }
+      return { ...state, products: action.payload };
     case ADD_CATEGORY_PRODUCT:
       return {};
     case ADD_PRODUCT:
       return {
         ...state,
-        products: state.products.concat(action.payload)
-      }
+        products: state.products.concat(action.payload),
+      };
     case ADD_REVIEW:
       return {};
-    case ADD_TO_CARD:
+    case ADD_TO_CART:
       return {};
     case ADD_CATEGORY:
       return {
         ...state,
-        categories: state.categories.concat(action.payload)
+        categories: state.categories.concat(action.payload),
       };
     case UPDATE_FROM_CART:
       return {};
@@ -106,18 +124,27 @@ function ReducerProducts(state = inicialState, action) {
       return {};
     case DELETE_CART:
       return {};
+    case PUT_CHANGE_QUANTITY:
+      return {
+        ...state,
+        order: action.payload,
+      };
     case DELETE_CATEGORY:
       return {
         ...state,
-        categories: state.categories.filter((category) => category.id !== action.payload)
-      }
+        categories: state.categories.filter(
+          (category) => category.id !== action.payload
+        ),
+      };
     case DELETE_ORDER:
       return {};
     case DELETE_PRODUCT:
       return {
         ...state,
-        products: state.products.filter((product) => product.id !== action.payload)
-      }
+        products: state.products.filter(
+          (product) => product.id !== action.payload
+        ),
+      };
     case DELETE_REVIEW:
       return {};
     case DELETE_USER:
@@ -129,31 +156,32 @@ function ReducerProducts(state = inicialState, action) {
     case MODIFY_CATEGORY:
       return {
         ...state,
-        categories: state.categories.map(p => {
+        categories: state.categories.map((p) => {
           if (p.id === action.payload.id) {
-            return action.payload
+            return action.payload;
           } else {
-            return p
+            return p;
           }
-        })
+        }),
       };
     case MODIFY_PRODUCT:
       return {
         ...state,
-        products: state.products.map(p => {
+        products: state.products.map((p) => {
           if (p.id === action.payload.id) {
-            return action.payload
+            return action.payload;
           } else {
-            return p
+            return p;
           }
-        })
-      }
+        }),
+      };
     case CREATE_ORDER:
       return {};
     case CREATE_USER:
-      return {};
+      return {...state, user: action.payload};
     case ERROR_MESSAGE:
-      return alert(action.message);
+      alert(action.message);
+      return { ...state };
     case LOGOUT:
       return {};
     case LOGIN:
@@ -167,9 +195,21 @@ function ReducerProducts(state = inicialState, action) {
     case POST_PRODUCT_JOIN_CATEGORY:
       return { ...state, products: action.payload };
     case DELETE_PRODUCT_JOIN_CATEGORY:
-      return { ...state, products: action.payload }
+      return { ...state, products: action.payload };
+    case POST_CREATE_CART:
+      return { ...state, order: action.payload };
+    case GET_USER_CART:
+      return { ...state, users: action.payload};
+    case POST_PRODUCT_TO_CART:
+      return { ...state, order: action.payload};
+    case GET_USER_BY_ID:
+      return { ...state, user: action.payload};
+    case DEL_PRODUCT_TO_CART:
+      return { ...state, order: action.payload};
+    case EMPTY_ALL_PRODUCTS_OF_CART:
+      return { ...state, order: action.payload};
     default:
-      return state
+      return state;
   }
 }
 

@@ -9,6 +9,7 @@
   padding: 5px;
   border: solid rgb(221, 235, 194) 3px;
   border-radius: 10px;
+  width: 200px;
 }
 
 .Catalogo-Lista-Item {
@@ -68,3 +69,59 @@
   text-decoration: none;
 }
 
+.Catalogo-Products-Pagination {
+  display: flex;
+  flex-direction: column;
+}
+
+.Catalago-Pagination {
+  display: flex;
+  justify-content:flex-end;
+  margin-left:auto;
+  margin-right: 13%;
+  margin-top: 20px;
+}
+
+.Catalogo-Btn-Prev {
+  width: 120px;
+  height: 50px;
+  background-color: goldenrod;
+  color: white;
+  margin-right: 5px;
+  border: none;
+}
+
+.Catalogo-Btn-Prev:hover {
+  cursor: pointer;
+  transition: all .3s;
+  box-shadow: 3px 3px 10px black;
+}
+
+.Catalogo-Btn-Prev:disabled {
+  background-color: lightgray;
+  color: gray;
+  box-shadow: none;
+  cursor: no-drop; 
+}
+
+.Catalogo-Btn-Next {
+  width: 120px;
+  height: 50px;
+  background-color: goldenrod;
+  color: white;
+  margin-right: 5px;
+  border: none;
+}
+
+.Catalogo-Btn-Next:hover {
+  cursor: pointer;
+  transition: all .3s;
+  box-shadow: 3px 3px 10px black;
+}
+
+.Catalogo-Btn-Next:disabled {
+  background-color: lightgray;
+  color: gray;
+  box-shadow: none;
+  cursor: no-drop; 
+}
