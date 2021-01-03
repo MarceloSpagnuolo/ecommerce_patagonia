@@ -17,7 +17,7 @@ server.post("/", async (req, res) => {
     postal,
     role,
   } = req.body;
-  (!name || !lastname || !email || !hashedpassword || !role) && res.send("Falta valor name, lastname, email, pass o role").status(400);
+  (!name || !lastname || !role) && res.send("Falta valor name, lastname, email, pass o role").status(400);
   try {
     const user = await User.create({
       name,
@@ -71,11 +71,45 @@ server.put("/:id", async (req, res) => {
       },
       returning: true,
     }
-  );
+    );
+    
+    !user ? res.sendStatus(400) : res.json(user[1][0]);
+  });
 
-  !user ? res.sendStatus(400) : res.json(user[1][0]);
-});
+  
+  server.get("/:userId/cart", async (req, res) => {
+    const { userId } = req.params;
+    const user = await User.findOne({
+      where: {
+        id: userId
+      },
+      include: [
+        {
+          model: Order,
+          include: [
+            {
+              model: Product,
+            },
+          ],
+          where: {
+            [Op.or]: [
+              {
+                status: "carrito",
+              },
+            ],
+          },
+        },
+      ],
+    });
+    !user ? res.sendStatus(404) : res.json(user);
+  });
 
+
+server.get("/:userId", async (req, res) => {
+  const { userId } = req.params;
+  const usuario = await User.findByPk(userId)
+  usuario ? res.json(usuario).status(200) : res.sendStatus(400);
+})
 //////////////// 36 /////////////////////////
 
 server.get("/", (req, res, next) => {
@@ -91,6 +125,7 @@ server.get("/", (req, res, next) => {
   include && (include = JSON.parse(include));
   User.findAll({ limit, offset, order, where, include }) //Pasamos a findAll todos los argumentos
     .then((users) => {
+      console.log(users, "Esto viene de la ruta con la funcion general")
       res.send(users).status(200);
     })
     .catch(next);
@@ -137,30 +172,6 @@ server.post("/:userId/cart", async (req, res) => {
 // La tarea dice que debe devolver el ULTIMO Order abierto (sea lo que signifique eso). Se puede discutir a ver que
 // es lo que se interpreta por "el último Order abierto" para ver que cosa más específica queremos devolver.
 
-server.get("/:userId/cart", async (req, res) => {
-  const { userId } = req.params;
-  const user = await User.findByPk(userId, {
-    include: [
-      {
-        model: Order,
-        include: [
-          {
-            model: Product,
-          },
-        ],
-        where: {
-          [Op.or]: [
-            {
-              status: "carrito",
-            },
-          ],
-        },
-      },
-    ],
-  });
-
-  !user ? res.sendStatus(404) : res.json(user);
-});
 /////////// Solo los productos /////////////
 /* 
    Hay otro modelo que trae unicamente los productos en el res.data,
@@ -195,7 +206,6 @@ server.put('/:userId/product/cart', async (req, res) => {
   const { productId, quantity } = req.body;
 
   const product = await Product.findByPk(productId);
-  console.log(product);
 
   const order = await Order.findOne({         // nos traemos solo la orden con status "carrito"
     where: {                                  // y que coincida con idUser
