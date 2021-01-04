@@ -17,7 +17,8 @@ server.post("/", async (req, res) => {
     postal,
     role,
   } = req.body;
-  (!givenname || !familyname || !email || !password || !role) && res.send("Falta valor name, lastname, email, pass o role").status(400);
+  (!givenname || !familyname || !email || !password || !role) &&
+    res.send("Falta valor name, lastname, email, pass o role").status(400);
   try {
     const user = await User.create({
       givenname,
@@ -32,9 +33,8 @@ server.post("/", async (req, res) => {
     });
     !user ? res.sendStatus(400) : res.json(user).status(201);
   } catch (error) {
-    res.send("Ese email ya existe").status(400)
+    res.send("Ese email ya existe").status(400);
   }
-
 });
 
 ////////////// S35 ///////////////////
@@ -50,7 +50,6 @@ server.put("/:id", async (req, res) => {
     adress,
     phone,
     postal,
-    role,
   } = req.body;
 
   const user = await User.update(
@@ -63,7 +62,6 @@ server.put("/:id", async (req, res) => {
       adress,
       phone,
       postal,
-      role,
     },
     {
       where: {
@@ -89,13 +87,12 @@ server.get("/", (req, res, next) => {
   where && (where = JSON.parse(where));
   // /products/?where={%22id%22:5}&include=[%22categories%22]
   include && (include = JSON.parse(include));
-  if(req.user) {
-
+  if (req.user) {
     User.findAll({ limit, offset, order, where, include }) //Pasamos a findAll todos los argumentos
-    .then((users) => {
-      res.send(users).status(200);
-    })
-    .catch(next);
+      .then((users) => {
+        res.send(users).status(200);
+      })
+      .catch(next);
   } else {
     res.sendStatus(401);
   }
@@ -107,18 +104,20 @@ server.get("/", (req, res, next) => {
 server.post("/:userId/cart", async (req, res) => {
   const { userId } = req.params;
   const { productId, quantity, unitprice } = req.body;
-  (!userId || !productId || !quantity || !unitprice) && res.send("Falta valor userId, productId, quantity o unitprice").status(400);
+  (!userId || !productId || !quantity || !unitprice) &&
+    res.send("Falta valor userId, productId, quantity o unitprice").status(400);
 
   const user = await User.findByPk(userId, { include: Order });
-  const orderId = user.orders[0].dataValues.id // saco el id del order.
+  const orderId = user.orders[0].dataValues.id; // saco el id del order.
 
-  const order = await Order.findByPk(orderId)
-  const product = await Product.findByPk(productId)
-  const orderProduct = await order.addProduct(product, { through: { quantity, unitprice } }) //Agrega el producto
-
+  const order = await Order.findByPk(orderId);
+  const product = await Product.findByPk(productId);
+  const orderProduct = await order.addProduct(product, {
+    through: { quantity, unitprice },
+  }); //Agrega el producto
 
   !orderProduct ? res.sendStatus(400) : res.json(orderProduct);
-})
+});
 
 //////////////METODO ANTERIOR/////////////
 //   const order = await Order.findByPk(orderId);
@@ -178,54 +177,79 @@ server.get("/:userId/cart", async (req, res) => {
 // Es un delete normal. El res.Json devuelve el item
 // que es igual a 1, no influye porque la accion se efectua
 // pero puede devolver un message de confirmación de delete si se desea
-server.delete('/:orderId/cart/:productId', async (req, res) => {
+server.delete("/:orderId/cart/:productId", async (req, res) => {
   const { orderId, productId } = req.params;
 
-  const itemDelete = await Order_products.destroy({          //Se preguntaran porque usamos la tabla de relacion directamente
-    where: {                                                 // No les voy a mentir....
+  const itemDelete = await Order_products.destroy({
+    //Se preguntaran porque usamos la tabla de relacion directamente
+    where: {
+      // No les voy a mentir....
       orderId,
-      productId
+      productId,
     },
-  }
-  );
-  !itemDelete ? res.sendStatus(404) : res.json(itemDelete)
-})
+  });
+  !itemDelete ? res.sendStatus(404) : res.json(itemDelete);
+});
 
 ///////////////////////// S41 /////////////////////
 // En la logica se considera que solo se puede modificar una orden
 // solo cuando se encuentra en estado "carrito", por eso solo se trabajan en estas
 // recibe solo "producto" y "quantity" del body ya que son las unicas modificables por el "USER"
-server.put('/:userId/product/cart', async (req, res) => {
+server.put("/:userId/product/cart", async (req, res) => {
   const { userId } = req.params;
   const { productId, quantity } = req.body;
 
   const product = await Product.findByPk(productId);
   console.log(product);
 
-  const order = await Order.findOne({         // nos traemos solo la orden con status "carrito"
-    where: {                                  // y que coincida con idUser
-      userId,                                 // al considerarse que un user solo puede tener una "order"
-      [Op.or]: [                              // en status "carrito", se utiliza el metodo "findOne"
+  const order = await Order.findOne({
+    // nos traemos solo la orden con status "carrito"
+    where: {
+      // y que coincida con idUser
+      userId, // al considerarse que un user solo puede tener una "order"
+      [Op.or]: [
+        // en status "carrito", se utiliza el metodo "findOne"
         {
           status: "carrito",
         },
       ],
     },
+  });
+  await order.setProducts(product, { through: { quantity } }); // aca se updatea los datos
 
-  })
-  await order.setProducts(product, { through: { quantity } });  // aca se updatea los datos
-
-  const orderUpdate = await Order_products.findAll(       // se crea una const para devolverlo en el json
+  const orderUpdate = await Order_products.findAll(
+    // se crea una const para devolverlo en el json
     {
       where: {
         orderId: order.id,
-        productId
-      }
-    })
-  !orderUpdate ? res.sendStatus(404) : res.json(orderUpdate)
-})
+        productId,
+      },
+    }
+  );
+  !orderUpdate ? res.sendStatus(404) : res.json(orderUpdate);
+});
+
+//////////////////////////////////S70////////////////////////////////
+
+server.post("/:id/passwordReset", async (req, res) => {
+  const { id } = req.params;
+  const { password } = req.body;
+
+  const passwordReset = await User.update(
+    {
+      password,
+    },
+    {
+      where: {
+        id,
+      },
+      returning: true,
+    }
+  );
+
+  !passwordReset ? res.sendStatus(400) : res.json(passwordReset);
+});
 
 /////////////// Fin de rutas en Users ///////////////
-
 
 module.exports = server;
