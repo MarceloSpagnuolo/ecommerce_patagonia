@@ -4,10 +4,10 @@ import SearchBar from "../SearchBar/SearchBar.js";
 import "./styles.css";
 import { connect } from "react-redux";
 import { getCategories, getProducts, createUser, postCreateCart, getUserCart, getUserById, getCartByUser } from "../../store/actions/index.js";
-//import { set } from "../../../../api/src/app.js";
 
 function Home(props) {
   const [ total, setTotal] = useState(0);
+  const [ show, setShow ] = useState(false);
 
   useEffect(() => {
     if (!props.user.id) {
@@ -40,12 +40,16 @@ function Home(props) {
     }
   },[props.order])
 
-/*   function handleClick() {
-    props.getProducts(12,0);
-    props.getCategories();
-  } */
+  function handleLogin() {
+    setShow(true);
+  }
+
+  function handleClose() {
+    setShow(false);
+  }
 
   return (
+    <>
     <div className="home">
       <Link to="/">
         <img
@@ -83,9 +87,56 @@ function Home(props) {
             )}
             </Link>
           </div>
+          <span className="btnMenu" onClick={() => handleLogin()}>Entrar</span>
+          <span className="btnMenu" onClick={() => handleLogin()}>Registrarse</span>
         </nav>
       </div>
     </div>
+      <div>
+        {show && 
+          <div className="Login-Container">
+            <div className="Login-Content">
+              <header className="Login-Header">
+                Acceso de Usuario
+              </header>
+              <section className="Login-Section">
+                <form>
+                  <div className="Login-Campos">
+                    <label for="email">Email registrado</label><br></br>
+                    <input autofocus="true" autocorrect="off" size={40} type="email" id="email" name="email" className="Login-Campos" /><br></br>
+                  </div>
+                  <div className="Login-Campos">
+                    <label for="pass">Contraseña</label><br></br>
+                    <input size={40} type="password" id="pass" name="pass" className="Login-Campos" />
+                  </div>
+                </form>
+                <div className="Login-Leyenda">
+                  <span className="Login-Sep-Leyenda">Si no tiene una cuenta, deberá </span>
+                  <Link to="/registro">registrarse</Link>
+                </div>
+              </section>
+              <div className="Login-Btn-Social">
+                <button className="Login-Btn-Google">
+                  <img src="http://localhost:3001/images/google.png" className="Login-Logo-Btn" />
+                  Acceder con Google
+                </button>
+                <button className="Login-Btn-Github">
+                  <img src="http://localhost:3001/images/github.jpg" className="Login-Logo-Btn" />
+                  Acceder con GitHub
+                </button>
+              </div>
+              <footer className="Login-Footer">
+                <button className="Login-Btn-Down" id="Login-Cancel" onClick={() => handleClose()}>Cancelar</button>
+                <button className="Login-Btn-Down" 
+                  title={true && "Debe ingresar los datos de acceso"} 
+                  id="Login-Entrar" 
+                  onClick={() => handleClose()}
+                  disabled={true}>Entrar</button>
+              </footer>
+            </div>
+          </div>}
+      </div>
+      </>
   );
 }
 
