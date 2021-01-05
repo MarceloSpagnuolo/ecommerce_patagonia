@@ -102,7 +102,7 @@ function Carrito() {
               <h2>{parseFloat(prod.Order_products.unitprice * prod.Order_products.quantity).toFixed(2)}</h2>
             </div>
           </div>
-        )) : <h1>Su Carrito de compras no contiene productos</h1>};  
+        )) : <h1>Su Carrito de compras no contiene productos</h1>}  
       <div className="Carrito-Total">
         <h2>Total</h2>
         <h2>{parseFloat(total).toFixed(2)}</h2>

@@ -18,6 +18,7 @@ const BeerForm = (props) => {
             price: '',
             stock: '',
             volume: '355 cc',
+            volume: false,
             thumbnail: ''
         }} validate={(values) => {
             const errors = {};
@@ -104,6 +105,14 @@ const BeerForm = (props) => {
                             <option value="355 cc">355 cc</option>
                             <option value="473 cc">473 cc</option>
                             <option value="730 cc">730 cc</option>
+                        </Field>
+
+                    </div>
+                   
+                    <div className="row"> Destacado
+                <Field name="destacado" as="select" className="input">
+                            <option value= {false} >NO</option>
+                            <option value={true}>SI</option>
                         </Field>
 
                     </div>

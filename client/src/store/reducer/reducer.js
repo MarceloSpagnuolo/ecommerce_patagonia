@@ -8,6 +8,7 @@ import {
   DELETE_PRODUCT,
   GET_PRODUCTS,
   MODIFY_PRODUCT,
+  GET_REVIEWS,
   GET_PRODUCTS_BY_CATEGORY,
   ADD_TO_CART,
   REMOVE_FROM_CART,
@@ -57,6 +58,7 @@ import {
 const inicialState = {
   products: [],
   categories: [],
+  reviews: [],
   order: [],
   users: {}
 };
@@ -86,7 +88,9 @@ function ReducerProducts(state = inicialState, action) {
     case GET_CART_BY_IDUSER:
       return { ...state, order: action.payload };
     case GET_USERS:
-      return {};
+      return { ...state, users: action.payload };
+    case GET_REVIEWS:
+      return { ...state, reviews: action.payload }
     case GET_USER_REVIEWS:
       return {};
     case GET_PRODUCT_JOIN_CATEGORY:
@@ -99,7 +103,11 @@ function ReducerProducts(state = inicialState, action) {
         products: state.products.concat(action.payload),
       };
     case ADD_REVIEW:
-      return {};
+      console.log("reducer", action.payload)
+      return {
+        ...state,
+        reviews: state.reviews.concat(action.payload)
+      };
     case ADD_TO_CART:
       return {};
     case ADD_CATEGORY:
@@ -118,7 +126,17 @@ function ReducerProducts(state = inicialState, action) {
     case UPDATE_ORDER_TO_REJECT:
       return {};
     case UPDATE_REVIEW:
-      return {};
+      console.log(action.payload, "reducer")
+    return {
+        ...state,
+        reviews: state.reviews.map((r) => {
+          if (r.id === action.payload.id) {
+            return action.payload;
+          } else {
+            return r;
+          }
+        }),
+      };
     case UPDATE_USER:
       return {};
     case DELETE_CART:
@@ -177,7 +195,7 @@ function ReducerProducts(state = inicialState, action) {
     case CREATE_ORDER:
       return {};
     case CREATE_USER:
-      return {...state, users: action.payload};
+      return { ...state, users: action.payload };
     case ERROR_MESSAGE:
       alert(action.message);
       return { ...state };
@@ -198,15 +216,15 @@ function ReducerProducts(state = inicialState, action) {
     case POST_CREATE_CART:
       return { ...state, order: action.payload };
     case GET_USER_CART:
-      return { ...state, users: action.payload};
+      return { ...state, users: action.payload };
     case POST_PRODUCT_TO_CART:
-      return { ...state, order: action.payload};
+      return { ...state, order: action.payload };
     case GET_USER_BY_ID:
-      return { ...state, users: action.payload};
+      return { ...state, users: action.payload };
     case DEL_PRODUCT_TO_CART:
-      return { ...state, order: action.payload};
+      return { ...state, order: action.payload };
     case EMPTY_ALL_PRODUCTS_OF_CART:
-      return { ...state, order: action.payload};
+      return { ...state, order: action.payload };
     default:
       return state;
   }

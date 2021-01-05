@@ -18,6 +18,7 @@ export const DETAIL_USER = "DETAIL_USER";
 export const LOGIN = "LOGIN";
 export const LOGIN_ERROR = "LOGIN_ERROR";
 export const LOGOUT = "LOGOUT";
+export const GET_REVIEWS = "GET_REVIEWS";
 export const ADD_REVIEW = "ADD_REVIEW";
 export const GET_USER_REVIEWS = "GET_USER_REVIEWS";
 export const UPDATE_REVIEW = "UPDATE_REVIEW";

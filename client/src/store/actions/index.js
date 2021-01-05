@@ -9,6 +9,7 @@ import {
   ADD_CATEGORY,
   GET_CATEGORIES,
   MODIFY_CATEGORY,
+  GET_REVIEWS,
   DELETE_CATEGORY,
   GET_PRODUCTS_BY_CATEGORY,
   SEARCH_PRODUCT,
@@ -27,12 +28,14 @@ import {
   GET_USER_BY_ID,
   DEL_PRODUCT_TO_CART,
   EMPTY_ALL_PRODUCTS_OF_CART,
+  ADD_REVIEW,
+  UPDATE_REVIEW,
 } from "../constants/constants.js";
 
 const url = "http://localhost:3001/";
 
 //Trae todos los productos
-export const getProducts = (limite,jump) => async (dispatch) => {
+export const getProducts = (limite, jump) => async (dispatch) => {
   try {
     const res = await axios.get(`${url}products/?limit=${limite}&offset=${jump}&include="categories"`);
     dispatch({
@@ -346,7 +349,7 @@ export const getOrderById = (orderId) => async (dispatch) => {
       type: GET_ORDER_BY_ID,
       payload: res.data,
     })
-  } catch(e) {
+  } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
       message: "Problemas para traer la órden de compra",
@@ -361,10 +364,10 @@ export const createUser = (payload) => async (dispatch) => {
       type: CREATE_USER,
       payload: res.data,
     })
-  } catch(e) {
-     dispatch({
+  } catch (e) {
+    dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas para traer la órden de compra",
+      message: "Problemas para crear usuario",
     });
   }
 }
@@ -376,13 +379,13 @@ export const getUserCart = (userId) => async (dispatch) => {
       type: GET_USER_CART,
       payload: res.data,
     })
-  } catch(e) {
+  } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
       message: "Problemas para traer la órden de compra",
     });
   }
-} 
+}
 
 export const postProductToCart = (orderId, productId, payload) => async (dispatch) => {
   try {
@@ -391,7 +394,7 @@ export const postProductToCart = (orderId, productId, payload) => async (dispatc
       type: POST_PRODUCT_TO_CART,
       payload: res.data,
     })
-  } catch(e) {
+  } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
       message: "No se pudo agregar el producto al carrito",
@@ -406,7 +409,7 @@ export const getUserById = (userId) => async (dispatch) => {
       type: GET_USER_BY_ID,
       payload: res.data,
     })
-  } catch(e) {
+  } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
       message: "No se encuentra el Usuario",
@@ -421,7 +424,7 @@ export const delProductToCart = (orderId, productId) => async (dispatch) => {
       type: DEL_PRODUCT_TO_CART,
       payload: res.data,
     })
-  } catch(e) {
+  } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
       message: "No se encuentra el Producto es ese Carrito",
@@ -436,10 +439,64 @@ export const emptyAllProductsOfCart = (orderId) => async (dispatch) => {
       type: EMPTY_ALL_PRODUCTS_OF_CART,
       payload: res.data,
     })
-  } catch(e) {
+  } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
       message: "No se encuentran Productos es ese Carrito",
     });
+  }
+}
+
+//ADD_REVIEW
+///:user_id/product/:product_id
+
+export const addReview = (user_id, product_id, payload) => async (dispatch) => {
+  console.log("entre aca con mi amigo ", payload)
+  try {
+    const res = await axios.post(`${url}reviews/${user_id}/product/${product_id}`, payload)
+    console.log("entre aca con restu ", res.data)
+
+    dispatch({
+      type: ADD_REVIEW,
+      payload: res.data,
+    })
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Review no creada",
+    });
+  }
+}
+
+export const getReviews = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${url}reviews/?include="user"`)
+    dispatch({
+      type: GET_REVIEWS,
+      payload: res.data
+    })
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Problemas al conseguir las reviews"
+    })
+  }
+}
+
+//UPDATE_REVIEW
+export const updateReview = (id, payload) => async (dispatch) => {
+  try {
+    console.log(payload, "arriba await")
+    const res = await axios.put(`${url}reviews/${id}`, payload);
+    console.log(res.data, "abajo await")
+    dispatch({
+      type: UPDATE_REVIEW,
+      payload: res.data
+    })
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Problemas al modifucar la review"
+    })
   }
 }

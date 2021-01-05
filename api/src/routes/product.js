@@ -8,7 +8,7 @@ const { Op } = require("sequelize");
 server.get("/count/:nameCat", async (req, res) => {
   const { nameCat } = req.params;
 
-  if(nameCat === "all") {
+  if (nameCat === "all") {
     count = await Product.findAndCountAll()
   } else {
     count = await Product.findAndCountAll({
@@ -117,6 +117,7 @@ server.post("/", async (req, res) => {
     price,
     stock,
     volume,
+    destacado,
     thumbnail,
   } = req.body;
   (!name || !appearance || !price || !volume) && res.sendStatus(400);
@@ -127,6 +128,7 @@ server.post("/", async (req, res) => {
     price,
     stock,
     volume,
+    destacado,
     thumbnail,
   });
   !product ? res.sendStatus(400) :
@@ -144,6 +146,7 @@ server.put("/:id", async (req, res) => {
     price,
     stock,
     volume,
+    destacado,
     thumbnail,
   } = req.body;
 
@@ -165,6 +168,7 @@ server.put("/:id", async (req, res) => {
       price,
       stock,
       volume,
+      destacado,
       thumbnail,
     },
     {

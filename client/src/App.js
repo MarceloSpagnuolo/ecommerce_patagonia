@@ -13,7 +13,6 @@ import Carrito from "../src/Components/carrito/Carrito";
 import OrderDetails from "../src/Components/FormAdmin/orderDetail.js";
 import TableOrders from "./Components/FormAdmin/tableOrders.js";
 
-
 function App() {
   return (
     <>
