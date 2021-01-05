@@ -1,15 +1,49 @@
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useEffect,  useState } from "react";
 import SearchBar from "../SearchBar/SearchBar.js";
 import "./styles.css";
 import { connect } from "react-redux";
-import { getCategories, getProducts } from "../../store/actions/index.js";
+import { getCategories, getProducts, createUser, postCreateCart, getUserCart, getUserById, getCartByUser } from "../../store/actions/index.js";
+//import { set } from "../../../../api/src/app.js";
 
 function Home(props) {
-  function handleClick() {
+  const [ total, setTotal] = useState(0);
+
+  useEffect(() => {
+    if (!props.user.id) {
+      var user = JSON.parse(localStorage.getItem("user"));
+      if(!user) {
+        props.createUser({name: "guest", lastname: "guest", role: "guest"});
+      } else {
+        props.getUserById(user.id);
+        props.getCartByUser(user.id);
+      }
+    }
+  },[])
+  
+  useEffect(() => {
+    if(props.user.id) {
+      var user = JSON.parse(localStorage.getItem("user"));
+      if(!user) {
+        props.postCreateCart(props.user.id)
+      }
+      localStorage.setItem("user",JSON.stringify(props.user));
+    }
+    if(props.order.products) {
+      setTotal(props.order.products.length)
+    }
+  },[props.user])
+
+  useEffect(() => {
+    if(props.order.products) {
+      setTotal(props.order.products.length)
+    }
+  },[props.order])
+
+/*   function handleClick() {
     props.getProducts(12,0);
     props.getCategories();
-  }
+  } */
 
   return (
     <div className="home">
@@ -31,7 +65,6 @@ function Home(props) {
           <Link
             className="btnMenu"
             to="/products/?page=1"
-            onClick={() => handleClick()}
           >
             Productos{" "}
           </Link>
@@ -39,10 +72,17 @@ function Home(props) {
             Contáctenos{" "}
           </Link>
           <SearchBar></SearchBar>
-          <img
-            className="Navegation-Imagen-Carrito"
-            src="https://image.flaticon.com/icons/png/512/107/107831.png"
-          />
+          <div className="Navegation-Container-Carrito">
+            <Link to="/cart">
+            <img
+              className="Navegation-Imagen-Carrito"
+              src="https://image.flaticon.com/icons/png/512/107/107831.png"
+            />
+            {total > 0 && (
+              <span className="Navegation-Cantidad">{total}</span>
+            )}
+            </Link>
+          </div>
         </nav>
       </div>
     </div>
@@ -53,6 +93,8 @@ function mapStateToProps(state) {
   return {
     products: state.products,
     categories: state.categories,
+    user: state.user,
+    order: state.order,
   };
 }
 
@@ -60,6 +102,11 @@ function mapDispatchToProps(dispatch) {
   return {
     getProducts: (limit, offset) => dispatch(getProducts(limit, offset)),
     getCategories: () => dispatch(getCategories()),
+    createUser: (payload) => dispatch(createUser(payload)),
+    postCreateCart: (id) => dispatch(postCreateCart(id)),
+    getUserCart: (id) => dispatch(getUserCart(id)),
+    getUserById: (id) => dispatch(getUserById(id)),
+    getCartByUser: (id) => dispatch(getCartByUser(id)),
   };
 }
 

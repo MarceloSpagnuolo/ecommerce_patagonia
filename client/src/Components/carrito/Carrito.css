@@ -17,6 +17,7 @@
   border-bottom: solid lightgray 1px;
   margin-bottom: 10px;
   padding-bottom: 10px;
+  align-items: center;
 }
 .Carrito-Detalles {
   display: flex;
@@ -28,6 +29,7 @@
   justify-content: space-between;
   align-items: center;
   width: 30%;
+  margin-left: 10px;
 }
 
 .Carrito-Boton-Cantidad {
@@ -83,9 +85,92 @@
   color: white;
   font-size: 18px;
   margin-top: 30px;
+  margin-left: 5px;
 }
 
 .Carrito-Continuar:hover {
   box-shadow: 3px 3px 10px black;
   cursor: pointer;
+}
+
+.Carrito-Continuar:disabled {
+  background-color: lightgray;
+  color: gray;
+  cursor: no-drop;
+  box-shadow: none;
+}
+
+.Carrito-Btn-Cancel {
+  height: 30px;
+}
+
+.Carrito-Btn-Cancel:hover {
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.Modal-Container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 3;
+  display: none;
+}
+
+.Modal-Content {
+  left:auto;
+  right: auto;
+  top: auto;
+  bottom: auto;
+  background-color: white;
+  overflow: auto;
+  border: solid 1px black;
+  border-radius: 5px;
+  box-shadow: 3px 3px 10px black;
+}
+
+#modal1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Modal-Header,
+.Modal-Footer {
+  background-color: lightgray;
+  padding: 5px 10px 5px 10px;
+}
+
+.Modal-Section {
+  display:flex;
+  padding: 20px;
+  align-items: center;
+}
+
+.Modal-Imagen {
+  width: 100px;
+  margin-right: 20px;
+}
+
+.Modal-Footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.Modal-Botones {
+  height: 30px;
+  margin-left: 5px;
+}
+
+.Modal-Botones:hover {
+  cursor: pointer;
+}
+
+.Modal-Leyenda {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

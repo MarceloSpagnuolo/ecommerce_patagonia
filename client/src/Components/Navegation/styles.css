@@ -62,8 +62,24 @@
 
 .Navegation-Imagen-Carrito {
   height: 20px;
+  padding-left: 10px;
 }
 
 .Navegation-Imagen-Carrito:hover {
   cursor: pointer;
+}
+
+.Navegation-Container-Carrito {
+  position: relative;
+}
+
+.Navegation-Cantidad {
+  position: absolute;
+  font-size: small;
+  background-color: red;
+  color:white;
+  padding: 0 5px 0 5px;
+  border-radius: 30px;
+  left: 28px;
+  top: 0px;
 }

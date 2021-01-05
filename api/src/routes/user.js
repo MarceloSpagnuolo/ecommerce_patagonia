@@ -19,6 +19,7 @@ server.post("/", async (req, res) => {
   } = req.body;
   (!givenname || !familyname || !email || !password || !role) &&
     res.send("Falta valor name, lastname, email, pass o role").status(400);
+
   try {
     const user = await User.create({
       givenname,
@@ -69,11 +70,45 @@ server.put("/:id", async (req, res) => {
       },
       returning: true,
     }
-  );
+    );
+    
+    !user ? res.sendStatus(400) : res.json(user[1][0]);
+  });
 
-  !user ? res.sendStatus(400) : res.json(user[1][0]);
-});
+  
+  server.get("/:userId/cart", async (req, res) => {
+    const { userId } = req.params;
+    const user = await User.findOne({
+      where: {
+        id: userId
+      },
+      include: [
+        {
+          model: Order,
+          include: [
+            {
+              model: Product,
+            },
+          ],
+          where: {
+            [Op.or]: [
+              {
+                status: "carrito",
+              },
+            ],
+          },
+        },
+      ],
+    });
+    !user ? res.sendStatus(404) : res.json(user);
+  });
 
+
+server.get("/:userId", async (req, res) => {
+  const { userId } = req.params;
+  const usuario = await User.findByPk(userId)
+  usuario ? res.json(usuario).status(200) : res.sendStatus(400);
+})
 //////////////// 36 /////////////////////////
 
 server.get("/", (req, res, next) => {
@@ -96,6 +131,7 @@ server.get("/", (req, res, next) => {
   } else {
     res.sendStatus(401);
   }
+
 });
 
 /////////////////// S38 /////////////////////////////
@@ -141,30 +177,6 @@ server.post("/:userId/cart", async (req, res) => {
 // La tarea dice que debe devolver el ULTIMO Order abierto (sea lo que signifique eso). Se puede discutir a ver que
 // es lo que se interpreta por "el último Order abierto" para ver que cosa más específica queremos devolver.
 
-server.get("/:userId/cart", async (req, res) => {
-  const { userId } = req.params;
-  const user = await User.findByPk(userId, {
-    include: [
-      {
-        model: Order,
-        include: [
-          {
-            model: Product,
-          },
-        ],
-        where: {
-          [Op.or]: [
-            {
-              status: "carrito",
-            },
-          ],
-        },
-      },
-    ],
-  });
-
-  !user ? res.sendStatus(404) : res.json(user);
-});
 /////////// Solo los productos /////////////
 /* 
    Hay otro modelo que trae unicamente los productos en el res.data,
@@ -200,7 +212,6 @@ server.put("/:userId/product/cart", async (req, res) => {
   const { productId, quantity } = req.body;
 
   const product = await Product.findByPk(productId);
-  console.log(product);
 
   const order = await Order.findOne({
     // nos traemos solo la orden con status "carrito"

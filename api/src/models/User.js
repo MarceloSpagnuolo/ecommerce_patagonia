@@ -8,6 +8,7 @@ module.exports = (sequelize) => {
     // defino el modelo
     const User = sequelize.define('user', {
         givenname: {
+
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -34,28 +35,28 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: true,
         },
-        githubID: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
         photoURL: {
             type: DataTypes.STRING,
             allowNull: true,
         },
         city: {
             type: DataTypes.STRING,
+            allowNull: true
         },
         adress: {
             type: DataTypes.STRING,
+            allowNull: true
         },
         phone: {
             type: DataTypes.STRING,
+            allowNull: true
         },
         postal: {
             type: DataTypes.STRING,
+            allowNull: true
         },
         role: {
-            type: DataTypes.ENUM('user', 'admin'),
+            type: DataTypes.ENUM('guest','user', 'admin'),
             allowNull: false,
             defaultValue: "user"
         }
@@ -63,6 +64,5 @@ module.exports = (sequelize) => {
     User.prototype.compare = function(pass){
         return bcrypt.compareSync(pass, this.password)
     }
-
     return User;
 };

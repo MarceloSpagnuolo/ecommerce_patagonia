@@ -12,6 +12,7 @@ import Relationship from "../src/Components/AdminRelaciones/RelationshipViews";
 import Carrito from "../src/Components/carrito/Carrito";
 import OrderDetails from "../src/Components/FormAdmin/orderDetail.js";
 import TableOrders from "./Components/FormAdmin/tableOrders.js";
+import Admin from "./Components/Admin/admin.js";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
       <Route exact path="/categories" />
       <Route exact path="/cart" component={Carrito} />
       <Route exact path="/registro" component={Registro} />
+      <Route exact path="/admin" component={Admin} />
     </>
   );
 }
