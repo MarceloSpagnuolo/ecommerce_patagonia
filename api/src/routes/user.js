@@ -17,8 +17,8 @@ server.post("/", async (req, res) => {
     postal,
     role,
   } = req.body;
-  (!givenname || !familyname || !email || !password || !role) &&
-    res.send("Falta valor name, lastname, email, pass o role").status(400);
+  (!givenname || !familyname || !role) &&
+    res.send("Falta valor name, lastname o role").status(400);
 
   try {
     const user = await User.create({

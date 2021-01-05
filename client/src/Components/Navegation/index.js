@@ -10,10 +10,11 @@ function Home(props) {
   const [ total, setTotal] = useState(0);
 
   useEffect(() => {
+    localStorage.clear();   //Esto es solo para desarrollar la aplicacion, después se elimina.
     if (!props.user.id) {
       var user = JSON.parse(localStorage.getItem("user"));
       if(!user) {
-        props.createUser({name: "guest", lastname: "guest", role: "guest"});
+        props.createUser({givenname: "guest", familyname: "guest", role: "guest"});
       } else {
         props.getUserById(user.id);
         props.getCartByUser(user.id);
