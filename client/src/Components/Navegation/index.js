@@ -11,6 +11,7 @@ function Home(props) {
   const [ show, setShow ] = useState(false);
 
   useEffect(() => {
+    localStorage.clear();   //Esto es solo para desarrollar la aplicacion, después se elimina.
     if (!props.user.id) {
       var user = JSON.parse(localStorage.getItem("user"));
       if(!user) {

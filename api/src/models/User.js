@@ -18,29 +18,25 @@ module.exports = (sequelize) => {
         email: {
             type: DataTypes.STRING,
             allowNull: true,
-            unique: true,
-            validate: {
-                isEmail: true
-            }
+            unique: true,            
         },
         password: {
             type: DataTypes.STRING,
-            allowNull: true,
             set(value) {
                 if(value) {
-                    const salt = bcrypt.genSaltSync(10);
-                    const hash = bcrypt.hashSync(value, salt);
-                    this.setDataValue("hashedpassword", hash);
+                    const salt = bcrypt.genSaltSync(10)
+                    const hash = bcrypt.hashSync(value, salt)
+                    this.setDataValue("password", hash)
                 }
             }
         },
         googleID: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: true,
         },
         photoURL: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: true,
         },
         city: {
             type: DataTypes.STRING,
@@ -61,26 +57,12 @@ module.exports = (sequelize) => {
         role: {
             type: DataTypes.ENUM('guest','user', 'admin'),
             allowNull: false,
+            defaultValue: "user"
         }
     });
     User.prototype.compare = function (pass) {
         return bcrypt.compareSync(pass, this.password)
     };
+
     return User;
 };
-
-
-
-
-
-// user.beforeCreate((user) => {
-//     user.hashedPassword = "12345"
-// })
-//User.addHook('beforeCreate', async (user) => {
-    //     const salt = await bcrypt.genSaltSync(8);
-    //     user.hashedPassword = await bcrypt.hashSync(user.hashedPassword, salt);
-    // });
-
-    // User.addHook('beforeValiate', async (hashedPassword) => {
-    //     return await bcrypt.compare(hashedPassword, this.hashedPassword);
-    // });

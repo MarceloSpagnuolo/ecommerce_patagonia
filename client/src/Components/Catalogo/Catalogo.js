@@ -42,7 +42,7 @@ function Catalogo(props) {
         setCount(res.data.count);
       })
     }
-  },[categ,props.location.search]) //se ejecuta cuando categ cambia
+  },[categ,props.location.search,props.history.location.pathname]) //se ejecuta cuando categ cambia
 
   useEffect(() => {
     const page = props.location.search.split("=")[1];
@@ -58,7 +58,7 @@ function Catalogo(props) {
     
     dispatch(getCategories());
     return function cleanup() {};
-  }, [pagina, categ, props.location.search]); // Este useEffect se ejecuta cuando cambia la página
+  }, [pagina, categ, props.location.search,props.history.location.pathname]); // Este useEffect se ejecuta cuando cambia la página
 
 function handleClick(cat) {
   setCateg(cat);
@@ -101,7 +101,7 @@ return (
     <div className="Catalogo-Products-Pagination">
       <div id="Catalogo-ProductCard-Container">
 
-        {props.products.length > 0 && props.products.map((prod) => (
+        {props.products.length > 0 ? props.products.map((prod) => (
         <div key={prod.id}>
 
             <ProductCard
@@ -115,7 +115,7 @@ return (
             ></ProductCard>
 
           </div>
-        ))}
+        )) : <h2>No se encontraron productos que coincidan con esa búsqueda</h2>}
 
       </div>
     <div className="Catalago-Pagination">
