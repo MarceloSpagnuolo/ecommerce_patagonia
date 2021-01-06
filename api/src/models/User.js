@@ -8,7 +8,6 @@ module.exports = (sequelize) => {
     // defino el modelo
     const User = sequelize.define('user', {
         givenname: {
-
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -61,8 +60,9 @@ module.exports = (sequelize) => {
             defaultValue: "user"
         }
     });
-    User.prototype.compare = function(pass){
+    User.prototype.compare = function (pass) {
         return bcrypt.compareSync(pass, this.password)
-    }
+    };
+
     return User;
 };

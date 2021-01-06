@@ -4,10 +4,11 @@ import SearchBar from "../SearchBar/SearchBar.js";
 import "./styles.css";
 import { connect } from "react-redux";
 import { getCategories, getProducts, createUser, postCreateCart, getUserCart, getUserById, getCartByUser } from "../../store/actions/index.js";
-//import { set } from "../../../../api/src/app.js";
+import Login from "../Login/login.js";
 
 function Home(props) {
   const [ total, setTotal] = useState(0);
+  const [ show, setShow ] = useState(false);
 
   useEffect(() => {
     localStorage.clear();   //Esto es solo para desarrollar la aplicacion, después se elimina.
@@ -41,12 +42,16 @@ function Home(props) {
     }
   },[props.order])
 
-/*   function handleClick() {
-    props.getProducts(12,0);
-    props.getCategories();
-  } */
+  function handleLogin() {
+    setShow(true);
+  }
+
+  function handleClose() {
+    setShow(false);
+  }
 
   return (
+    <>
     <div className="home">
       <Link to="/">
         <img
@@ -84,9 +89,17 @@ function Home(props) {
             )}
             </Link>
           </div>
+          {props.user.role === "guest" ? 
+          <span className="btnMenu" onClick={() => setShow(true)}>Entrar</span>
+          : <span className="btnMenu">{props.user.givenname}</span> }
+          <span className="btnMenu" onClick={() => handleLogin()}>Registrarse</span>
         </nav>
       </div>
     </div>
+      <div>
+        <Login guestId={props.user.id} show={show} onClose={() => setShow((p) => !p)} />
+      </div>
+      </>
   );
 }
 
