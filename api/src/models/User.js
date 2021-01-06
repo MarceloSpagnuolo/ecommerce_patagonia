@@ -7,11 +7,11 @@ const bcrypt = require("bcrypt")
 module.exports = (sequelize) => {
     // defino el modelo
     const User = sequelize.define('user', {
-        name: {
+        givenname: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        lastname: {
+        familyname: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
                 isEmail: true
             }
         },
-        hashedpassword: {
+        password: {
             type: DataTypes.STRING,
             allowNull: true,
             set(value) {
@@ -34,7 +34,7 @@ module.exports = (sequelize) => {
                 }
             }
         },
-        googleId: {
+        googleID: {
             type: DataTypes.STRING,
             allowNull: true
         },
@@ -64,7 +64,7 @@ module.exports = (sequelize) => {
         }
     });
     User.prototype.compare = function (pass) {
-        return bcrypt.compareSync(pass, this.hashedpassword)
+        return bcrypt.compareSync(pass, this.password)
     };
     return User;
 };

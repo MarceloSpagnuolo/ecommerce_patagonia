@@ -6,24 +6,29 @@ const { Op } = require("sequelize");
 //Creación de usuario. City, adress, phone y postal no son obligatorios.
 //Si ingresa un mail repetido, manda un status 400 con un mensaje de email repetido.
 server.post("/", async (req, res) => {
+  console.log(req.body,"Del back")
   const {
-    name,
-    lastname,
+    givenname,
+    familyname,
     email,
-    hashedpassword,
+    password,
+    googleID,
+    photoURL,
     city,
     adress,
     phone,
     postal,
     role,
   } = req.body;
-  (!name || !lastname || !role) && res.send("Falta valor name, lastname, email, pass o role").status(400);
+  (!givenname || !familyname || !role) && res.send("Falta valor givenname, familyname o role").status(400);
   try {
     const user = await User.create({
-      name,
-      lastname,
+      givenname,
+      familyname,
       email,
-      hashedpassword,
+      password,
+      googleID,
+      photoURL,
       city,
       adress,
       phone,
@@ -32,7 +37,7 @@ server.post("/", async (req, res) => {
     });
     !user ? res.sendStatus(400) : res.json(user).status(201);
   } catch (error) {
-    res.send("Ese email ya existe").status(400)
+    res.send(error).status(400)
   }
 
 });

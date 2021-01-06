@@ -4,6 +4,7 @@ import SearchBar from "../SearchBar/SearchBar.js";
 import "./styles.css";
 import { connect } from "react-redux";
 import { getCategories, getProducts, createUser, postCreateCart, getUserCart, getUserById, getCartByUser } from "../../store/actions/index.js";
+import Login from "../Login/login.js";
 
 function Home(props) {
   const [ total, setTotal] = useState(0);
@@ -13,7 +14,7 @@ function Home(props) {
     if (!props.user.id) {
       var user = JSON.parse(localStorage.getItem("user"));
       if(!user) {
-        props.createUser({name: "guest", lastname: "guest", role: "guest"});
+        props.createUser({givenname: "guest", familyname: "guest", role: "guest"});
       } else {
         props.getUserById(user.id);
         props.getCartByUser(user.id);
@@ -87,54 +88,15 @@ function Home(props) {
             )}
             </Link>
           </div>
-          <span className="btnMenu" onClick={() => handleLogin()}>Entrar</span>
+          {props.user.role === "guest" ? 
+          <span className="btnMenu" onClick={() => setShow(true)}>Entrar</span>
+          : <span className="btnMenu">{props.user.givenname}</span> }
           <span className="btnMenu" onClick={() => handleLogin()}>Registrarse</span>
         </nav>
       </div>
     </div>
       <div>
-        {show && 
-          <div className="Login-Container">
-            <div className="Login-Content">
-              <header className="Login-Header">
-                Acceso de Usuario
-              </header>
-              <section className="Login-Section">
-                <form>
-                  <div className="Login-Campos">
-                    <label for="email">Email registrado</label><br></br>
-                    <input autofocus="true" autocorrect="off" size={40} type="email" id="email" name="email" className="Login-Campos" /><br></br>
-                  </div>
-                  <div className="Login-Campos">
-                    <label for="pass">Contraseña</label><br></br>
-                    <input size={40} type="password" id="pass" name="pass" className="Login-Campos" />
-                  </div>
-                </form>
-                <div className="Login-Leyenda">
-                  <span className="Login-Sep-Leyenda">Si no tiene una cuenta, deberá </span>
-                  <Link to="/registro">registrarse</Link>
-                </div>
-              </section>
-              <div className="Login-Btn-Social">
-                <button className="Login-Btn-Google">
-                  <img src="http://localhost:3001/images/google.png" className="Login-Logo-Btn" />
-                  Acceder con Google
-                </button>
-                <button className="Login-Btn-Github">
-                  <img src="http://localhost:3001/images/github.jpg" className="Login-Logo-Btn" />
-                  Acceder con GitHub
-                </button>
-              </div>
-              <footer className="Login-Footer">
-                <button className="Login-Btn-Down" id="Login-Cancel" onClick={() => handleClose()}>Cancelar</button>
-                <button className="Login-Btn-Down" 
-                  title={true && "Debe ingresar los datos de acceso"} 
-                  id="Login-Entrar" 
-                  onClick={() => handleClose()}
-                  disabled={true}>Entrar</button>
-              </footer>
-            </div>
-          </div>}
+        <Login guestId={props.user.id} show={show} onClose={() => setShow((p) => !p)} />
       </div>
       </>
   );
