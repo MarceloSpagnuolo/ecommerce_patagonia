@@ -35,6 +35,13 @@ VALUES ('Amber Lager', 'Color ambar, rojjos brillantes, espuma blanca.', 'Sabor 
 ('Abraso De OSO', 'Color dorado profundo aspecto levemente opalescente, espuma blanca persistente', 'De sabores a cereal, grano, con un toque dulce por la miel. Refrescante, de cuerpo medio-liviano.', 120, 30, '473 cc', 'https://www.comprasparaguai.com.br/media/fotos/modelos/cerveja_patagonia_abrazo_de_oso_473ml_119781_550x550.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('VeraIPA', 'Dorado/anaranjado profundo espuma blanca persistente, y opalescencia caracteristica', 'Muy suave lupulado en hervor que le da un amargor bajo, con intenso de sabor cítrico y a frutas tropicales, gracias al agregado de lúpulos aromáticos en Dry Hopping. De cuerpo medio y muy refrescante.', 125, 20, '473 cc', 'https://www.boulevard-sa.com.ar/Site/img/products/patagonia/Patagonia-vera-ipa-473-L.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00');
 
+INSERT INTO images (path,"createdAt", "updatedAt", "productId")
+VALUES ('https://images.losandes.com.ar/resizer/jjcY6mCgKXSpCoMzkoBglZFHVBg=/800x450/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/GZSTSMRUMY4TSMZTGRQWCNBZHA.jpg',  '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1),
+('https://sonarfm.cl/sonarfm/site/artic/20171011/imag/foto_0000000320171011114514.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1),
+('https://pbs.twimg.com/media/EO1crNVX0AIEwJB.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 2),
+('https://sonarfm.cl/sonarfm/site/artic/20171011/imag/foto_0000000320171011114514.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 2),
+('https://pbs.twimg.com/media/EO1crNVX0AIEwJB.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 3);
+
 
 INSERT INTO categories (name, description, "createdAt", "updatedAt")
 
@@ -133,19 +140,25 @@ VALUES (10 ,1000, '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1, 1
 (9 ,1000, '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 2, 1),
 (8 ,1200, '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 3, 1),
 (2 ,300, '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 3, 3);
+
+INSERT INTO reviews (rate, comment,  "createdAt", "updatedAt", "productId", "userId" )
+VALUES (3 ,'Me parece una cerveza normal', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1, 1),
+(5 ,'Mi cerveza favorita de patagonia, me encanta siempre arrancar con esta', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1, 2),
+(2 ,'Poco recomendable, no se destaca en nada de otras cervezas del mismo tipo', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1, 3),
+(5 ,'SIMPLEMENTE EXCELENTE!!! Super recomendable', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1, 4),
+(4 ,'De las mejorcitas de patagonia, con un buen gusto agrio a pesar de ser cerveza rubia', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 2, 1),
+(1 ,'Muy amarga para mi gusto. No la recomiendo a menos que te gusten las rubias muy fuertes. Para eso me pido otro tipo directamente. No se que fue lo que intentaron hacer con este gusto horrible que le pusieron. Me decepcionó totalmente', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 2, 2),
+(3 ,'Me parece una cerveza normal', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 2, 3),
+(5 ,'Mi cerveza favorita de patagonia, me encanta siempre arrancar con esta', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 3, 1),
+(3 ,'Ni fu ni fa', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 3, 2),
+(1 ,'meh, prefiero quilmes por el precio que pagué la última vez', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 3, 3),
+(5 ,'ME encantaaaaaAA. Siempre la pido!!!!', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 4, 1),
+(5 ,'Mi cerveza favorita de patagonia, me encanta siempre arrancar con esta', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 4, 2),
+(3 ,'Me parece una cerveza normal', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 4, 3);
+
 `);
 
 
 
 
 module.exports = { query };
-
-// INSERT INTO "users" ("firstName", "lastName", "password", "email", "shippingAdress", "isAdmin", "createdAt", "updatedAt")
-// VALUES ('Admin', 'Admin', '$2b$10$gXEMhz5MUjH4i3V9y8m1oOpYnxKAJbFLR/vKxRlDywjGg2T66VsPy', 'admin@admin.com', 'Administracion', true, '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
-// ('Fer', 'Leiva', '$2b$10$x5GQPa0nSnJVMUoKgztYEe0NTLYknYJ5aL.7wFh/Xhk3xay03NU5y', 'efeleiva@gmail.com', 'Chaquito', true, '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00');
-
-// INSERT INTO "reviews" ("rating", "title", "body", "createdAt", "updatedAt", "productId", "userId")
-// VALUES ('2', 'Maomeno noma', 'Flojeli flojeli este autor', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 2, 2),
-// ('5', 'Lo amo mucho', 'Enamorada del libro', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 4, 3),
-// ('1', 'Horrible', 'Nunca mas compro aca', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 6, 5),
-// ('1', 'VIVA EL SEXO', 'Culo teta pito', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 6, 5);

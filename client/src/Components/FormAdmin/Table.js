@@ -26,6 +26,7 @@ const Table = (props) => {
         stock: beer.stock,
         volume: beer.volume,
         thumbnail: beer.thumbnail,
+        destacado: beer.destacado,
         categories: beer.categories,
       });
     },
@@ -43,6 +44,7 @@ const Table = (props) => {
               <th>Description</th>
               <th>Price</th>
               <th>Stock</th>
+              <th>Destacado</th>
               <th>Volumen</th>
               <th></th>
               <th></th>
@@ -56,6 +58,7 @@ const Table = (props) => {
                   <td>{beer.description}</td>
                   <td>{beer.price}</td>
                   <td>{beer.stock}</td>
+                  <td>{beer.destacado ? "SI" : "NO"}</td>
                   <td>{beer.volume}</td>
                   <td>
                     <button

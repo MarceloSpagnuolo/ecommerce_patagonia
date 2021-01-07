@@ -1,0 +1,133 @@
+.body-shome {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.vaca {
+    width: 100%;
+    background-color:#163d34;
+    margin-top: -3%;
+    /* margin-bottom: -80px; */
+}
+.vaca img{
+    width: 100%;
+    margin-top: -20px;
+}
+
+.slider-home {
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+}
+
+.slides-home {
+    width: 500%;
+    height: 600px;
+    display: flex;
+}
+
+.slides-home input {
+    display: none;
+}
+
+.slide-h {
+    width: 20%;
+    transition: 2s;
+}
+
+.slide-h img {
+    width: 100%;
+    height: 600px;
+}
+
+.navigation-manual {
+    position: absolute;
+    width: 100%;
+    margin-top: 550px;
+    display: flex;
+    justify-content: center;
+}
+
+.manual-btn {
+    border: 2px inset;
+    border-top-color: rgb(53, 156, 5);
+    border-left-color:rgb(53, 156, 5);
+    border-right-color: rgb(128, 195, 97);
+    border-bottom-color:rgb(128, 195, 97);
+    opacity: 0.4;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 1s;
+}
+
+.manual-btn:not(:last-child) {
+    margin-right: 40px;
+}
+
+.manual-btn:hover {
+    background: rgb(214, 152, 35);
+}
+
+#radio1:checked~.first {
+    margin-left: 0;
+}
+
+#radio2:checked~.first {
+    margin-left: -20%;
+}
+
+#radio3:checked~.first {
+    margin-left: -40%;
+}
+
+#radio4:checked~.first {
+    margin-left: -60%;
+}
+
+.navigation-auto {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 550px
+}
+
+.navigation-auto div {
+    border: 2px inset;
+    border-top-color: rgb(53, 156, 5);
+    border-left-color:rgb(53, 156, 5);
+    border-right-color: rgb(128, 195, 97);
+    border-bottom-color:rgb(128, 195, 97);
+    opacity: 0.4;
+    padding: 5px;
+    border-radius: 10px;
+    transition: 1s;
+}
+
+.navigation-auto div:not(:last-child) {
+    margin-right: 40px;
+}
+
+#radio1:checked~.navigation-auto .auto-btn1 {
+    background: rgb(214, 152, 35);
+    opacity: 0.5;
+}
+
+#radio2:checked~.navigation-auto .auto-btn2 {
+    background: rgb(214, 152, 35);
+    opacity: 0.5;
+}
+
+#radio3:checked~.navigation-auto .auto-btn3 {
+    background: rgb(214, 152, 35);
+    opacity: 0.5;
+}
+
+#radio4:checked~.navigation-auto .auto-btn4 {
+    background: rgb(214, 152, 35);
+    opacity: 0.5;
+}
+

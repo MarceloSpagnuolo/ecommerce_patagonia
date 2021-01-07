@@ -18,6 +18,7 @@ export const DETAIL_USER = "DETAIL_USER";
 export const LOGIN = "LOGIN";
 export const LOGIN_ERROR = "LOGIN_ERROR";
 export const LOGOUT = "LOGOUT";
+export const GET_REVIEWS = "GET_REVIEWS";
 export const ADD_REVIEW = "ADD_REVIEW";
 export const GET_USER_REVIEWS = "GET_USER_REVIEWS";
 export const UPDATE_REVIEW = "UPDATE_REVIEW";
@@ -49,4 +50,7 @@ export const POST_PRODUCT_TO_CART = "POST_PRODUCT_TO_CART";
 export const GET_USER_BY_ID = "GET_USER_BY_ID";
 export const DEL_PRODUCT_TO_CART = "DEL_PRODUCT_TO_CART";
 export const EMPTY_ALL_PRODUCTS_OF_CART = "EMPTY_ALL_PRODUCTS_OF_CART";
+export const GET_IMAGES = "GET_IMAGES";
+export const ADD_IMAGES = "ADD_IMAGES";
+export const DELETE_IMAGES = "DELETE_IMAGES";
 

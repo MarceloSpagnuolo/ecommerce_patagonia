@@ -1,0 +1,82 @@
+.divSliderPDet {
+    display: grid;
+    max-height: 510px;
+    max-width: 510px;
+    grid-template-columns: 0px 510px 0px;
+    grid-template-areas: "box1 box2 box3";
+    /* overflow-x: hidden;
+    overflow-y: hidden; */
+}
+
+.LeftPDet {
+    grid-area: box1;
+    position: relative;
+}
+
+
+
+.buttBackPDet {
+    font-size: 50px;
+    font-weight: 900;
+    height: 510px;
+    width: 200px;
+    text-align: left;
+    background: transparent;
+    border: none;
+    color: black;
+    outline-style: none;
+    cursor: pointer;
+}
+
+.buttBackPDet:hover {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.185), rgba(255, 255, 255, 0));
+    color: #163d34;
+}
+
+.imgContPCard {
+    grid-area: box2;
+    display: -webkit-inline-box;
+    max-height: 510px;
+    overflow: hidden;
+}
+
+.rightPDet {
+    grid-area: box3;
+    position: relative;
+    left: -200px;
+    top: 3px
+}
+
+.buttNextPDet {
+    font-size: 50px;
+    font-weight: 900;
+    height: 510px;
+    width: 200px;
+    text-align: right;
+    background: transparent;
+    border: none;
+    color: black;
+    outline-style: none;
+    cursor: pointer;
+}
+
+.buttNextPDet:hover {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.185));
+    color: #163d34;
+}
+
+.buttBackPDet:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+
+.buttNextPDet:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+
+.imgPDet {
+    width: 510px;
+    height: 510px;
+}
+

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import React, { useEffect,  useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchBar from "../SearchBar/SearchBar.js";
 import "./styles.css";
 import { connect } from "react-redux";
@@ -14,6 +14,7 @@ function Home(props) {
     localStorage.clear();   //Esto es solo para desarrollar la aplicacion, después se elimina.
     if (!props.user.id) {
       var user = JSON.parse(localStorage.getItem("user"));
+
       if(!user) {
         props.createUser({givenname: "guest", familyname: "guest", role: "guest"});
       } else {
@@ -21,9 +22,10 @@ function Home(props) {
         props.getCartByUser(user.id);
       }
     }
-  },[])
-  
+  }, [])
+
   useEffect(() => {
+
     if(props.user.id) {
       var user = JSON.parse(localStorage.getItem("user"));
       if(!user) {
@@ -31,16 +33,17 @@ function Home(props) {
       }
       localStorage.setItem("user",JSON.stringify(props.user));
     }
-    if(props.order.products) {
+    if (props.order.products) {
       setTotal(props.order.products.length)
     }
   },[props.user])
 
   useEffect(() => {
-    if(props.order.products) {
+    if (props.order.products) {
       setTotal(props.order.products.length)
     }
-  },[props.order])
+  }, [props.order])
+
 
   function handleLogin() {
     setShow(true);
@@ -60,34 +63,44 @@ function Home(props) {
         />
       </Link>
       <div className="segundo">
-        <h1 className="titleEcom">Ecommerce Patagonia</h1>
+        <h1 className="titleEcom">ECOMMERCE PATAGONIA</h1>
         <nav className="navegacion">
-          <Link className="btnMenu" to="/">
-            Inicio{" "}
-          </Link>
-          <Link className="btnMenu" to="/categories">
-            Categorias{" "}
-          </Link>
-          <Link
-            className="btnMenu"
-            to="/products/?page=1"
-          >
-            Productos{" "}
-          </Link>
-          <Link className="btnMenu" to="/contact">
-            Contáctenos{" "}
-          </Link>
-          <SearchBar></SearchBar>
-          <div className="Navegation-Container-Carrito">
+          <div className="prueba-nav">
+            <Link className="btnMenu" to="/">
+              <span>Inicio</span>
+            </Link>
+          </div>
+          <div className="prueba-nav">
+            <Link className="btnMenu" to="/categories">
+              <span>Categorias</span>
+            </Link>
+          </div>
+          <div className="prueba-nav">
+            <Link
+              className="btnMenu"
+              to="/products/?page=1"
+              onClick={() => handleClick()}
+            >
+              <span>Productos</span>
+            </Link>
+          </div>
+          <div className="prueba-nav">
+            <Link className="btnMenu" to="/contact">
+              <span>Contáctenos</span>
+            </Link>
+          </div>
+          <div className="ss-home">
+
             <Link to="/cart">
             <img
               className="Navegation-Imagen-Carrito"
-              src="https://image.flaticon.com/icons/png/512/107/107831.png"
+              src="https://cdn.discordapp.com/attachments/764979688446885898/792228021385691136/icons8-carrito-de-compras-64.png"
             />
             {total > 0 && (
-              <span className="Navegation-Cantidad">{total}</span>
-            )}
+                <span className="Navegation-Cantidad">{total}</span>
+              )}
             </Link>
+            <SearchBar />
           </div>
           {props.user.role === "guest" ? 
           <span className="btnMenu" onClick={() => setShow(true)}>Entrar</span>

@@ -7,6 +7,8 @@ const cors = require('cors');
 const passport = require("./routes/passport");
 const cookieSession = require("cookie-session")
 
+
+
 require('./db.js');
 
 const server = express();
@@ -55,5 +57,9 @@ server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   console.error(err);
   res.status(status).send(message);
 });
+
+//multer
+server.use(express.static('./src/images/cervezas'));
+
 
 module.exports = server;

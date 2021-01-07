@@ -1,0 +1,53 @@
+.asdas {
+    display: grid;
+    /* padding: 50px; */
+    /* margin: 20px; */
+    margin-left: 25%;
+    margin-right: 25%;
+    /* border: inset 3px; */
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 50px 50px 50px;
+    /* justify-content: center; */
+    grid-template-areas: "box1 box1" "box2 box4" "box3 box3";
+}
+
+.userReview {
+    grid-area: box1;
+    max-height: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight:900;
+}
+
+.userRateReview {
+    grid-area: box2;
+    align-items: center;
+    max-height: 50px;
+}
+
+.userCommentReview {
+    grid-area: box3;
+    /* max-height: 50px; */
+    line-height: 1.5;
+}
+
+.userCommentReview p {
+    font-family: 'Montserrat', sans-serif;
+    position: relative;
+    top: -19px;
+}
+
+.userDateReview {
+    grid-area: box4;
+    max-height: 50px;
+    color: rgb(160, 160, 160);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+
+}
+
+@media screen and (max-width: 1300px){
+    .asdas{
+        grid-template-rows: 50px 50px 100px;
+    }
+}

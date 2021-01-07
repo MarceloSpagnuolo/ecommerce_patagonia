@@ -1,14 +1,24 @@
+/* fuentes */
+
+@font-face {
+  font-family: 'Pilsen Plakat';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Pilsen Plakat'), url('https://fonts.cdnfonts.com/s/8645/PilsenPlakat.woff') format('woff');
+}
+
+/*///////*/
+
 .home {
   display: flex;
   align-items: stretch;
-  padding-left: 50px;
+  padding-left: 40px;
   background-color: rgb(255, 165, 0, 0.8);
   backdrop-filter: blur(5px);
-  /* opacity: 0.8; */
   position: sticky;
   top: 0;
-  border-bottom: solid 3px lightcoral;
   z-index: 2;
+  box-shadow: 0px 1px 1px #313131;
 }
 
 @keyframes Logo {
@@ -41,45 +51,80 @@
 }
 
 .titleEcom {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  color: rgb(2, 85, 2);
+  position: relative;
+  top: -20px;
+  left: 10px;
+  font-family: 'Pilsen Plakat';
+  -webkit-text-fill-color: #1c5045;
+  filter: drop-shadow(2px 2px rgba(255, 254, 254, 0.932));
+  font-size: 50px;
 }
 
 .btnMenu {
-  color: rgb(2, 85, 2);
+  text-transform: uppercase;
+  margin: 0 20px 0 20px;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  font-family: 'AmsiPro-Bold';
+  font-size: 25px;
+  position: relative;
+  left: 1.5%;
+  top: -12px;
+  color: #1c5045;
   text-decoration: none;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  padding: 0 5px 0 5px;
-  cursor: pointer;
+  /* padding: 0 5px 0 5px; */
+  border: solid 1px transparent;
+}
+
+.btnMenu:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-image: url("https://cdn.discordapp.com/attachments/764979688446885898/792240520818327562/pincelada.gif");
+  background-size: cover;
+  transform-origin: left;
+  transition: 0.5s;
+}
+
+.btnMenu:hover:before {
+  width: 100%;
+
 }
 
 .btnMenu:hover {
-  background-color: khaki;
-  transition: all 0.5s;
-  border-radius: 5px;
+  color: rgb(255, 255, 255);
+  /* transform: translate(5px, -5px); */
+  transition: all 300ms;
+}
+
+.btnMenu span {
+  position: relative;
+  z-index: 1;
 }
 
 .Navegation-Imagen-Carrito {
-  height: 20px;
-  padding-left: 10px;
-}
-
-.Navegation-Imagen-Carrito:hover {
+  height: 35px;
   cursor: pointer;
+  bottom: 15px;
 }
 
-.Navegation-Container-Carrito {
-  position: relative;
-  margin-right: 10px;
+.ss-home {
+  display: flex;
+  position: absolute;
+  left: 78%;
+  top: 130px;
+
 }
 
 .Navegation-Cantidad {
   position: absolute;
   font-size: small;
   background-color: red;
-  color:white;
+  color: white;
   padding: 0 5px 0 5px;
   border-radius: 30px;
   left: 28px;
