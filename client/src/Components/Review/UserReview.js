@@ -1,4 +1,4 @@
-import React, { useEffect, } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import ReviewStarts from "./ReviewStarts"
 import "./UserReview.css"
@@ -13,12 +13,14 @@ const UserReview = (props) => {
         dispatch(getReviews())
     }, [reviews.length])
 
+ 
+
     return (
         <>
             {!!review && review.length > 0 && review.map((m) => {
                 return (
                     <div className="asdas" key={m.productId + "%" + m.userId}>
-                        <div className="userReview"><h3>{m.user != undefined ? m.user.name : "Anonimo"}</h3></div>
+                        <div className="userReview" ><h3>{m.user != undefined ? m.user.name : "Anonimo"}</h3></div>
                         <div className="userRateReview"> <ReviewStarts rate={m.rate} size={30} /></div>
                         <div className="userCommentReview"><p>{m.comment}</p></div>
                         <div className="userDateReview">{m.date}</div>

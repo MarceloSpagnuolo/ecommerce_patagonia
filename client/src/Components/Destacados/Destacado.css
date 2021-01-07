@@ -20,7 +20,7 @@
     color: black;
 }
 
-.minidiv {
+.minidivDestacado {
     margin: 3px;
     transition: 500ms;
 }
@@ -92,12 +92,12 @@
     cursor: not-allowed;
 }
 
-.ca {
+.bannerDestacados {
     position: absolute;   
     z-index: 1;
 }
 
-.divDestacado:hover .ca {
+.divDestacado:hover .bannerDestacados {
     display: none;
 
 }

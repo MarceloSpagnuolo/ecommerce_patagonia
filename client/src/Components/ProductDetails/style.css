@@ -48,13 +48,12 @@
   position: relative;
   display: grid;
   left: -55px;
-  top: 30px;
+  /* top: 30px; */
   align-content: space-around;
   height: 510px;
   max-height: 50vh;
   width: 510px;
   object-fit: contain;
-  /* box-shadow: 0px 0px 30px LightGray; */
 }
 
 #Description {

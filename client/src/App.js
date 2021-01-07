@@ -2,7 +2,6 @@ import React from "react";
 import Catalogo from "../src/Components/Catalogo/Catalogo.js";
 import Navegation from "../src/Components/Navegation/index";
 import Registro from "../src/Components/Registro/Registro"
-
 import Home from "../src/Components/Home/home";
 import { Route } from "react-router-dom";
 import ProductDetails from "../src/Components/ProductDetails/index.js";
@@ -12,12 +11,14 @@ import Relationship from "../src/Components/AdminRelaciones/RelationshipViews";
 import Carrito from "../src/Components/carrito/Carrito";
 import OrderDetails from "../src/Components/FormAdmin/orderDetail.js";
 import TableOrders from "./Components/FormAdmin/tableOrders.js";
+import ImageForm from "./Components/Multer/Multer";
 
 function App() {
   return (
     <>
       <Navegation />
       <Route exact path="/" component={Home} />
+      <Route exact path="/as" component={ImageForm} />
       <Route path="/products" component={Catalogo} />
       <Route exact path="/product/:id" component={ProductDetails} />
       <Route path="/admin/relations" component={Relationship} />

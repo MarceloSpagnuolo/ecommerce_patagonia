@@ -6,6 +6,7 @@ const relationRouter = require("./relations.js");
 const userRouter = require("./user");
 const orderRouter = require("./order");
 const reviewRouter = require("./reviews");
+const multerRouter = require("./multer")
 
 const router = Router();
 
@@ -18,5 +19,7 @@ router.use("/relations", relationRouter);
 router.use("/users", userRouter);
 router.use("/orders", orderRouter);
 router.use("/reviews", reviewRouter);
+router.use("/multer", multerRouter);
+
 
 module.exports = router;

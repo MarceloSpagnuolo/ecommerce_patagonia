@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import ReviewStars from "../Review/ReviewStarts";
 import UserReview from "../Review/UserReview";
 import NewReview from "../Review/NewReview";
+import SliderPCard from "./SliderPCard";
 
 
 const Product = (props) => {
@@ -50,9 +51,7 @@ const Product = (props) => {
         <h3 id="Product-Name"><span className="beerName">{props.products.name || "Product Name"}</span>{/*<img src="https://cdn.discordapp.com/attachments/764979688446885898/792633765402509362/trazo1.gif"/>*/}</h3>
         <svg id={props.products.name && props.products.name.length > 12 ? "Capita" : "Capa_1"} data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352.7 53.45"><defs><style></style></defs><polygon className="cls-1" points="350.82 47.94 2.75 50.35 2.75 3.22 348.9 0.5 350.82 47.94" /><polygon className="cls-1" points="352.15 2.69 0.54 0.5 4.62 52.95 347.54 50.36 352.15 2.69" /></svg>
         <div className="container-img-p">
-          <img
-            className="item-image"
-            src={props.products.thumbnail} alt="Imagen Aquí" />
+          <SliderPCard id={props.products.id} image={props.products.thumbnail}/>
           <div id="Description">
             {props.products.stock === 0 && (<h3 id="ProductDetail-NoDisponible">No disponible</h3>)}
             <h2>Informacion sobre producto</h2>

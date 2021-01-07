@@ -35,6 +35,13 @@ VALUES ('Amber Lager', 'Color ambar, rojjos brillantes, espuma blanca.', 'Sabor 
 ('Abraso De OSO', 'Color dorado profundo aspecto levemente opalescente, espuma blanca persistente', 'De sabores a cereal, grano, con un toque dulce por la miel. Refrescante, de cuerpo medio-liviano.', 120, 30, '473 cc', 'https://www.comprasparaguai.com.br/media/fotos/modelos/cerveja_patagonia_abrazo_de_oso_473ml_119781_550x550.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('VeraIPA', 'Dorado/anaranjado profundo espuma blanca persistente, y opalescencia caracteristica', 'Muy suave lupulado en hervor que le da un amargor bajo, con intenso de sabor cítrico y a frutas tropicales, gracias al agregado de lúpulos aromáticos en Dry Hopping. De cuerpo medio y muy refrescante.', 125, 20, '473 cc', 'https://www.boulevard-sa.com.ar/Site/img/products/patagonia/Patagonia-vera-ipa-473-L.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00');
 
+INSERT INTO images (path,"createdAt", "updatedAt", "productId")
+VALUES ('https://images.losandes.com.ar/resizer/jjcY6mCgKXSpCoMzkoBglZFHVBg=/800x450/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/GZSTSMRUMY4TSMZTGRQWCNBZHA.jpg',  '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1),
+('https://sonarfm.cl/sonarfm/site/artic/20171011/imag/foto_0000000320171011114514.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1),
+('https://pbs.twimg.com/media/EO1crNVX0AIEwJB.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 2),
+('https://sonarfm.cl/sonarfm/site/artic/20171011/imag/foto_0000000320171011114514.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 2),
+('https://pbs.twimg.com/media/EO1crNVX0AIEwJB.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 3);
+
 
 INSERT INTO categories (name, description, "createdAt", "updatedAt")
 

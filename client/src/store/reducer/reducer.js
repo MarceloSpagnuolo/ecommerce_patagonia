@@ -53,6 +53,9 @@ import {
   GET_USER_BY_ID,
   DEL_PRODUCT_TO_CART,
   EMPTY_ALL_PRODUCTS_OF_CART,
+  GET_IMAGES,
+  ADD_IMAGES,
+  DELETE_IMAGES,
 } from "../constants/constants";
 
 const inicialState = {
@@ -60,7 +63,8 @@ const inicialState = {
   categories: [],
   reviews: [],
   order: [],
-  users: {}
+  users: {},
+  images: []
 };
 
 function ReducerProducts(state = inicialState, action) {
@@ -127,7 +131,7 @@ function ReducerProducts(state = inicialState, action) {
       return {};
     case UPDATE_REVIEW:
       console.log(action.payload, "reducer")
-    return {
+      return {
         ...state,
         reviews: state.reviews.map((r) => {
           if (r.id === action.payload.id) {
@@ -225,6 +229,20 @@ function ReducerProducts(state = inicialState, action) {
       return { ...state, order: action.payload };
     case EMPTY_ALL_PRODUCTS_OF_CART:
       return { ...state, order: action.payload };
+    case GET_IMAGES:
+      return { ...state, images: action.payload };
+    case ADD_IMAGES:
+      return {
+        ...state,
+        images: state.images.concat(action.payload),
+      };
+    case DELETE_IMAGES:
+      return {
+        ...state,
+        images: state.products.filter(
+          (image) => image.id !== action.payload
+        ),
+      };
     default:
       return state;
   }

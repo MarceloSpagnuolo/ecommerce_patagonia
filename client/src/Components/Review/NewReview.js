@@ -18,7 +18,7 @@ const NewReview = (props) => {
 
     useEffect(() => {
         const review = !!reviews && reviews.length > 0 && reviews.filter(r => user.id === r.userId && props.id === r.productId);
-        if (review.length > 0){
+        if (review.length > 0) {
             console.log(review, "que le estoy pasando")
             setRe([{
                 comment: review[0].comment,
@@ -26,11 +26,11 @@ const NewReview = (props) => {
                 id: review[0].id
             }])
         }
-    },[reviews.length, updateReview])
+    }, [reviews.length, updateReview])
 
 
     return (
-        <Formik initialValues={Object.values(re[0]).length > 0 && re[0]  || {
+        <Formik initialValues={Object.values(re[0]).length > 0 && re[0] || {
             comment: '',
             rate: '1',
         }} validate={(values) => {
@@ -43,11 +43,12 @@ const NewReview = (props) => {
             }
             return errors;
         }} onSubmit={(values) => {
-            if (Object.values(re[0]).length > 0 && re[0] ) {
+            if (Object.values(re[0]).length > 0 && re[0]) {
                 console.log("modificar")
-                console.log(re[0].id,"quien es este usuario")
+                console.log(re[0].id, "quien es este usuario")
 
                 dispatch(updateReview(re[0].id, values))
+                window.location.reload()
             } else {
                 dispatch(addReview(user.id, props.id, values))
                 console.log(values, "del form")

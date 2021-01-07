@@ -27,7 +27,7 @@ export default function ProductCard(props) {
         </Link>
         <div className="gfd">
           {props.categorias && props.categorias.map((elem) => (
-            <span id={elem.name.replace(" ", "_")} className="nameCategorias">{elem.name.replace("Edicion", "")}</span>
+            <span key={elem.name} id={elem.name.replace(" ", "_")} className="nameCategorias">{elem.name.replace("Edicion", "")}</span>
           ))}
         </div>
       </div>

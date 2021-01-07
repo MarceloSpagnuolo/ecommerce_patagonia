@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import ProductCard from "./Components/ProductCard/ProductCard";
+import ProductCard from "../ProductCard/ProductCard";
 import { useDispatch, useSelector } from "react-redux"
-import { getProducts } from "./store/actions/index"
+import { getProducts } from "../../store/actions/index"
 import "./Destacado.css";
 
 
 
 const Destacado = () => {
-    const [numero, setNumero] = useState(0)
-    const [num, setNum] = useState(4)
+    const [numero, setNumero] = useState(0)  //Con este estado controlamos el pocentaje  de avance de las imagenes
+    const [num, setNum] = useState(4)        //Con este estado controlamos la cantidad de veces que puden clickiar a los lados
     const dispatch = useDispatch();
     useEffect(() => { dispatch(getProducts(1000, 0)) }, []);
     const { products } = useSelector(state => state)
@@ -19,6 +19,7 @@ const Destacado = () => {
     const valor = {
         transform: `translateX(${numero}em)`,
     }
+    
     function next() {
         if (prod.length - num > 0) {
             setNum(num + 1)
@@ -27,6 +28,7 @@ const Destacado = () => {
         }
         return
     }
+    
     function back() {
         if (num !== 4) {
             setNum(num - 1)
@@ -38,14 +40,14 @@ const Destacado = () => {
 
     return (
         <div className="divDestacado">
-            <img className="ca" src="http://localhost:3001/images/productos_destacados.gif" />
+            <img className="bannerDestacados" src="http://localhost:3001/images/productos_destacados.gif" />
 
             <div className="destacadoTitle"><p>Productos destacados</p></div>
 
             <div className="destacadoProducts">
                 {!!prod && prod.length > 0 && prod.map((p) => {
 
-                    return (<div className="minidiv" style={valor} ><ProductCard
+                    return (<div className="minidivDestacado" style={valor} ><ProductCard
                         id={p.id}
                         name={p.name}
                         thumbnail={p.thumbnail}

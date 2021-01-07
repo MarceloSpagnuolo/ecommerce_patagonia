@@ -1,7 +1,7 @@
 import React from "react";
 import Carrusel from "../Carrusel/Carrusel"
 import "./home.css";
-import Destacado from "../../Destacado"
+import Destacado from "../Destacados/Destacado"
 
 function Home() {
   return (

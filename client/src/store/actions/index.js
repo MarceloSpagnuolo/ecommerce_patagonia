@@ -30,6 +30,9 @@ import {
   EMPTY_ALL_PRODUCTS_OF_CART,
   ADD_REVIEW,
   UPDATE_REVIEW,
+  GET_IMAGES,
+  ADD_IMAGES,
+  DELETE_IMAGES,
 } from "../constants/constants.js";
 
 const url = "http://localhost:3001/";
@@ -500,3 +503,50 @@ export const updateReview = (id, payload) => async (dispatch) => {
     })
   }
 }
+
+///Multer
+export const getImages = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${url}multer/?where={"productId":${id}}`);
+    dispatch({
+      type: GET_IMAGES,
+      payload: res.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Problemas al traer las imágenes",
+    });
+  }
+};
+
+export const addImages = (payload, id) => async (dispatch) => {
+  try {
+    console.log(payload)
+    const res = await axios.post(`${url}multer/${id}`, payload);
+    dispatch({
+      type: ADD_IMAGES,
+      payload: res.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Problemas al añadir imágenes",
+    });
+  }
+};
+
+export const deleteImages = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`${url}multer/${id}`);
+    dispatch({
+      type: DELETE_IMAGES,
+      payload: res.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Problemas borrar una imagen",
+    });
+  }
+};
