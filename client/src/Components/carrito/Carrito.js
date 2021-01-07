@@ -9,7 +9,7 @@ function Carrito() {
   const dispatch = useDispatch();
   const [ modal1, setModal1 ] = useState(false);
   const [ modal2, setModal2 ] = useState(false);
-  const [produ, setProdu] = useState({});
+  const [ produ, setProdu] = useState({});
   const [ cart, setCart ] = useState(0);
 
   useEffect(() => {
@@ -47,10 +47,6 @@ function Carrito() {
   function emptyCart(orderId) {
     setCart(orderId);
     setModal2(true);
-    /* var opcion = window.confirm("Seguro que quiere vaciar el carrito ?");
-    if(opcion) {
-      dispatch(emptyAllProductsOfCart(orderId));
-    } */
   }
 
   function confirmEmptyCart() {

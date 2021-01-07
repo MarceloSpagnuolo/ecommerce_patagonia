@@ -3,6 +3,7 @@ import Carrusel from "../Carrusel/Carrusel"
 import "./home.css";
 import Destacado from "../Destacados/Destacado"
 
+
 function Home() {
   return (
     <div className="divHome">
@@ -83,48 +84,6 @@ function Home() {
             explorar, a buscar nuevas experiencias y a proponernos <span>cosas tan
             desafiantes como hacer la mejor cerveza del mundo.</span>
           </p>
-          <p>
-          <span>En el sur volvemos al principio, a valorar lo que tenemos y
-            a darle gracias a la tierra que nos inspira.</span> Porque nos invita a
-            explorar, a buscar nuevas experiencias y a proponernos <span>cosas tan
-            desafiantes como hacer la mejor cerveza del mundo.</span>
-          </p>
-          <p>
-          <span>En el sur volvemos al principio, a valorar lo que tenemos y
-            a darle gracias a la tierra que nos inspira.</span> Porque nos invita a
-            explorar, a buscar nuevas experiencias y a proponernos <span>cosas tan
-            desafiantes como hacer la mejor cerveza del mundo.</span>
-          </p>
-          <p>
-          <span>En el sur volvemos al principio, a valorar lo que tenemos y
-            a darle gracias a la tierra que nos inspira.</span> Porque nos invita a
-            explorar, a buscar nuevas experiencias y a proponernos <span>cosas tan
-            desafiantes como hacer la mejor cerveza del mundo.</span>
-          </p>
-          <p>
-          <span>En el sur volvemos al principio, a valorar lo que tenemos y
-            a darle gracias a la tierra que nos inspira.</span> Porque nos invita a
-            explorar, a buscar nuevas experiencias y a proponernos <span>cosas tan
-            desafiantes como hacer la mejor cerveza del mundo.</span>
-          </p>
-          <p>
-          <span>En el sur volvemos al principio, a valorar lo que tenemos y
-            a darle gracias a la tierra que nos inspira.</span> Porque nos invita a
-            explorar, a buscar nuevas experiencias y a proponernos <span>cosas tan
-            desafiantes como hacer la mejor cerveza del mundo.</span>
-          </p>
-          <p>
-          <span>En el sur volvemos al principio, a valorar lo que tenemos y
-            a darle gracias a la tierra que nos inspira.</span> Porque nos invita a
-            explorar, a buscar nuevas experiencias y a proponernos <span>cosas tan
-            desafiantes como hacer la mejor cerveza del mundo.</span>
-          </p>
-          <p>
-          <span>En el sur volvemos al principio, a valorar lo que tenemos y
-            a darle gracias a la tierra que nos inspira.</span> Porque nos invita a
-            explorar, a buscar nuevas experiencias y a proponernos <span>cosas tan
-            desafiantes como hacer la mejor cerveza del mundo.</span>
-          </p> */}
         </div>
       </div>
       <div className="destacadoHome">

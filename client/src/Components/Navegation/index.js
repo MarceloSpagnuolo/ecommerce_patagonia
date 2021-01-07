@@ -4,16 +4,19 @@ import SearchBar from "../SearchBar/SearchBar.js";
 import "./styles.css";
 import { connect } from "react-redux";
 import { getCategories, getProducts, createUser, postCreateCart, getUserCart, getUserById, getCartByUser } from "../../store/actions/index.js";
-
+import Login from "../Login/login.js";
 
 function Home(props) {
-  const [total, setTotal] = useState(0);
+  const [ total, setTotal] = useState(0);
+  const [ show, setShow ] = useState(false);
 
   useEffect(() => {
-    if (!props.users.id) {
+    localStorage.clear();   //Esto es solo para desarrollar la aplicacion, después se elimina.
+    if (!props.user.id) {
       var user = JSON.parse(localStorage.getItem("user"));
-      if (!user) {
-        props.createUser({ name: "guess", lastname: "guess", role: "guess" });
+
+      if(!user) {
+        props.createUser({givenname: "guest", familyname: "guest", role: "guest"});
       } else {
         props.getUserById(user.id);
         props.getCartByUser(user.id);
@@ -22,17 +25,18 @@ function Home(props) {
   }, [])
 
   useEffect(() => {
-    if (props.users.id) {
+
+    if(props.user.id) {
       var user = JSON.parse(localStorage.getItem("user"));
-      if (!user) {
-        props.postCreateCart(props.users.id)
+      if(!user) {
+        props.postCreateCart(props.user.id)
       }
-      localStorage.setItem("user", JSON.stringify(props.users));
+      localStorage.setItem("user",JSON.stringify(props.user));
     }
     if (props.order.products) {
       setTotal(props.order.products.length)
     }
-  }, [props.users])
+  },[props.user])
 
   useEffect(() => {
     if (props.order.products) {
@@ -40,12 +44,17 @@ function Home(props) {
     }
   }, [props.order])
 
-  function handleClick() {
-    props.getProducts(12, 0);
-    props.getCategories();
+
+  function handleLogin() {
+    setShow(true);
+  }
+
+  function handleClose() {
+    setShow(false);
   }
 
   return (
+    <>
     <div className="home">
       <Link to="/">
         <img
@@ -81,6 +90,7 @@ function Home(props) {
             </Link>
           </div>
           <div className="ss-home">
+
             <Link to="/cart">
             <img
               className="Navegation-Imagen-Carrito"
@@ -92,22 +102,17 @@ function Home(props) {
             </Link>
             <SearchBar />
           </div>
-          
-          {/*//viejo/*/}
-          {/* <div className="Navegation-Container-Carrito">
-            <Link to="/cart">
-              <img
-                className="Navegation-Imagen-Carrito"
-                src="https://image.flaticon.com/icons/png/512/107/107831.png"
-              />
-              {total > 0 && (
-                <span className="Navegation-Cantidad">{total}</span>
-              )}
-            </Link>
-          </div> */}
+          {props.user.role === "guest" ? 
+          <span className="btnMenu" onClick={() => setShow(true)}>Entrar</span>
+          : <span className="btnMenu">{props.user.givenname}</span> }
+          <span className="btnMenu" onClick={() => handleLogin()}>Registrarse</span>
         </nav>
       </div>
     </div>
+      <div>
+        <Login guestId={props.user.id} show={show} onClose={() => setShow((p) => !p)} />
+      </div>
+      </>
   );
 }
 
@@ -115,7 +120,7 @@ function mapStateToProps(state) {
   return {
     products: state.products,
     categories: state.categories,
-    users: state.users,
+    user: state.user,
     order: state.order,
   };
 }

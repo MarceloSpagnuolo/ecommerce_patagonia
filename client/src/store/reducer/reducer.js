@@ -64,7 +64,8 @@ const inicialState = {
   reviews: [],
   order: [],
   users: {},
-  images: []
+  images: [],
+  user: {}
 };
 
 function ReducerProducts(state = inicialState, action) {
@@ -199,7 +200,7 @@ function ReducerProducts(state = inicialState, action) {
     case CREATE_ORDER:
       return {};
     case CREATE_USER:
-      return { ...state, users: action.payload };
+      return {...state, user: action.payload};
     case ERROR_MESSAGE:
       alert(action.message);
       return { ...state };
@@ -224,7 +225,7 @@ function ReducerProducts(state = inicialState, action) {
     case POST_PRODUCT_TO_CART:
       return { ...state, order: action.payload };
     case GET_USER_BY_ID:
-      return { ...state, users: action.payload };
+      return { ...state, user: action.payload};
     case DEL_PRODUCT_TO_CART:
       return { ...state, order: action.payload };
     case EMPTY_ALL_PRODUCTS_OF_CART:

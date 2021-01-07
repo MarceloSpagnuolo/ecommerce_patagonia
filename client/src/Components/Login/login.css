@@ -1,0 +1,153 @@
+.Login-Container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 3;
+  }
+  
+  .Login-Content {
+    background-color: white;
+    border: 3px solid rgb(2,85,2);
+    border-radius: 12px;
+    transition: all .5s;
+  }
+  
+  .Login-Header,
+  .Login-Footer {
+    background-color: rgb(255, 165, 50);
+  }
+  
+  .Login-Header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 25px;
+    font-weight: 600;
+    color: rgb(2,85,2);
+    height: 40px;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0px 3px 7px black;
+  }
+  
+  .Login-Campos {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    margin: 10px;
+  }
+  
+  .Login-Footer {
+    display: flex;
+    align-items: center;
+    justify-content:space-around;
+    height: 40px;
+    border-radius: 0 0 10px 10px;
+  }
+  
+  .Login-Btn-Google {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .Login-Btn-Google:hover {
+    transition: all .4s;
+    background-color: lightgreen;
+    cursor: pointer;
+  }
+  
+  .Login-Btn-Facebook {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .Login-Btn-Facebook:hover {
+    transition: all .3s;
+    background-color: lightgreen;
+    cursor: pointer;
+  }
+  
+  .Login-Btn-Down {
+    width: 150px;
+    height: 30px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+  }
+  
+  .Login-Logo-Btn {
+    width: 40px;
+    margin-right: 10px;
+  }
+  
+  .Login-Section {
+    margin-bottom: 30px;
+  }
+  
+  .Login-Btn-Social {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .Login-Leyenda {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 18px;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+  }
+  
+  .Login-Sep-Leyenda {
+    margin-right: 8px;
+  }
+  
+  #Login-Cancel {
+    width: 50%;
+    height: 40px;
+    border-radius: 0 0 0 10px;
+    background-color: lightpink;
+    border: none;
+  }
+  
+  #Login-Cancel:hover {
+    background-color: red;
+    color: white;
+    cursor: pointer;
+    transition: all .4s;
+  }
+  
+  #Login-Entrar {
+    width: 50%;
+    height: 40px;
+    border-radius: 0 0 10px 0;
+    background-color: lightgreen;
+    border: none;
+  }
+  
+  #Login-Entrar:hover {
+    transition: all .4s;
+    cursor: pointer;
+    background-color: green;
+    color: white;
+  }
+  
+  #Login-Entrar:disabled {
+    background-color: lightgrey;
+    color: gray;
+    cursor: no-drop;
+  }
+
+  input:focus {
+    background-color: lightyellow;
+  }

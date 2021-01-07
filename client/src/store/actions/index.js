@@ -370,7 +370,8 @@ export const createUser = (payload) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas para crear usuario",
+
+      message: "Problemas para crear el usuario",
     });
   }
 }

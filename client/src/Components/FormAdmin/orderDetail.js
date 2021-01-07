@@ -31,13 +31,13 @@ const Order = (props) => {
                 </thead>
                 <tbody>
                     {order.products && order.products.map((prod) => (
-                        <tr className="OrderDetail-Datos">
-                            <td>{prod.id}</td>
-                            <td>{prod.name}</td>
-                            <td>{prod.Order_products.preciounitario}</td>
-                            <td>{prod.Order_products.cantidad}</td>
-                            <td>{prod.Order_products.preciounitario * prod.Order_products.cantidad}</td>
-                        </tr>
+                       <tr className="OrderDetail-Datos">
+                       <td>{prod.id}</td>
+                       <td>{prod.name}</td>
+                       <td>{prod.Order_products.unitprice}</td>
+                       <td>{prod.Order_products.quantity}</td>
+                       <td>{prod.Order_products.unitprice * prod.Order_products.quantity}</td>
+                   </tr>
                     ))}
 
                 </tbody>

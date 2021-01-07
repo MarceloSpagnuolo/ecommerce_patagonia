@@ -11,7 +11,7 @@ export default function Registro() {
             name: "",
             lastname: "",
             email: "",
-            hashedpassword: "",
+            password: "",
             city: "",
             adress: "",
             phone: "",
@@ -23,7 +23,7 @@ export default function Registro() {
             //regPass requiere entre 8 y 16 characters. y minimo una mayuscula, minuscula, char especial y numero
             //regMail requiere solo un formato de email asi "example@correo.com" pero se le agrega la posibilidad de agregar
             // un "." algo mas alfinal ejemp "example@correo.com.ar"
-            const regPass = (/^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/.test(values.hashedpassword))
+            const regPass = (/^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/.test(values.password))
             const regMail = /^([a-zA-Z0-9._+-]+)(@[a-zA-Z0-9-.]+)(.[a-zA-Z]{2,4}){2,}$/gm.test(values.email)
             ////////////////////////
             if (!values.name) { errors.name = "Debe ingresar un nombre" }
@@ -32,7 +32,7 @@ export default function Registro() {
             else if (!regMail) {
                 errors.email = 'Invalid email address';
             }
-            if (!regPass) { errors.hashedpassword = "Debe ingresar su contraseña" }
+            if (!regPass) { errors.password = "Debe ingresar su contraseña" }
 
             return errors
 
@@ -65,8 +65,8 @@ export default function Registro() {
 
                     <div>
                         <label htmlFor="Registro">Contraseña</label>
-                        <ErrorMessage name="hashedpassword">{message => <div>{message}</div>}</ErrorMessage>
-                        <Field className="RegistroInput" name="hashedpassword" />
+                        <ErrorMessage name="password">{message => <div>{message}</div>}</ErrorMessage>
+                        <Field className="RegistroInput" name="password" />
                     </div>
 
                     <div>
