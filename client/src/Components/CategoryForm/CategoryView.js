@@ -3,6 +3,8 @@ import Table from './Table';
 import CategoryForm from './CategoryForm'
 import { connect } from 'react-redux'
 import { getCategories } from "../../store/actions/index";
+import Modal from "../Modal/Modal.js";
+
 
 const CategoryView = (props) => {
     const [display, setDisplay] = useState(false);
@@ -19,15 +21,22 @@ const CategoryView = (props) => {
     }
     return (
         <>
-           <div className="prueba">               
+            <div className="prueba">
                 <button className="new" onClick={() => { seteadora(setDisplay, display) }
                 }>New</button>
-            {display ? <CategoryForm seteadora={{ seteadora, display, setDisplay }} /> : null}
-            {edit ? <CategoryForm data={cat} seteadora={{ seteadora, edit, setEdit }} /> : null}
-            <Table seteadora={seteadora}
-                estados={[edit, setEdit]}
-                onUpdate={setCat}
-            />
+
+                <Modal title="Administrador de categoria" show={display} onClose={() => setDisplay((val) => !val)}>
+                    <CategoryForm seteadora={{ seteadora, display, setDisplay }} />
+                </Modal>
+
+                <Modal title="Editar categoria" show={edit} onClose={() => setEdit((val) => !val)}>
+                    <CategoryForm data={cat} seteadora={{ seteadora, edit, setEdit }} />
+                </Modal>
+
+                <Table seteadora={seteadora}
+                    estados={[edit, setEdit]}
+                    onUpdate={setCat}
+                />
             </div>
         </>
     )

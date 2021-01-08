@@ -22,7 +22,7 @@ const CategoryForm = (props) => {
 
             return errors;
         }} onSubmit={(values) => {
-            if (props.data) {               
+            if (props.data) {
                 props.updateCategory(props.data.id, values)
                 props.seteadora.seteadora(props.seteadora.setEdit, props.seteadora.edit)
             } else {
@@ -34,7 +34,7 @@ const CategoryForm = (props) => {
             isValid
         }) => (
             <>
-                <h1>Administrador de categoria</h1>
+                {/* <h1>Administrador de categoria</h1> */}
                 <Form className="form">
                     <div className="row">
                         <label htmlFor="producto">Nombre</label>
@@ -51,7 +51,7 @@ const CategoryForm = (props) => {
                         </ErrorMessage>
                         <Field as='textarea' name="description" className="input" />
                     </div>
-               
+
                     <button
                         type="submit"
                         className={`submit ${isSubmitting || !isValid ? 'disabled' : ''}`}

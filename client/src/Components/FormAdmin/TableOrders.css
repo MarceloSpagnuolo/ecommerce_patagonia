@@ -1,0 +1,29 @@
+.conteiner-orders-user {
+    background-color: #163D34;
+    padding-top: 1px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.title-orders-user {
+    background-color: #163D34;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+.headTable-orders-user {
+    background-color: #163D34;
+    color: white;
+    text-align: center;
+}
+
+.bottom-orders-user {
+    background-color: #146552;
+    color: white;
+    border-radius: 3px;
+}
+.bottom-orders-user:hover {
+    background-color: #139375;
+}
+.ordersUsers-Datos {
+    text-align: center;
+}
