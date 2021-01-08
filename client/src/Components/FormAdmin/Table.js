@@ -68,7 +68,7 @@ const Table = (props) => {
                         handleOnUpdate(beer);
                       }}
                     >
-                      edit
+                      Edit
                     </button>
                   </td>
                   <td>

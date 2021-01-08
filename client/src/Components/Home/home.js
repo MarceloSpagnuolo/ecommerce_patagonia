@@ -84,6 +84,7 @@ function Home() {
             explorar, a buscar nuevas experiencias y a proponernos <span>cosas tan
             desafiantes como hacer la mejor cerveza del mundo.</span>
           </p>
+          */}
         </div>
       </div>
       <div className="destacadoHome">

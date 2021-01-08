@@ -25,7 +25,7 @@ const ImageForm = (props) => {
     const handleSubmit = () => {
         image.map(i => {
             uploadAction(i);
-            dispatch(addImages(i.name, 1))
+            dispatch(addImages(i.name, props.id))
         })
 
         setPreview(false);

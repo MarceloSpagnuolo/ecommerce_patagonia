@@ -7,13 +7,15 @@
     flex-direction: column; 
     align-items: center;
     justify-content: center;
-    
+    background-color: #163D34;
     
 }
 .new{   
     width: 70%;
     margin-top: 20px;
     margin-bottom: -15px;
+    border-radius: 7px 7px 0px 0px;
+    border: none;
     height: height;
     padding: 8px;
     font-size: 0.8rem;
