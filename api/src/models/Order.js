@@ -7,12 +7,12 @@ module.exports = (sequelize) => {
        
         total: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             defaultValue: 0
         },
         date: {
             type: DataTypes.DATE,
-            allowNull: false,
+            allowNull: true,
             defaultValue: new DATE()
         },
         status: {

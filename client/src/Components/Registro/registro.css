@@ -1,0 +1,77 @@
+.Registro-Body {
+    display:flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(22, 61, 52);
+    position: absolute;
+    margin: 0;
+}
+
+.Registro-Formik {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+
+.Registro-Form-Label {
+    font-size: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+}
+
+.Registro-Form-Input {
+    width: 100%;
+    font-size: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.Registro-Form {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Registro-Form > div {
+    margin-bottom: 15px;
+}
+
+.Registro-Form-Error {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: lightsalmon; 
+    animation-name: error;
+    animation-duration: .7s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes error{
+    0% {opacity: 1; }
+    50% {opacity: 0; }
+    100% {opacity: 1; }
+}
+
+.Registro-Title {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+}
+
+.Registro-Imagen1 {
+    background-color: rgb(22, 61, 52);
+    width: 25%;
+    height: 66%;
+    box-shadow: 0px 0px 30px 30px rgb(22, 61, 52) inset;
+    background: url(http://localhost:3001/images/lateral1.jpg) no-repeat center/100%;
+}
+
+.Registro-Imagen2 {
+    background-color: rgb(22, 61, 52);
+    width: 25%;
+    height: 66%;
+    box-shadow: 0px 0px 20px 30px rgb(22, 61, 52) inset;
+    background: url(http://localhost:3001/images/lateral2.jpg) no-repeat center/100%;
+}
+
+#Registro-Btn-Submit {
+    width: 100%;
+}

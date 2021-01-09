@@ -39,7 +39,7 @@ server.post("/", async (req, res) => {
     });
     !user ? res.sendStatus(400) : res.json(user).status(201);
   } catch (error) {
-    res.send("Ese email ya existe").status(400);
+    res.sendStatus(400);
   }
 });
 
