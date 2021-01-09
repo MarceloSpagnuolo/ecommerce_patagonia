@@ -1,19 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import "./login.css";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getUserByToken } from "../../store/actions/index.js"
 
 function Login({ guestId, show, onClose }) {
+    const dispatch = useDispatch();
+    const { order, user } = useSelector(state => state);
     const [ estado, setEstado ] = useState({
         email: '',
-        pass: ''
+        password: ''
     })
-    /* const [ mail, setMail ] = useState('');
-    const [ pass, setPass ] = useState(''); */
     
     function handleInput(e) {
         setEstado({... estado, 
             [e.target.name]: e.target.value})
+    }
+
+    const handleLogueo = async () => {
+        try {
+            //enviamos el mail y el password a la ruta /login
+            const newToken = await axios.post("http://localhost:3001/auth/login", estado)
+            console.log(newToken.data);
+            if(newToken) {  //si la ruta nos devolvió un token
+                dispatch(getUserByToken(newToken.data))
+                onClose();
+            }
+        } catch(e) {
+            alert("Los datos están incorrectos");
+        }
     }
 
     return show ? (
@@ -29,13 +45,13 @@ function Login({ guestId, show, onClose }) {
                             <input autofocus="true" size={40} type="email" id="email" name="email" className="Login-Campos" onChange={(e) => handleInput(e)} />
                         </div>
                         <div className="Login-Campos">
-                            <label for="pass">Contraseña</label><br></br>
-                            <input size={40} type="password" id="pass" name="pass" className="Login-Campos" onChange={(e) => handleInput(e)}/>
+                            <label for="password">Contraseña</label><br></br>
+                            <input size={40} type="password" id="pass" name="password" className="Login-Campos" onChange={(e) => handleInput(e)}/>
                         </div>
                     </form>
                     <div className="Login-Leyenda">
                         <span className="Login-Sep-Leyenda">Si no tiene una cuenta, deberá </span>
-                        <Link to="/registro">registrarse</Link>
+                        <Link to="/registro" onClick={() => {onClose &&onClose()}}>registrarse</Link>
                     </div>
                 </section>
                 <div className="Login-Btn-Social">
@@ -51,10 +67,10 @@ function Login({ guestId, show, onClose }) {
                 <footer className="Login-Footer">
                 <button className="Login-Btn-Down" id="Login-Cancel" onClick={() => {onClose && onClose()}}>Cancelar</button>
                 <button className="Login-Btn-Down" 
-                  title={ estado.email.length === 0 || estado.pass.length === 0 && "Debe ingresar los datos de acceso"} 
+                  title={ estado.email.length === 0 || estado.password.length === 0 && "Debe ingresar los datos de acceso"} 
                   id="Login-Entrar" 
-                  onClick={() => {onClose && onClose()}}
-                  disabled={ estado.email.length  === 0 || estado.pass.length === 0 }>Entrar</button>
+                  onClick={() => handleLogueo()}
+                  disabled={ estado.email.length  === 0 || estado.password.length === 0 }>Entrar</button>
               </footer>
             </div>
         </div>

@@ -2,51 +2,82 @@ import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import SearchBar from "../SearchBar/SearchBar.js";
 import "./styles.css";
-import { connect } from "react-redux";
-import { getCategories, getProducts, createUser, postCreateCart, getUserCart, getUserById, getCartByUser } from "../../store/actions/index.js";
+import { connect, useDispatch } from "react-redux";
+import { getCategories,
+         getProducts,
+         createUser,
+         postCreateCart,
+         getUserCart,
+         getUserById,
+         getCartByUser,
+         copyCartToStore,
+         copyUserToStore,
+         getUserByToken,
+         postProductToCart
+        } from "../../store/actions/index.js";
 import Login from "../Login/login.js";
+import { LOGOUT } from "../../store/constants/constants.js";
+
 
 function Home(props) {
+  const dispatch = useDispatch();
   const [total, setTotal] = useState(0);
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    localStorage.clear();   //Esto es solo para desarrollar la aplicacion, después se elimina.
     if (!props.user.id) {
-      var user = JSON.parse(localStorage.getItem("user"));
-
-      if (!user) {
-        props.createUser({ givenname: "guest", familyname: "guest", role: "guest" });
+      const token = localStorage.getItem("userToken");
+      if(!token) {
+        var localUser = JSON.parse(localStorage.getItem("guestUser"));
+        if(!localUser) {
+          const carrito = { id: 0, total: 0, status: "carrito", date: Date.now() };
+          const usuario = { id: 0, givenname: "Guest", familyname: "Guest" , role: "guest" };
+          localStorage.setItem("guestUser", JSON.stringify(usuario));
+          localStorage.setItem("guestCart", JSON.stringify(carrito));
+          localUser = JSON.parse(localStorage.getItem("guestUser"));
+        }
+        const localCart = JSON.parse(localStorage.getItem("guestCart"));
+        props.copyUserToStore(localUser);
+        props.copyCartToStore(localCart);
       } else {
-        props.getUserById(user.id);
-        props.getCartByUser(user.id);
+        props.getUserByToken(token);
       }
     }
   }, [])
 
   useEffect(() => {
-
-    if (props.user.id) {
-      var user = JSON.parse(localStorage.getItem("user"));
-      if (!user) {
-        props.postCreateCart(props.user.id)
-      }
-      localStorage.setItem("user", JSON.stringify(props.user));
-    }
-    if (props.order.products) {
-      setTotal(props.order.products.length)
+    if (props.user.id > 0) {
+      props.getCartByUser(props.user.id);
     }
   }, [props.user])
 
   useEffect(() => {
+    // se borra si es usuario guest aunque no este logueado
+    if (props.user.id > 0) {
+      const localCart = JSON.parse(localStorage.getItem("guestCart"));
+      if (localCart && localCart.products && localCart.products.length > 0) {
+        localCart.products.map((elem) => {
+          dispatch(postProductToCart(props.order.id, elem.id, {unitprice: elem.Order_products.unitprice, quantity: elem.Order_products.quantity }))
+        })
+      }
+      localStorage.removeItem("guestCart");
+      localStorage.removeItem("guestUser");
+    }
     if (props.order.products) {
-      setTotal(props.order.products.length)
+      setTotal(props.order.products.length);
+    } else {
+      setTotal(0);
     }
   }, [props.order])
 
   function handleClick() {
     props.getProducts(12, 0);
     props.getCategories();
+  }
+
+  function salir() {
+    localStorage.removeItem("userToken");
+    window.location.href = "/";
   }
 
   return (
@@ -67,9 +98,11 @@ function Home(props) {
               </Link>
             </div>
             <div className="prueba-nav">
-              <Link className="btnMenu" to="/categories">
-                <span>Categorias</span>
+              {props.user && props.user.role === "admin" ?
+              <Link className="btnMenu" to="/admin">
+                <span>Admin</span>
               </Link>
+              : null }
             </div>
             <div className="prueba-nav">
               <Link
@@ -98,15 +131,21 @@ function Home(props) {
               </Link>
               <SearchBar />
             </div>
-            {props.user.role === "guest" ?
-              <span className="btnMenu" onClick={() => setShow(true)}>Entrar</span>
-              : <span className="btnMenu">{props.user.givenname}</span>}
-            <Link to="/registro"><span className="btnMenu">Registrarse</span></Link>
+            {props.user && props.user.role === "guest" ?
+            <div className="btnMenu">
+              <span onClick={() => setShow(true)}>Entrar</span>
+            </div>
+              : props.user && <div className="btnMenu">
+                <img className="Navigation-User" src="http://localhost:3001/images/user.png" />
+                <span>{props.user.givenname}</span></div>}
+              {props.user && props.user.role === "guest" ?
+              <Link to="/registro"  className="btnMenu"><span>Registrarse</span></Link>
+              : <div className="btnMenu"><span onClick={() => salir()}>Salir</span></div> }
           </nav>
         </div>
       </div>
       <div>
-        <Login guestId={props.user.id} show={show} onClose={() => setShow((p) => !p)} />
+        { props.user && <Login guestId={props.user.id} show={show} onClose={() => setShow((p) => !p)} />}
       </div>
     </>
   );
@@ -130,6 +169,9 @@ function mapDispatchToProps(dispatch) {
     getUserCart: (id) => dispatch(getUserCart(id)),
     getUserById: (id) => dispatch(getUserById(id)),
     getCartByUser: (id) => dispatch(getCartByUser(id)),
+    copyUserToStore: (payload) => dispatch(copyUserToStore(payload)),
+    copyCartToStore: (payload) => dispatch(copyCartToStore(payload)),
+    getUserByToken: (payload) => dispatch(getUserByToken(payload)),
   };
 }
 
