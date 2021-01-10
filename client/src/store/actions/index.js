@@ -34,7 +34,12 @@ import {
   ADD_IMAGES,
   DELETE_IMAGES,
   UPDATE_USER,
+  LOGIN,
+  GET_USER_BY_TOKEN,
+  COPY_USER_TO_STORE,
+  COPY_CART_TO_STORE,
 } from "../constants/constants.js";
+const jwt = require("jsonwebtoken");
 
 const url = "http://localhost:3001/";
 
@@ -361,21 +366,6 @@ export const getOrderById = (orderId) => async (dispatch) => {
   }
 }
 
-export const createUser = (payload) => async (dispatch) => {
-  try {
-    const res = await axios.post(`${url}users/`, payload)
-    dispatch({
-      type: CREATE_USER,
-      payload: res.data,
-    })
-  } catch (e) {
-    dispatch({
-      type: ERROR_MESSAGE,
-
-      message: "Problemas para crear el usuario",
-    });
-  }
-}
 
 export const getUserCart = (userId) => async (dispatch) => {
   try {
@@ -393,8 +383,38 @@ export const getUserCart = (userId) => async (dispatch) => {
 }
 
 export const postProductToCart = (orderId, productId, payload) => async (dispatch) => {
+  const { unitprice, quantity } = payload;
+  var res;
   try {
-    const res = await axios.post(`${url}orders/${orderId}/cart/${productId}`, payload)
+    if(orderId === 0) {
+      var localCart = JSON.parse(localStorage.getItem("guestCart"));
+      if(!localCart.products) {
+        localCart.products = []
+      }
+      if(localCart.products.length === 0) {
+        const producto = await axios.get(`${url}products/${productId}`);
+        localCart.products.push(producto.data);
+        localCart.products[0].Order_products = {quantity, unitprice}
+      } else {
+        var isExist = false;
+        for (let i=0; i < localCart.products.length; i++) {
+          if(localCart.products[i].id === productId) {
+            isExist = true;
+            localCart.products[i].Order_products.quantity += quantity;
+            localCart.products[i].Order_products.unitprice = unitprice;
+          }
+        }
+        if (!isExist) {
+          const producto = await axios.get(`${url}products/${productId}`);
+          localCart.products.push(producto.data);
+          localCart.products[localCart.products.length - 1].Order_products = {quantity, unitprice};
+        }
+      }
+      localStorage.setItem("guestCart", JSON.stringify(localCart));
+      res = {data: localCart};
+    } else {
+      res = await axios.post(`${url}orders/${orderId}/cart/${productId}`, payload)
+    }
     dispatch({
       type: POST_PRODUCT_TO_CART,
       payload: res.data,
@@ -423,8 +443,16 @@ export const getUserById = (userId) => async (dispatch) => {
 }
 
 export const delProductToCart = (orderId, productId) => async (dispatch) => {
+  var res;
   try {
-    const res = await axios.delete(`${url}orders/${orderId}/cart/${productId}`)
+    if (orderId === 0) {
+      var localCart = JSON.parse(localStorage.getItem("guestCart"));
+      localCart.products = localCart.products.filter((elem) => elem.id !== productId); 
+      localStorage.setItem("guestCart", JSON.stringify(localCart));
+      res = { data: localCart};
+    } else {
+      res = await axios.delete(`${url}orders/${orderId}/cart/${productId}`)
+    }
     dispatch({
       type: DEL_PRODUCT_TO_CART,
       payload: res.data,
@@ -438,8 +466,16 @@ export const delProductToCart = (orderId, productId) => async (dispatch) => {
 }
 
 export const emptyAllProductsOfCart = (orderId) => async (dispatch) => {
+  var res;
   try {
-    const res = await axios.delete(`${url}orders/${orderId}/products`)
+    if (orderId === 0) {
+      var localCart = JSON.parse(localStorage.getItem("guestCart"));
+      localCart.products = [];
+      localStorage.setItem("guestCart", JSON.stringify(localCart));
+      res = {data: localCart};
+    } else {
+      res = await axios.delete(`${url}orders/${orderId}/products`)
+    }
     dispatch({
       type: EMPTY_ALL_PRODUCTS_OF_CART,
       payload: res.data,
@@ -460,7 +496,7 @@ export const addReview = (user_id, product_id, payload) => async (dispatch) => {
   try {
     const res = await axios.post(`${url}reviews/${user_id}/product/${product_id}`, payload)
     console.log("entre aca con restu ", res.data)
-
+    
     dispatch({
       type: ADD_REVIEW,
       payload: res.data,
@@ -566,4 +602,75 @@ export const updateUser = (id, payload) => async (dispatch) => {
       message: "Problemas al actualizar usuario",
     });
   }
+}
+
+export const login = (payload) => async (dispatch) => {
+  try {
+    const res = await axios.post(`${url}auth/login`, payload);
+    dispatch({
+      type: LOGIN,
+      payload: res.data
+    })
+  } catch(e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "No se encuentra ese usuario",
+    });
+  }
+}
+
+export const getUserByToken = (payload) => async (dispatch) => {
+  try {
+    localStorage.setItem("userToken",payload);
+    axios.defaults.headers.common["Authorization"] = `Bearer ${payload}`
+    const usuario = jwt.decode(payload)
+    dispatch({
+      type: GET_USER_BY_TOKEN,
+      payload: usuario
+    })
+  } catch(e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Bajate los lienzos"
+    });
+  }
+}
+
+export const createUser = (payload) => async (dispatch) => {
+  try {
+    const res = await axios.post(`${url}users/`, payload);
+    if(res) {
+      const { email, password } = payload;
+      const datos = { email, password };
+      const newToken = await axios.post("http://localhost:3001/auth/login", datos);
+      if(newToken) {
+        localStorage.setItem("userToken", newToken.data);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${newToken.data}`;
+      }
+    };
+    dispatch({
+      type: CREATE_USER,
+      payload: res.data,
+    })
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Problemas para crear el usuario",
+    });
+  }
+}
+
+export const copyUserToStore = (guestUser) => (dispatch) => {
+  console.log(guestUser, "CopyUser del Actions");
+  dispatch({
+    type: COPY_USER_TO_STORE,
+    payload: guestUser
+  })
+}
+
+export const copyCartToStore = (guestCart) => (dispatch) => {
+  dispatch({
+    type: COPY_CART_TO_STORE,
+    payload: guestCart
+  })
 }

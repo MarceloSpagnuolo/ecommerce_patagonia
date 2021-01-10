@@ -21,7 +21,7 @@ import {
   DELETE_CART,
   LOGIN,
   LOGIN_ERROR,
-  LOGOUT,
+  GET_USER_BY_TOKEN,
   ADD_REVIEW,
   CHECKOUT_END,
   UPDATE_REVIEW,
@@ -56,6 +56,8 @@ import {
   GET_IMAGES,
   ADD_IMAGES,
   DELETE_IMAGES,
+  COPY_CART_TO_STORE,
+  COPY_USER_TO_STORE,
 } from "../constants/constants";
 
 const inicialState = {
@@ -63,7 +65,6 @@ const inicialState = {
   categories: [],
   reviews: [],
   order: [],
-  orders: [],
   users: {},
   images: [],
   user: {}
@@ -79,9 +80,11 @@ function ReducerProducts(state = inicialState, action) {
     case GET_CATEGORIES:
       return { ...state, categories: action.payload };
     case GET_FULL_ORDERS:
-      return { ...state, orders: action.payload };
+      return { ...state, order: action.payload };
     case GET_ORDER_BY_ID:
-      return { ...state, orders: action.payload };
+      return { ...state, order: action.payload };
+    case GET_ORDER_BY_USER:
+      return { ...state, order: action.payload};
     case GET_ORDERS_STATUS:
       return {};
     case GET_PRODUCTS_BY_CATEGORY:
@@ -201,12 +204,13 @@ function ReducerProducts(state = inicialState, action) {
     case CREATE_ORDER:
       return {};
     case CREATE_USER:
-      return { ...state, user: action.payload };
+      return {...state, user: action.payload};
     case ERROR_MESSAGE:
       alert(action.message);
       return { ...state };
-    case LOGOUT:
-      return {};
+    case GET_USER_BY_TOKEN:
+      console.log(action.payload, "Este es el reducer");
+      return {...state, user: action.payload};
     case LOGIN:
       return {};
     case LOGIN_ERROR:
@@ -226,7 +230,7 @@ function ReducerProducts(state = inicialState, action) {
     case POST_PRODUCT_TO_CART:
       return { ...state, order: action.payload };
     case GET_USER_BY_ID:
-      return { ...state, user: action.payload };
+      return { ...state, user: action.payload};
     case DEL_PRODUCT_TO_CART:
       return { ...state, order: action.payload };
     case EMPTY_ALL_PRODUCTS_OF_CART:
@@ -245,6 +249,16 @@ function ReducerProducts(state = inicialState, action) {
           (image) => image.id !== action.payload
         ),
       };
+    case COPY_USER_TO_STORE:
+      return {
+        ...state,
+        user: action.payload
+      }
+    case COPY_CART_TO_STORE:
+      return {
+        ...state,
+        order: action.payload
+      }
     default:
       return state;
   }

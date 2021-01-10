@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../../store/actions/index";
 import "./style.css";
 
 export default function Profile() {
   const dispatch = useDispatch();
+  const { user } = useSelector(state => state);
   const [disable, setDisable] = useState(0)
   const [show, setShow] = useState({
     givenname: true,
@@ -15,14 +16,14 @@ export default function Profile() {
     phone: true,
     postal: true,
   });
-  const [user, setUser] = useState({
-    givenname: "Alan",
-    familyname: "Casella",
-    email: "alan.casella@hotmail.com",
-    city: "CABA",
-    adress: "Avenida Falsa 123",
-    phone: "4856-9851",
-    postal: "5000",
+  const [usuario, setUsuario] = useState({
+    givenname: user.givenname,
+    familyname: user.familyname,
+    email: user.email,
+    city: user.city,
+    adress: user.adress,
+    phone: user.phone,
+    postal: user.postal,
   });
 
   function handleClick(value) {
@@ -31,7 +32,7 @@ export default function Profile() {
   }
 
   function handleInput(e) {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setUsuario({ ...usuario, [e.target.name]: e.target.value });
   
     console.log(disable)
   }
@@ -69,7 +70,7 @@ export default function Profile() {
               >
                 <h3 className="UserProfileH3">Nombre:</h3>
                 <div className="StrongData">
-                  <strong>{user.givenname}</strong>
+                  <strong>{usuario.givenname}</strong>
                 </div>
                 <span className="SpanEditar">
                   <img
@@ -92,7 +93,7 @@ export default function Profile() {
                     type="text"
                     name="givenname"
                     onChange={(e) => handleInput(e)}
-                    value={user.givenname}
+                    value={usuario.givenname}
                   />
                   <button
                     className="UserProfileButtonAfterIf"
@@ -109,7 +110,7 @@ export default function Profile() {
               >
                 <h3 className="UserProfileH3">Apellido:</h3>
                 <div className="StrongData">
-                  <strong>{user.familyname}</strong>
+                  <strong>{usuario.familyname}</strong>
                 </div>
                 <span className="SpanEditar">
                   <img
@@ -132,7 +133,7 @@ export default function Profile() {
                     type="text"
                     name="familyname"
                     onChange={(e) => handleInput(e)}
-                    value={user.familyname}
+                    value={usuario.familyname}
                   />
                   <button
                     className="UserProfileButtonAfterIf"
@@ -146,7 +147,7 @@ export default function Profile() {
               <span onClick={() => handleClick("email")} className="SpanEdit">
                 <h3 className="UserProfileH3">Email:</h3>
                 <div className="StrongData">
-                  <strong>{user.email}</strong>
+                  <strong>{usuario.email}</strong>
                 </div>
                 <span className="SpanEditar">
                   <img
@@ -169,7 +170,7 @@ export default function Profile() {
                     type="email"
                     name="email"
                     onChange={(e) => handleInput(e)}
-                    value={user.email}
+                    value={usuario.email}
                   />
                   <button
                     className="UserProfileButtonAfterIf"
@@ -183,7 +184,7 @@ export default function Profile() {
               <span className="SpanEdit" onClick={() => handleClick("city")}>
                 <h3 className="UserProfileH3">City:</h3>
                 <div className="StrongData">
-                  <strong>{user.city}</strong>
+                  <strong>{usuario.city}</strong>
                 </div>
                 <span className="SpanEditar">
                   <img
@@ -206,7 +207,7 @@ export default function Profile() {
                     type="text"
                     name="city"
                     onChange={(e) => handleInput(e)}
-                    value={user.city}
+                    value={usuario.city}
                   />
                   <button
                     className="UserProfileButtonAfterIf"
@@ -220,7 +221,7 @@ export default function Profile() {
               <span onClick={() => handleClick("adress")} className="SpanEdit">
                 <h3 className="UserProfileH3">Adress:</h3>
                 <div className="StrongData">
-                  <strong>{user.adress}</strong>
+                  <strong>{usuario.adress}</strong>
                 </div>
                 <span className="SpanEditar">
                   <img
@@ -243,7 +244,7 @@ export default function Profile() {
                     type="text"
                     name="adress"
                     onChange={(e) => handleInput(e)}
-                    value={user.adress}
+                    value={usuario.adress}
                   />
                   <button
                     className="UserProfileButtonAfterIf"
@@ -257,7 +258,7 @@ export default function Profile() {
               <span className="SpanEdit" onClick={() => handleClick("phone")}>
                 <h3 className="UserProfileH3">Phone:</h3>
                 <div className="StrongData">
-                  <strong>{user.phone}</strong>
+                  <strong>{usuario.phone}</strong>
                 </div>
                 <span className="SpanEditar">
                   <img
@@ -281,7 +282,7 @@ export default function Profile() {
                     type="text"
                     name="phone"
                     onChange={(e) => handleInput(e)}
-                    value={user.phone}
+                    value={usuario.phone}
                   />
                   <button
                     className="UserProfileButtonAfterIf"
@@ -295,7 +296,7 @@ export default function Profile() {
               <span className="SpanEdit" onClick={() => handleClick("postal")}>
                 <h3 className="UserProfileH3">Postal:</h3>
                 <div className="StrongData">
-                  <strong>{user.postal}</strong>
+                  <strong>{usuario.postal}</strong>
                 </div>
                 <span className="SpanEditar">
                   <img
@@ -319,7 +320,7 @@ export default function Profile() {
                     type="text"
                     name="postal"
                     onChange={(e) => handleInput(e)}
-                    value={user.postal}
+                    value={usuario.postal}
                   />
                   <button
                     className="UserProfileButtonAfterIf"
@@ -331,7 +332,7 @@ export default function Profile() {
               )}
             <div className="UserDivButton">
               <button
-                onClick={(e) => handleSubmit(e, user)}
+                onClick={(e) => handleSubmit(e, usuario)}
                 className="UserActualizarButton"
                 disabled={(disable > 0)}
                 title={disable>0 ? "Debe Fijar los cambios" : null}
@@ -339,7 +340,7 @@ export default function Profile() {
                 Actualizar Datos
               </button>
               <button
-                onClick={(e) => handleReset(e, user)}
+                onClick={(e) => handleReset(e, usuario)}
                 className="UserResetearButton"
                 disabled={(disable > 0)}
                 title={disable>0 ? "Debe Fijar los cambios" : null}

@@ -23,7 +23,11 @@ const { query } = require("./INSERT");
 const multer = require('multer');
 var upload = multer({dest: "./src/images/cervezas"})
 // Syncing all the models at once.
+<<<<<<< HEAD
 const force = true;
+=======
+const force = false ;
+>>>>>>> 639ebc202efe0f1678984aaa4449b8c5cf375e83
 conn.sync({ force }).then(() => {
   if (force) {
     query();

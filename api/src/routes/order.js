@@ -1,4 +1,5 @@
 const server = require("express").Router();
+const { DATE } = require("sequelize");
 const db = require("../db.js");
 const { Order, Order_products, User, Product } = db
 
@@ -37,7 +38,17 @@ server.get("/:userId/cart", async (req, res) => {
     },
     include: [Product]
   })
-  !order ?  res.sendStatus(400) : res.json(order);
+  if(!order) {
+    console.log(userId);
+    const newOrder = await Order.create({
+      total: 0,
+      date: Date.now(),
+      userId,
+      status: "carrito",
+    })
+    !newOrder ? res.sendStatus(400) : res.json(newOrder);
+  }
+  order && res.json(order);
 })
 
 //model order = total tiene default value al igual que carrito
