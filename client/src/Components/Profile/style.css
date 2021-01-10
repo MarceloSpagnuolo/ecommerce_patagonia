@@ -1,14 +1,15 @@
-#root {
-  overflow: hidden;
+.UserProfileFirstDiv {
+  background-color: rgb(22, 61, 52);
+  height: 116.8%;
 }
 
 .UserProfileForm {
+  display: grid;
+  grid-template-columns: 350px 1fr;
   background-color: rgb(22, 61, 52);
-}
-
-.UserProfileDivContainer {
-  /* margin: 0px 0px 100px 300px; */
-  padding: 0px 0px 105px 400px;
+  overflow: hidden;
+  position: relative;
+  top:150px
 }
 
 .SpanEdit {
@@ -28,12 +29,17 @@
 .SpanEdit:hover .StrongData {
   text-decoration: underline;
 }
+
 .SpanEdit:hover .UserProfileH3 {
   text-decoration: underline;
 }
 
 .SpanEdit:hover .UserProfileEditImg {
   visibility: visible;
+}
+
+.UserResetearButton:hover {
+  cursor: pointer;
 }
 
 .UserProfileH3 {
@@ -54,7 +60,7 @@
 
 .SpanEditar {
   position: absolute;
-  right: 0px;
+  right: 0;
   margin-top: 20px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 20px;
@@ -79,18 +85,22 @@
   text-align: center;
   font-size: 20px;
   padding: 15px;
+  font-weight: 700;
   padding-left: 100px;
   padding-right: 100px;
 }
 
 .UserResetearButton {
+  position: absolute;
   border: none;
+  right: 40px;
   text-align: center;
   font-size: 20px;
   padding: 15px;
   padding-left: 100px;
   padding-right: 100px;
-  margin-left: 455px;
+  /* margin-left: 455px; */
+  justify-content: space-between;
 }
 
 .UserProfileLabel {
@@ -126,8 +136,32 @@
 }
 
 .UserProfileRegistroImagen1 {
-  width: 30%;
-  height: 100%;
+  width: 350px;
+  height: 501px;
+  overflow: hidden;
+  /* background-color: rgb(22, 61, 52);
   box-shadow: -100px -50px 30px 30px rgb(22, 61, 52) inset;
-  background: url(http://localhost:3001/images/Imagencita.jpg) no-repeat left/115%;
+  background: url(http://localhost:3001/images/Imagencita.jpg) no-repeat left/115%; */
 }
+
+.imgPstaProfile {
+  position: relative;
+  left: -40px;
+  width: 450px;
+  height: 501px;
+}
+.UserActualizarButton:hover {
+  cursor: pointer
+}
+
+.UserActualizarButton:disabled {
+  cursor: not-allowed; 
+}
+
+.UserResetearButton:disabled {
+  cursor: not-allowed; 
+}
+
+
+
+
