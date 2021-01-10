@@ -27,3 +27,22 @@
 .ordersUsers-Datos {
     text-align: center;
 }
+
+.Table {
+    width: 100%;
+    background-color: white;
+    border-collapse: collapse;
+    text-align: left;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid #3b0707;
+    height: 320px;
+}
+
+.Th, .Td {
+    padding: 10px;
+    box-shadow: inset 0px 1px 2px #949090;
+}
+
+#Tr:nth-child(even) {
+    background-color: rgb(190, 182, 182);
+}

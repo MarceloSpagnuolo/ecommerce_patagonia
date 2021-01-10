@@ -278,7 +278,7 @@ export const deleteProduct = (id) => async (dispatch) => {
     const res = await axios.delete(`${url}products/${id}`);
     dispatch({
       type: DELETE_PRODUCT,
-      payload: id,
+      payload: [id, res.data]
     });
   } catch (e) {
     dispatch({
@@ -450,7 +450,7 @@ export const deleteCategory = (id) => async (dispatch) => {
     const res = await axios.delete(`${url}categories/${id}`);
     dispatch({
       type: DELETE_CATEGORY,
-      payload: id,
+      payload: [id, res.data]
     });
   } catch (e) {
     dispatch({

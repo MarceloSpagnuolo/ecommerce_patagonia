@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { uploadAction } from './ActionUpdate';
 import { addImages } from "../../store/actions/index"
@@ -12,7 +12,7 @@ const ImageForm = (props) => {
 
     const handleImageUpload = (e) => {
         const j = Array.from(e.target.files)
-        console.log(j)
+
         setImage(j)
         setPreview(true);
     }
@@ -29,7 +29,6 @@ const ImageForm = (props) => {
         })
 
         setPreview(false);
-        console.log(image, "seteadora")
         setImage([]);
     }
 

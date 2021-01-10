@@ -21,33 +21,33 @@ const TableUser = () => {
     return (
         <div className="table-users-container">
             <h2 className="table-users-titles">Usuarios</h2>
-            <table className="table-users">
+            <table className="Table">
                 <thead className="table-users-titles">
-                    <tr>
-                        <th>Id</th>
-                        <th>Apellido y Nombre</th>
-                        <th>Email</th>
-                        <th>Ciudad</th>
-                        <th>Dirección</th>
-                        <th>Codigo Postal</th>
-                        <th>Telefono</th>
-                        <th>Rol</th>
-                        <th>Cambiar Rol</th>
+                    <tr id="Tr">
+                        <th className="Th">Id</th>
+                        <th className="Th">Apellido y Nombre</th>
+                        <th className="Th">Email</th>
+                        <th className="Th">Ciudad</th>
+                        <th className="Th">Dirección</th>
+                        <th className="Th">Codigo Postal</th>
+                        <th className="Th">Telefono</th>
+                        <th className="Th">Rol</th>
+                        <th className="Th">Cambiar Rol</th>
                     </tr>
 
                 </thead>
                 <tbody>
                     {!!users && users.length > 0 && users.map((us) => (
-                        <tr>
-                            <td>{us.id}</td>
-                            <td>{us.familyname + " " + us.givenname}</td>
-                            <td>{us.email}</td>
-                            <td>{us.city}</td>
-                            <td>{us.adress}</td>
-                            <td>{us.postal}</td>
-                            <td>{us.phone}</td>
-                            <td>{us.role}</td>
-                            <td>
+                        <tr id="Tr" key={us.id}>
+                            <td className="Td">{us.id}</td>
+                            <td className="Td">{us.familyname + " " + us.givenname}</td>
+                            <td className="Td">{us.email}</td>
+                            <td className="Td">{us.city}</td>
+                            <td className="Td">{us.adress}</td>
+                            <td className="Td">{us.postal}</td>
+                            <td className="Td">{us.phone}</td>
+                            <td className="Td">{us.role}</td>
+                            <td className="Td">
                                 {usLocal !== us.id ?
                                     (us.role === "user") ? <button className="table-user-button"
                                         onClick={() => handleClick(us.id, { "role": "admin" })}>Promover</button> :

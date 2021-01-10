@@ -92,17 +92,17 @@ server.get("/:id", async (req, res) => {
 });
 //////////////////////////////////////////////////
 
-///////////////////delete producto/////////////////
-server.delete("/removeProduct/:id", async (req, res) => {
-  const { id } = req.params;
-  const remove = await Product.destroy({
-    where: {
-      id,
-    },
-  });
-  remove === 0 ? res.sendStatus(404) : res.send("El Producto se eliminó exitosamente");
+// ///////////////////delete producto/////////////////
+// server.delete("/removeProduct/:id", async (req, res) => {
+//   const { id } = req.params;
+//   const remove = await Product.destroy({
+//     where: {
+//       id,
+//     },
+//   });
+//   remove === 0 ? res.sendStatus(404) : res.send("El Producto se eliminó exitosamente");
 
-});
+// });
 
 
 ////////////////////// S22 //////////////////////
@@ -195,7 +195,7 @@ server.delete("/:id", async (req, res) => {
   }
   );
   //product > 0 && res.sendStatus(200)
-  return res.sendStatus(200);
+  return product === 0 ? res.sendStatus(400) : res.send("El Producto se eliminó exitosamente");
 });
 
 ////////////////////// S27 //////////////////////

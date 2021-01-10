@@ -16,26 +16,26 @@ function TableOrders(props) {
     return (
         <div className="conteiner-orders-user">
             <h3 className="title-orders-user">Listado de Ordenes en el Sistema</h3>
-            <table>
+            <table className="Table">
                 <thead>
-                    <tr className="headTable-orders-user">
-                        <th>id</th>
-                        <th>Usuario</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
-                        <th>Total</th>
-                        <th>Detalles</th>
+                    <tr id="Tr" className="headTable-orders-user">
+                        <th className="Th">id</th>
+                        <th className="Th">Usuario</th>
+                        <th className="Th">Fecha</th>
+                        <th className="Th">Estado</th>
+                        <th className="Th">Total</th>
+                        <th className="Th">Detalles</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {orders.length > 0 && orders.map((ord) => (
-                        <tr className="ordersUsers-Datos">
-                            <td>{ord.id}</td>
-                            <td>{ord.user.givenname + " " + ord.user.familyname}</td>
-                            <td>{ord.date}</td>
-                            <td>{ord.status}</td>
-                            <td>{ord.total}</td>
-                            <td >
+                    {orders && orders.length > 0 && orders.map((ord) => (
+                        <tr id="Tr" className="ordersUsers-Datos" key={ord.id}>
+                            <td className="Td">{ord.id}</td>
+                            <td className="Td">{ord.user.givenname + " " + ord.user.familyname}</td>
+                            <td className="Td">{ord.date}</td>
+                            <td className="Td">{ord.status}</td>
+                            <td className="Td">{ord.total}</td>
+                            <td className="Td">
                                 <Link to={`/admin/orders/${ord.id}`}>
                                     <button className="bottom-orders-user">Ver Orden</button>
                                 </Link>

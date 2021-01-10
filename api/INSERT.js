@@ -133,6 +133,21 @@ VALUES (10 ,170, '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1, 1)
 (9 ,170, '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 2, 1),
 (8 ,170, '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 3, 1),
 (2 ,100, '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 3, 3);
+
+INSERT INTO reviews (rate, comment,  "createdAt", "updatedAt", "productId", "userId" )
+VALUES (3 ,'Me parece una cerveza normal', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1, 1),
+(5 ,'Mi cerveza favorita de patagonia, me encanta siempre arrancar con esta', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1, 2),
+(2 ,'Poco recomendable, no se destaca en nada de otras cervezas del mismo tipo', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1, 3),
+(5 ,'SIMPLEMENTE EXCELENTE!!! Super recomendable', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1, 4),
+(4 ,'De las mejorcitas de patagonia, con un buen gusto agrio a pesar de ser cerveza rubia', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 2, 1),
+(1 ,'Muy amarga para mi gusto. No la recomiendo a menos que te gusten las rubias muy fuertes. Para eso me pido otro tipo directamente. No se que fue lo que intentaron hacer con este gusto horrible que le pusieron. Me decepcionó totalmente', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 2, 2),
+(3 ,'Me parece una cerveza normal', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 2, 3),
+(5 ,'Mi cerveza favorita de patagonia, me encanta siempre arrancar con esta', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 3, 1),
+(3 ,'Ni fu ni fa', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 3, 2),
+(1 ,'meh, prefiero quilmes por el precio que pagué la última vez', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 3, 3),
+(5 ,'ME encantaaaaaAA. Siempre la pido!!!!', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 4, 1),
+(5 ,'Mi cerveza favorita de patagonia, me encanta siempre arrancar con esta', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 4, 2),
+(3 ,'Me parece una cerveza normal', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 4, 3);
 `);
 
 

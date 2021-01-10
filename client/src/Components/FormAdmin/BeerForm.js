@@ -19,7 +19,7 @@ const BeerForm = (props) => {
             price: '',
             stock: '',
             volume: '355 cc',
-            volume: false,
+            destacado: false,
             thumbnail: ''
         }} validate={(values) => {
             const errors = {};
