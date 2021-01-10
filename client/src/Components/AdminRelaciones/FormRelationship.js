@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getProducts, getCategories, postProductJoinCategory } from '../../store/actions/index';
 import { Form, Field, ErrorMessage, Formik } from 'formik';
 
 
 const Relationship = (props) => {
+    let arr = [];
     return (
         <Formik initialValues={props.data || {
             idP: '',
@@ -16,7 +17,7 @@ const Relationship = (props) => {
             }
             if (!values.idG) {
                 errors.idG = 'Se tiene que llenar el campo'
-            }
+            } 
             return errors;
         }} onSubmit={(values) => {
             if (props.data) {
@@ -40,11 +41,11 @@ const Relationship = (props) => {
                         </ErrorMessage>
                         <Field as='select' name="idP" className="input" >
                             {props.products.length > 0 && props.products.map((e) => {
-
-                                return (
-                                    <option value={e.id}>{e.name} {e.volume}</option>
-                                )
-
+                            
+                                    return (
+                                        <option value={e.id}>{e.name} {e.volume}</option>
+                                    )
+                                
                             })}
                         </Field>
                     </div>
@@ -93,7 +94,7 @@ function mapDispatchToProps(dispatch) {
     return {
         getCategories: () => dispatch(getCategories()),
         getProducts: () => dispatch(getProducts()),
-        postProductJoinCategory: (id1, id2) => dispatch(postProductJoinCategory(id1, id2))
+        postProductJoinCategory: (id1, id2) =>dispatch(postProductJoinCategory(id1,id2))
     };
 }
 

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import { useDispatch } from "react-redux"
-import { createUser } from "../../store/actions/index"
+import { createUser, getUserByToken, postCreateCart } from "../../store/actions/index"
 import "./registro.css";
 
 export default function Registro() {
     const dispatch = useDispatch();
-    const [show, setShow] = useState(true);
+    const [ show, setShow ] = useState(true);
 
     return (
         <Formik initialValues={{
@@ -38,83 +38,83 @@ export default function Registro() {
 
             return errors
 
-        }} onSubmit={async (values) => {
-            dispatch(createUser(values));
-            setShow(false);
-        }}>{({
-            isSubmitting,
-            isValid
-        }) => (
-            <>
-                <div className="Registro-Body">
-                    <div className="Registro-Imagen1">
+       }} onSubmit={ async (values) => {
+        dispatch(createUser(values));
+        setShow(false);
+       }}>{({
+           isSubmitting,
+           isValid
+       }) => (
+           <>
+            <div className="Registro-Body">
+            <div className="Registro-Imagen1">
+            </div>
+            <div className="Registro-Formik">
+                <h1 className="Registro-Title">Registro de Usuario</h1>
+                {show ?
+                <Form className="Registro-Form">
+                    <div>
+                        <label className="Registro-Form-Label" htmlFor="Registro">Nombre</label><br></br>
+                        <Field className="Registro-Form-Input" name="givenname" />
+                        <ErrorMessage name="name">{message => <div className="Registro-Form-Error">{message}</div>}</ErrorMessage>
                     </div>
-                    <div className="Registro-Formik">
-                        <h1 className="Registro-Title">Registro de Usuario</h1>
-                        {show ?
-                            <Form className="Registro-Form">
-                                <div>
-                                    <label className="Registro-Form-Label" htmlFor="Registro">Nombre</label><br></br>
-                                    <Field className="Registro-Form-Input" name="givenname" />
-                                    <ErrorMessage name="name">{message => <div className="Registro-Form-Error">{message}</div>}</ErrorMessage>
-                                </div>
 
-                                <div>
-                                    <label className="Registro-Form-Label" htmlFor="Registro">Apellido</label><br></br>
-                                    <Field className="Registro-Form-Input" name="familyname" />
-                                    <ErrorMessage name="lastname">{message => <div className="Registro-Form-Error">{message}</div>}</ErrorMessage>
-                                </div>
+                    <div>
+                        <label className="Registro-Form-Label" htmlFor="Registro">Apellido</label><br></br>
+                        <Field className="Registro-Form-Input" name="familyname" />
+                        <ErrorMessage name="lastname">{message => <div className="Registro-Form-Error">{message}</div>}</ErrorMessage>
+                    </div>
 
-                                <div>
-                                    <label className="Registro-Form-Label" htmlFor="Registro">Email</label><br></br>
-                                    <Field className="Registro-Form-Input" type="email" name="email" />
-                                    <ErrorMessage name="email">{message => <div className="Registro-Form-Error">{message}</div>}</ErrorMessage>
-                                </div>
+                    <div>
+                        <label className="Registro-Form-Label" htmlFor="Registro">Email</label><br></br>
+                        <Field className="Registro-Form-Input" type="email" name="email" />
+                        <ErrorMessage name="email">{message => <div className="Registro-Form-Error">{message}</div>}</ErrorMessage>
+                    </div>
 
-                                <div>
-                                    <label className="Registro-Form-Label" htmlFor="Registro">Contraseña</label><br></br>
-                                    <Field className="Registro-Form-Input" name="password" type="password" />
-                                    <ErrorMessage name="password">{message => <div className="Registro-Form-Error">{message}</div>}</ErrorMessage>
-                                </div>
+                    <div>
+                        <label className="Registro-Form-Label" htmlFor="Registro">Contraseña</label><br></br>
+                        <Field className="Registro-Form-Input" name="password" type="password"/>
+                        <ErrorMessage name="password">{message => <div className="Registro-Form-Error">{message}</div>}</ErrorMessage>
+                    </div>
 
-                                <div>
-                                    <label className="Registro-Form-Label" htmlFor="Registro">Ciudad</label><br></br>
-                                    <Field className="Registro-Form-Input" name="city" />
-                                </div>
+                    <div>
+                        <label className="Registro-Form-Label" htmlFor="Registro">Ciudad</label><br></br>
+                        <Field className="Registro-Form-Input" name="city" />
+                    </div>
 
-                                <div>
-                                    <label className="Registro-Form-Label" htmlFor="Registro">Direccion</label><br></br>
-                                    <Field className="Registro-Form-Input" name="adress" />
-                                </div>
+                    <div>
+                        <label className="Registro-Form-Label" htmlFor="Registro">Direccion</label><br></br>
+                        <Field className="Registro-Form-Input" name="adress" />
+                    </div>
 
-                                <div>
-                                    <label className="Registro-Form-Label" htmlFor="Registro">Teléfono</label><br></br>
-                                    <Field className="Registro-Form-Input" name="phone" />
-                                </div>
+                    <div>
+                        <label className="Registro-Form-Label" htmlFor="Registro">Teléfono</label><br></br>
+                        <Field className="Registro-Form-Input" name="phone" />
+                    </div>
 
-                                <div>
-                                    <label className="Registro-Form-Label" htmlFor="Registro">Código Postal</label><br></br>
-                                    <Field className="Registro-Form-Input" name="postal" />
-                                </div>
-                                <button type="submit"
-                                    className={`submit ${isSubmitting || !isValid ? 'disabled' : ''}`}
-                                    id="Registro-Btn-Submit"
-                                    disabled={isSubmitting || !isValid}>
-                                    Registrarse
+                    <div>
+                        <label className="Registro-Form-Label" htmlFor="Registro">Código Postal</label><br></br>
+                        <Field className="Registro-Form-Input" name="postal" />
+                    </div>
+                    <button type="submit"
+                        className={`submit ${isSubmitting || !isValid ? 'disabled' : ''}`}
+                        id="Registro-Btn-Submit"
+                        disabled={isSubmitting || !isValid}>
+                        Registrarse
                     </button>
-                            </Form>
-                            :
-                            <div className="Registro-Formik">
-                                <h2 className="Registro-Title">Muchas Gracias por</h2>
-                                <h2 className="Registro-Title">registrarse en nuestro</h2>
-                                <h2 className="Registro-Title">ECOMMERCE PATAGONIA</h2>
-                            </div>
-                        }
-                    </div>
-                    <div className="Registro-Imagen2">
-                    </div>
+                </Form>
+            :
+                <div className="Registro-Formik">
+                    <h2 className="Registro-Title">Muchas Gracias por</h2>
+                    <h2 className="Registro-Title">registrarse en nuestro</h2>
+                    <h2 className="Registro-Title">ECOMMERCE PATAGONIA</h2>
                 </div>
-            </>
+             }
+            </div>
+            <div className="Registro-Imagen2">
+            </div>
+            </div>
+            </>          
         )}
         </Formik>
     )

@@ -6,6 +6,7 @@ const { Op } = require("sequelize");
 //Creación de usuario. City, adress, phone y postal no son obligatorios.
 //Si ingresa un mail repetido, manda un status 400 con un mensaje de email repetido.
 server.post("/", async (req, res) => {
+  console.log(req.body,"Del back")
   const {
     givenname,
     familyname,
@@ -74,38 +75,38 @@ server.put("/:id", async (req, res) => {
       },
       returning: true,
     }
-  );
+    );
+    
+    !user ? res.sendStatus(400) : res.json(user[1][0]);
+  });
 
-  !user ? res.sendStatus(400) : res.json(user[1][0]);
-});
-
-
-server.get("/:userId/cart", async (req, res) => {
-  const { userId } = req.params;
-  const user = await User.findOne({
-    where: {
-      id: userId
-    },
-    include: [
-      {
-        model: Order,
-        include: [
-          {
-            model: Product,
-          },
-        ],
-        where: {
-          [Op.or]: [
+  
+  server.get("/:userId/cart", async (req, res) => {
+    const { userId } = req.params;
+    const user = await User.findOne({
+      where: {
+        id: userId
+      },
+      include: [
+        {
+          model: Order,
+          include: [
             {
-              status: "carrito",
+              model: Product,
             },
           ],
+          where: {
+            [Op.or]: [
+              {
+                status: "carrito",
+              },
+            ],
+          },
         },
-      },
-    ],
+      ],
+    });
+    !user ? res.sendStatus(404) : res.json(user);
   });
-  !user ? res.sendStatus(404) : res.json(user);
-});
 
 
 server.get("/:userId", async (req, res) => {
@@ -126,11 +127,16 @@ server.get("/", (req, res, next) => {
   where && (where = JSON.parse(where));
   // /products/?where={%22id%22:5}&include=[%22categories%22]
   include && (include = JSON.parse(include));
-  User.findAll({ limit, offset, order, where, include }) //Pasamos a findAll todos los argumentos
-    .then((users) => {
-      res.send(users).status(200);
-    })
-    .catch(next);
+  if (req.user) {
+    User.findAll({ limit, offset, order, where, include }) //Pasamos a findAll todos los argumentos
+      .then((users) => {
+        res.send(users).status(200);
+      })
+      .catch(next);
+  } else {
+    res.sendStatus(401);
+  }
+
 });
 
 /////////////////// S38 /////////////////////////////

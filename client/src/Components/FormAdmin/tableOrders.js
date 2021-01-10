@@ -29,13 +29,13 @@ function TableOrders(props) {
                 </thead>
                 <tbody>
                     {orders && orders.length > 0 && orders.map((ord) => (
-                        <tr id="Tr" className="ordersUsers-Datos" key={ord.id}>
+                        <tr id="Tr" className="ordersUsers-Datos">
                             <td className="Td">{ord.id}</td>
                             <td className="Td">{ord.user.givenname + " " + ord.user.familyname}</td>
                             <td className="Td">{ord.date}</td>
                             <td className="Td">{ord.status}</td>
                             <td className="Td">{ord.total}</td>
-                            <td className="Td">
+                            <td  className="Td">
                                 <Link to={`/admin/orders/${ord.id}`}>
                                     <button className="bottom-orders-user">Ver Orden</button>
                                 </Link>

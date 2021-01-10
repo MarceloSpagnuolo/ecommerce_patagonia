@@ -5,18 +5,18 @@ import "./Carrusel.css";
 const Carrusel = () => {
     const [counter, setCounter] = useState(1)
     useEffect(() => {
-        const interval = setInterval(() => {
+       const interval = setInterval(() => {
             if (counter <= 4) {
 
                 document.getElementById('radio' + counter).checked = true;
                 setCounter(counter + 1)
             }
-            if (counter === 4) {
+            if (counter == 4) {
                 setCounter(1)
                 return () => clearInterval(interval);
             }
         }, 5000);
-        return () => clearInterval(interval)
+         return () => clearInterval(interval)
     }, [counter])
     return (
         <div className="body-shome">
