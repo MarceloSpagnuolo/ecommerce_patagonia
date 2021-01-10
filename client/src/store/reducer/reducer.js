@@ -39,7 +39,6 @@ import {
   PUT_CHANGE_QUANTITY,
   GET_ORDERS,
   GET_ORDERS_STATUS,
-  GET_ORDER_BY_USER,
   GET_ORDER_BY_ID,
   CREATE_ORDER,
   DELETE_ORDER,
@@ -83,8 +82,6 @@ function ReducerProducts(state = inicialState, action) {
       return { ...state, order: action.payload };
     case GET_ORDER_BY_ID:
       return { ...state, order: action.payload };
-    case GET_ORDER_BY_USER:
-      return { ...state, order: action.payload};
     case GET_ORDERS_STATUS:
       return {};
     case GET_PRODUCTS_BY_CATEGORY:
@@ -204,13 +201,13 @@ function ReducerProducts(state = inicialState, action) {
     case CREATE_ORDER:
       return {};
     case CREATE_USER:
-      return {...state, user: action.payload};
+      return { ...state, user: action.payload };
     case ERROR_MESSAGE:
       alert(action.message);
       return { ...state };
     case GET_USER_BY_TOKEN:
       console.log(action.payload, "Este es el reducer");
-      return {...state, user: action.payload};
+      return { ...state, user: action.payload };
     case LOGIN:
       return {};
     case LOGIN_ERROR:
@@ -230,7 +227,7 @@ function ReducerProducts(state = inicialState, action) {
     case POST_PRODUCT_TO_CART:
       return { ...state, order: action.payload };
     case GET_USER_BY_ID:
-      return { ...state, user: action.payload};
+      return { ...state, user: action.payload };
     case DEL_PRODUCT_TO_CART:
       return { ...state, order: action.payload };
     case EMPTY_ALL_PRODUCTS_OF_CART:

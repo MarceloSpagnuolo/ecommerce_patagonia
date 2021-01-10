@@ -28,10 +28,12 @@ function Admin() {
                         <span className="Admin-Titulo">ORDENES</span>
                     </div>
                 </Link>
-                <div className="Admin-Content-Photo">
-                    <img className="Admin-Imagen" src="http://localhost:3001/images/users.jpg" />
-                    <span className="Admin-Titulo">USUARIOS</span>
-                </div>
+                <Link to="admin/users">
+                    <div className="Admin-Content-Photo">
+                        <img className="Admin-Imagen" src="http://localhost:3001/images/users.jpg" />
+                        <span className="Admin-Titulo">USUARIOS</span>
+                    </div>
+                </Link>
             </div>
         </div>
     )

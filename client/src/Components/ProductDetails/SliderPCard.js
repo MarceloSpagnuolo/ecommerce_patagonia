@@ -11,8 +11,8 @@ const SliderPCard = (props) => {
     const { images } = useSelector(state => state);
 
     useEffect(() => {
-        if (1 != undefined) {
-            dispatch(getImages(1))
+        if (props.id != undefined) {
+            dispatch(getImages(props.id))
         }
     }, [props.id])
     console.log(images)
@@ -42,7 +42,8 @@ const SliderPCard = (props) => {
 
             <div className="destacadoProducts">
                 <div className="imgContPCard">
-                    <div className="divImgPC" style={valor}><img className="imgPDet" src={"https://emporiodacerveja.vtexassets.com/arquivos/ids/176098/Cerveja-Patagonia-Amber-Lager-Long-Neck-355ml.jpg?v=637212809310330000"} /></div>
+                    <div className="divImgPC" style={valor}><img className="imgPDet"
+                        src={props.image} /></div>
                     {
                         !!images && images.map(i => {
                             console.log(i.path, "vengo del maap")

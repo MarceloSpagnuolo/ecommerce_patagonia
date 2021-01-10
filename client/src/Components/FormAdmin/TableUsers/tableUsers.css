@@ -1,0 +1,28 @@
+.table-users-container {
+    background-color: #163D34;
+    padding: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.table-users {
+    text-align: center;
+}
+
+.table-users-titles {
+    color: white;
+    text-align: center;
+    background-color: #163D34;
+}
+
+.table-user-button {
+    text-shadow: 0px 0px 0px black;
+    padding: 7px;
+    color: black;
+    background-color: #e8a52c;
+    border-radius: 5px;
+}
+
+.table-user-button:hover {
+    box-shadow: 2px 3px 7px black;
+    background-color: #ffb530;
+}
