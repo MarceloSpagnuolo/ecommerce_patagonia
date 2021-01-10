@@ -33,6 +33,7 @@ import {
   GET_IMAGES,
   ADD_IMAGES,
   DELETE_IMAGES,
+  UPDATE_USER,
 } from "../constants/constants.js";
 
 const url = "http://localhost:3001/";
@@ -551,3 +552,18 @@ export const deleteImages = (id) => async (dispatch) => {
     });
   }
 };
+
+export const updateUser = (id, payload) => async (dispatch) => {
+  try {
+    const res = await axios.put(`${url}users/${id}`, payload);
+    dispatch({
+      type: UPDATE_USER,
+      payload: res.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Problemas al actualizar usuario",
+    });
+  }
+}

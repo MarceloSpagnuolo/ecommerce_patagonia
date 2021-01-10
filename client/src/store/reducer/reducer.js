@@ -144,7 +144,7 @@ function ReducerProducts(state = inicialState, action) {
         }),
       };
     case UPDATE_USER:
-      return {};
+      return {...state, user: action.payload};
     case DELETE_CART:
       return {};
     case PUT_CHANGE_QUANTITY:

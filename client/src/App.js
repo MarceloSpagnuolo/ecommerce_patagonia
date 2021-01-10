@@ -11,16 +11,15 @@ import Relationship from "../src/Components/AdminRelaciones/RelationshipViews";
 import Carrito from "../src/Components/carrito/Carrito";
 import OrderDetails from "../src/Components/FormAdmin/orderDetail.js";
 import TableOrders from "./Components/FormAdmin/tableOrders.js";
-import ImageForm from "./Components/Multer/Multer";
 import Admin from "./Components/Admin/admin.js";
-
+import Profile from "./Components/Profile/Profile.js"
 
 function App() {
   return (
     <>
       <Navegation />
       <Route exact path="/" component={Home} />
-      <Route exact path="/as" component={ImageForm} />
+      <Route exact path="/as" component={Profile} />
       <Route path="/products" component={Catalogo} />
       <Route exact path="/product/:id" component={ProductDetails} />
       <Route path="/admin/relations" component={Relationship} />
