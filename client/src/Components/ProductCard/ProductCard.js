@@ -11,6 +11,7 @@ de la database */
 
 export default function ProductCard(props) {
   const dispatch = useDispatch()
+  const user = useSelector(state => state.users);
   const order = useSelector(state => state.order)
 
   function agregaCarrito(orderId, prodId, unitprice, quantity) {

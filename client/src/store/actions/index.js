@@ -209,7 +209,7 @@ export const copyUserToStore = (guestUser) => (dispatch) => {
 //Trae todos los productos
 export const getProducts = (limite, jump) => async (dispatch) => {
   try {
-    const res = await axios.get(`${url}products/?limit=${limite}&offset=${jump}&include="categories"`);
+    const res = await axios.get(`${url}products/?limit=${limite}&offset=${jump}&include="categories"&order=["name"]`);
     dispatch({
       type: GET_PRODUCTS,
       payload: res.data,

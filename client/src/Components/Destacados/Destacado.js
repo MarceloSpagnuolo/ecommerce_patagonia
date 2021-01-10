@@ -19,7 +19,7 @@ const Destacado = () => {
     const valor = {
         transform: `translateX(${numero}em)`,
     }
-
+    
     function next() {
         if (prod.length - num > 0) {
             setNum(num + 1)
@@ -28,7 +28,7 @@ const Destacado = () => {
         }
         return
     }
-
+    
     function back() {
         if (num !== 4) {
             setNum(num - 1)
@@ -40,14 +40,14 @@ const Destacado = () => {
 
     return (
         <div className="divDestacado">
-            <img className="bannerDestacados" src="http://localhost:3001/images/productos_destacados.gif" alt="DESTACADOS" />
+            <img className="bannerDestacados" src="http://localhost:3001/images/productos_destacados.gif" />
 
             <div className="destacadoTitle"><p>Productos destacados</p></div>
 
             <div className="destacadoProducts">
                 {!!prod && prod.length > 0 && prod.map((p) => {
 
-                    return (<div className="minidivDestacado" style={valor} key={p.id}><ProductCard
+                    return (<div className="minidivDestacado" style={valor} ><ProductCard
                         id={p.id}
                         name={p.name}
                         thumbnail={p.thumbnail}
