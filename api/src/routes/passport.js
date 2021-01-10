@@ -24,12 +24,16 @@ passport.use(
       if (!user) return done(null, false, "No se encontró el user");
       if (!user.compare(password))
         return done(null, false, "Contraseña incorrecta");
-      const { id, givenname, familyname, email: userEmail, role } = user;
+      const { id, givenname, familyname, email: userEmail, role, city, adress, phone, postal } = user;
       return done(null, {
         id,
         givenname,
         familyname,
         email: userEmail,
+        city,
+        adress,
+        phone,
+        postal,
         role,
       }); 
     }
@@ -65,7 +69,6 @@ passport.use(new GitHubStrategy({
   callbackURL: "/auth/github/callback"
 },
 async function(accessToken, refreshToken, profile, done) {
-  console.log(profile, "soy el profile de github")
   const usuario = await User.findOrCreate({ 
     where: {
       githubID: profile.id
