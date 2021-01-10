@@ -33,14 +33,6 @@ server.post("/login", function (req, res, next) {
   })(req, res, next);
 });
 
-
-/////////////////////////////S64//////////////////
-// Ruta Logout. req.logout() borra las cookies relacionadas al login. No toca localstorage ni nada del jwt.
-server.get("/logout", function (req, res, next) {
-  req.logout();
-  res.redirect("/");
-});
-
 ////////////////////////S75///////////////////////
 //login de google
 server.get(
@@ -58,54 +50,28 @@ server.get(
   (req, res) => {
     res.send("llegaste al callback");
   }
-  //     {
-  //         successRedirect: '/auth/success',
-  //         failureRedirect: '/auth/failed'
-  // })
 );
-
-// Rutas para usar en el re-redirecionamiento de la estrategia de google
-server.get("/failed", (req, res) => res.send("you failed to log in"));
-server.get("/success", function (req, res) {
-  res.send(`You logged in succesfully mr user`);
-});
-
-
-
-// Estrategia de Github
-server.get("/github", passport.authenticate("github", { scope: ["user"] }));
-
-
-// Callback de github
-server.get(
-  "/github/callback",
-  passport.authenticate("github", { failureRedirect: "/products" }),
-  function (req, res) {
-    // Successful authentication, redirect home.
-    res.redirect("/categories");
-  }
-);
-////////////////////////////////////////////////////////////////
-
 
 ///////////////////////////////////S67////////////////////////////
 // Ruta promote, para cambiar el role del usuario a admin de manera automática.
 // Solo se necesita ID por params. No se necesita ninguna otra comprobación para que funcione.
-server.post("/promote/:id", async (req, res, next) => {
-    const { id } = req.params;
-    const promote = await User.update(
-        {
-            role: "admin"
-        },
-        {
-            where: {
-                id,
-            },
-            returning: true,
-        }
-    );
+server.put("/promote/:id", async (req, res, next) => {
+  const { id } = req.params;
+  const { role } = req.body;
+  console.log(req.body)
+  const promote = await User.update(
+    {
+      role: role,
+    },
+    {
+      where: {
+        id,
+      },
+      returning: true,
+    }
+  );
 
-    !promote ? res.sendStatus(400) : res.json(promote);
+  !promote ? res.sendStatus(400) : res.json(promote[1][0]);
 })
 
 module.exports = server;

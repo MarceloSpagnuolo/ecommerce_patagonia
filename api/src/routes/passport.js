@@ -6,16 +6,6 @@ const jwt = require("jsonwebtoken");
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 const GitHubStrategy = require( 'passport-github2' ).Strategy;
 
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-  });
-  
-  passport.deserializeUser( async function(id, done) {
-    const usuario = await User.findByPk(id);
-    done(null, usuario)
-  });
-
-
 passport.use(
   new LocalStrategy( 
     { usernameField: "email", passwordField: "password", session: false },
@@ -69,6 +59,7 @@ passport.use(new GitHubStrategy({
   callbackURL: "/auth/github/callback"
 },
 async function(accessToken, refreshToken, profile, done) {
+  console.log(profile, "soy el profile de github")
   const usuario = await User.findOrCreate({ 
     where: {
       githubID: profile.id
