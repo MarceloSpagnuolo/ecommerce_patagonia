@@ -1,5 +1,14 @@
+#root {
+  overflow: hidden;
+}
+
+.UserProfileForm {
+  background-color: rgb(22, 61, 52);
+}
+
 .UserProfileDivContainer {
-  margin: 50px 0px 100px 300px;
+  /* margin: 0px 0px 100px 300px; */
+  padding: 0px 0px 105px 400px;
 }
 
 .SpanEdit {
@@ -19,20 +28,25 @@
 .SpanEdit:hover .StrongData {
   text-decoration: underline;
 }
+.SpanEdit:hover .UserProfileH3 {
+  text-decoration: underline;
+}
 
 .SpanEdit:hover .UserProfileEditImg {
   visibility: visible;
 }
 
 .UserProfileH3 {
-    margin-left: 20px;
+  margin-left: 20px;
+  color: white;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 20px;
 }
 
 .StrongData {
   position: absolute;
-  left: 600px;
+  color: white;
+  left: 900px;
   margin-top: 20px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 20px;
@@ -40,11 +54,11 @@
 
 .SpanEditar {
   position: absolute;
-  right: 100px;
+  right: 0px;
   margin-top: 20px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 20px;
-  color: blue;
+  color: lightblue;
   font-weight: 800;
 }
 
@@ -55,47 +69,65 @@
 }
 
 .UserDivButton {
-    margin-left: 25%;
-    width: 100%;
+  display: flex;
+  margin-left: 20px;
 }
 
 .UserActualizarButton {
-    justify-content: center;
-    border: none;
-    text-align: center;
-    font-size: 20px;
-    padding: 15px;
-    padding-left: 100px;
-    padding-right: 100px;
+  justify-content: center;
+  border: none;
+  text-align: center;
+  font-size: 20px;
+  padding: 15px;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.UserResetearButton {
+  border: none;
+  text-align: center;
+  font-size: 20px;
+  padding: 15px;
+  padding-left: 100px;
+  padding-right: 100px;
+  margin-left: 455px;
 }
 
 .UserProfileLabel {
-    font-size: 20px;
-    font-weight: 700;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .UserProfileInput {
-    position: absolute;
-    left: 600px;
+  position: absolute;
+  left: 900px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 20px;
 }
 
 .UserProfileButton {
-    position: absolute;
-    right: 100px;
-    font-size: 20px;
+  position: absolute;
+  right: 100px;
+  font-size: 20px;
 }
 
 .UserProfileDivAfterIf {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
 }
 
 .UserProfileButtonAfterIf {
-    position: absolute;
-    right: 250px;
-    font-size: 20px;
+  position: absolute;
+  right: 150px;
+  font-size: 20px;
+}
+
+.UserProfileRegistroImagen1 {
+  width: 30%;
+  height: 100%;
+  box-shadow: -100px -50px 30px 30px rgb(22, 61, 52) inset;
+  background: url(http://localhost:3001/images/Imagencita.jpg) no-repeat left/115%;
 }
