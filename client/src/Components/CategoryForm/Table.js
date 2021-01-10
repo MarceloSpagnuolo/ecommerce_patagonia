@@ -26,23 +26,23 @@ const Table = (props) => {
     return (
         <>
             <div className="contenedor">
-                <table>
+                <table className="Table">
                     <tbody>
 
-                        <tr className="titulo">
-                            <th>id</th>
-                            <th>nombre</th>
-                            <th>description</th>
-                            <th></th>
-                            <th></th>
+                        <tr id="Tr" className="titulo">
+                            <th className="Th">id</th>
+                            <th className="Th">nombre</th>
+                            <th className="Th">description</th>
+                            <th className="Th"></th>
+                            <th className="Th"></th>
                         </tr>
                         {props.categories.map((c) => (
-                            <tr key={c.id} >
-                                <td>{c.id}</td>
-                                <td>{c.name}</td>
-                                <td>{c.description}</td>
-                                <td><button className="edit" onClick={() => { props.seteadora(props.estados[1], props.estados[0]); handleOnUpdate(c); }}>edit</button></td>
-                                <td><button className="x" onClick={() => handleClick(c)}>x</button></td>
+                            <tr id="Tr" key={c.id} >
+                                <td className="Td">{c.id}</td>
+                                <td className="Td">{c.name}</td>
+                                <td className="Td">{c.description}</td>
+                                <td className="Td"><button className="edit" onClick={() => { props.seteadora(props.estados[1], props.estados[0]); handleOnUpdate(c); }}>edit</button></td>
+                                <td className="Td"><button className="x" onClick={() => handleClick(c)}>x</button></td>
                             </tr>
                         ))
                         }

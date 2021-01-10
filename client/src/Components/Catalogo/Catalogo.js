@@ -27,13 +27,13 @@ function Catalogo(props) {
       //Manda a llamar directamente la ruta que trae la cantidad de
       //productos es esa categoria
 
-      axios.get("http://localhost:3001/products/count/"+categ)
-      .then((res) => {
-        //Setea en count la cantidad de productos de la categoría
-        setCount(res.data.count);
-      })
-    } else if (props.history.location.pathname == "/products/search") {
-        setCount(props.products.length)
+      axios.get("http://localhost:3001/products/count/" + categ)
+        .then((res) => {
+          //Setea en count la cantidad de productos de la categoría
+          setCount(res.data.count);
+        })
+    } else if (props.history.location.pathname === "/products/search") {
+      setCount(props.products.length)
     } else {
       //Si no se están mostrando los productos por categoría, manda a llamar
       //la misma ruta pero con el prefijo "all" que indica que se necesita
@@ -44,28 +44,7 @@ function Catalogo(props) {
           setCount(res.data.count);
         })
     }
-  },[categ,props.location.search,props.history.location.pathname]) //se ejecuta cuando categ cambia
-
-  useEffect(() => {
-    const page = props.location.search.split("=")[1];
-
-    if(props.history.location.pathname.includes("categoria")) {
-      const categ = props.history.location.pathname.split("/")[3];
-      dispatch(getProductByCategory(categ,12,(page-1)*12));
-    } else if (props.history.location.pathname == "/products/search") {
-    } else {
-      dispatch(getProducts(12,(page-1)*12));
-    }
-    page && setPagina(parseInt(page))
-    
-    dispatch(getCategories());
-    return function cleanup() {};
-  }, [pagina, categ, props.location.search,props.history.location.pathname]); // Este useEffect se ejecuta cuando cambia la página
-
-function handleClick(cat) {
-  setCateg(cat);
-  setPagina(1);
-}
+  }, [categ, props.location.search, props.history.location.pathname]) //se ejecuta cuando categ cambia
 
   useEffect(() => {
     const page = props.location.search.split("=")[1];
@@ -73,7 +52,28 @@ function handleClick(cat) {
     if (props.history.location.pathname.includes("categoria")) {
       const categ = props.history.location.pathname.split("/")[3];
       dispatch(getProductByCategory(categ, 12, (page - 1) * 12));
-    } else if (props.history.location.pathname == "/products/search") {
+    } else if (props.history.location.pathname === "/products/search") {
+    } else {
+      dispatch(getProducts(12, (page - 1) * 12));
+    }
+    page && setPagina(parseInt(page))
+
+    dispatch(getCategories());
+    return function cleanup() { };
+  }, [pagina, categ, props.location.search, props.history.location.pathname]); // Este useEffect se ejecuta cuando cambia la página
+
+  function handleClick(cat) {
+    setCateg(cat);
+    setPagina(1);
+  }
+
+  useEffect(() => {
+    const page = props.location.search.split("=")[1];
+
+    if (props.history.location.pathname.includes("categoria")) {
+      const categ = props.history.location.pathname.split("/")[3];
+      dispatch(getProductByCategory(categ, 12, (page - 1) * 12));
+    } else if (props.history.location.pathname === "/products/search") {
     } else {
       dispatch(getProducts(12, (page - 1) * 12));
     }
@@ -82,9 +82,9 @@ function handleClick(cat) {
     return function cleanup() { };
   }, [pagina, categ]); // Este useEffect se ejecuta cuando cambia la página
 
-  function handleClick(cat) {
-    setCateg(cat);
-  }
+  // function handleClick(cat) {
+  //   setCateg(cat);
+  // }
 
   function handleClickAll() {
     setPagina(1);

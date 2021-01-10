@@ -4,7 +4,7 @@
     width: 70%;
 }
 
-table {
+.Table {
     width: 100%;
     background-color: white;
     border-collapse: collapse;
@@ -14,7 +14,7 @@ table {
     height: 320px;
 }
 
-th, td {
+.Th, .Td {
     padding: 10px;
     box-shadow: inset 0px 1px 2px #949090;
 
@@ -30,7 +30,7 @@ th, td {
 }
 
 
-tr:nth-child(even) {
+#Tr:nth-child(even) {
     background-color: rgb(190, 182, 182);
 }
 
@@ -49,7 +49,7 @@ tr:nth-child(even) {
   }
 
 
-button:hover {
+.xrs:hover {
    opacity: 10;
 }
 

@@ -1,46 +1,210 @@
 import axios from "axios";
 
 import {
-  GET_PRODUCTS,
-  ERROR_MESSAGE,
-  MODIFY_PRODUCT,
+  //users
+  CREATE_USER,
+  GET_USERS,
+  GET_USER_BY_ID,
+  GET_USER_BY_TOKEN,
+  GET_USER_CART,
+  PUT_ROLE_USER,
+  LOGIN,
+  COPY_USER_TO_STORE,
+
+  //products
   ADD_PRODUCT,
+  GET_PRODUCTS,
+  GET_PRODUCT_BY_ID,
+  GET_PRODUCTS_BY_CATEGORY,
+  GET_PRODUCT_JOIN_CATEGORY,
+  POST_PRODUCT_JOIN_CATEGORY,
+  SEARCH_PRODUCT,
+  DELETE_PRODUCT_JOIN_CATEGORY,
+  MODIFY_PRODUCT,
   DELETE_PRODUCT,
+
+  //categories
   ADD_CATEGORY,
   GET_CATEGORIES,
   MODIFY_CATEGORY,
-  GET_REVIEWS,
   DELETE_CATEGORY,
-  GET_PRODUCTS_BY_CATEGORY,
-  SEARCH_PRODUCT,
-  GET_PRODUCT_BY_ID,
-  GET_PRODUCT_JOIN_CATEGORY,
-  POST_PRODUCT_JOIN_CATEGORY,
-  DELETE_PRODUCT_JOIN_CATEGORY,
-  GET_CART_BY_IDUSER,
+
+  //cart
   POST_CREATE_CART,
-  PUT_CHANGE_QUANTITY,
-  GET_FULL_ORDERS,
-  GET_ORDER_BY_ID,
-  CREATE_USER,
-  GET_USER_CART,
+  GET_CART_BY_IDUSER,
   POST_PRODUCT_TO_CART,
-  GET_USER_BY_ID,
+  PUT_CHANGE_QUANTITY,
   DEL_PRODUCT_TO_CART,
   EMPTY_ALL_PRODUCTS_OF_CART,
+  COPY_CART_TO_STORE,
+
+  //orders
+  GET_FULL_ORDERS,
+  GET_ORDER_BY_ID,
+
+
+  //review
   ADD_REVIEW,
+  GET_REVIEWS,
   UPDATE_REVIEW,
+
+  //multer
   GET_IMAGES,
   ADD_IMAGES,
   DELETE_IMAGES,
-  LOGIN,
-  GET_USER_BY_TOKEN,
-  COPY_USER_TO_STORE,
-  COPY_CART_TO_STORE,
+
+
+
+  //msj error
+  ERROR_MESSAGE,
 } from "../constants/constants.js";
 const jwt = require("jsonwebtoken");
 
 const url = "http://localhost:3001/";
+
+
+////////////////////////////   USERS   ////////////////////////////////////// 
+
+//Crea un usuario y se loguea
+export const createUser = (payload) => async (dispatch) => {
+  try {
+    const res = await axios.post(`${url}users/`, payload);
+    if (res) {
+      const { email, password } = payload;
+      const datos = { email, password };
+      const newToken = await axios.post("http://localhost:3001/auth/login", datos);
+      if (newToken) {
+        localStorage.setItem("userToken", newToken.data);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${newToken.data}`;
+      }
+    };
+    dispatch({
+      type: CREATE_USER,
+      payload: res.data,
+    })
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Problemas para crear el usuario",
+    });
+  }
+};
+
+//Modificar el Rol del usuario
+export const putRoleUser = (id, payload) => async (dispatch) => {
+  try {
+    const res = await axios.put(`${url}auth/promote/${id}`, payload)
+    dispatch({
+      type: PUT_ROLE_USER,
+      payload: res.data,
+    })
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Problemas al cambiar el rol del usuario",
+    })
+  }
+};
+
+//Trae todos los Usuarios ordenados por apellido
+export const getUsers = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${url}users/?order=["familyname"]`)
+    dispatch({
+      type: GET_USERS,
+      payload: res.data,
+    })
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Problemas al traer los usuarios"
+    })
+  }
+};
+
+//Trae un usuario especifico por id
+export const getUserById = (userId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${url}users/${userId}`)
+    dispatch({
+      type: GET_USER_BY_ID,
+      payload: res.data,
+    })
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "No se encuentra el Usuario",
+    });
+  }
+};
+
+//Trae el carrito de un usuario
+export const getUserCart = (userId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${url}users/${userId}/cart`)
+    dispatch({
+      type: GET_USER_CART,
+      payload: res.data,
+    })
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Problemas para traer la órden de compra",
+    });
+  }
+};
+
+
+//Devuelve el token del usuario
+export const login = (payload) => async (dispatch) => {
+  try {
+    const res = await axios.post(`${url}auth/login`, payload);
+    dispatch({
+      type: LOGIN,
+      payload: res.data
+    })
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "No se encuentra ese usuario",
+    });
+  }
+};
+
+//Devuelve el usuario del token
+export const getUserByToken = (payload) => async (dispatch) => {
+  try {
+    localStorage.setItem("userToken", payload);
+    axios.defaults.headers.common["Authorization"] = `Bearer ${payload}`
+    const usuario = jwt.decode(payload)
+    dispatch({
+      type: GET_USER_BY_TOKEN,
+      payload: usuario
+    })
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "No se encuentra el usuario"
+    });
+  }
+};
+
+
+//Copia el GUESTUSER en el store
+export const copyUserToStore = (guestUser) => (dispatch) => {
+  dispatch({
+    type: COPY_USER_TO_STORE,
+    payload: guestUser
+  })
+}
+
+////////////////////////////   USERS   ////////////////////////////////////// 
+
+
+
+
+
+////////////////////////////   PRODUCTS   ////////////////////////////////////// 
 
 //Trae todos los productos
 export const getProducts = (limite, jump) => async (dispatch) => {
@@ -57,6 +221,7 @@ export const getProducts = (limite, jump) => async (dispatch) => {
     });
   }
 };
+
 //agregar producto
 export const addProduct = (payload) => async (dispatch) => {
   try {
@@ -70,7 +235,8 @@ export const addProduct = (payload) => async (dispatch) => {
       type: ERROR_MESSAGE,
       message: "Error al añadir producto",
     });
-  }
+  };
+
   // catIds.forEach(catId => {
   //     axios.put(`http://${url}/products/${productId}/category/${catId}`)
   //         .then(res => {
@@ -112,76 +278,12 @@ export const deleteProduct = (id) => async (dispatch) => {
     const res = await axios.delete(`${url}products/${id}`);
     dispatch({
       type: DELETE_PRODUCT,
-      payload: id,
+      payload: [id, res.data]
     });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
       message: "Error al eliminar el producto",
-    });
-  }
-};
-
-//Trae todas las categorias
-export const getCategories = () => async (dispatch) => {
-  try {
-    const res = await axios.get(`${url}categories`);
-    dispatch({
-      type: GET_CATEGORIES,
-      payload: res.data,
-    });
-  } catch (e) {
-    dispatch({
-      type: ERROR_MESSAGE,
-      message: "Error al mostrar categorías",
-    });
-  }
-};
-
-// Agrega una categoría
-export const addCategory = (payload) => async (dispatch) => {
-  try {
-    const res = await axios.post(`${url}categories/`, payload);
-    dispatch({
-      type: ADD_CATEGORY,
-      payload: res.data[0],
-    });
-  } catch (e) {
-    dispatch({
-      type: ERROR_MESSAGE,
-      message: "Error al añadir categoría",
-    });
-  }
-};
-
-// Modifica una categoría
-export const updateCategory = (id, category) => async (dispatch) => {
-  try {
-    const res = await axios.put(`${url}categories/${id}`, category);
-    dispatch({
-      type: MODIFY_CATEGORY,
-      payload: res.data[1][0],
-    });
-  } catch (e) {
-    dispatch({
-      type: ERROR_MESSAGE,
-      message: "Error al actualizar una categoría",
-    });
-  }
-};
-
-// Borra una categoría
-export const deleteCategory = (id) => async (dispatch) => {
-  try {
-    const res = await axios.delete(`${url}categories/${id}`);
-    dispatch({
-      type: DELETE_CATEGORY,
-      payload: id,
-    });
-  } catch (e) {
-    dispatch({
-      type: ERROR_MESSAGE,
-      message: "Error al eliminar la categoría",
     });
   }
 };
@@ -286,6 +388,185 @@ export const deleteProductJoinCategory = (idProd, idCat) => async (
   }
 };
 
+////////////////////////////   PRODUCTS   ////////////////////////////////////// 
+
+
+
+
+
+////////////////////////////   CATEGORIES   ////////////////////////////////////// 
+
+//Trae todas las categorias
+export const getCategories = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${url}categories`);
+    dispatch({
+      type: GET_CATEGORIES,
+      payload: res.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Error al mostrar categorías",
+    });
+  }
+};
+
+// Agrega una categoría
+export const addCategory = (payload) => async (dispatch) => {
+  try {
+    const res = await axios.post(`${url}categories/`, payload);
+    dispatch({
+      type: ADD_CATEGORY,
+      payload: res.data[0],
+    });
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Error al añadir categoría",
+    });
+  }
+};
+
+// Modifica una categoría
+export const updateCategory = (id, category) => async (dispatch) => {
+  try {
+    const res = await axios.put(`${url}categories/${id}`, category);
+    dispatch({
+      type: MODIFY_CATEGORY,
+      payload: res.data[1][0],
+    });
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Error al actualizar una categoría",
+    });
+  }
+};
+
+// Borra una categoría
+export const deleteCategory = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`${url}categories/${id}`);
+    dispatch({
+      type: DELETE_CATEGORY,
+      payload: [id, res.data]
+    });
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Error al eliminar la categoría",
+    });
+  }
+};
+
+////////////////////////////   CATEGORIES   ////////////////////////////////////// 
+
+
+
+
+
+
+////////////////////////////   CART   ////////////////////////////////////// 
+
+
+//Agrega productos al carrito Y modifica la cantidad del producto en el carrito
+export const postProductToCart = (orderId, productId, payload) => async (dispatch) => {
+  const { unitprice, quantity } = payload;
+  var res;
+  try {
+    if (orderId === 0) {
+      var localCart = JSON.parse(localStorage.getItem("guestCart"));
+      if (!localCart.products) {
+        localCart.products = []
+      }
+      if (localCart.products.length === 0) {
+        const producto = await axios.get(`${url}products/${productId}`);
+        localCart.products.push(producto.data);
+        localCart.products[0].Order_products = { quantity, unitprice }
+      } else {
+        var isExist = false;
+        for (let i = 0; i < localCart.products.length; i++) {
+          if (localCart.products[i].id === productId) {
+            isExist = true;
+            localCart.products[i].Order_products.quantity += quantity;
+            localCart.products[i].Order_products.unitprice = unitprice;
+          }
+        }
+        if (!isExist) {
+          const producto = await axios.get(`${url}products/${productId}`);
+          localCart.products.push(producto.data);
+          localCart.products[localCart.products.length - 1].Order_products = { quantity, unitprice };
+        }
+      }
+      localStorage.setItem("guestCart", JSON.stringify(localCart));
+      res = { data: localCart };
+    } else {
+      res = await axios.post(`${url}orders/${orderId}/cart/${productId}`, payload)
+    }
+    dispatch({
+      type: POST_PRODUCT_TO_CART,
+      payload: res.data,
+    })
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "No se pudo agregar el producto al carrito",
+    });
+  }
+};
+
+
+//Elimina un producto del carrito
+export const delProductToCart = (orderId, productId) => async (dispatch) => {
+  var res;
+  try {
+    if (orderId === 0) {
+      var localCart = JSON.parse(localStorage.getItem("guestCart"));
+      localCart.products = localCart.products.filter((elem) => elem.id !== productId);
+      localStorage.setItem("guestCart", JSON.stringify(localCart));
+      res = { data: localCart };
+    } else {
+      res = await axios.delete(`${url}orders/${orderId}/cart/${productId}`)
+    }
+    dispatch({
+      type: DEL_PRODUCT_TO_CART,
+      payload: res.data,
+    })
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "No se encuentra el Producto en ese Carrito",
+    });
+  }
+};
+
+
+//Vacia el carrito
+export const emptyAllProductsOfCart = (orderId) => async (dispatch) => {
+  var res;
+  try {
+    if (orderId === 0) {
+      var localCart = JSON.parse(localStorage.getItem("guestCart"));
+      localCart.products = [];
+      localStorage.setItem("guestCart", JSON.stringify(localCart));
+      res = { data: localCart };
+    } else {
+      res = await axios.delete(`${url}orders/${orderId}/products`)
+    }
+    dispatch({
+      type: EMPTY_ALL_PRODUCTS_OF_CART,
+      payload: res.data,
+    })
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "No se encuentran Productos es ese Carrito",
+    });
+  }
+};
+
+
 //Trae el carrito del usuario con sus productos agregados
 export const getCartByUser = (idUser) => async (dispatch) => {
   try {
@@ -334,6 +615,22 @@ export const putQuantity = (idUser, idOrder, idProduct, cant) => async (dispatch
   }
 };
 
+//Copia el GUESTCART en el store
+export const copyCartToStore = (guestCart) => (dispatch) => {
+  dispatch({
+    type: COPY_CART_TO_STORE,
+    payload: guestCart
+  })
+}
+
+////////////////////////////   CART   ////////////////////////////////////// 
+
+
+
+
+
+////////////////////////////   ORDERS   ////////////////////////////////////// 
+
 //Trae todas las ordenes de compras con sus usuarios y sus productos
 export const getFullOrders = () => async (dispatch) => {
   try {
@@ -350,6 +647,7 @@ export const getFullOrders = () => async (dispatch) => {
   }
 };
 
+//Trae todas las ordenes de un usuario
 export const getOrderById = (orderId) => async (dispatch) => {
   try {
     const res = await axios.get(`${url}orders/${orderId}`);
@@ -363,139 +661,20 @@ export const getOrderById = (orderId) => async (dispatch) => {
       message: "Problemas para traer la órden de compra",
     });
   }
-}
+};
+
+////////////////////////////   ORDERS   ////////////////////////////////////// 
 
 
-export const getUserCart = (userId) => async (dispatch) => {
-  try {
-    const res = await axios.get(`${url}users/${userId}/cart`)
-    dispatch({
-      type: GET_USER_CART,
-      payload: res.data,
-    })
-  } catch (e) {
-    dispatch({
-      type: ERROR_MESSAGE,
-      message: "Problemas para traer la órden de compra",
-    });
-  }
-}
 
-export const postProductToCart = (orderId, productId, payload) => async (dispatch) => {
-  const { unitprice, quantity } = payload;
-  var res;
-  try {
-    if(orderId === 0) {
-      var localCart = JSON.parse(localStorage.getItem("guestCart"));
-      if(!localCart.products) {
-        localCart.products = []
-      }
-      if(localCart.products.length === 0) {
-        const producto = await axios.get(`${url}products/${productId}`);
-        localCart.products.push(producto.data);
-        localCart.products[0].Order_products = {quantity, unitprice}
-      } else {
-        var isExist = false;
-        for (let i=0; i < localCart.products.length; i++) {
-          if(localCart.products[i].id === productId) {
-            isExist = true;
-            localCart.products[i].Order_products.quantity += quantity;
-            localCart.products[i].Order_products.unitprice = unitprice;
-          }
-        }
-        if (!isExist) {
-          const producto = await axios.get(`${url}products/${productId}`);
-          localCart.products.push(producto.data);
-          localCart.products[localCart.products.length - 1].Order_products = {quantity, unitprice};
-        }
-      }
-      localStorage.setItem("guestCart", JSON.stringify(localCart));
-      res = {data: localCart};
-    } else {
-      res = await axios.post(`${url}orders/${orderId}/cart/${productId}`, payload)
-    }
-    dispatch({
-      type: POST_PRODUCT_TO_CART,
-      payload: res.data,
-    })
-  } catch (e) {
-    dispatch({
-      type: ERROR_MESSAGE,
-      message: "No se pudo agregar el producto al carrito",
-    });
-  }
-}
 
-export const getUserById = (userId) => async (dispatch) => {
-  try {
-    const res = await axios.get(`${url}users/${userId}`)
-    dispatch({
-      type: GET_USER_BY_ID,
-      payload: res.data,
-    })
-  } catch (e) {
-    dispatch({
-      type: ERROR_MESSAGE,
-      message: "No se encuentra el Usuario",
-    });
-  }
-}
 
-export const delProductToCart = (orderId, productId) => async (dispatch) => {
-  var res;
-  try {
-    if (orderId === 0) {
-      var localCart = JSON.parse(localStorage.getItem("guestCart"));
-      localCart.products = localCart.products.filter((elem) => elem.id !== productId); 
-      localStorage.setItem("guestCart", JSON.stringify(localCart));
-      res = { data: localCart};
-    } else {
-      res = await axios.delete(`${url}orders/${orderId}/cart/${productId}`)
-    }
-    dispatch({
-      type: DEL_PRODUCT_TO_CART,
-      payload: res.data,
-    })
-  } catch (e) {
-    dispatch({
-      type: ERROR_MESSAGE,
-      message: "No se encuentra el Producto es ese Carrito",
-    });
-  }
-}
+////////////////////////////   REVIEW   ////////////////////////////////////// 
 
-export const emptyAllProductsOfCart = (orderId) => async (dispatch) => {
-  var res;
-  try {
-    if (orderId === 0) {
-      var localCart = JSON.parse(localStorage.getItem("guestCart"));
-      localCart.products = [];
-      localStorage.setItem("guestCart", JSON.stringify(localCart));
-      res = {data: localCart};
-    } else {
-      res = await axios.delete(`${url}orders/${orderId}/products`)
-    }
-    dispatch({
-      type: EMPTY_ALL_PRODUCTS_OF_CART,
-      payload: res.data,
-    })
-  } catch (e) {
-    dispatch({
-      type: ERROR_MESSAGE,
-      message: "No se encuentran Productos es ese Carrito",
-    });
-  }
-}
-
-//ADD_REVIEW
-///:user_id/product/:product_id
-
+//Agrega una review de un usuario a un producto
 export const addReview = (user_id, product_id, payload) => async (dispatch) => {
-  console.log("entre aca con mi amigo ", payload)
   try {
     const res = await axios.post(`${url}reviews/${user_id}/product/${product_id}`, payload)
-    console.log("entre aca con restu ", res.data)
-    
     dispatch({
       type: ADD_REVIEW,
       payload: res.data,
@@ -506,8 +685,9 @@ export const addReview = (user_id, product_id, payload) => async (dispatch) => {
       message: "Review no creada",
     });
   }
-}
+};
 
+//Trae todas las reviews con sus usuarios
 export const getReviews = () => async (dispatch) => {
   try {
     const res = await axios.get(`${url}reviews/?include="user"`)
@@ -521,14 +701,12 @@ export const getReviews = () => async (dispatch) => {
       message: "Problemas al conseguir las reviews"
     })
   }
-}
+};
 
-//UPDATE_REVIEW
+//Modifica la review del usuario logueado
 export const updateReview = (id, payload) => async (dispatch) => {
   try {
-    console.log(payload, "arriba await")
     const res = await axios.put(`${url}reviews/${id}`, payload);
-    console.log(res.data, "abajo await")
     dispatch({
       type: UPDATE_REVIEW,
       payload: res.data
@@ -539,9 +717,17 @@ export const updateReview = (id, payload) => async (dispatch) => {
       message: "Problemas al modifucar la review"
     })
   }
-}
+};
 
-///Multer
+////////////////////////////   REVIEW   ////////////////////////////////////// 
+
+
+
+
+
+////////////////////////////   MULTER   ////////////////////////////////////// 
+
+///Trae todas las imagenes de un producto por id
 export const getImages = (id) => async (dispatch) => {
   try {
     const res = await axios.get(`${url}multer/?where={"productId":${id}}`);
@@ -557,9 +743,9 @@ export const getImages = (id) => async (dispatch) => {
   }
 };
 
+//Agrega imagen a un producto por id
 export const addImages = (payload, id) => async (dispatch) => {
   try {
-    console.log(payload)
     const res = await axios.post(`${url}multer/${id}`, payload);
     dispatch({
       type: ADD_IMAGES,
@@ -573,6 +759,8 @@ export const addImages = (payload, id) => async (dispatch) => {
   }
 };
 
+
+//Elimina imagen de producto por id
 export const deleteImages = (id) => async (dispatch) => {
   try {
     const res = await axios.delete(`${url}multer/${id}`);
@@ -587,73 +775,7 @@ export const deleteImages = (id) => async (dispatch) => {
     });
   }
 };
-export const login = (payload) => async (dispatch) => {
-  try {
-    const res = await axios.post(`${url}auth/login`, payload);
-    dispatch({
-      type: LOGIN,
-      payload: res.data
-    })
-  } catch(e) {
-    dispatch({
-      type: ERROR_MESSAGE,
-      message: "No se encuentra ese usuario",
-    });
-  }
-}
 
-export const getUserByToken = (payload) => async (dispatch) => {
-  try {
-    localStorage.setItem("userToken",payload);
-    axios.defaults.headers.common["Authorization"] = `Bearer ${payload}`
-    const usuario = jwt.decode(payload)
-    dispatch({
-      type: GET_USER_BY_TOKEN,
-      payload: usuario
-    })
-  } catch(e) {
-    dispatch({
-      type: ERROR_MESSAGE,
-      message: "Bajate los lienzos"
-    });
-  }
-}
+////////////////////////////   MULTER   ////////////////////////////////////// 
 
-export const createUser = (payload) => async (dispatch) => {
-  try {
-    const res = await axios.post(`${url}users/`, payload);
-    if(res) {
-      const { email, password } = payload;
-      const datos = { email, password };
-      const newToken = await axios.post("http://localhost:3001/auth/login", datos);
-      if(newToken) {
-        localStorage.setItem("userToken", newToken.data);
-        axios.defaults.headers.common["Authorization"] = `Bearer ${newToken.data}`;
-      }
-    };
-    dispatch({
-      type: CREATE_USER,
-      payload: res.data,
-    })
-  } catch (e) {
-    dispatch({
-      type: ERROR_MESSAGE,
-      message: "Problemas para crear el usuario",
-    });
-  }
-}
 
-export const copyUserToStore = (guestUser) => (dispatch) => {
-  console.log(guestUser, "CopyUser del Actions");
-  dispatch({
-    type: COPY_USER_TO_STORE,
-    payload: guestUser
-  })
-}
-
-export const copyCartToStore = (guestCart) => (dispatch) => {
-  dispatch({
-    type: COPY_CART_TO_STORE,
-    payload: guestCart
-  })
-}

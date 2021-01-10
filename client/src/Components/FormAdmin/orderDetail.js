@@ -31,23 +31,24 @@ const Order = (props) => {
                 <h4>Fecha: {orders && orders.date}</h4>
                 <h4>Estado: {orders && orders.status}</h4>
             </div>
-            <table className="table-orderDetail">                <thead>
-                <tr className="orderDetail-titulos">
-                    <th>Id</th>
-                    <th>Producto</th>
-                    <th>Precio</th>
-                    <th>Cantidad</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
+            <table className="Table">
+                <thead>
+                    <tr id="Tr" className="orderDetail-titulos">
+                        <th className="Th">Id</th>
+                        <th className="Th">Producto</th>
+                        <th className="Th">Precio</th>
+                        <th className="Th">Cantidad</th>
+                        <th className="Th">Total</th>
+                    </tr>
+                </thead>
                 <tbody>
                     {orders.products && orders.products.map((prod) => (
-                        <tr className="OrderDetail-Datos">
-                            <td>{prod.id}</td>
-                            <td>{prod.name}</td>
-                            <td>{prod.Order_products.unitprice}</td>
-                            <td>{prod.Order_products.quantity}</td>
-                            <td>{prod.Order_products.unitprice * prod.Order_products.quantity}</td>
+                        <tr id="Tr" className="table-orderDetail" key={prod.id}>
+                            <td className="Td">{prod.id}</td>
+                            <td className="Td">{prod.name}</td>
+                            <td className="Td">{prod.Order_products.unitprice}</td>
+                            <td className="Td">{prod.Order_products.quantity}</td>
+                            <td className="Td">{prod.Order_products.unitprice * prod.Order_products.quantity}</td>
                         </tr>
                     ))}
 

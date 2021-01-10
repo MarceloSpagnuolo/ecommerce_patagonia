@@ -38,7 +38,7 @@ server.get("/:userId/cart", async (req, res) => {
     },
     include: [Product]
   })
-  if(!order) {
+  if (!order) {
     console.log(userId);
     const newOrder = await Order.create({
       total: 0,
@@ -88,15 +88,17 @@ server.post("/:orderId/cart/:productId", async (req, res) => {
     }
   });
 
-  if(producto) {    //Si el producto ya está agregado al carrito
+  if (producto) {    //Si el producto ya está agregado al carrito
     const cantidad = producto.quantity + quantity;
     const sumado = await Order_products.update({
-      quantity: cantidad},
-      {where: {
-        orderId,
-        productId
-      }
-    })
+      quantity: cantidad
+    },
+      {
+        where: {
+          orderId,
+          productId
+        }
+      })
   } else {    //Si el producto no estaba agregado al carrito
     const agregado = await Order_products.create({
       orderId,
@@ -110,9 +112,9 @@ server.post("/:orderId/cart/:productId", async (req, res) => {
     where: {
       id: orderId
     },
-    include: [ Product ]
+    include: [Product]
   })
-  
+
   !order ? res.sendStatus(400) : res.json(order).status(200);
 });
 
@@ -128,14 +130,14 @@ server.get("/", async (req, res, next) => {
   // /products/?where={"id":5}
   where && (where = JSON.parse(where));
   // /products/?where={%22id%22:5}&include=[%22categories%22] El valor de include debe ir en minúscula y plural
-//   if(include) {
-//        (include = JSON.parse(include));
-//        include = getIncludes(include)
-//     }
-    include && (include = JSON.parse(include));
+  //   if(include) {
+  //        (include = JSON.parse(include));
+  //        include = getIncludes(include)
+  //     }
+  include && (include = JSON.parse(include));
 
   const orders = await Order.findAll({ limit, offset, order, where, include }) //Pasamos a findAll todos los argumentos
-    
+
   !orders ? res.sendStatus(400) : res.json(orders).status(200);
 });
 
@@ -144,13 +146,13 @@ server.get("/", async (req, res, next) => {
 // get orders/filter se pasa el filtro de busqueda en el query. Acepta ?status=valor
 // siendo valor = "carrito", "creada", "procesando", "cancelada", "completa"
 // incluye Order con el modelo User y Products
-server.get("/filter/", async (req, res) => {
+server.get("/filter", async (req, res) => {
   const { status } = req.query;
   let parametrosQuery;
 
   !status ?
     parametrosQuery = {
-        order: ['id'],
+      order: ['id'],
       include: [
         {
           model: User,
@@ -160,9 +162,9 @@ server.get("/filter/", async (req, res) => {
         },
       ],
     }
-  : 
+    :
     parametrosQuery = {
-        order: ['id'],
+      order: ['id'],
       where: { status },
       include: [
         {
@@ -170,7 +172,7 @@ server.get("/filter/", async (req, res) => {
         },
         { model: Product },
       ],
-    }; 
+    };
 
   const orderFilter = await Order.findAll(parametrosQuery);
   !orderFilter ? res.sendStatus(400) : res.json(orderFilter).status(200);
@@ -230,7 +232,7 @@ server.delete("/:orderId/cart/:productId", async (req, res) => {
     where: {
       id: orderId
     },
-    include: [ Product ]
+    include: [Product]
   })
   !order ? res.sendStatus(400) : res.json(order);
 });
@@ -247,7 +249,7 @@ server.delete("/:orderId/products", async (req, res) => {
     where: {
       id: orderId
     },
-    include: [ Product ]
+    include: [Product]
   })
   !order ? res.sendStatus(400) : res.json(order);
 });

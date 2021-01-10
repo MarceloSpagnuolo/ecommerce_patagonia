@@ -21,9 +21,9 @@ const server = require("./src/app.js");
 const { conn } = require("./src/db.js");
 const { query } = require("./INSERT");
 const multer = require('multer');
-var upload = multer({dest: "./src/images/cervezas"})
+var upload = multer({ dest: "./src/images/cervezas" })
 // Syncing all the models at once.
-const force = false ;
+const force = true;
 conn.sync({ force }).then(() => {
   if (force) {
     query();

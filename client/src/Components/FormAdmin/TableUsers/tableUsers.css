@@ -1,32 +1,33 @@
-.conteiner-orders-user {
+.table-users-container {
     background-color: #163D34;
-    padding-top: 1px;
+    padding: 10px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.title-orders-user {
-    background-color: #163D34;
-    color: white;
-    display: flex;
-    justify-content: center;
-}
-.headTable-orders-user {
-    background-color: #163D34;
-    color: white;
+.table-users {
     text-align: center;
 }
 
-.bottom-orders-user {
-    background-color: #146552;
+.table-users-titles {
     color: white;
-    border-radius: 3px;
-}
-.bottom-orders-user:hover {
-    background-color: #139375;
-}
-.ordersUsers-Datos {
     text-align: center;
+    background-color: #163D34;
 }
+
+.table-user-button {
+    text-shadow: 0px 0px 0px black;
+    padding: 7px;
+    color: black;
+    background-color: #e8a52c;
+    border-radius: 5px;
+}
+
+.table-user-button:hover {
+    box-shadow: 2px 3px 7px black;
+    background-color: #ffb530;
+}
+
+
 
 .Table {
     width: 100%;
@@ -41,6 +42,7 @@
 .Th, .Td {
     padding: 10px;
     box-shadow: inset 0px 1px 2px #949090;
+    text-align: center;
 }
 
 #Tr:nth-child(even) {
