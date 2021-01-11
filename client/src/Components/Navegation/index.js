@@ -140,7 +140,7 @@ function Home(props) {
                     <span className="entrarNav" onClick={() => setShow(true)}><img className="iconEntrar" src="https://cdn.discordapp.com/attachments/764979688446885898/797733755603124254/usuario_1.png" alt="" />Entrar
                   </span>
                   </div>
-                  : <div className="divEntrarNav" ><span className="entrarNav"><img className="iconEntrar" src="https://cdn.discordapp.com/attachments/764979688446885898/797733755603124254/usuario_1.png" alt="" />{props.user.givenname}</span></div>}
+                  : <Link to="/profile"><div className="divEntrarNav" ><span className="entrarNav"><img className="iconEntrar" src="https://cdn.discordapp.com/attachments/764979688446885898/797733755603124254/usuario_1.png" alt="" />{props.user.givenname}</span></div></Link>}
                 {props.user && props.user.role === "guest" ?
                   <div className="divRegistroNav"><Link to="/registro"><span id="registroNav"><img className="iconRegis" src="https://cdn.discordapp.com/attachments/764979688446885898/797734641536598026/agregar-usuario_1.png" alt="" />Registrarse</span></Link></div>
                   : <div className="divRegistroNav"><span id="registroNav" onClick={() => salir()}><img className="iconRegis" src="https://cdn.discordapp.com/attachments/764979688446885898/797944797762551818/logout_1.png" alt="" />Salir</span></div>}

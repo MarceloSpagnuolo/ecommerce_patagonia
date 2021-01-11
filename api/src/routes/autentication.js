@@ -12,9 +12,9 @@ server.get("/me", async (req, res, next) => {
     if (req.user) {
       const { id } = req.user;
       const result = await User.findByPk(id);
-      res.json(result);
+      return res.send(jwt.sign(result.toJSON(), "secreto"));
     } else {
-      res.sendStatus(401);
+      return res.sendStatus(401);
     }
   } catch (error) {
     next(error);

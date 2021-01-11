@@ -10,6 +10,7 @@ import {
   PUT_ROLE_USER,
   LOGIN,
   COPY_USER_TO_STORE,
+  UPDATE_USER,
 
   //products
   ADD_PRODUCT,
@@ -191,6 +192,20 @@ export const getUserByToken = (payload) => async (dispatch) => {
   }
 };
 
+export const updateUser = (id, payload) => async (dispatch) => {
+  try {
+    const res = await axios.put(`${url}users/${id}`, payload);
+    dispatch({
+      type: UPDATE_USER,
+      payload: res.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Problemas al actualizar usuario",
+    });
+  }
+}
 
 //Copia el GUESTUSER en el store
 export const copyUserToStore = (guestUser) => (dispatch) => {
@@ -667,10 +682,8 @@ export const getOrderById = (orderId) => async (dispatch) => {
 
 //Moificar order /:id UPDATE_ORDER
 export const updateOrder = (id, payload) => async (dispatch) => {
-  console.log(payload,"antes de la llamada")
   try {
     const res = await axios.put(`${url}orders/${id}`, payload);
-    console.log(res,res.data, "despyess de la llamada")
     dispatch({
       type: UPDATE_ORDER,
       payload: res.data

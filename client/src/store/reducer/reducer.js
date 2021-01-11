@@ -7,6 +7,7 @@ import {
   GET_USER_CART,
   PUT_ROLE_USER,
   COPY_USER_TO_STORE,
+  UPDATE_USER,
 
   //products
   ADD_PRODUCT,
@@ -68,7 +69,6 @@ import {
   REMOVE_FROM_CART,
   UPDATE_FROM_CART,
   DELETE_USER,
-  UPDATE_USER,
   DETAIL_USER,
   DELETE_CART,
   LOGIN,
@@ -129,6 +129,8 @@ function ReducerProducts(state = inicialState, action) {
         ...state,
         user: action.payload
       }
+    case UPDATE_USER:
+      return {...state, user: action.payload};
 
     ////////////////////////////////////   USERS   //////////////////////////////////////////
 
@@ -362,8 +364,6 @@ function ReducerProducts(state = inicialState, action) {
     case DELETE_ORDER:
       return {};
     case CREATE_ORDER:
-      return {};
-    case UPDATE_USER:
       return {};
     case DELETE_CART:
       return {};

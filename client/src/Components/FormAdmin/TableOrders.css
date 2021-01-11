@@ -1,8 +1,7 @@
 tr:nth-child(even) {
     background-color: rgba(255, 255, 255, 0);
 }
-
-.tableOrders {
+.tableOrders{
     width: 100%;
     background-color: white;
     border-collapse: collapse;
@@ -11,17 +10,6 @@ tr:nth-child(even) {
     border: 1px solid #3b0707;
     height: 320px;
 }
-
-.headTable-orders-user th{
-    padding: 10px;
-    box-shadow: inset 0px 1px 2px #949090;
-}
-
-.ordersUsers-Datos td{
-    padding: 10px;
-    box-shadow: inset 0px 1px 2px #949090;
-}
-
 .divContaianerOrders {
     display: flex;
     flex-direction: row;
@@ -141,7 +129,7 @@ tr:nth-child(even) {
     font-family: 'AmsiPro-Bold';
 }
 
-.botonFeo div {
+.botonFeo div{
     padding: 0;
     margin: 0;
 }
@@ -179,6 +167,7 @@ tr:nth-child(even) {
     height: 50px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 900;
+
 }
 
 .orStatus {
@@ -250,27 +239,28 @@ tr:nth-child(even) {
 
 [class~='creada'] {
     background-color: #b1b3b2 !important;
-    color: rgb(255, 255, 255)
+    color:rgb(255, 255, 255)
 }
 
 [class~='carrito'] {
     background-color: #dfccad !important;
-    color: rgb(255, 255, 255)
+    color:rgb(255, 255, 255)
+
 }
 
 [class~='procesando'] {
     background-color: rgb(128, 168, 196) !important;
-    color: rgb(255, 255, 255)
+    color:rgb(255, 255, 255)
 }
 
 [class~='cancelada'] {
     background-color: rgb(197, 38, 38) !important;
-    color: white
+    color:white
 }
 
 [class~='completa'] {
     background-color: rgb(138, 170, 146) !important;
-    color: white
+    color:white
 }
 
 #creada {
@@ -298,7 +288,7 @@ tr:nth-child(even) {
     opacity: 1;
 }
 
-.rty {
+.rty{
     position: absolute;
     /* left: 100px; */
     background-color: transparent;
@@ -306,20 +296,21 @@ tr:nth-child(even) {
     backdrop-filter: blur(10px);
     border: none
 }
-
-.rty:hover img {
+.rty:hover img{
     height: 40px;
     width: 28px;
 }
 
-.rty img {
+.rty img{
     height: 35px;
     width: 25px;
-}
 
-.nb {
-    position: relative;
+}
+.nb{
+    position:relative;
     top: -35px;
     right: -85px;
     backdrop-filter: blur(10px);
+
+
 }

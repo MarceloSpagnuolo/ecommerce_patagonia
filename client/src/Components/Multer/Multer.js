@@ -12,7 +12,6 @@ const ImageForm = (props) => {
 
     const handleImageUpload = (e) => {
         const j = Array.from(e.target.files)
-        console.log(j)
         setImage(j)
         setPreview(true);
     }
@@ -29,7 +28,6 @@ const ImageForm = (props) => {
         })
 
         setPreview(false);
-        console.log(image, "seteadora")
         setImage([]);
     }
 

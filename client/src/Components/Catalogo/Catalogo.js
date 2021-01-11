@@ -99,7 +99,6 @@ function Catalogo(props) {
 
   return (
     <div id="Catalogo-Container">
-
       <div className="preubaC">
         <div id="Catalogo-Lista-Container">
           <ul id="Catalogo-Lista-title">Categorias</ul>
@@ -126,7 +125,7 @@ function Catalogo(props) {
       <div className="Catalogo-Products-Pagination">
         <div id="Catalogo-ProductCard-Container">
 
-          {props.products.length > 0 && props.products.map((prod) => (
+          {props.products.length > 0 ? props.products.map((prod) => (
             <div key={prod.id}>
 
               <ProductCard
@@ -140,7 +139,7 @@ function Catalogo(props) {
               ></ProductCard>
 
             </div>
-          ))}
+          )) : <h1>No se encontraron resultados de su búsqueda</h1>}
 
         </div>
         <div className="Catalago-Pagination">

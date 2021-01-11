@@ -6,7 +6,7 @@ import "./orderDetail.css";
 
 const Order = (props) => {
     const dispatch = useDispatch();
-    const { orders } = useSelector(state => state)
+    const { orders, user } = useSelector(state => state)
     const history = useHistory();
     const [total, setTotal] = useState(0)
 
@@ -23,7 +23,7 @@ const Order = (props) => {
     }, [orders])
 
 
-    return (
+    return user.role ==="admin" ? (
         <div className="container-orderDetail">
             <div className="orderDetail-user">
                 <h2 className="table-orderDetail">Detalle de Orden </h2>
@@ -58,7 +58,10 @@ const Order = (props) => {
             <button className="back-button-orderDetail" onClick={() => history.goBack()}>Volver</button>
         </div>
 
-    )
+    ) :
+    <div className="Authorized-Container">
+        <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" />
+    </div>
 }
 
 export default Order;
