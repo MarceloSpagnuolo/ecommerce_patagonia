@@ -49,7 +49,7 @@ const Table = (props) => {
               <th className="Th"></th>
               <th className="Th"></th>
             </tr>
-            {props.products.length > 0 && props.products.map((beer) => {
+            {props.products && props.products.map((beer) => {
               return (
                 <tr id="Tr" key={beer.id} className="index">
                   <td className="Td">{beer.id}</td>
