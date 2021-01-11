@@ -91,21 +91,22 @@ server.get(
 ///////////////////////////////////S67////////////////////////////
 // Ruta promote, para cambiar el role del usuario a admin de manera automática.
 // Solo se necesita ID por params. No se necesita ninguna otra comprobación para que funcione.
-server.post("/promote/:id", async (req, res, next) => {
-    const { id } = req.params;
-    const promote = await User.update(
-        {
-            role: "admin"
-        },
-        {
-            where: {
-                id,
-            },
-            returning: true,
-        }
-    );
+server.put("/promote/:id", async (req, res, next) => {
+  const { id } = req.params;
+  const { role } = req.body;
+  const promote = await User.update(
+    {
+      role: role,
+    },
+    {
+      where: {
+        id,
+      },
+      returning: true,
+    }
+  );
 
-    !promote ? res.sendStatus(400) : res.json(promote);
+  !promote ? res.sendStatus(400) : res.json(promote[1][0]);
 })
 
 module.exports = server;
