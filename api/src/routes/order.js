@@ -39,7 +39,6 @@ server.get("/:userId/cart", async (req, res) => {
     include: [Product]
   })
   if(!order) {
-    console.log(userId);
     const newOrder = await Order.create({
       total: 0,
       date: Date.now(),

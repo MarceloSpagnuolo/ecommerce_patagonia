@@ -37,7 +37,7 @@ const Table = (props) => {
                                         <td className="Td">{c.name}</td>
                                         <td className="Td">{c.categories[i].name}</td>
                                         <td className="Td">{c.volume}</td>
-                                        <td className="Td"><button className="xrs" onClick={() => { props.deleteProductJoinCategory(c.id, id); console.log(id) }}>Eliminar</button></td>
+                                        <td className="Td"><button className="xrs" onClick={() => { props.deleteProductJoinCategory(c.id, id) }}>Eliminar</button></td>
                                     </tr>
                                 )
                             }

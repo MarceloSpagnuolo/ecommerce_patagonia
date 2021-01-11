@@ -26,7 +26,6 @@ server.get("/", (req, res, next) => {
 /////////////////////////S54//////////////////////////////////
 
 server.post("/:user_id/product/:product_id", async (req, res) => {
-  console.log("ruta review")
   const {
     rate,
     comment,
@@ -71,7 +70,6 @@ server.put(`/:id`, async (req, res) => {
       returning: true,
     }
   );
-  console.log(update[1][0], "del backend")
   !update ? res.sendStatus(400) : res.json(update[1][0]);
 });
 

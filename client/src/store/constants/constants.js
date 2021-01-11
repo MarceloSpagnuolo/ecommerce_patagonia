@@ -7,6 +7,7 @@ export const GET_USER_BY_TOKEN = "GET_USER_BY_TOKEN"
 export const GET_USER_CART = "GET_USER_CART";
 export const PUT_ROLE_USER = "PUT_ROLE_USER";
 export const COPY_USER_TO_STORE = "COPY_USER_TO_STORE";
+export const UPDATE_USER = "UPDATE_USER";
 
 //products
 export const ADD_PRODUCT = "ADD_PRODUCT";
@@ -57,7 +58,6 @@ export const ERROR_MESSAGE = "ERROR_MESSAGE";
 export const ADD_CATEGORY_PRODUCT = "ADD_CATEGORY_PRODUCT";
 export const REMOVE_CATEGORY_PRODUCT = "REMOVE_CATEGORY_PRODUCT";
 export const DELETE_USER = "DELETE_USER";
-export const UPDATE_USER = "UPDATE_USER";
 export const DETAIL_USER = "DETAIL_USER";
 export const LOGIN = "LOGIN";
 export const LOGIN_ERROR = "LOGIN_ERROR";

@@ -65,7 +65,6 @@ passport.use(new GitHubStrategy({
   callbackURL: "/auth/github/callback"
 },
 async function(accessToken, refreshToken, profile, done) {
-  console.log(profile, "soy el profile de github")
   const usuario = await User.findOrCreate({ 
     where: {
       githubID: profile.id

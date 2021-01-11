@@ -15,6 +15,7 @@ import Admin from "./Components/Admin/admin.js";
 import TableUser from "./Components/FormAdmin/TableUsers/tableUsers.js";
 import Unauthorized from "./Components/Unauthorized/unauthorized.js";
 import Contacto from "./Components/Contacto/contacto.js";
+import Profile from "./Components/Profile/Profile.js";
 
 
 
@@ -37,6 +38,7 @@ function App() {
       <Route exact path="/admin" component={Admin} />
       <Route exact path="/contacto" component={Contacto} />
       <Route exact path="/admin/users" component={TableUser} />
+      <Route exect path="/profile" component={Profile} />
     </>
   );
 }

@@ -1,12 +1,12 @@
 const server = require("express").Router();
 const { User, Product, Order, Order_products } = require("../db.js");
 const { Op } = require("sequelize");
+const jwt = require("jsonwebtoken");
 
 /////////// S34 ///////////////////
 //Creación de usuario. City, adress, phone y postal no son obligatorios.
 //Si ingresa un mail repetido, manda un status 400 con un mensaje de email repetido.
 server.post("/", async (req, res) => {
-  console.log(req.body,"Del back")
   const {
     givenname,
     familyname,
@@ -247,8 +247,8 @@ server.put("/:userId/product/cart", async (req, res) => {
 
 //////////////////////////////////S70////////////////////////////////
 
-server.post("/:id/passwordReset", async (req, res) => {
-  const { id } = req.params;
+server.post("/passwordReset", async (req, res) => {
+  const { id } = req.user;
   const { password } = req.body;
 
   const passwordReset = await User.update(
@@ -262,8 +262,9 @@ server.post("/:id/passwordReset", async (req, res) => {
       returning: true,
     }
   );
+  const token = jwt.sign(passwordReset[1][0].toJSON(), "secreto")
 
-  !passwordReset ? res.sendStatus(400) : res.json(passwordReset);
+  !passwordReset ? res.sendStatus(400) : res.json(token);
 });
 
 /////////////// Fin de rutas en Users ///////////////
