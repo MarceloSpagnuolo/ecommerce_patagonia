@@ -4,6 +4,7 @@ import CategoryForm from './CategoryForm'
 import { connect } from 'react-redux'
 import { getCategories } from "../../store/actions/index";
 import Modal from "../Modal/Modal.js";
+import { Redirect } from 'react-router-dom';
 
 
 const CategoryView = (props) => {
@@ -19,7 +20,7 @@ const CategoryView = (props) => {
     const seteadora = (set, state) => {
         set(!state)
     }
-    return (
+    return props.user.role === "admin" ? (
         <>
             <div className="prueba">
                 <button className="new" onClick={() => { seteadora(setDisplay, display) }
@@ -40,12 +41,14 @@ const CategoryView = (props) => {
             </div>
         </>
     )
+    : <Redirect to="/unauthorize" />
 }
 
 
 function mapStateToProps(state) {
     return {
         categories: state.categories,
+        user: state.user
     };
 }
 

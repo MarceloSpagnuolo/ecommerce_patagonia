@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { getFullOrders } from '../../store/actions';
 import "./TableOrders.css";
 
 
 function TableOrders(props) {
     const dispatch = useDispatch();
-    const { orders } = useSelector(state => state)
+    const { orders,user } = useSelector(state => state)
 
     useEffect(() => {
         dispatch(getFullOrders());
     }, [])
 
-    return (
+    return user.role === "admin" ? (
         <div className="conteiner-orders-user">
             <h3 className="title-orders-user">Listado de Ordenes en el Sistema</h3>
             <table className="Table">
@@ -46,6 +46,7 @@ function TableOrders(props) {
             </table>
         </div>
     )
+    : <Redirect to="/unauthorize" />
 
 
 }

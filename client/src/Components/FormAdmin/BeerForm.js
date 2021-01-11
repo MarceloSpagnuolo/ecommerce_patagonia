@@ -5,13 +5,14 @@ import { connect } from 'react-redux';
 import { addProduct, modifyProduct } from '../../store/actions/index';
 import Checkcat from "../../Components/FormAdmin/CheckCategories";
 import Multer from "../Multer/Multer.js"
+import { Redirect } from 'react-router-dom';
 
 
 const cerveza = "http://localhost:3001/images/nodisponible.jpg"
 
 const BeerForm = (props) => {
 
-    return (
+    return props.user.role === "admin" ? (
         <Formik initialValues={props.data || {
             name: '',
             appearance: '',
@@ -140,13 +141,14 @@ const BeerForm = (props) => {
             </>
         )}
         </Formik >
-
     )
+    : <Redirect to="/unauthorize" />
 }
 
 function mapStateToProps(state) {
     return {
         products: state.products,
+        user: state.user,
     };
 }
 

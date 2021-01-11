@@ -14,6 +14,7 @@ import TableOrders from "./Components/FormAdmin/tableOrders.js";
 import ImageForm from "./Components/Multer/Multer";
 import Admin from "./Components/Admin/admin.js";
 import TableUser from "./Components/FormAdmin/TableUsers/tableUsers.js";
+import Unauthorized from "./Components/Unauthorized/unauthorized.js";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
       <Route exact path="/categories" />
       <Route exact path="/cart" component={Carrito} />
       <Route exact path="/registro" component={Registro} />
+      <Route exact path="/unauthorize" component={Unauthorized} />
     </>
   );
 }

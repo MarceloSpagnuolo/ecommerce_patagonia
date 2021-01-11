@@ -1,10 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "./admin.css";
 
 function Admin() {
+    const { user } = useSelector(state => state);
 
-    return (
+
+    return user.role === "admin" ? (
         <div className="Admin-Container-Total">
             <h2 className="Admin-Admin">ADMINISTRACION</h2>
             <div className="Admin-Container">
@@ -37,6 +40,7 @@ function Admin() {
             </div>
         </div>
     )
+    : <Redirect to="/unauthorize" />
 };
 
 export default Admin;
