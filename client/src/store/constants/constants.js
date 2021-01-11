@@ -38,12 +38,13 @@ export const COPY_CART_TO_STORE = "COPY_CART_TO_STORE";
 //orders
 export const GET_FULL_ORDERS = "GET_FULL_ORDERS";
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
+export const UPDATE_ORDER = "UPDATE_ORDER";
 
 //reviews
 export const ADD_REVIEW = "ADD_REVIEW";
 export const GET_REVIEWS = "GET_REVIEWS";
 export const UPDATE_REVIEW = "UPDATE_REVIEW";
-
+export const DELETE_REVIEW = "DELETE_REVIEW";
 //multer
 export const GET_IMAGES = "GET_IMAGES";
 export const ADD_IMAGES = "ADD_IMAGES";
@@ -62,7 +63,6 @@ export const LOGIN = "LOGIN";
 export const LOGIN_ERROR = "LOGIN_ERROR";
 export const LOGOUT = "LOGOUT";
 export const GET_USER_REVIEWS = "GET_USER_REVIEWS";
-export const DELETE_REVIEW = "DELETE_REVIEW";
 export const CREATE_ORDER = "CREATE_ORDER";
 export const DELETE_ORDER = "DELETE_ORDER";
 export const UPDATE_ORDER_TO_CREATE = "UPDATE_ORDER_TO_CREATE";

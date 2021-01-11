@@ -9,6 +9,11 @@
 
 /*///////*/
 
+a:-webkit-any-link {
+  cursor: pointer;
+  text-decoration: none;
+}
+
 .home {
   display: flex;
   align-items: stretch;
@@ -19,6 +24,7 @@
   top: 0;
   z-index: 2;
   box-shadow: 0px 1px 1px #313131;
+  overflow: hidden;
 }
 
 @keyframes Logo {
@@ -42,7 +48,6 @@
 
 .navegacion {
   display: flex;
-  justify-content: space-between;
   width: 100%;
 }
 
@@ -64,18 +69,17 @@
   text-transform: uppercase;
   margin: 0 20px 0 20px;
   display: flex;
-  flex-direction: row;
-  text-align: center;
+  /* flex-direction: row; */
+  /* text-align: center; */
   font-family: 'AmsiPro-Bold';
   font-size: 25px;
   position: relative;
-  left: 1.5%;
+  /* left: 1.5%; */
   top: -12px;
   color: #1c5045;
   text-decoration: none;
   /* padding: 0 5px 0 5px; */
   border: solid 1px transparent;
-  text-decoration: none;
 }
 
 .btnMenu:before {
@@ -93,7 +97,6 @@
 
 .btnMenu:hover:before {
   width: 100%;
-
 }
 
 .btnMenu:hover {
@@ -118,7 +121,6 @@
   position: absolute;
   left: 78%;
   top: 130px;
-
 }
 
 .Navegation-Cantidad {
@@ -141,19 +143,18 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0, 0, 0, 0.6);
   z-index: 3;
 }
 
 .Login-Content {
   background-color: white;
-  border: 3px solid rgb(2,85,2);
+  border: 3px solid rgb(2, 85, 2);
   border-radius: 12px;
   transition: all .5s;
 }
 
-.Login-Header,
-.Login-Footer {
+.Login-Header, .Login-Footer {
   background-color: rgb(255, 165, 50);
 }
 
@@ -164,7 +165,7 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 25px;
   font-weight: 600;
-  color: rgb(2,85,2);
+  color: rgb(2, 85, 2);
   height: 40px;
   border-radius: 10px 10px 0 0;
   box-shadow: 0px 3px 7px black;
@@ -179,7 +180,7 @@
 .Login-Footer {
   display: flex;
   align-items: center;
-  justify-content:space-around;
+  justify-content: space-around;
   height: 40px;
   border-radius: 0 0 10px 10px;
 }
@@ -284,9 +285,80 @@
   cursor: no-drop;
 }
 
-.Navigation-User {
-  width: 25px;
-  height: 25px;
-  padding-top: 4px;
-  padding-right: 4px;
+.megaDivNav {
+  position: relative;
+  display: flex;
+  font-family: 'AmsiPro-Bold';
+  left: -10px;
+}
+
+.divEntrarNav {
+  position: absolute;
+  top: -77px;
+  left: -310px;
+  cursor: pointer;
+  font-size: 23px;
+  color: #1c5045;
+  text-transform: uppercase;
+}
+
+.divRegistroNav {
+  position: absolute;
+  top: -77px;
+  left: -150px;
+  font-size: 23px;
+  text-transform: uppercase;
+}
+
+#registroNav {
+  color: #1c5045;
+}
+
+.iconRegis {
+  position: absolute;
+  left: -39px;
+  top: -5px;
+  width: 36px;
+}
+
+.iconEntrar {
+  position: absolute;
+  left: -50px;
+  top: -5px;
+}
+
+.divEntrarNav:hover {
+  font-size: 25px;
+  color: white;
+}
+
+.divEntrarNav:hover .iconEntrar {
+  width: 37px;
+}
+
+#registroNav:hover {
+  font-size: 25px;
+  color: white;
+}
+
+.divRegistroNav:hover .iconRegis {
+  width: 39px;
+}
+
+.nununu{
+  display: none;
+}
+
+
+
+
+@media screen and (max-width: 900px){
+
+  .divRegistroNav{
+    left: -80px;
+  }
+  .divEntrarNav {
+    left: -230px;
+
+  }
 }
