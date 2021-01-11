@@ -11,7 +11,7 @@ const SliderPCard = (props) => {
     const { images } = useSelector(state => state);
 
     useEffect(() => {
-        if (props.id!== undefined) {
+        if (props.id !== undefined) {
             dispatch(getImages(props.id))
         }
     }, [props.id])
@@ -41,11 +41,11 @@ const SliderPCard = (props) => {
 
             <div className="destacadoProducts">
                 <div className="imgContPCard">
-                    <div className="divImgPC" style={valor}><img className="imgPDet" src={props.image} /></div>
+                    <div className="divImgPC" style={valor}><img className="imgPDet" src={props.image} alt="" /></div>
                     {
                         !!images && images.map(i => {
                             return (
-                                <div style={valor} className="divImgPC"><img className="imgPDet" src={i.path} /></div>
+                                <div style={valor} className="divImgPC"><img className="imgPDet" src={i.path} alt="" /></div>
                             )
                         })}
                 </div>

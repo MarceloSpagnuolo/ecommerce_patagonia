@@ -25,9 +25,9 @@ function SearchBar(props) {
 				{/* Input buscador */}
 				<input className="se-input" name="Buscador" type="search" id='inlineFormInputGroup' placeholder='Busca algo aqui...' onChange={(e) => handlerInput(e)} />{' '}
 				<button className="button-search" variant='primary' type='submit'>
-				<img className= "icon-S" src="http://localhost:3001/images/lupa2.ico"></img>
+					<img className="icon-S" src="http://localhost:3001/images/lupa2.ico" alt="img-lupa"></img>
 				</button>
-				
+
 			</form>
 		</div>
 	);

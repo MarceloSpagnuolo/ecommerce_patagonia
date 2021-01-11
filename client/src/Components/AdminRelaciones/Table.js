@@ -1,11 +1,11 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { connect } from 'react-redux';
 import { deleteProductJoinCategory } from '../../store/actions/index'
 import './Table.css'
 
 // beers, removeBeers, seteadora, estados, onUpdate,
 const Table = (props) => {
-    
+
     // const handleOnUpdate = useCallback(async (category) => {
     //     // La llamada a Axios        
     //     props.onUpdate({
@@ -31,13 +31,13 @@ const Table = (props) => {
                         {props.products.length > 0 && props.products.map((c) => {
                             let newArr = [];
                             for (let i = 0; i < c.categories.length; i++) {
-                                let id =c.categories[i].id
+                                let id = c.categories[i].id
                                 newArr.push(
-                                    <tr id="Tr" key={Math.random()+c.id}>
+                                    <tr id="Tr" key={Math.random() + c.id}>
                                         <td className="Td">{c.name}</td>
                                         <td className="Td">{c.categories[i].name}</td>
                                         <td className="Td">{c.volume}</td>
-                                        <td className="Td"><button className="xrs" onClick={() => { props.deleteProductJoinCategory(c.id, id);console.log(id) }}>Eliminar</button></td>
+                                        <td className="Td"><button className="xrs" onClick={() => { props.deleteProductJoinCategory(c.id, id); console.log(id) }}>Eliminar</button></td>
                                     </tr>
                                 )
                             }

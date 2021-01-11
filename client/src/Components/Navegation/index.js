@@ -17,7 +17,6 @@ import {
   postProductToCart
 } from "../../store/actions/index.js";
 import Login from "../Login/login.js";
-import { LOGOUT } from "../../store/constants/constants.js";
 
 
 function Home(props) {
@@ -88,6 +87,7 @@ function Home(props) {
           <img
             className="logo"
             src="https://seeklogo.com/images/P/patagonia-cerveza-logo-E4330326F4-seeklogo.com.png"
+            alt="img-logo"
           />
         </Link>
         <div className="segundo">
@@ -114,19 +114,20 @@ function Home(props) {
                 <span>Contáctenos</span>
               </Link>
             </div>
-              {props.user && props.user.role === "admin" ?
-                <Link className="btnMenu" to="/admin">
-                  <span>Admin</span>
-                </Link>
-                :  <Link className="nununu" to="/admin">
-                  <span>Admin</span>
-                </Link>}
+            {props.user && props.user.role === "admin" ?
+              <Link className="btnMenu" to="/admin">
+                <span>Admin</span>
+              </Link>
+              : <Link className="nununu" to="/admin">
+                <span>Admin</span>
+              </Link>}
             <div className="ss-home">
 
               <Link to="/cart">
                 <img
                   className="Navegation-Imagen-Carrito"
                   src="https://cdn.discordapp.com/attachments/764979688446885898/792228021385691136/icons8-carrito-de-compras-64.png"
+                  alt="img-carrito"
                 />
                 {total > 0 && (
                   <span className="Navegation-Cantidad">{total}</span>
@@ -136,16 +137,16 @@ function Home(props) {
               <div className="megaDivNav">
                 {props.user.role === "guest" ?
                   <div className="divEntrarNav">
-                    <span className="entrarNav" onClick={() => setShow(true)}><img className="iconEntrar" src="https://cdn.discordapp.com/attachments/764979688446885898/797733755603124254/usuario_1.png" />Entrar
+                    <span className="entrarNav" onClick={() => setShow(true)}><img className="iconEntrar" src="https://cdn.discordapp.com/attachments/764979688446885898/797733755603124254/usuario_1.png" alt="" />Entrar
                   </span>
                   </div>
-                  : <div className="divEntrarNav" ><span className="entrarNav"><img className="iconEntrar" src="https://cdn.discordapp.com/attachments/764979688446885898/797733755603124254/usuario_1.png" />{props.user.givenname}</span></div>}
+                  : <div className="divEntrarNav" ><span className="entrarNav"><img className="iconEntrar" src="https://cdn.discordapp.com/attachments/764979688446885898/797733755603124254/usuario_1.png" alt="" />{props.user.givenname}</span></div>}
                 {props.user && props.user.role === "guest" ?
-                  <div className="divRegistroNav"><Link to="/registro"><span id="registroNav"><img className="iconRegis" src="https://cdn.discordapp.com/attachments/764979688446885898/797734641536598026/agregar-usuario_1.png" />Registrarse</span></Link></div>
-                  : <div className="divRegistroNav"><span id="registroNav" onClick={() => salir()}><img className="iconRegis" src="https://cdn.discordapp.com/attachments/764979688446885898/797944797762551818/logout_1.png" />Salir</span></div>}
+                  <div className="divRegistroNav"><Link to="/registro"><span id="registroNav"><img className="iconRegis" src="https://cdn.discordapp.com/attachments/764979688446885898/797734641536598026/agregar-usuario_1.png" alt="" />Registrarse</span></Link></div>
+                  : <div className="divRegistroNav"><span id="registroNav" onClick={() => salir()}><img className="iconRegis" src="https://cdn.discordapp.com/attachments/764979688446885898/797944797762551818/logout_1.png" alt="" />Salir</span></div>}
               </div>
             </div>
-          </nav>  
+          </nav>
         </div>
       </div>
       <div>
