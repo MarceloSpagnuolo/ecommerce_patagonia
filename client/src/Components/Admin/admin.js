@@ -1,6 +1,6 @@
 import React from "react";
+import { Link, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import "./admin.css";
 
 function Admin() {
@@ -38,10 +38,8 @@ function Admin() {
                 </Link>
             </div>
         </div>
-    ) :
-        <div className="Authorized-Container">
-            <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" alt="img-inauthorizado" />
-        </div>;
+    )
+    : <Redirect to="/unauthorize" />
 };
 
 export default Admin;

@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { getProductJoinCategory } from "../../store/actions/index";
 import "./ComponentFormFather.css"
 import Modal from "../Modal/Modal.js";
+import { Redirect } from 'react-router-dom';
 
 const ComponentFormFather = (props) => {
     const [display, setDisplay] = useState(false);
@@ -22,7 +23,7 @@ const ComponentFormFather = (props) => {
         set(!state)
     }
 
-    return (
+    return props.user.role === "admin" ? (
         <>
             <div className="prueba">
                 <button className="new" onClick={() => { seteadora(setDisplay, display) }
@@ -41,11 +42,13 @@ const ComponentFormFather = (props) => {
             </div>
         </>
     )
+    : <Redirect to="/unauthorize" />
 }
 
 function mapStateToProps(state) {
     return {
         products: state.products,
+        user: state.user
     };
 }
 

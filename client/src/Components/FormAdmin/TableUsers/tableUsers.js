@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { getUsers, putRoleUser } from "../../../store/actions";
 import "./tableUsers.css"
 
@@ -17,7 +18,7 @@ const TableUser = () => {
         dispatch(putRoleUser(id, role))
     }
 
-    return (
+    return user.role === "admin" ? (
         <div className="table-users-container">
             <h2 className="table-users-titles">Usuarios</h2>
             <table className="Table">
@@ -60,6 +61,7 @@ const TableUser = () => {
             </table>
         </div>
     )
+    : <Redirect to="/unauthorize" />
 }
 
 
