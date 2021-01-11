@@ -39,7 +39,10 @@ function Admin() {
             </div>
         </div>
     )
-    : <Redirect to="/unauthorize" />
+    : 
+    <div className="Authorized-Container">
+        <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" />
+    </div>
 };
 
 export default Admin;
