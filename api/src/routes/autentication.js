@@ -94,7 +94,6 @@ server.get(
 server.put("/promote/:id", async (req, res, next) => {
   const { id } = req.params;
   const { role } = req.body;
-  console.log(req.body)
   const promote = await User.update(
     {
       role: role,

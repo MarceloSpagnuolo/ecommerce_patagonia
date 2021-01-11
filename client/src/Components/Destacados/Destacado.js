@@ -40,14 +40,14 @@ const Destacado = () => {
 
     return (
         <div className="divDestacado">
-            <img className="bannerDestacados" src="http://localhost:3001/images/productos_destacados.gif" alt="DESTACADOS" />
+            <img className="bannerDestacados" src="http://localhost:3001/images/productos_destacados.gif" alt="img-prodDestacados" />
 
             <div className="destacadoTitle"><p>Productos destacados</p></div>
 
             <div className="destacadoProducts">
                 {!!prod && prod.length > 0 && prod.map((p) => {
 
-                    return (<div className="minidivDestacado" style={valor} key={p.id}><ProductCard
+                    return (<div className="minidivDestacado" style={valor} ><ProductCard
                         id={p.id}
                         name={p.name}
                         thumbnail={p.thumbnail}

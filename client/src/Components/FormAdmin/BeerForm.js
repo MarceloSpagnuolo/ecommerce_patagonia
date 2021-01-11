@@ -37,7 +37,7 @@ const BeerForm = (props) => {
             } else if (values.appearance.length < 5) {
                 errors.appearance = 'La apariencia tiene que ser mas amplia'
             }
-            if (!values.price || isNaN(values.price)) {
+            if (values.price < -1 || isNaN(values.price)) {
                 errors.price = 'Debe ingresar un numero'
             }
             if (!values.stock || isNaN(values.stock)) {

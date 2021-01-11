@@ -12,6 +12,10 @@ function Login({ guestId, show, onClose }) {
         password: ''
     })
 
+    function handleReset() {
+        alert("Ruta de MailGun");
+    }
+
     function handleInput(e) {
         setEstado({
             ...estado,
@@ -49,6 +53,9 @@ function Login({ guestId, show, onClose }) {
                             <input size={40} type="password" id="pass" name="password" className="Login-Campos" onChange={(e) => handleInput(e)} />
                         </div>
                     </form>
+                    <div className="Login-Campos">
+                        <button onClick={() => handleReset()} >Olvidé mi contraseña</button>
+                    </div>
                     <div className="Login-Leyenda">
                         <span className="Login-Sep-Leyenda">Si no tiene una cuenta, deberá </span>
                         <Link to="/registro" onClick={() => { onClose && onClose() }}>registrarse</Link>
@@ -56,11 +63,11 @@ function Login({ guestId, show, onClose }) {
                 </section>
                 <div className="Login-Btn-Social">
                     <button className="Login-Btn-Google">
-                        <img src="http://localhost:3001/images/google.png" className="Login-Logo-Btn" alt="logo-google" />
+                        <img src="http://localhost:3001/images/google.png" className="Login-Logo-Btn" alt="img-google" />
                             Acceder con Google
                     </button>
                     <button className="Login-Btn-Facebook">
-                        <img src="http://localhost:3001/images/facebook.png" className="Login-Logo-Btn" alt="logo-facebook" />
+                        <img src="http://localhost:3001/images/facebook.png" className="Login-Logo-Btn" alt="img-facebook" />
                         Acceder con Facebook
                     </button>
                 </div>

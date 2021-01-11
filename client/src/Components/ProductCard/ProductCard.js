@@ -39,9 +39,9 @@ export default function ProductCard(props) {
         <div id="ProductCard-btnContainer">
           <h5 id="ProductPrecio">${props.price}</h5>
           <button
-            onClick={() => agregaCarrito(order.id, props.id, props.price, 1)}
-            id="ProductCard-btnAddCarr" disabled={props.stock === 0}>
-            Agregar al carrito
+            onClick={props.stock === 0 ? null : () => agregaCarrito(order.id, props.id, props.price, 1)}
+            id="ProductCard-btnAddCarr" className={props.stock === 0 ? "sinStock" : ""}>
+            {props.stock === 0 ? "Sin Stock" : " Agregar al carrito"}
           </button>
         </div>
       </div>

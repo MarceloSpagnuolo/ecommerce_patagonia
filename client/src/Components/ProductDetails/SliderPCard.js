@@ -41,8 +41,7 @@ const SliderPCard = (props) => {
 
             <div className="destacadoProducts">
                 <div className="imgContPCard">
-                    <div className="divImgPC" style={valor}><img className="imgPDet"
-                        src={props.image} alt="IMG-SLIDER" /></div>
+                    <div className="divImgPC" style={valor}><img className="imgPDet" src={props.image} alt="" /></div>
                     {
                         !!images && images.map(i => {
                             return (

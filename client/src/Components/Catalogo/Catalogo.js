@@ -82,9 +82,6 @@ function Catalogo(props) {
     return function cleanup() { };
   }, [pagina, categ]); // Este useEffect se ejecuta cuando cambia la página
 
-  // function handleClick(cat) {
-  //   setCateg(cat);
-  // }
 
   function handleClickAll() {
     setPagina(1);

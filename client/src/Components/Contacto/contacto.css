@@ -1,0 +1,116 @@
+.Contacto-Body {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(22, 61, 52);
+    color: white;
+    padding-top: 20px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Contacto-Table {
+    width: 90%;
+}
+
+.Contacto-Tr {
+    vertical-align: top;
+}
+
+.Contacto-Datos {
+    background-color: rgb(22, 61, 52);
+    margin: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.Contacto-Titulo {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.Contacto-Icono-Lugar {
+    width: 15px;
+    padding-right: 7px;
+}
+
+.Contacto-Icono-Flecha {
+    width: 25px;
+}
+
+.Contacto-Renglon {
+    display: flex;
+    align-items: center;
+    padding-bottom: 5px;
+    font-size: 20px;
+}
+
+.Contacto-Icono-Github,
+.Contacto-Icono-Gmail,
+.Contacto-Icono-Facebook,
+.Contacto-Icono-Instagram,
+.Contacto-Icono-Phone,
+.Contacto-Icono-Instagram {
+    width: 20px;
+    padding-right: 7px;
+}
+
+.Contacto-Th, .Contacto-Td {
+    vertical-align: text-top;
+    width: 33%;
+    border: 1px solid rgb(95, 95, 95);
+    border-collapse: collapse;
+}
+
+.Contacto-Datos {
+    display: flex;
+    flex-direction: column;
+}
+
+.Contacto-Th {
+    font-size: 30px;
+    padding: 20px;
+}
+
+.Contacto-Form {
+    display:flex;
+    margin-top: 30px;
+    font-size: 20px;
+}
+
+.Contacto-Input {
+    font-size: 20px;
+}
+
+.Contacto-Botones {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.Contacto-Botones button {
+    width: 100px;
+    height: 40px;
+    margin: 5px;
+    font-size: 15px;
+    border-radius: 5px;
+    background-color: goldenrod;
+    color:rgb(22, 61, 52);
+}
+
+.Contacto-Botones button:hover {
+    cursor: pointer;
+    box-shadow: 0 0 10px white;
+}
+
+.Contacto-Body-Form {
+    display: flex;
+    align-items: center;
+}
+
+.Contacto-Imagen img {
+    width: 350px;
+    margin: 25px;
+    box-shadow: 10px 10px 20px black;
+}

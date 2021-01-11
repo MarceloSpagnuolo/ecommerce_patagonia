@@ -69,7 +69,7 @@ function Carrito() {
               onClick={() => deleteProduct(order.id, prod.id, prod.name, prod.volume)}>X</button>
             <div className="Carrito-Detalles">
               <div>
-                <img className="Carrito-Imagen" src={prod.thumbnail} alt="Img-Carrito"></img>
+                <img className="Carrito-Imagen" src={prod.thumbnail} alt="img-carrito"></img>
               </div>
               <div>
                 <h3>{prod.name} {prod.volume}</h3>
@@ -116,7 +116,7 @@ function Carrito() {
             Eliminar un producto
           </header>
           <section className="Modal-Section">
-            <img src="http://localhost:3001/images/question.png" className="Modal-Imagen" alt="" />
+            <img src="http://localhost:3001/images/question.png" className="Modal-Imagen" alt="img-pregunta" />
             <h3>¿ Quiere Eliminar la {produ.prodName} de {produ.prodVol} ?</h3>
           </section>
           <footer className="Modal-Footer">
@@ -133,7 +133,7 @@ function Carrito() {
             Vaciar el Carrito
           </header>
           <section className="Modal-Section">
-            <img src="http://localhost:3001/images/exclamation.png" className="Modal-Imagen" alt="" />
+            <img src="http://localhost:3001/images/exclamation.png" className="Modal-Imagen" alt="img-exclamacion" />
             <div className="Modal-Leyenda">
               <h3>Está por vaciar completamente su carrito</h3>
               <h3>¿ Desea continuar ?</h3>
