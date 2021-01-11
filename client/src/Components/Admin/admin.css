@@ -5,6 +5,7 @@
     align-items: center;
     padding: 40px;
     background-color: rgb(22, 61, 52);
+    color: white;
 }
 
 .Admin-Container {
@@ -53,10 +54,4 @@
     top: 130px;
     font-size: 40px;
     opacity: 0;
-}
-
-.Admin-Admin {
-    color: white;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    margin: 0px;
 }

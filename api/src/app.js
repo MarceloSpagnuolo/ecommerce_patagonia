@@ -4,6 +4,10 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
 const cors = require('cors');
+const passport = require("./routes/passport");
+const cookieSession = require("cookie-session")
+
+
 
 require('./db.js');
 
@@ -24,6 +28,26 @@ server.use((req, res, next) => {
   next();
 });
 
+server.use(cookieSession({
+  maxAge: 24 * 60 * 60 * 1000,
+  keys: ["secretooo"]
+}))
+
+server.use(passport.initialize());
+
+server.use(passport.session())
+
+server.all('*', function(req,res,next) {
+  passport.authenticate('bearer', function(error,user){
+    if(error) return next(error);
+    if(user) {
+      req.user=user
+    }
+    return next();
+  })(req,res,next)
+})
+
+
 server.use('/', routes);
 
 // Error catching endware.
@@ -33,5 +57,9 @@ server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   console.error(err);
   res.status(status).send(message);
 });
+
+//multer
+server.use(express.static('./src/images/cervezas'));
+
 
 module.exports = server;

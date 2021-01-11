@@ -11,9 +11,8 @@ de la database */
 
 export default function ProductCard(props) {
   const dispatch = useDispatch()
-  const user = useSelector(state => state.users);
   const order = useSelector(state => state.order)
-  
+
   function agregaCarrito(orderId, prodId, unitprice, quantity) {
     //alert("Agregar al carrito")
     dispatch(postProductToCart(orderId, prodId, { unitprice, quantity }))
@@ -25,22 +24,24 @@ export default function ProductCard(props) {
         <Link className="catalogo-Link" to={`/product/${props.id}`}>
           <img id="ProductCard-Img" src={props.thumbnail} alt="Imagen aquí"></img>
         </Link>
-        {props.categorias && props.categorias.map((elem) => (
-          <span className="nameCategorias">{elem.name.replace(" ","_")}</span>
-        ))}
+        <div className="gfd">
+          {props.categorias && props.categorias.map((elem) => (
+            <span key={elem.name} id={elem.name.replace(" ", "_")} className="nameCategorias">{elem.name.replace("Edicion", "")}</span>
+          ))}
+        </div>
       </div>
       <div className="ProductCard-Props">
         <Link className="catalogo-Link" to={`/product/${props.id}`}>
-          <h3 id="ProductName">{props.name}</h3>
+          <h3 id={props.name.length > 7 ? "ProductName" : "PnameLitle"}>{props.name}</h3>
         </Link>
         {props.stock === 0 && (<h4 id="ProductCart-NoDisponible">No Disponible</h4>)}
-        <span>{props.volume}</span>
+        <span className={props.name.length > 7 ? "vol-pc" : "vol-lc"}>{props.volume}</span>
         <div id="ProductCard-btnContainer">
           <h5 id="ProductPrecio">${props.price}</h5>
-          <button 
-            onClick={() => agregaCarrito(order.id, props.id, props.price, 1)}
-            id="ProductCard-btnAddCarr" disabled={props.stock === 0}>
-            Agregar al carrito
+          <button
+            onClick={props.stock === 0 ? null : () => agregaCarrito(order.id, props.id, props.price, 1)}
+            id="ProductCard-btnAddCarr" className={props.stock === 0 ? "sinStock" : ""}>
+            {props.stock === 0 ? "Sin Stock" : " Agregar al carrito"}
           </button>
         </div>
       </div>

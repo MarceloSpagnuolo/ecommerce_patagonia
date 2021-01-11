@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import { useDispatch } from "react-redux"
 import { createUser } from "../../store/actions/index"
+import "./registro.css";
 
 export default function Registro() {
     const dispatch = useDispatch();
+    const [show, setShow] = useState(true);
 
     return (
         <Formik initialValues={{
-            name: "",
-            lastname: "",
+            givenname: "",
+            familyname: "",
             email: "",
-            hashedpassword: "",
+            password: "",
             city: "",
             adress: "",
             phone: "",
@@ -23,78 +25,95 @@ export default function Registro() {
             //regPass requiere entre 8 y 16 characters. y minimo una mayuscula, minuscula, char especial y numero
             //regMail requiere solo un formato de email asi "example@correo.com" pero se le agrega la posibilidad de agregar
             // un "." algo mas alfinal ejemp "example@correo.com.ar"
-            const regPass = (/^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/.test(values.hashedpassword))
-            const regMail = /^([a-zA-Z0-9._+-]+)(@[a-zA-Z0-9-.]+)(.[a-zA-Z]{2,4}){2,}$/gm.test(values.email)
+            const regPass = (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/.test(values.password))
+            const regMail = /[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}/igm.test(values.email)
             ////////////////////////
-            if (!values.name) { errors.name = "Debe ingresar un nombre" }
-            if (!values.lastname) { errors.lastname = "Debe ingresar su apellido" }
+            if (!values.givenname) { errors.name = "Debe ingresar un nombre" }
+            if (!values.familyname) { errors.lastname = "Debe ingresar su apellido" }
             if (!values.email) { errors.email = "Debe ingresar su email" }
             else if (!regMail) {
                 errors.email = 'Invalid email address';
             }
-            if (!regPass) { errors.hashedpassword = "Debe ingresar su contraseña" }
+            if (!regPass) { errors.password = "Debe ingresar su contraseña" }
 
             return errors
 
-       }} onSubmit={(values) => {
-        dispatch(createUser(values));
-       }}>{({
-           isSubmitting,
-           isValid
-       }) => (
+        }} onSubmit={async (values) => {
+            dispatch(createUser(values));
+            setShow(false);
+        }}>{({
+            isSubmitting,
+            isValid
+        }) => (
             <>
-                <h1>Registro de Usuario</h1>
-                <Form>
-                    <div>
-                        <label htmlFor="Registro">Nombre</label>
-                        <ErrorMessage name="name">{message => <div>{message}</div>}</ErrorMessage>
-                        <Field className="RegistroInput" name="name" />
+                <div className="Registro-Body">
+                    <div className="Registro-Imagen1">
                     </div>
+                    <div className="Registro-Formik">
+                        <h1 className="Registro-Title">Registro de Usuario</h1>
+                        {show ?
+                            <Form className="Registro-Form">
+                                <div>
+                                    <label className="Registro-Form-Label" htmlFor="Registro">Nombre</label><br></br>
+                                    <Field className="Registro-Form-Input" name="givenname" />
+                                    <ErrorMessage name="name">{message => <div className="Registro-Form-Error">{message}</div>}</ErrorMessage>
+                                </div>
 
-                    <div>
-                        <label htmlFor="Registro">Apellido</label>
-                        <ErrorMessage name="lastname">{message => <div>{message}</div>}</ErrorMessage>
-                        <Field className="RegistroInput" name="lastname" />
+                                <div>
+                                    <label className="Registro-Form-Label" htmlFor="Registro">Apellido</label><br></br>
+                                    <Field className="Registro-Form-Input" name="familyname" />
+                                    <ErrorMessage name="lastname">{message => <div className="Registro-Form-Error">{message}</div>}</ErrorMessage>
+                                </div>
+
+                                <div>
+                                    <label className="Registro-Form-Label" htmlFor="Registro">Email</label><br></br>
+                                    <Field className="Registro-Form-Input" type="email" name="email" />
+                                    <ErrorMessage name="email">{message => <div className="Registro-Form-Error">{message}</div>}</ErrorMessage>
+                                </div>
+
+                                <div>
+                                    <label className="Registro-Form-Label" htmlFor="Registro">Contraseña</label><br></br>
+                                    <Field className="Registro-Form-Input" name="password" type="password" />
+                                    <ErrorMessage name="password">{message => <div className="Registro-Form-Error">{message}</div>}</ErrorMessage>
+                                </div>
+
+                                <div>
+                                    <label className="Registro-Form-Label" htmlFor="Registro">Ciudad</label><br></br>
+                                    <Field className="Registro-Form-Input" name="city" />
+                                </div>
+
+                                <div>
+                                    <label className="Registro-Form-Label" htmlFor="Registro">Direccion</label><br></br>
+                                    <Field className="Registro-Form-Input" name="adress" />
+                                </div>
+
+                                <div>
+                                    <label className="Registro-Form-Label" htmlFor="Registro">Teléfono</label><br></br>
+                                    <Field className="Registro-Form-Input" name="phone" />
+                                </div>
+
+                                <div>
+                                    <label className="Registro-Form-Label" htmlFor="Registro">Código Postal</label><br></br>
+                                    <Field className="Registro-Form-Input" name="postal" />
+                                </div>
+                                <button type="submit"
+                                    className={`submit ${isSubmitting || !isValid ? 'disabled' : ''}`}
+                                    id="Registro-Btn-Submit"
+                                    disabled={isSubmitting || !isValid}>
+                                    Registrarse
+                    </button>
+                            </Form>
+                            :
+                            <div className="Registro-Formik">
+                                <h2 className="Registro-Title">Muchas Gracias por</h2>
+                                <h2 className="Registro-Title">registrarse en nuestro</h2>
+                                <h2 className="Registro-Title">ECOMMERCE PATAGONIA</h2>
+                            </div>
+                        }
                     </div>
-
-                    <div>
-                        <label htmlFor="Registro">Email</label>
-                        <ErrorMessage name="email">{message => <div>{message}</div>}</ErrorMessage>
-                        <Field className="RegistroInput" type="email" name="email" />
+                    <div className="Registro-Imagen2">
                     </div>
-
-                    <div>
-                        <label htmlFor="Registro">Contraseña</label>
-                        <ErrorMessage name="hashedpassword">{message => <div>{message}</div>}</ErrorMessage>
-                        <Field className="RegistroInput" name="hashedpassword" />
-                    </div>
-
-                    <div>
-                        <label htmlFor="Registro">Ciudad</label>
-                        <Field className="RegistroInput" name="city" />
-                    </div>
-
-                    <div>
-                        <label htmlFor="Registro">Direccion</label>
-                        <Field className="RegistroInput" name="adress" />
-                    </div>
-
-                    <div>
-                        <label htmlFor="Registro">Teléfono</label>
-                        <Field className="RegistroInput" name="phone" />
-                    </div>
-
-                    <div>
-                        <label htmlFor="Registro">Código Postal</label>
-                        <Field className="RegistroInput" name="postal" />
-                    </div>
-
-                    <button type="submit"
-                        className={`submit ${isSubmitting || !isValid ? 'disabled' : ''}`}
-                        disabled={isSubmitting || !isValid}>
-                        Registrarse
-                </button>
-                </Form>
+                </div>
             </>
         )}
         </Formik>

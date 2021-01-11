@@ -1,6 +1,27 @@
-.home-imagen {
-  width: 100%;
-  border-bottom: solid 3px lightcoral;
+@font-face {
+  font-family: 'Amsi Pro Narw Ultra';
+  font-style: normal;
+  font-weight: 900;
+  src: local('Amsi Pro Narw Ultra'), url('https://fonts.cdnfonts.com/s/13934/Stawix - AmsiProNarw-Ultra.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'AmsiPro-Regular';
+  font-style: normal;
+  font-weight: 400;
+  src: local('AmsiPro-Regular'), url('https://fonts.cdnfonts.com/s/14630/AmsiPro-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'AmsiPro-Bold';
+  font-style: normal;
+  font-weight: 400;
+  src: local('AmsiPro-Bold'), url('https://fonts.cdnfonts.com/s/14631/AmsiPro-Bold.woff') format('woff');
+}
+
+.divHome {
+  overflow: hidden;
+  /* background-color: #163d34; */
 }
 
 p {
@@ -9,21 +30,46 @@ p {
 
 .home-manifiesto {
   display: flex;
-  /* flex-direction: row; */
-  background-color: rgb(22, 61, 52);
+  background-color: #163d34;
   color: white;
   margin-top: -4px;
-  border-bottom: solid 3px lightcoral;
 }
 
 .home-titulo {
-  font-size: 30px;
-  font-family: cursive;
+  margin-top: -100px;
+  font-size: 50px;
+  font-family: 'Amsi Pro Narw Ultra';
   padding: 60px 60px 30px 60px;
 }
 
 .home-texto {
+  margin-top: -100px;
   font-size: 25px;
-  font-family: cursive;
+  font-family: 'AmsiPro-Regular';
   padding: 30px 300px 100px 100px;
 }
+
+.home-texto span {
+  font-family: 'AmsiPro-Bold';
+}
+
+.aa {
+  position: absolute;
+  top: 0;
+  background: url(https://cdn.discordapp.com/attachments/764979688446885898/793301551241887764/fondo6.png);
+  width: 100vw;
+  height: 177px;
+}
+
+
+
+/* @media screen and (max-width: 1071px){
+  .aa{
+  
+  }
+}
+@media screen and (max-width: 700px){
+  .aa{
+    width: 112.5%;    
+  }
+} */

@@ -1,49 +1,48 @@
 import React from 'react';
 import { useState } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { useHistory } from "react-router-dom";
-import { searchProduct} from "../../store/actions/index";
+import { searchProduct } from "../../store/actions/index";
 // CSS
-import  './SearchBar.css';
+import './SearchBar.css';
 
 function SearchBar(props) {
 	const [product, setProduct] = useState('');
 	let history = useHistory();
-	const handlerInput = (e) => {			
+	const handlerInput = (e) => {
 		setProduct(e.target.value);
 	};
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		props.searchProduct(product);		
-		history.push(`/products/search`);	
+		props.searchProduct(product);
+		history.push(`/products/search`);
 	};
-	
+
 	return (
-		<form onSubmit={(e) => onSubmit(e)}>
-			<div className={`d-flex`}>
+		<div className="search-nav">
+			<form onSubmit={(e) => onSubmit(e)}>
 				{/* Input buscador */}
-				<input name="Buscador" type="search" id='inlineFormInputGroup' placeholder='Busca algo aqui...' onChange={ (e) => handlerInput(e)} />{' '}
-				<div>
-					<button variant='primary' type='submit' >
-						Buscar
-					</button>
-				</div>
-			</div>
-		</form>
+				<input className="se-input" name="Buscador" type="search" id='inlineFormInputGroup' placeholder='Busca algo aqui...' onChange={(e) => handlerInput(e)} />{' '}
+				<button className="button-search" variant='primary' type='submit'>
+					<img className="icon-S" src="http://localhost:3001/images/lupa2.ico" alt="img-lupa"></img>
+				</button>
+
+			</form>
+		</div>
 	);
 }
 function mapStateToProps(state) {
 	return {
-	  products: state.products
+		products: state.products
 	};
-  }
-  
-  function mapDispatchToProps(dispatch) {
+}
+
+function mapDispatchToProps(dispatch) {
 	return {
-	  searchProduct: (productName) =>dispatch(searchProduct(productName))
-	  
+		searchProduct: (productName) => dispatch(searchProduct(productName))
+
 	};
-  }
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

@@ -1,80 +1,60 @@
-.modal-wrapper {
-  background: white;
-  border: 1px solid #d0cccc;
-  box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2), 0 7px 20px 0 rgba(0,0,0,0.17);
-  margin: 100px auto 0;
-  transition: all .8s;
-  width: 60%;
-}
-
-.modal-header {
-  background: #263238;
-  height: 40px;
-  line-height: 40px;
-  padding: 5px 20px;
-  text-align: right;
-}
-
-.modal-header h3 {
-  color: white;
-  float: left;
-  margin: 0;
-  padding: 0;
-}
-
-.modal-body {
-  padding: 10px 15px;
-  text-align: center;
-}
-
-.modal-footer {
-  background: #263238;
-  height: 35px;
-  padding: 15px;
-}
-
-.close-modal-btn {
-  color: white;
-  cursor: pointer;
-  float: right;
-  font-size: 30px;
-  margin: 0;
-}
-
-.close-modal-btn:hover {
-  color: black;
-}
-
-.btn-cancel, .btn-continue {
-  background: coral;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-  outline: none;
-  padding: 10px;
-}
-
-.btn-cancel {
-  background-color: #b71c1c;
-  float: left;
-}
-
-.btn-continue {
-  background-color: #1b5e20;
-  float: right;
-}
-
-.back-drop {
-  background-color: rgba(48, 49, 48, 0.42);
-  height: 100%;
+.modal {
   position: fixed;
-  transition: all 1.3s;
-  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000000a1;
+  z-index: 3;
 }
-
-.open-modal-btn {
-  margin: 15px;
+.modal > .content {
+  width: 100%;
+  height: fit-content;
+  max-width: 700px;
+  background-color: #163D34;
+  border-radius: 10px;
+  box-shadow: 1px 2px 13px -4px #5e5e5e;
+}
+.content > .header {
   padding: 10px;
+  padding-bottom: 0px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+.title {
+   display: flex;
+  justify-content: center;
+  color: white;
+  /*grid-column: 1; */
+  padding-bottom: 15px;
+  font-size: 23px;
   font-weight: bold;
+  text-transform: uppercase;
+}
+.header > .close-modal {
+  grid-column: 2;
+  border: 2px solid #a3a3a3;
+  background-color: #cc0000;
+  color: rgb(230, 230, 230);
+  border-radius: 5px;
+  cursor: pointer;
+  height: 25px;
+  width: 25px;
+  transition: background-color 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.header > .close-modal:hover {
+  background-color: #e70202;
+}
+.content > .body-modal {
+  padding: 10px;
+  padding-top: 0px;
+  display: grid;
+  justify-content: center;
 }

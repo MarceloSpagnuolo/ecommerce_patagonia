@@ -1,18 +1,25 @@
 import React from "react";
+import Carrusel from "../Carrusel/Carrusel"
 import "./home.css";
+import Destacado from "../Destacados/Destacado"
+
 
 function Home() {
   return (
-    <div>
-      <img className="home-imagen" src="https://i.pinimg.com/originals/9e/8b/66/9e8b66b9bcc4b6619fc51917ad14ca54.jpg" />
+    <div className="divHome">
+
+      <Carrusel />
+      <div className="vaca">
+        <img src="http://localhost:3001/images/trazo4.gif" alt="" />
+      </div>
       <div className="home-manifiesto">
         <div className="home-titulo">NUESTRO MANIFIESTO</div>
         <div className="home-texto">
           <p>
-            En la patagonia necesitamos menos cosas. 
+            En la patagonia necesitamos menos cosas.
           </p>
           <p>
-            Acá valoramos la naturaleza, sus sonidos, sus silencios, los paisajes.
+            Acá <span>valoramos la naturaleza</span>, sus sonidos, sus silencios, los paisajes.
           </p>
           <p>
             Preferimos calentarnos las manos al fuego y sentarnos frente a una comida
@@ -22,20 +29,66 @@ function Home() {
             Acá tomamos agua de los lagos.
           </p>
           <p>
-           Nos inspiramos cuando miramos  una montaña y gracias a esa inspiración empezamos búsquedas que nos
-           llevan a descubrir aromas, texturas y sabores nuevos.
+            <span>Nos inspiramos cuando miramos  una montaña</span> y gracias a esa inspiración <span>empezamos búsquedas que nos
+           llevan a descubrir aromas, texturas y sabores nuevos.</span>
           </p>
           <p>
-           Hacer todo con nuestras manos es una sensación que algún día todos deberíamos
+            Hacer todo con nuestras manos es una sensación que algún día todos deberíamos
             sentir.
           </p>
           <p>
-           En el sur volvemos al principio, a valorar lo que tenemos y
-            a darle gracias a la tierra que nos inspira. Porque nos invita a
-            explorar, a buscar nuevas experiencias y a proponernos cosas tan
-            desafiantes como hacer la mejor cerveza del mundo.
+            <span>En el sur volvemos al principio, a valorar lo que tenemos y
+            a darle gracias a la tierra que nos inspira.</span> Porque nos invita a
+            explorar, a buscar nuevas experiencias y a proponernos <span>cosas tan
+            desafiantes como hacer la mejor cerveza del mundo.</span>
           </p>
+          {/* <p>
+          <span>En el sur volvemos al principio, a valorar lo que tenemos y
+            a darle gracias a la tierra que nos inspira.</span> Porque nos invita a
+            explorar, a buscar nuevas experiencias y a proponernos <span>cosas tan
+            desafiantes como hacer la mejor cerveza del mundo.</span>
+          </p>
+          <p>
+          <span>En el sur volvemos al principio, a valorar lo que tenemos y
+            a darle gracias a la tierra que nos inspira.</span> Porque nos invita a
+            explorar, a buscar nuevas experiencias y a proponernos <span>cosas tan
+            desafiantes como hacer la mejor cerveza del mundo.</span>
+          </p>
+          <p>
+          <span>En el sur volvemos al principio, a valorar lo que tenemos y
+            a darle gracias a la tierra que nos inspira.</span> Porque nos invita a
+            explorar, a buscar nuevas experiencias y a proponernos <span>cosas tan
+            desafiantes como hacer la mejor cerveza del mundo.</span>
+          </p>
+          <p>
+          <span>En el sur volvemos al principio, a valorar lo que tenemos y
+            a darle gracias a la tierra que nos inspira.</span> Porque nos invita a
+            explorar, a buscar nuevas experiencias y a proponernos <span>cosas tan
+            desafiantes como hacer la mejor cerveza del mundo.</span>
+          </p>
+          <p>
+          <span>En el sur volvemos al principio, a valorar lo que tenemos y
+            a darle gracias a la tierra que nos inspira.</span> Porque nos invita a
+            explorar, a buscar nuevas experiencias y a proponernos <span>cosas tan
+            desafiantes como hacer la mejor cerveza del mundo.</span>
+          </p>
+          <p>
+          <span>En el sur volvemos al principio, a valorar lo que tenemos y
+            a darle gracias a la tierra que nos inspira.</span> Porque nos invita a
+            explorar, a buscar nuevas experiencias y a proponernos <span>cosas tan
+            desafiantes como hacer la mejor cerveza del mundo.</span>
+          </p>
+          <p>
+          <span>En el sur volvemos al principio, a valorar lo que tenemos y
+            a darle gracias a la tierra que nos inspira.</span> Porque nos invita a
+            explorar, a buscar nuevas experiencias y a proponernos <span>cosas tan
+            desafiantes como hacer la mejor cerveza del mundo.</span>
+          </p>
+          */}
         </div>
+      </div>
+      <div className="destacadoHome">
+        <Destacado />
       </div>
     </div>
   );

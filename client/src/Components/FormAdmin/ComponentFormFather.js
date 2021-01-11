@@ -4,7 +4,8 @@ import Table from './Table';
 import { connect } from 'react-redux'
 import { getProductJoinCategory } from "../../store/actions/index";
 import "./ComponentFormFather.css"
-import Checkcat from "../../Components/FormAdmin/CheckCategories"
+import Modal from "../Modal/Modal.js";
+import { Redirect } from 'react-router-dom';
 
 const ComponentFormFather = (props) => {
     const [display, setDisplay] = useState(false);
@@ -22,14 +23,18 @@ const ComponentFormFather = (props) => {
         set(!state)
     }
 
-    return (
+    return props.user.role === "admin" ? (
         <>
-            <div className="prueba">               
+            <div className="prueba">
                 <button className="new" onClick={() => { seteadora(setDisplay, display) }
                 }>New</button>
-                {display ? <BeerForm seteadora={{ seteadora, display, setDisplay }} /> : null}
-                {edit ? <BeerForm data={beer} seteadora={{ seteadora, edit, setEdit }} /> : null}
-                {edit ? <Checkcat data={beer}/> : null}
+                <Modal title="Administrador de Productos" show={display} onClose={() => setDisplay((val) => !val)}>
+                    <BeerForm seteadora={{ seteadora, display, setDisplay }} />
+                </Modal>
+                <Modal title="Editar Producto" show={edit} onClose={() => setEdit((val) => !val)}>
+                    <BeerForm data={beer} seteadora={{ seteadora, edit, setEdit }} />
+                </Modal>
+
                 <Table seteadora={seteadora}
                     estados={[edit, setEdit]}
                     onUpdate={setBeer}
@@ -37,11 +42,15 @@ const ComponentFormFather = (props) => {
             </div>
         </>
     )
+        : <div className="Authorized-Container">
+            <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" />
+          </div>
 }
 
 function mapStateToProps(state) {
     return {
         products: state.products,
+        user: state.user
     };
 }
 

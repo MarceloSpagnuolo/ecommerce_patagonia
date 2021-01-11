@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
     },
     price: {
       type: DataTypes.DECIMAL(10, 2),
@@ -26,6 +26,10 @@ module.exports = (sequelize) => {
     volume: {
       type: DataTypes.ENUM('355 cc', '473 cc', '730 cc'),
       allowNull: false,
+    },
+    destacado: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
     thumbnail: {
       type: DataTypes.STRING,
