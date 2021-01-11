@@ -117,6 +117,13 @@ VALUES ('Pepito', 'Pon', 'pepito22@gmail.com', '$2b$10$JYZBhXOEWO8VIJA8JLNSguKoG
 ('Armando', 'Esteban', 'quito@gmail.com', '$2b$10$x7PEB9lO8cNjJ.CZSS/wPeVd1uktD3vawwiwQJ9BApB6altR4haCK', 'user','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('Admin', 'Admin', 'Admin@soyadmin.com', '$2b$10$KjH28ocxb6CGMIaSXUQxKuuyOct/9ldBOhwVxvnEuYWfSmXA6QGRK', 'admin', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00');
 
+INSERT INTO images (path,"createdAt", "updatedAt", "productId")
+VALUES ('https://images.losandes.com.ar/resizer/jjcY6mCgKXSpCoMzkoBglZFHVBg=/800x450/smart/cloudfront-us-east-1.images.arcpublishing.com/grupoclarin/GZSTSMRUMY4TSMZTGRQWCNBZHA.jpg',  '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1),
+('https://sonarfm.cl/sonarfm/site/artic/20171011/imag/foto_0000000320171011114514.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1),
+('https://pbs.twimg.com/media/EO1crNVX0AIEwJB.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 2),
+('https://sonarfm.cl/sonarfm/site/artic/20171011/imag/foto_0000000320171011114514.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 2),
+('https://pbs.twimg.com/media/EO1crNVX0AIEwJB.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 3);
+
 
 INSERT INTO Orders (total, date, status, "createdAt", "updatedAt", "userId")
 VALUES (100 ,'2017-08-09 07:00:00 -7:00', 'carrito', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1),
@@ -148,6 +155,7 @@ VALUES (3 ,'Me parece una cerveza normal', '2017-08-09 07:00:00 -7:00', '2017-08
 (5 ,'ME encantaaaaaAA. Siempre la pido!!!!', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 4, 1),
 (5 ,'Mi cerveza favorita de patagonia, me encanta siempre arrancar con esta', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 4, 2),
 (3 ,'Me parece una cerveza normal', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 4, 3);
+
 `);
 
 

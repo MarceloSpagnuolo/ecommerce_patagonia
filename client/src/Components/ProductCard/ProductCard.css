@@ -175,3 +175,9 @@
 #Negras {
   background-color: black;
 }
+
+.sinStock {
+  background: linear-gradient(to bottom, rgba(122, 122, 122, 0.918), rgb(94, 97, 95)) !important;
+  cursor: no-drop !important;
+  outline-style: none;
+}

@@ -38,6 +38,7 @@ import {
   //orders
   GET_FULL_ORDERS,
   GET_ORDER_BY_ID,
+  UPDATE_ORDER,
 
 
   //review
@@ -260,7 +261,18 @@ function ReducerProducts(state = inicialState, action) {
       return { ...state, orders: action.payload };
     case GET_ORDER_BY_ID:
       return { ...state, orders: action.payload };
-
+    case UPDATE_ORDER:
+      return {
+        ...state,
+        orders: state.orders.map((o) => {
+          if (o.id === action.payload.id) {
+            o.status = action.payload.status
+            return o;
+          } else {
+            return o;
+          }
+        }),
+      };
     ////////////////////////////////////   ORDERS   //////////////////////////////////////////
 
 
@@ -288,8 +300,14 @@ function ReducerProducts(state = inicialState, action) {
         }),
       };
 
+    case DELETE_REVIEW:
+      return {
+        ...state,
+        reviews: state.reviews.filter(
+          (reviews) => reviews.id !== action.payload
+        ),
+      };
     ////////////////////////////////////   REVIEWS   //////////////////////////////////////////
-
 
 
 
@@ -348,8 +366,6 @@ function ReducerProducts(state = inicialState, action) {
     case UPDATE_USER:
       return {};
     case DELETE_CART:
-      return {};
-    case DELETE_REVIEW:
       return {};
     case DELETE_USER:
       return {};

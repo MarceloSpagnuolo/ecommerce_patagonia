@@ -79,7 +79,6 @@
   align-items: center;
   justify-self: center;
   position: relative;
-  left: -50px;
 }
 
 #Capa_1 {
@@ -301,17 +300,17 @@
   color: white;
   opacity: 0.5;
 }
-.div-newReview{
+
+.div-newReview {
   position: relative;
   top: -9px;
   width: 99.8%;
   background-color: white;
   border: solid 0.5px rgb(202, 197, 197);
-  border-top: none;
-  border-radius: 0px 0px 0px 0px;
-  border-bottom: none;
-  height: 230px;
+  height: 250px;
+  border-radius: 0px 0 10px 10px;
 }
+
 
 
 @media screen and (max-width: 1070px) {

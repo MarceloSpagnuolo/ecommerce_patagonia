@@ -45,6 +45,13 @@
     font-size: 15px;
 
 }
+.eliRev{
+    grid-area: box1;
+    justify-self: flex-end;
+    position: relative;
+    top:21px;
+ 
+}
 
 @media screen and (max-width: 1300px){
     .asdas{

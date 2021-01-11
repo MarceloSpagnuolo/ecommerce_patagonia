@@ -41,12 +41,14 @@ import {
   //orders
   GET_FULL_ORDERS,
   GET_ORDER_BY_ID,
+  UPDATE_ORDER,
 
 
   //review
   ADD_REVIEW,
   GET_REVIEWS,
   UPDATE_REVIEW,
+  DELETE_REVIEW,
 
   //multer
   GET_IMAGES,
@@ -663,6 +665,24 @@ export const getOrderById = (orderId) => async (dispatch) => {
   }
 };
 
+//Moificar order /:id UPDATE_ORDER
+export const updateOrder = (id, payload) => async (dispatch) => {
+  console.log(payload,"antes de la llamada")
+  try {
+    const res = await axios.put(`${url}orders/${id}`, payload);
+    console.log(res,res.data, "despyess de la llamada")
+    dispatch({
+      type: UPDATE_ORDER,
+      payload: res.data
+    });
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Problemas al modificar la order",
+    });
+  }
+}
+
 ////////////////////////////   ORDERS   ////////////////////////////////////// 
 
 
@@ -718,6 +738,22 @@ export const updateReview = (id, payload) => async (dispatch) => {
     })
   }
 };
+
+//DELETE_REVIEW
+export const deleteReview = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`${url}reviews/removeReview/${id}`)
+    dispatch({
+      type: DELETE_REVIEW ,
+      payload: res.data
+    })
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "Problemas al conseguir las reviews"
+    })
+  }
+}
 
 ////////////////////////////   REVIEW   ////////////////////////////////////// 
 

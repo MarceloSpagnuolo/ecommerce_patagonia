@@ -3,18 +3,19 @@ import React, { useEffect, useState } from "react";
 import SearchBar from "../SearchBar/SearchBar.js";
 import "./styles.css";
 import { connect, useDispatch } from "react-redux";
-import { getCategories,
-         getProducts,
-         createUser,
-         postCreateCart,
-         getUserCart,
-         getUserById,
-         getCartByUser,
-         copyCartToStore,
-         copyUserToStore,
-         getUserByToken,
-         postProductToCart
-        } from "../../store/actions/index.js";
+import {
+  getCategories,
+  getProducts,
+  createUser,
+  postCreateCart,
+  getUserCart,
+  getUserById,
+  getCartByUser,
+  copyCartToStore,
+  copyUserToStore,
+  getUserByToken,
+  postProductToCart
+} from "../../store/actions/index.js";
 import Login from "../Login/login.js";
 import { LOGOUT } from "../../store/constants/constants.js";
 
@@ -27,11 +28,11 @@ function Home(props) {
   useEffect(() => {
     if (!props.user.id) {
       const token = localStorage.getItem("userToken");
-      if(!token) {
+      if (!token) {
         var localUser = JSON.parse(localStorage.getItem("guestUser"));
-        if(!localUser) {
+        if (!localUser) {
           const carrito = { id: 0, total: 0, status: "carrito", date: Date.now() };
-          const usuario = { id: 0, givenname: "Guest", familyname: "Guest" , role: "guest" };
+          const usuario = { id: 0, givenname: "Guest", familyname: "Guest", role: "guest" };
           localStorage.setItem("guestUser", JSON.stringify(usuario));
           localStorage.setItem("guestCart", JSON.stringify(carrito));
           localUser = JSON.parse(localStorage.getItem("guestUser"));
@@ -57,7 +58,7 @@ function Home(props) {
       const localCart = JSON.parse(localStorage.getItem("guestCart"));
       if (localCart && localCart.products && localCart.products.length > 0) {
         localCart.products.map((elem) => {
-          dispatch(postProductToCart(props.order.id, elem.id, {unitprice: elem.Order_products.unitprice, quantity: elem.Order_products.quantity }))
+          dispatch(postProductToCart(props.order.id, elem.id, { unitprice: elem.Order_products.unitprice, quantity: elem.Order_products.quantity }))
         })
       }
       localStorage.removeItem("guestCart");
@@ -98,11 +99,6 @@ function Home(props) {
               </Link>
             </div>
             <div className="prueba-nav">
-              {props.user && props.user.role === "admin" ?
-              <Link className="btnMenu" to="/admin">
-                <span>Admin</span>
-              </Link>
-              : null }
             </div>
             <div className="prueba-nav">
               <Link
@@ -118,6 +114,13 @@ function Home(props) {
                 <span>Contáctenos</span>
               </Link>
             </div>
+              {props.user && props.user.role === "admin" ?
+                <Link className="btnMenu" to="/admin">
+                  <span>Admin</span>
+                </Link>
+                :  <Link className="nununu" to="/admin">
+                  <span>Admin</span>
+                </Link>}
             <div className="ss-home">
 
               <Link to="/cart">
@@ -130,22 +133,23 @@ function Home(props) {
                 )}
               </Link>
               <SearchBar />
+              <div className="megaDivNav">
+                {props.user.role === "guest" ?
+                  <div className="divEntrarNav">
+                    <span className="entrarNav" onClick={() => setShow(true)}><img className="iconEntrar" src="https://cdn.discordapp.com/attachments/764979688446885898/797733755603124254/usuario_1.png" />Entrar
+                  </span>
+                  </div>
+                  : <div className="divEntrarNav" ><span className="entrarNav"><img className="iconEntrar" src="https://cdn.discordapp.com/attachments/764979688446885898/797733755603124254/usuario_1.png" />{props.user.givenname}</span></div>}
+                {props.user && props.user.role === "guest" ?
+                  <div className="divRegistroNav"><Link to="/registro"><span id="registroNav"><img className="iconRegis" src="https://cdn.discordapp.com/attachments/764979688446885898/797734641536598026/agregar-usuario_1.png" />Registrarse</span></Link></div>
+                  : <div className="divRegistroNav"><span id="registroNav" onClick={() => salir()}><img className="iconRegis" src="https://cdn.discordapp.com/attachments/764979688446885898/797944797762551818/logout_1.png" />Salir</span></div>}
+              </div>
             </div>
-            {props.user && props.user.role === "guest" ?
-            <div className="btnMenu">
-              <span onClick={() => setShow(true)}>Entrar</span>
-            </div>
-              : props.user && <div className="btnMenu">
-                <img className="Navigation-User" src="http://localhost:3001/images/user.png" />
-                <span>{props.user.givenname}</span></div>}
-              {props.user && props.user.role === "guest" ?
-              <Link to="/registro"  className="btnMenu"><span>Registrarse</span></Link>
-              : <div className="btnMenu"><span onClick={() => salir()}>Salir</span></div> }
-          </nav>
+          </nav>  
         </div>
       </div>
       <div>
-        { props.user && <Login guestId={props.user.id} show={show} onClose={() => setShow((p) => !p)} />}
+        {props.user && <Login guestId={props.user.id} show={show} onClose={() => setShow((p) => !p)} />}
       </div>
     </>
   );

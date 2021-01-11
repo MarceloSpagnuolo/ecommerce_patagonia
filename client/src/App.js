@@ -14,7 +14,6 @@ import TableOrders from "./Components/FormAdmin/tableOrders.js";
 import ImageForm from "./Components/Multer/Multer";
 import Admin from "./Components/Admin/admin.js";
 import Contacto from "./Components/Contacto/contacto.js";
-import Unauthorized from "./Components/Unauthorized/unauthorized.js"
 import TableUser from "./Components/FormAdmin/TableUsers/tableUsers.js"
 
 
@@ -36,7 +35,6 @@ function App() {
       <Route exact path="/registro" component={Registro} />
       <Route exact path="/admin" component={Admin} />
       <Route exact path="/contacto" component={Contacto} />
-      <Route exact path="/unauthorized" component={Unauthorized} />
       <Route exact path="/admin/users" component={TableUser} />
     </>
   );
