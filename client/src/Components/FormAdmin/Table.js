@@ -35,32 +35,32 @@ const Table = (props) => {
   return (
     <>
       <div className="contenedor">
-        <table>
+        <table className="Table">
           <tbody>
-            <tr className="titulo">
-              <th>Id</th>
-              <th>Name</th>
-              <th>Appearance</th>
-              <th>Description</th>
-              <th>Price</th>
-              <th>Stock</th>
-              <th>Destacado</th>
-              <th>Volumen</th>
-              <th></th>
-              <th></th>
+            <tr id="Tr" className="titulo">
+              <th className="Th">Id</th>
+              <th className="Th">Name</th>
+              <th className="Th">Appearance</th>
+              <th className="Th">Description</th>
+              <th className="Th">Price</th>
+              <th className="Th">Stock</th>
+              <th className="Th">Destacado</th>
+              <th className="Th">Volumen</th>
+              <th className="Th"></th>
+              <th className="Th"></th>
             </tr>
             {props.products.map((beer) => {
               return (
-                <tr key={beer.id} className="index">
-                  <td>{beer.id}</td>
-                  <td>{beer.name}</td>
-                  <td>{beer.appearance}</td>
-                  <td>{beer.description}</td>
-                  <td>{beer.price}</td>
-                  <td>{beer.stock}</td>
-                  <td>{beer.destacado ? "SI" : "NO"}</td>
-                  <td>{beer.volume}</td>
-                  <td>
+                <tr id="Tr" key={beer.id} className="index">
+                  <td className="Td">{beer.id}</td>
+                  <td className="Td">{beer.name}</td>
+                  <td className="Td">{beer.appearance}</td>
+                  <td className="Td">{beer.description}</td>
+                  <td className="Td">{beer.price}</td>
+                  <td className="Td">{beer.stock}</td>
+                  <td className="Td">{beer.destacado ? "SI" : "NO"}</td>
+                  <td className="Td">{beer.volume}</td>
+                  <td className="Td">
                     <button
                       className="edit"
                       onClick={() => {
