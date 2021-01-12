@@ -10,6 +10,16 @@ tr:nth-child(even) {
     border: 1px solid #3b0707;
     height: 320px;
 }
+
+.headTable-orders-user th{
+    padding: 10px;
+    box-shadow: inset 0px 1px 2px #949090;
+}
+
+.ordersUsers-Datos td{
+    padding: 10px;
+    box-shadow: inset 0px 1px 2px #949090;
+}
 .divContaianerOrders {
     display: flex;
     flex-direction: row;
