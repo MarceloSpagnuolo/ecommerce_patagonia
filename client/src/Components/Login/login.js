@@ -38,47 +38,51 @@ function Login({ guestId, show, onClose }) {
 
     return show ? (
         <div className="Login-Container">
-            <div className="Login-Content">
-                <header className="Login-Header">
-                    Acceso de Usuario
+            <div className="LoginSub-Content">
+                <header className="LoginDiv-Header">
+                    <div className="nameLogin">Acceso de Usuario</div>
                 </header>
-                <section className="Login-Section">
+                <section className="LoginDiv-Section">
                     <form>
-                        <div className="Login-Campos">
-                            <label for="email">Email registrado</label><br></br>
-                            <input autofocus="true" size={40} type="email" id="email" name="email" className="Login-Campos" onChange={(e) => handleInput(e)} />
+                        <div className="LoginDiv-Campos">
+                            <label className="nameInput" for="email">Email registrado</label><br></br>
+                            <input autofocus="true" size={40} type="email" id="email" name="email" className="LoginDivInput-Campos" onChange={(e) => handleInput(e)} />
                         </div>
-                        <div className="Login-Campos">
-                            <label for="password">Contraseña</label><br></br>
-                            <input size={40} type="password" id="pass" name="password" className="Login-Campos" onChange={(e) => handleInput(e)} />
+                        <div className="LoginDiv-Campos">
+                            <label className="nameInput" for="password">Contraseña</label><br></br>
+                            <input size={60} type="password" id="pass" name="password" className="LoginDivInput-Campos" onChange={(e) => handleInput(e)} />
                         </div>
                     </form>
-                    <div className="Login-Campos">
-                        <button onClick={() => handleReset()} >Olvidé mi contraseña</button>
-                    </div>
-                    <div className="Login-Leyenda">
-                        <span className="Login-Sep-Leyenda">Si no tiene una cuenta, deberá </span>
-                        <Link to="/registro" onClick={() => { onClose && onClose() }}>registrarse</Link>
+                    <div className="LoginDiv-Campos btLogMeOlvide">
+                        <button className="btnOlvidePass" onClick={() => handleReset()} >Olvidé mi contraseña</button>
                     </div>
                 </section>
-                <div className="Login-Btn-Social">
-                    <button className="Login-Btn-Google">
-                        <img src="http://localhost:3001/images/google.png" className="Login-Logo-Btn" alt="img-google" />
+                <div className="gridLogin4">
+                    <div className="Login-Leyenda noRegistrLogin">
+                        <span className="Login-Sep-Leyenda">Si no tiene una cuenta, deberá </span>
+                        <Link to="/registro" className="ToRegis" onClick={() => { onClose && onClose() }}>Registrarse</Link>
+                    </div>
+                    <div className="Login-Btn-Social btnGoogleLogin">
+                        <button className="Login-Btn-Google">
                             Acceder con Google
-                    </button>
-                    <button className="Login-Btn-Facebook">
-                        <img src="http://localhost:3001/images/facebook.png" className="Login-Logo-Btn" alt="img-facebook" />
-                        Acceder con Facebook
-                    </button>
+                            <img src="http://localhost:3001/images/google.png" className="Login-Logo-Btn googleIcon" alt="img-google" />
+                        </button>
+                    </div>
+                    <div className="Login-Btn-Social btnFaceLogin" >
+                        <button className="Login-Btn-Facebook">
+                            Acceder con Facebook
+                            <img src="http://localhost:3001/images/facebook.png" className="Login-Logo-Btn faceIcon" alt="img-facebook" />
+                        </button>
+                    </div>
+                    <div className="LoginDiv-Footer loginEntrarSalir">
+                        <button className="Login-Btn-Down" id="Login-Cancel" onClick={() => { onClose && onClose() }}>Cancelar</button>
+                        <button className="Login-Btn-Down"
+                            title={(estado.email.length === 0 || estado.password.length === 0) && "Debe ingresar los datos de acceso"}
+                            id="Login-Entrar"
+                            onClick={() => handleLogueo()}
+                            disabled={estado.email.length === 0 || estado.password.length === 0}>Acceder</button>
+                    </div>
                 </div>
-                <footer className="Login-Footer">
-                    <button className="Login-Btn-Down" id="Login-Cancel" onClick={() => { onClose && onClose() }}>Cancelar</button>
-                    <button className="Login-Btn-Down"
-                        title={(estado.email.length === 0 || estado.password.length === 0) && "Debe ingresar los datos de acceso"}
-                        id="Login-Entrar"
-                        onClick={() => handleLogueo()}
-                        disabled={estado.email.length === 0 || estado.password.length === 0}>Entrar</button>
-                </footer>
             </div>
         </div>
     ) : null;

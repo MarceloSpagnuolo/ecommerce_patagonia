@@ -20,7 +20,7 @@ const Product = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { order, reviews, user } = useSelector(state => state);
-
+console.log(user)
   useEffect(() => {
     props.match.params.id && props.getProductById(props.match.params.id)
     dispatch(getReviews())
@@ -109,7 +109,7 @@ const Product = (props) => {
         </div>
       </div>
       <div className="addComent">
-        {user.givenname === "guess" ? null :
+        {user.role !== "admin" &&  user.role !== "user" ? null :
           !!r[0] && r[0].id ?
             <button className="addComentAction" onClick={() => { setEdite(!edite) }}>Edite su comentario</button>
         : <button className="addComentAction" onClick={() => { setNeview(!neview) }}>Escriba su comentario</button>

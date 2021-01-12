@@ -113,6 +113,7 @@
   padding-bottom: 30px;
   position: relative;
   bottom: 50px;
+  left: -60px;
 }
 
 .precioText {
@@ -284,6 +285,8 @@
   font-family: 'Montserrat', sans-serif;
   outline-style: none;
   background: none;
+  position: relative;
+  left: 27px;
 }
 
 .addComentAction:hover {
@@ -304,6 +307,7 @@
 .div-newReview {
   position: relative;
   top: -9px;
+  left: 27px;
   width: 99.8%;
   background-color: white;
   border: solid 0.5px rgb(202, 197, 197);
