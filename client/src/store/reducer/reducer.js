@@ -41,7 +41,6 @@ import {
   GET_ORDER_BY_ID,
   UPDATE_ORDER,
 
-
   //review
   ADD_REVIEW,
   GET_REVIEWS,
@@ -52,19 +51,8 @@ import {
   ADD_IMAGES,
   DELETE_IMAGES,
 
-
-
   //msj error
   ERROR_MESSAGE,
-
-
-
-
-
-
-
-
-
   ADD_TO_CART,
   REMOVE_FROM_CART,
   UPDATE_FROM_CART,
@@ -85,8 +73,8 @@ import {
   UPDATE_ORDER_TO_PROCESS,
   UPDATE_ORDER_TO_FULL,
   UPDATE_ORDER_TO_REJECT,
-
-} from "../constants/constants";
+  SHIPPING_ADDRESS,
+} from '../constants/constants';
 
 const inicialState = {
   products: [],
@@ -96,7 +84,7 @@ const inicialState = {
   orders: [],
   users: {},
   images: [],
-  user: {}
+  user: {},
 };
 
 function ReducerProducts(state = inicialState, action) {
@@ -122,24 +110,15 @@ function ReducerProducts(state = inicialState, action) {
           } else {
             return us;
           }
-        })
+        }),
       };
     case COPY_USER_TO_STORE:
       return {
         ...state,
-        user: action.payload
-      }
-    case UPDATE_USER:
-      return {...state, user: action.payload};
+        user: action.payload,
+      };
 
     ////////////////////////////////////   USERS   //////////////////////////////////////////
-
-
-
-
-
-
-
 
     ////////////////////////////////////   PRODUCTS   //////////////////////////////////////////
 
@@ -185,12 +164,6 @@ function ReducerProducts(state = inicialState, action) {
       };
     ////////////////////////////////////   PRODUCTS   //////////////////////////////////////////
 
-
-
-
-
-
-
     ////////////////////////////////////   CATEGORIES   //////////////////////////////////////////
 
     case ADD_CATEGORY:
@@ -221,11 +194,6 @@ function ReducerProducts(state = inicialState, action) {
 
     ////////////////////////////////////   CATEGORIES   //////////////////////////////////////////
 
-
-
-
-
-
     ////////////////////////////////////   CART   //////////////////////////////////////////
 
     case POST_CREATE_CART:
@@ -247,15 +215,10 @@ function ReducerProducts(state = inicialState, action) {
     case COPY_CART_TO_STORE:
       return {
         ...state,
-        order: action.payload
-      }
+        order: action.payload,
+      };
 
     ////////////////////////////////////   CART   //////////////////////////////////////////
-
-
-
-
-
 
     ////////////////////////////////////   ORDERS   //////////////////////////////////////////
 
@@ -268,7 +231,7 @@ function ReducerProducts(state = inicialState, action) {
         ...state,
         orders: state.orders.map((o) => {
           if (o.id === action.payload.id) {
-            o.status = action.payload.status
+            o.status = action.payload.status;
             return o;
           } else {
             return o;
@@ -277,19 +240,15 @@ function ReducerProducts(state = inicialState, action) {
       };
     ////////////////////////////////////   ORDERS   //////////////////////////////////////////
 
-
-
-
-
     ////////////////////////////////////   REVIEWS   //////////////////////////////////////////
 
     case ADD_REVIEW:
       return {
         ...state,
-        reviews: state.reviews.concat(action.payload)
+        reviews: state.reviews.concat(action.payload),
       };
     case GET_REVIEWS:
-      return { ...state, reviews: action.payload }
+      return { ...state, reviews: action.payload };
     case UPDATE_REVIEW:
       return {
         ...state,
@@ -311,10 +270,6 @@ function ReducerProducts(state = inicialState, action) {
       };
     ////////////////////////////////////   REVIEWS   //////////////////////////////////////////
 
-
-
-
-
     ////////////////////////////////////   MULTER   //////////////////////////////////////////
 
     case ADD_IMAGES:
@@ -327,16 +282,10 @@ function ReducerProducts(state = inicialState, action) {
     case DELETE_IMAGES:
       return {
         ...state,
-        images: state.products.filter(
-          (image) => image.id !== action.payload
-        ),
+        images: state.products.filter((image) => image.id !== action.payload),
       };
 
     ////////////////////////////////////   MULTER   //////////////////////////////////////////
-
-
-
-
 
     ////////////////////////////////////   MSJ ERROR   //////////////////////////////////////////
 
@@ -345,12 +294,6 @@ function ReducerProducts(state = inicialState, action) {
       return { ...state };
 
     ////////////////////////////////////   MSJ ERROR   //////////////////////////////////////////
-
-
-
-
-
-
 
     ////////////////////////////////////////////////////////////////
     case GET_ORDERS_STATUS:
@@ -391,6 +334,9 @@ function ReducerProducts(state = inicialState, action) {
       return {};
     case UPDATE_ORDER_TO_REJECT:
       return {};
+    case SHIPPING_ADDRESS:
+      return { ...state, shippingAddres: action.payload };
+
     default:
       return state;
   }
