@@ -4,7 +4,7 @@ const { Op } = require("sequelize");
 const adminAuth = require("../utils/authMiddleware.js")
 
 /////////////////GET A CATEGORIAS ///////////////
-server.get("/", (req, res, next) => {
+server.get("/", adminAuth, (req, res, next) => {
   Category.findAll()
     .then((categories) => {
       res.send(categories).status(200);

@@ -129,7 +129,7 @@ server.get("/", adminAuth, async (req, res, next) => {
 // get orders/filter se pasa el filtro de busqueda en el query. Acepta ?status=valor
 // siendo valor = "carrito", "creada", "procesando", "cancelada", "completa"
 // incluye Order con el modelo User y Products
-server.get("/filter/", async (req, res) => {
+server.get("/filter/", adminAuth, async (req, res) => {
   const { status } = req.query;
   let parametrosQuery;
 

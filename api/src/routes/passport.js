@@ -70,7 +70,7 @@ async function(accessToken, refreshToken, profile, done) {
      defaults: {
        givenname: profile.name.givenName + (!!profile.name.middleName ? ` ${profile.name.middleName}` : ""),
        familyname: profile.name.familyName,
-       email: profile.emails[0].value,
+//       email: profile.emails[0].value,
        facebookID: profile.id,
      }
    }); done(null, usuario[0]);
