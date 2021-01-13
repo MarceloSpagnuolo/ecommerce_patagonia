@@ -10,6 +10,7 @@ const Check = (props) => {
 
     useEffect(() => {
         dispatch(getCategories());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     function estado(e) {
@@ -22,7 +23,7 @@ const Check = (props) => {
 
     function comprueba(id) {
         let response = false;
-        props.data.categories && props.data.categories.map(element => {
+        props.data.categories && props.data.categories.forEach(element => {
             if (element.id === id) {
                 response = true
             }
@@ -33,7 +34,7 @@ const Check = (props) => {
     return (
         <div className="CheckCategories-Checkboxs">
             {categories.length > 0 && categories.map((p) => (
-                <label>
+                <label key={p.id}>
                     <input className="CheckCategories-Check" onChange={estado.bind(this)} type="checkbox" name="prueba" value={p.id} defaultChecked={comprueba(p.id)} />
                     {p.name}{toggle}
                 </label>

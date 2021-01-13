@@ -7,7 +7,7 @@ import "./Table.css";
 const Table = (props) => {
   function handleClick(beer) {
 
-    var result = window.confirm("Want to delete?");
+    var result = window.confirm("¿Seguro desea eliminar este producto?");
     if (result) {
       props.deleteProduct(beer.id);
     }
@@ -30,6 +30,7 @@ const Table = (props) => {
         categories: beer.categories,
       });
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [props.onUpdate]
   );
   return (

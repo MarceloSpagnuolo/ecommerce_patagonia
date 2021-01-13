@@ -58,19 +58,19 @@ passport.use(new FacebookStrategy({
   clientID: "331736574540258",
   clientSecret: "ffacf6d0f331622338d47715cd3eddaa",
   callbackURL: "http://localhost:3001/auth/facebook/callback",
-  session: false
+  session: false,
+  profileFields: ['id', 'email', 'locale', 'name', 'verified'],
 },
 async function(accessToken, refreshToken, profile, done) {
-  const nombre = profile.displayName.split(" ")
   const usuario = await User.findOrCreate({ 
     where: {
       facebookID: profile.id
       //usar un or con email también.
      },
      defaults: {
-       givenname: nombre[0],
-       familyname: nombre[(nombre.length-1)],
-       email: profile.email,
+       givenname: profile.name.givenName + (!!profile.name.middleName ? ` ${profile.name.middleName}` : ""),
+       familyname: profile.name.familyName,
+       email: profile.emails[0].value,
        facebookID: profile.id,
      }
    }); done(null, usuario[0]);

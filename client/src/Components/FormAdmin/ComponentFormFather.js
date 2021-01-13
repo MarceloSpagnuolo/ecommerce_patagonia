@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { getProductJoinCategory } from "../../store/actions/index";
 import "./ComponentFormFather.css"
 import Modal from "../Modal/Modal.js";
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 
 const ComponentFormFather = (props) => {
     const [display, setDisplay] = useState(false);
@@ -17,6 +17,7 @@ const ComponentFormFather = (props) => {
         //Axios backend listar
         props.getProductJoinCategory()
         setBeers(props.products)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [edit])
 
     const seteadora = (set, state) => {
@@ -43,7 +44,7 @@ const ComponentFormFather = (props) => {
         </>
     )
         : <div className="Authorized-Container">
-            <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" />
+            <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" alt=""/>
           </div>
 }
 

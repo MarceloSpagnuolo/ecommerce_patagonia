@@ -22,7 +22,7 @@ const ImageForm = (props) => {
     }
 
     const handleSubmit = () => {
-        image.map(i => {
+        image.forEach(i => {
             uploadAction(i);
             dispatch(addImages(i.name, props.id))
         })

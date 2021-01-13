@@ -1,7 +1,7 @@
 import React, { useEffect, useState  } from "react";
 import axios from "axios";
 import { useSelector, useDispatch} from "react-redux";
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 import { getUsers, putRoleUser } from "../../../store/actions";
 import "./tableUsers.css"
 
@@ -13,6 +13,7 @@ const TableUser = () => {
 
     useEffect(() => {
         dispatch(getUsers());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cambio]);
 
 
@@ -23,7 +24,6 @@ const TableUser = () => {
     const handleDelete = (id) => {
         axios.delete(`http://localhost:3001/users/${id}`)
         setCambio(!cambio)
-        console.log(cambio)
     }
 
     return user.role === "admin" ? (
@@ -75,7 +75,7 @@ const TableUser = () => {
         </div>
     )
     : <div className="Authorized-Container">
-        <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" />
+        <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" alt=""/>
       </div>
 }
 

@@ -4,32 +4,6 @@ const db = require("../db.js");
 const { Order, Order_products, User, Product } = db
 const adminAuth = require("../utils/authMiddleware.js")
 
-/*inc debería venir un array. Debemos contestar con un array del modelo.
-caso base: inc = ["algo", "otra cosa"] => response =  ["algo", "otra cosa"]
-caso inc es objeto = [{model: "algo"}] */
-
-/*
-function getIncludes(inc){
-    let response = [];
-    for(const value of inc){
-        if(typeof value === "string") {
-            response.push(db[value])
-            // puede ser que sea con punto (db.[inc])
-            } else {
-                let result = {
-                    model: db[value.model]
-                }
-                value.include && (result.include = getIncludes(value.include))
-                response.push(result);
-            }
-    }   
-    return response;
-}
-
-Esta función por ahora la comento pero va a ser la que eventualmente vamos a usar en todos los llamados
-get que tengan limit,where, etc. para hacerlas super dinámicas.
-*/
-
 server.get("/:userId/cart", async (req, res) => {
   const { userId } = req.params;
   const order = await Order.findOne({
@@ -179,7 +153,7 @@ server.get("/filter/", async (req, res) => {
 ///////////////////S47/////////////////
 //Considerando que se actualiza el carrito, se pide que obligatoriamente manden id, total, date y status
 //Si sólo quieren cambiar un parámetro, deben mandar todos manteniendo el valor los que no quieran que se cambien.
-//Puede devolver undefined si la oden a modificar no existe.
+//Puede devolver undefined si la orden a modificar no existe.
 server.put(`/:id`, async (req, res) => {
   const { id } = req.params;
 
