@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { shippingAddress } from '../../store/actions';
 import './Shipping.css';
 
-import CheckoutSteps from './CheckoutSteps';
-
 export default function Shipping(props) {
   const { user } = useSelector(state => state);
 
@@ -49,7 +47,7 @@ export default function Shipping(props) {
   const dispatch = useDispatch();
   return (
     <div>
-      <CheckoutSteps step1 step2></CheckoutSteps>
+      
 
       <h1 className='shipping__title'>DIRECCION DE ENVIO</h1>
 

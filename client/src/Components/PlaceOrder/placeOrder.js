@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import CheckoutSteps from '../shipping/CheckoutSteps';
 import './placeOrder.css';
 
 export default function PlaceOrderScreen() {
   const { order, user } = useSelector(state => state);
   const [ total, setTotal ] = useState(0);
+  const [ edit, setEdit ] = useState(false);
 
   useEffect(() => {
     if (order.products && order.products.length > 0) {
@@ -25,45 +25,51 @@ export default function PlaceOrderScreen() {
             <li>
               <div className='card card-body'>
                 <h2>Envio</h2>
-                <form>
+                { edit ? <form>
                   <div>
                     <label for="name">Usuario</label><br />
-                    <input readonly="true" name="name" type="text" />
+                    <input className="Place-Input" value={user.givenname+" "+user.familyname} readonly="true" name="name" type="text" />
                   </div>
                   <div>
                     <label for="adress">Dirección *</label><br />
-                    <input name="adress" type="text" required
+                    <input className="Place-Input" value={user.adress} name="adress" type="text" required
                     title="Debe ingresar una dirección válida" />
                     
                   </div>
                   <div>
                     <label for="city">Ciudad *</label><br />
-                    <input name="city" type="text" required />
+                    <input className="Place-Input" value={user.city} name="city" type="text" required />
                   </div>
                   <div>
                     <label for="phone">Teléfono *</label><br />
-                    <input name="phone" type="tel"
+                    <input className="Place-Input" value={user.phone} name="phone" type="tel"
                       pattern="[0-9]{2,4} [0-9]{2,4}[-][0-9]{4}"
                       title="Ej: 11 9999-9999" required />
                   </div>
                   <div>
-                    <button type="submit">Aceptar</button>
+                    <button className="Order-Confirmar" type="submit">Confirmar cambios</button>
                   </div>
-                </form>
-                <p>
-                  <strong>
-                    Nombre: {user.givenname} {user.familyname}
-                  </strong>
-                  <br />
-                  <strong>Dirección: {user.address}</strong>
-                  <br />
-                  <span>Ciudad:  {user.city}</span>
-                  <br />
-                  <span>Código Postal:{user.postal}</span>
-                  <br />
-                  <span>Teléfono: {user.phone}</span>
-                  <br />
-                </p>
+                </form> :
+                <div className="Order-Datos">
+                    <div>
+                    <strong>
+                      Nombre: {user.givenname} {user.familyname}
+                    </strong>
+                    <br />
+                    <strong>Dirección: {user.address}</strong>
+                    <br />
+                    <span>Ciudad:  {user.city}</span>
+                    <br />
+                    <span>Código Postal:{user.postal}</span>
+                    <br />
+                    <span>Teléfono: {user.phone}</span>
+                    <br />
+                  </div>
+                  <div>
+                    <button onClick={() => setEdit(true)} className='Order-Confirmar'>Completar o Editar Información</button>
+                  </div>
+
+                </div>}
               </div>
             </li>
             <li>

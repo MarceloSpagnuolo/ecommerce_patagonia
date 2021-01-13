@@ -16,10 +16,7 @@ import TableUser from './Components/FormAdmin/TableUsers/tableUsers.js';
 import Unauthorized from './Components/Unauthorized/unauthorized.js';
 import Contacto from './Components/Contacto/contacto.js';
 import Profile from './Components/Profile/Profile.js';
-
 import ImageForm from './Components/Multer/Multer';
-import Shipping from './Components/shipping/Shipping.js';
-import Payment from './Components/payment/Payment.js';
 import PlaceOrderScreen from './Components/PlaceOrder/placeOrder.js';
 
 function App() {
@@ -42,8 +39,6 @@ function App() {
       <Route exact path='/contacto' component={Contacto} />
       <Route exact path='/admin/users' component={TableUser} />
       <Route exect path='/profile' component={Profile} />
-      <Route exact path='/payment' component={Payment} />
-      <Route exact path='/checkout' component={Shipping} />
       <Route exact path='/placeorder' component={PlaceOrderScreen} />
       <Route exact path='/as' component={ImageForm} />
     </>

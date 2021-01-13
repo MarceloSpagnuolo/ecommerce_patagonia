@@ -37,6 +37,7 @@
   font-size: 18px;
   margin-top: 30px;
   margin-left: 5px;
+  border-radius: 5px;
 }
 
 .Order-Confirmar:hover {
@@ -101,4 +102,16 @@ ul {
 
 .Order-Detail-Container {
   width: 75%;
+}
+
+.Order-Datos {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Place-Input {
+  width: 70%;
+  font-size: 25px;
 }

@@ -155,7 +155,7 @@ function Carrito() {
         >
           Vaciar carrito
         </button>
-        <Link to="/checkout">
+        <Link to="/placeorder">
         <button
           className='Carrito-Continuar'
           title={user.id === 0 ? "Debe ser un usuario registrado para continuar la compra" : null }
