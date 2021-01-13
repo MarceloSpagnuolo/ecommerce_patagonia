@@ -20,11 +20,11 @@ const Product = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { order, reviews, user } = useSelector(state => state);
-console.log(user)
   useEffect(() => {
     props.match.params.id && props.getProductById(props.match.params.id)
     dispatch(getReviews())
     return function cleanup() { };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -39,6 +39,7 @@ console.log(user)
     setN(final)
     setR(rev)
     if (final > 0) setA(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reviews])
 
   function addCart() {
@@ -97,7 +98,7 @@ console.log(user)
               id="Sumar-RestarM"
               disabled={props.products.stock === 0}
               onClick={() => {
-                setCount(count + 1);
+                count < props.products.stock && setCount(count + 1);
               }}
             >
               +

@@ -12,11 +12,12 @@ const Order = (props) => {
 
     useEffect(() => {
         props.match.params.id && dispatch(getOrderById(props.match.params.id));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
         var sum = 0;
-        !!orders.products && orders.products.map((prod) => {
+        !!orders.products && orders.products.forEach((prod) => {
             sum += prod.Order_products.unitprice * prod.Order_products.quantity
         })
         setTotal(sum)
@@ -60,7 +61,7 @@ const Order = (props) => {
 
     ) :
     <div className="Authorized-Container">
-        <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" />
+        <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" alt="imagen401"/>
     </div>
 }
 

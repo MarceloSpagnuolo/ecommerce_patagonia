@@ -50,12 +50,14 @@ function Home(props) {
           props.getUserByToken(token);
         }
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     if (props.user.id > 0) {
       props.getCartByUser(props.user.id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.user])
 
   useEffect(() => {
@@ -63,7 +65,7 @@ function Home(props) {
     if (props.user.id > 0) {
       const localCart = JSON.parse(localStorage.getItem("guestCart"));
       if (localCart && localCart.products && localCart.products.length > 0) {
-        localCart.products.map((elem) => {
+        localCart.products.forEach((elem) => {
           dispatch(postProductToCart(props.order.id, elem.id, { unitprice: elem.Order_products.unitprice, quantity: elem.Order_products.quantity }))
         })
       }
@@ -75,6 +77,7 @@ function Home(props) {
     } else {
       setTotal(0);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.order])
 
   function handleClick() {

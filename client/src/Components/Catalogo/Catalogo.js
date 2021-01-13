@@ -44,6 +44,7 @@ function Catalogo(props) {
           setCount(res.data.count);
         })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categ, props.location.search, props.history.location.pathname]) //se ejecuta cuando categ cambia
 
   useEffect(() => {
@@ -60,6 +61,7 @@ function Catalogo(props) {
 
     dispatch(getCategories());
     return function cleanup() { };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagina, categ, props.location.search, props.history.location.pathname]); // Este useEffect se ejecuta cuando cambia la página
 
   function handleClick(cat) {
@@ -80,6 +82,7 @@ function Catalogo(props) {
 
     dispatch(getCategories());
     return function cleanup() { };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagina, categ]); // Este useEffect se ejecuta cuando cambia la página
 
 
