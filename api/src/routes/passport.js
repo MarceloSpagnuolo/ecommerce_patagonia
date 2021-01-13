@@ -4,17 +4,7 @@ const BearerStrategy = require("passport-http-bearer").Strategy;
 const { User } = require("../db.js");
 const jwt = require("jsonwebtoken");
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
-const GitHubStrategy = require( 'passport-github2' ).Strategy;
-
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-  });
-  
-  passport.deserializeUser( async function(id, done) {
-    const usuario = await User.findByPk(id);
-    done(null, usuario)
-  });
-
+const FacebookStrategy = require( 'passport-facebook' ).Strategy;
 
 passport.use(
   new LocalStrategy( 
@@ -41,12 +31,13 @@ passport.use(new GoogleStrategy({
   clientID: '328443840831-f6gnbi1skjvj8bih1r5bm388gu2g80st.apps.googleusercontent.com',
   clientSecret: 'seHWMC-hymiQVRNkRtlYtF42',
   callbackURL: "/auth/google/callback",
-  passReqToCallback   : true
+  session: false
 },
 async function(request, accessToken, refreshToken, profile, done) {
  const usuario = await User.findOrCreate({ 
    where: {
      googleID: profile.id
+     //usar un or con email también.
     },
     defaults: {
       givenname: profile.given_name,
@@ -55,27 +46,30 @@ async function(request, accessToken, refreshToken, profile, done) {
       googleID: profile.id,
     }
   }); done(null, usuario[0])
-}
+}                            
 ));
 
 
-passport.use(new GitHubStrategy({
-  clientID: "0d14b759471f535ef16a",
-  clientSecret: "ebd4d25aefe97acc2b6c9fc09293534f7268dfc4",
-  callbackURL: "/auth/github/callback"
+passport.use(new FacebookStrategy({
+  clientID: "331736574540258",
+  clientSecret: "ffacf6d0f331622338d47715cd3eddaa",
+  callbackURL: "http://localhost:3001/auth/facebook/callback",
+  session: false
 },
 async function(accessToken, refreshToken, profile, done) {
+  const nombre = profile.displayName.split(" ")
   const usuario = await User.findOrCreate({ 
     where: {
-      githubID: profile.id
+      facebookID: profile.id
+      //usar un or con email también.
      },
      defaults: {
-      givenname: "profile.given_name",
-      familyname: "profile.family_name",
-       email: profile.emails[0].value,
-       githubID: profile.id,
+       givenname: nombre[0],
+       familyname: nombre[(nombre.length-1)],
+       email: profile.email,
+       facebookID: profile.id,
      }
-   }); done(null, usuario[0])
+   }); done(null, usuario[0]);
  }
  ));
 
