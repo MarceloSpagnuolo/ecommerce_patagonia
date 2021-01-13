@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { browserHistory } from 'react-router';
 import axios from "axios";
 import "./login.css";
 import { useDispatch } from "react-redux";
 import { getUserByToken } from "../../store/actions/index.js"
 
-function Login({ guestId, show, onClose }) {
+function Login({ guestId, show, onClose }, props) {
     const dispatch = useDispatch();
     const [estado, setEstado] = useState({
         email: '',
         password: ''
     })
 
-    function handleReset() {
+     function handleReset() {
         alert("Ruta de MailGun");
     }
 
@@ -63,16 +64,16 @@ function Login({ guestId, show, onClose }) {
                         <Link to="/registro" className="ToRegis" onClick={() => { onClose && onClose() }}>Registrarse</Link>
                     </div>
                     <div className="Login-Btn-Social btnGoogleLogin">
-                        <button className="Login-Btn-Google">
+                        <a href="http://localhost:3001/auth/google" className="Login-Btn-Google">
                             Acceder con Google
                             <img src="http://localhost:3001/images/google.png" className="Login-Logo-Btn googleIcon" alt="img-google" />
-                        </button>
+                        </a>
                     </div>
                     <div className="Login-Btn-Social btnFaceLogin" >
-                        <button className="Login-Btn-Facebook">
+                        <a href="http://localhost:3001/auth/facebook" className="Login-Btn-Facebook">
                             Acceder con Facebook
                             <img src="http://localhost:3001/images/facebook.png" className="Login-Logo-Btn faceIcon" alt="img-facebook" />
-                        </button>
+                        </a>
                     </div>
                     <div className="LoginDiv-Footer loginEntrarSalir">
                         <button className="Login-Btn-Down" id="Login-Cancel" onClick={() => { onClose && onClose() }}>Cancelar</button>

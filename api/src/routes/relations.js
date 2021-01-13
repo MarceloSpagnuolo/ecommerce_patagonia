@@ -1,8 +1,9 @@
 const server = require("express").Router();
 const { Product, Category } = require("../db.js");
+const adminAuth = require("../utils/authMiddleware.js")
 
 /////////////////// S17 //////////////////
-server.post("/:idProducto/category/:idCategoria", async (req, res) => {
+server.post("/:idProducto/category/:idCategoria", adminAuth, async (req, res) => {
   try {
     const { idProducto, idCategoria } = req.params;
 
@@ -25,7 +26,7 @@ server.post("/:idProducto/category/:idCategoria", async (req, res) => {
   }
 });
 
-server.delete("/:idProducto/category/:idCategoria", async (req, res) => {
+server.delete("/:idProducto/category/:idCategoria", adminAuth, async (req, res) => {
   try {
     const { idProducto, idCategoria } = req.params;
 

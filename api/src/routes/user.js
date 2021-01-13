@@ -2,6 +2,7 @@ const server = require("express").Router();
 const { User, Product, Order, Order_products } = require("../db.js");
 const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
+const adminAuth = require("../utils/authMiddleware.js")
 
 /////////// S34 ///////////////////
 //Creación de usuario. City, adress, phone y postal no son obligatorios.
@@ -116,7 +117,7 @@ server.get("/:userId", async (req, res) => {
 })
 //////////////// 36 /////////////////////////
 
-server.get("/", (req, res, next) => {
+server.get("/", adminAuth, (req, res, next) => {
   //Get de todos o un producto específico con sus categorías
   let { limit, offset, order, where, include } = req.query; //Destructuring del Query
   // order tiene que recibier un array con la columna entre comillas dobles

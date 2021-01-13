@@ -1,6 +1,7 @@
 const server = require("express").Router();
 const { Product, Category } = require("../db.js");
 const { Op } = require("sequelize");
+const adminAuth = require("../utils/authMiddleware.js")
 
 /////////////////GET A CATEGORIAS ///////////////
 server.get("/", (req, res, next) => {
@@ -12,7 +13,7 @@ server.get("/", (req, res, next) => {
 });
 
 ///////////////////// S18 ////////////////////
-server.post("/", async (req, res) => {
+server.post("/", adminAuth, async (req, res) => {
   const { name, description } = req.body;
 
   const newCategory = await Category.findOrCreate({
@@ -31,7 +32,7 @@ server.post("/", async (req, res) => {
 //////////////////// S18 ///////////////////
 
 //////////////////// S19 /////////////////////
-server.delete("/:id", async (req, res) => {
+server.delete("/:id", adminAuth, async (req, res) => {
   const { id } = req.params;
 
   const delCategory = await Category.destroy({
@@ -47,7 +48,7 @@ server.delete("/:id", async (req, res) => {
 ////////////////////// S19 //////////////////////
 
 //////////////////// S20 /////////////////////
-server.put("/:id", async (req, res) => {
+server.put("/:id", adminAuth, async (req, res) => {
   const { id } = req.params;
   const { name, description } = req.body;
 

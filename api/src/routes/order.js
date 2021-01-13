@@ -2,6 +2,7 @@ const server = require("express").Router();
 const { DATE } = require("sequelize");
 const db = require("../db.js");
 const { Order, Order_products, User, Product } = db
+const adminAuth = require("../utils/authMiddleware.js")
 
 /*inc debería venir un array. Debemos contestar con un array del modelo.
 caso base: inc = ["algo", "otra cosa"] => response =  ["algo", "otra cosa"]
@@ -117,7 +118,7 @@ server.post("/:orderId/cart/:productId", async (req, res) => {
 
 ////////////////S44////////////////
 //// 'Get Orders' route = '/'
-server.get("/", async (req, res, next) => {
+server.get("/", adminAuth, async (req, res, next) => {
   //Get de todas o una orden específica con sus productos
   let { limit, offset, order, where, include } = req.query; //Destructuring del Query
   // order tiene que recibier un array con la columna entre comillas dobles
