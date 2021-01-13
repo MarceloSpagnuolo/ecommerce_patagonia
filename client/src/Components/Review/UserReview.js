@@ -22,9 +22,10 @@ const UserReview = (props) => {
     return (
         <>
             {!!review && review.length > 0 && review.map((m) => {
+                console.log(m)
                 return (
-                    <div className="asdas" key={m.productId + "%" + m.userId}>
-                        <div className="userReview" ><h3>{m.user !== undefined ? m.user.givenname : "Anonimo"}</h3></div>
+                    <div className="asdas" id={m.user.role === "deleted" ? "uDelRev": ""}  key={m.productId + "%" + m.userId}>
+                        <div className="userReview" ><h3>{m.user !== undefined && m.user.role !== "deleted"  ? m.user.givenname : "Usuario Eliminado"}</h3></div>
                         <div className="userRateReview"> <ReviewStarts rate={m.rate} size={30} /></div>
                         <div className="userCommentReview"><p>{m.comment}</p></div>
                         <div className="userDateReview">{m.date}</div>
