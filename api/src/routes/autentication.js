@@ -58,7 +58,7 @@ server.get("/google/callback", function(req, res, next) {
     if (!user) {
       res.sendStatus(404);
     } else {
-      const token = jwt.sign({id:user.id, givenname: user.givenname, familyname: user.familyname, email: user.email, role:user.role}, "secreto");
+      const token = jwt.sign({id:user.id, givenname: user.givenname, familyname: user.familyname, email: user.email, city: user.city, adress: user.adress, phone: user.phone, postal: user.postal, role:user.role}, "secreto");
       res.redirect(`http://localhost:3000/?token=${token}`);
     }
   })(req, res, next);
@@ -75,7 +75,7 @@ server.get("/facebook/callback", function(req, res, next) {
     if (!user) {
       res.sendStatus(404);
     } else {
-      const token = jwt.sign({id:user.id, givenname: user.givenname, familyname: user.familyname, email: user.email, role:user.role}, "secreto");
+      const token = jwt.sign({id:user.id, givenname: user.givenname, familyname: user.familyname, email: user.email, city: user.city, adress: user.adress, phone: user.phone, postal: user.postal, role:user.role}, "secreto");
       res.redirect(`http://localhost:3000/?token=${token}`);
     }
   })(req, res, next);

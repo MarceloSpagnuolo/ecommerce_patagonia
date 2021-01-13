@@ -14,12 +14,16 @@ passport.use(
       if (!user) return done(null, false, "No se encontró el user");
       if (!user.compare(password))
         return done(null, false, "Contraseña incorrecta");
-      const { id, givenname, familyname, email: userEmail, role } = user;
+      const { id, givenname, familyname, email: userEmail, city, adress, phone, postal, role } = user;
       return done(null, {
         id,
         givenname,
         familyname,
         email: userEmail,
+        city,
+        adress,
+        phone,
+        postal,
         role,
       }); 
     }
