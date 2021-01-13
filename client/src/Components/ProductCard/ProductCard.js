@@ -19,7 +19,7 @@ export default function ProductCard(props) {
         if (el.id === props.id) {
           if (props.stock <= el.Order_products.quantity) {
             flag = false;
-            alert("Ya sumó el número máximo de elementos");
+            alert("Stock Insuficiente");
           }
         }
       });

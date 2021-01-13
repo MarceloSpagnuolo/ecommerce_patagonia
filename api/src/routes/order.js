@@ -63,16 +63,27 @@ server.post("/:orderId/cart/:productId", async (req, res) => {
   });
 
   if(producto) {    //Si el producto ya está agregado al carrito
-    const cantidad = producto.quantity + quantity;
-    const sumado = await Order_products.update({
-      quantity: cantidad},
-      {where: {
-        orderId,
-        productId
+
+    const singleProduct = await Product.findOne({
+      where: {
+        id: productId
       }
     })
+
+    var cantidad = producto.quantity + quantity;
+    
+    cantidad = cantidad > singleProduct.stock ? singleProduct.stock : cantidad
+    
+      await Order_products.update({
+        quantity: cantidad},
+        {where: {
+          orderId,
+          productId
+        }
+      })
+    
   } else {    //Si el producto no estaba agregado al carrito
-    const agregado = await Order_products.create({
+    await Order_products.create({
       orderId,
       productId,
       quantity,
