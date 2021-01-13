@@ -53,6 +53,10 @@
  
 }
 
+#uDelRev{
+    opacity: 0.4;
+}
+
 @media screen and (max-width: 1300px){
     .asdas{
         grid-template-rows: 50px 50px 100px;

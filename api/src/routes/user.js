@@ -268,6 +268,27 @@ server.post("/passwordReset", async (req, res) => {
   !passwordReset ? res.sendStatus(400) : res.json(token);
 });
 
+/////////////////////////////S37///////////////////////
+
+server.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const deletedUser = await User.update(
+    {
+      email: null,
+      role: "deleted"
+    },
+    {
+      where: {
+        id,
+      },
+      returning: true,
+    }
+    );
+
+    !deletedUser ? res.sendStatus(400) : res.json(deletedUser);
+})
+
 /////////////// Fin de rutas en Users ///////////////
 
 module.exports = server;
