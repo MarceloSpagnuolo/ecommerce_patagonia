@@ -99,6 +99,7 @@ function TableOrders(props) {
                                         </td>
                                         <td>{ord.total}</td>
                                         <td className="botonFeo">
+                                            
                                             <div>
                                                 <Link to={`/admin/orders/${ord.id}`}>
                                                     <button className="bottom-orders-user">Ver Orden</button>
