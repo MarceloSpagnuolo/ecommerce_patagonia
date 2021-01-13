@@ -1,6 +1,7 @@
 const server = require("express").Router();
 const { Product, Category } = require("../db.js");
 const { Op } = require("sequelize");
+const adminAuth = require("../utils/authMiddleware.js")
 
 
 // Busca una cadena en el nombre o descripcion del producto \\\\\
@@ -93,7 +94,7 @@ server.get("/:id", async (req, res) => {
 //////////////////////////////////////////////////
 
 ///////////////////delete producto/////////////////
-server.delete("/removeProduct/:id", async (req, res) => {
+server.delete("/removeProduct/:id", adminAuth, async (req, res) => {
   const { id } = req.params;
   const remove = await Product.destroy({
     where: {
@@ -109,7 +110,7 @@ server.delete("/removeProduct/:id", async (req, res) => {
 
 
 // Inserta un nuevo Producto ////////////////////
-server.post("/", async (req, res) => {
+server.post("/", adminAuth, async (req, res) => {
   const {
     name,
     appearance,
@@ -137,7 +138,7 @@ server.post("/", async (req, res) => {
 ////////////////////// S25 //////////////////////
 
 // Modifica un producto específico /////////////
-server.put("/:id", async (req, res) => {
+server.put("/:id", adminAuth, async (req, res) => {
   const { id } = req.params;
   const {
     name,
@@ -185,7 +186,7 @@ server.put("/:id", async (req, res) => {
 
 
 ////////////////////// S27 //////////////////////
-server.delete("/:id", async (req, res) => {
+server.delete("/:id", adminAuth, async (req, res) => {
   const { id } = req.params;
 
   const product = await Product.destroy({
