@@ -7,7 +7,7 @@ import './Shipping.css';
 import CheckoutSteps from './CheckoutSteps';
 
 export default function Shipping(props) {
-  const user = useSelector((state) => state.user);
+  const { user } = useSelector(state => state);
 
   const initialValues = {
     givenname: user.givenname,
@@ -53,7 +53,7 @@ export default function Shipping(props) {
 
       <h1 className='shipping__title'>DIRECCION DE ENVIO</h1>
 
-      <Formik
+      {user.id && <Formik
         initialValues={initialValues}
         validate={validate}
         onSubmit={onSubmit}
@@ -69,6 +69,7 @@ export default function Shipping(props) {
                   id='givenname'
                   name='givenname'
                   placeholder='Nombre'
+                  readonly="true"
                 />
                 <ErrorMessage name='givenname'>
                   {(errorMsg) => (
@@ -84,6 +85,7 @@ export default function Shipping(props) {
                   id='familyname'
                   name='familyname'
                   placeholder='Apellido'
+                  readonly="true"
                 />
                 <ErrorMessage name='familyname'>
                   {(errorMsg) => (
@@ -95,10 +97,12 @@ export default function Shipping(props) {
                 <label htmlFor='phone'>Telefono</label>
                 <Field
                   className='shipping__form__input'
-                  type='text'
+                  type='tel'
                   id='phone'
                   name='phone'
-                  placeholder='Telefono'
+                  /* placeholder='Ej: (011) 3456-9999' */
+                  pattern="[0-9]{3,5} [0-9]{2,4}[-][0-9]{4}"
+                  title="Ej: 011 9999-9999"
                 />
                 <ErrorMessage name='phone'>
                   {(errorMsg) => (
@@ -113,7 +117,7 @@ export default function Shipping(props) {
                   type='address'
                   id='address'
                   name='address'
-                  placeholder='Direccion'
+                 /*  placeholder='Direccion' */
                 />
                 <ErrorMessage name='address'>
                   {(errorMsg) => (
@@ -128,7 +132,7 @@ export default function Shipping(props) {
                   type='text'
                   id='city'
                   name='city'
-                  placeholder='Ciudad'
+                  /* placeholder='Ciudad' */
                 />
                 <ErrorMessage name='city'>
                   {(errorMsg) => (
@@ -143,7 +147,7 @@ export default function Shipping(props) {
                   type='text'
                   id='postal'
                   name='postal'
-                  placeholder='Codigo Postal'
+                  /* placeholder='Codigo Postal' */
                 />
                 <ErrorMessage name='postal'>
                   {(errorMsg) => (
@@ -164,7 +168,7 @@ export default function Shipping(props) {
             </Form>
           );
         }}
-      </Formik>
+      </Formik>}
     </div>
   );
 }

@@ -1,23 +1,27 @@
-[33mcommit da290c411e4f8e2b2c1e0540316941b626d81a79[m[33m ([m[1;36mHEAD -> [m[1;32mS5[m[33m, [m[1;32mS17[m[33m)[m
-Author: Daniel-Ignacio-Nieto <ignacionieto65@hotmail.com>
-Date:   Wed Dec 9 18:38:02 2020 -0300
+curl -X POST \
+-H "Content-Type: application/json" \
+-H 'Authorization: Bearer APP_USR-1492138033073934-011300-1f6ee7d38816d1027c375bb7f572c546-106391337' \
+"https://api.mercadopago.com/users/test_user" \
+-d '{"site_id":"MLA"}'
 
-    S17 mas Data import
+//Usuarios de prueba
+{"id":700852958,"nickname":"TETE646448","password":"qatest1608","site_status":"active","email":"test_user_52791541@testuser.com"}
+{"id":700851999,"nickname":"TETE2915922","password":"qatest2567","site_status":"active","email":"test_user_44392250@testuser.com"}
+{"id":700853092,"nickname":"TEST5W66OIJW","password":"qatest4424","site_status":"active","email":"test_user_85785308@testuser.com"}
+{"id":700855231,"nickname":"TESTSKBBINST","password":"qatest8790","site_status":"active","email":"test_user_27274924@testuser.com"}
+{"id":700855365,"nickname":"TESTHKEYF2A1","password":"qatest2785","site_status":"active","email":"test_user_19283290@testuser.com"}
 
-[33mcommit db8af7baa4ee52a40b1bfe8ba5d5f94eb4d39005[m[33m ([m[1;31morigin/S5[m[33m)[m
-Author: Daniel-Ignacio-Nieto <ignacionieto65@hotmail.com>
-Date:   Wed Dec 9 15:03:51 2020 -0300
+//Tarjetas de credito de prueba
+Tarjeta	         Número	               Código de seguridad	Fecha de vencimiento
+Mastercard	     5031 7557 3453 0604   123	                11/25
+Visa	         4509 9535 6623 3704   123	                11/25
+American Express 3711 803032 57522	   1234	                11/25
 
-    S5
-
-[33mcommit 7349ed9eafb16ce137ceac6980a26b34468ffac6[m[33m ([m[1;31morigin/S4[m[33m, [m[1;32mS4[m[33m)[m
-Author: Daniel-Ignacio-Nieto <ignacionieto65@hotmail.com>
-Date:   Wed Dec 9 14:50:39 2020 -0300
-
-    S4
-
-[33mcommit f6f5eb8b662312e88107b5a7a6f53555b3d128ca[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
-Author: agusamani <amanijuanagustin@gmail.com>
-Date:   Mon Oct 5 14:26:14 2020 -0300
-
-    first commit
+Access Token
+APP_USR-1492138033073934-011300-1f6ee7d38816d1027c375bb7f572c546-106391337
+Public Key
+APP_USR-a062fc5c-2d1c-4874-ac71-09342c9dac42
+Client ID
+1492138033073934
+Client Secret
+dfIwmn4PdQhBFW87ZYtSdra5Ffe2s4HH

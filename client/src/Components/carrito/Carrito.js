@@ -6,11 +6,11 @@ import {
   emptyAllProductsOfCart,
 } from '../../store/actions';
 import './Carrito.css';
+import { Link } from "react-router-dom";
 
 function Carrito() {
   const [total, setTotal] = useState(0);
-  const { order } = useSelector((state) => state);
-  console.log(order);
+  const { order, user } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [modal1, setModal1] = useState(false);
   const [modal2, setModal2] = useState(false);
@@ -27,10 +27,6 @@ function Carrito() {
     setTotal(cal);
   }, [order]);
 
-  // useEffect(() => {
-  //     dispatch(getCartByUser(idUserCurrent))
-  //     !order && order.length === 0 && dispatch(postCreateCart(idUserCurrent))
-  // },[]);
   function handleCantidad(orderId, prodId, unitprice, quantity) {
     dispatch(postProductToCart(orderId, prodId, { unitprice, quantity }));
   }
@@ -61,6 +57,14 @@ function Carrito() {
 
   function cancelEmptyCart() {
     setModal2(false);
+  }
+
+  function handleContinuar() {
+    //corroborar stock
+    //cambia el stock
+    //cambia el estado de la order a creada
+    //pone el total en la order
+    //redireccionar
   }
 
   return (
@@ -151,12 +155,16 @@ function Carrito() {
         >
           Vaciar carrito
         </button>
+        <Link to="/checkout">
         <button
           className='Carrito-Continuar'
-          disabled={order.products && order.products.length === 0}
+          title={user.id === 0 ? "Debe ser un usuario registrado para continuar la compra" : null }
+          disabled={order.products && order.products.length === 0 || user.id === 0}
+          onClick={() => handleContinuar()}
         >
           Continuar compra
         </button>
+        </Link>
       </div>
       <div className='Modal-Container' id={modal1 ? 'modal1' : null}>
         <div className='Modal-Content'>

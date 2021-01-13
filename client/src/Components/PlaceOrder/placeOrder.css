@@ -77,3 +77,28 @@ ul {
 .card-body > * {
   margin-bottom: 0.5rem;
 }
+
+.Order-Products {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.Order-Product-Name {
+  margin-top: -10px;
+}
+
+.Order-Products-List {
+  margin-bottom: 20px;
+  border-bottom: solid 1px gray;
+  padding-bottom: 5px;
+}
+
+.Order-Imagen-Container,
+.Order-Total-Container {
+  width: 20%;
+}
+
+.Order-Detail-Container {
+  width: 75%;
+}
