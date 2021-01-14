@@ -1,8 +1,7 @@
 const server = require("express").Router();
-const { Product, Category } = require("../db.js");
+const { Product, Category, Order_products, Order } = require("../db.js");
 const { Op } = require("sequelize");
-const adminAuth = require("../utils/authMiddleware.js")
-
+const adminAuth = require("../utils/authMiddleware.js");
 
 // Busca una cadena en el nombre o descripcion del producto \\\\\
 ///////////////Busqueda con count para hacer la paginación////////////
@@ -200,5 +199,46 @@ server.delete("/:id", adminAuth, async (req, res) => {
 });
 
 ////////////////////// S27 //////////////////////
+
+server.post("/controlstock/:productId", async (req, res) => {
+  const { productId } = req.params;
+  const { quantity, orderId } = req.body;
+  var cantidad;
+  var orden;
+
+  const producto = await Product.findByPk(productId);
+
+  if (producto) {
+    //Se establece la cantidad maxima por stock
+    cantidad = quantity > producto.stock ? producto.stock : quantity;
+    //Se resta la cantidad del stock existente
+    const newStock = producto.stock - cantidad;
+    //Se guarda el cambio de stocj en el modelo Product
+    await Product.update(
+      { stock: newStock },
+      { where: {
+        id: productId,
+      }}
+    )
+    //Se update el quantity en Order_products si la cantidad es diferente de quantity
+    if (cantidad !== quantity) {
+      await Order_products.update({
+        quantity: cantidad,
+        where: {
+          orderId,
+          productId
+        }
+      })
+    }
+    orden = await Order.findOne({
+      where: {
+        id: orderId
+      },
+      include: [ Product ]
+    })
+
+  }
+  !producto ? res.send("Producto no encontrado").status(404) : res.json(orden);
+})
 
 module.exports = server;

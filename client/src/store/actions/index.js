@@ -23,6 +23,7 @@ import {
   DELETE_PRODUCT_JOIN_CATEGORY,
   MODIFY_PRODUCT,
   DELETE_PRODUCT,
+  POST_PRODUCT_STOCK,
 
   //categories
   ADD_CATEGORY,
@@ -407,6 +408,22 @@ export const deleteProductJoinCategory = (idProd, idCat) => async (
     });
   }
 };
+
+//Controla y modifica el stock que necesita el checkout
+export const postProductStock = (productId, payload) => async (dispatch) => {
+  try {
+    const res = await axios.post(`${url}products/controlstock/${productId}`, payload)
+    dispatch({
+      type: POST_PRODUCT_STOCK,
+      paylaod: res.data
+    })
+  } catch(e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: 'Error al controlar stock',
+    });
+  }
+}
 
 ////////////////////////////   PRODUCTS   //////////////////////////////////////
 

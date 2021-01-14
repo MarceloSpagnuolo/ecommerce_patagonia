@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import './placeOrder.css';
+import { postProductStock} from "../../store/actions/index.js";
 
 export default function PlaceOrderScreen() {
   const { order, user } = useSelector(state => state);
   const [ total, setTotal ] = useState(0);
   const [ edit, setEdit ] = useState(false);
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if(order.products && order.products.length > 0) {
+      order.products.map((elem) => {
+        dispatch(postProductStock(elem.id,
+          {quantity: elem.Order_products.quantity, orderId: order.id }))
+      })
+    }
+  },[])  
 
   useEffect(() => {
     if (order.products && order.products.length > 0) {
@@ -15,7 +26,7 @@ export default function PlaceOrderScreen() {
       })
       setTotal(subTotal);
     }
-  },[order])  
+  },[order])
 
   return (
     <div>

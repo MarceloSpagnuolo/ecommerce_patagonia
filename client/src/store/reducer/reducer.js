@@ -20,6 +20,7 @@ import {
   DELETE_PRODUCT_JOIN_CATEGORY,
   MODIFY_PRODUCT,
   DELETE_PRODUCT,
+  POST_PRODUCT_STOCK,
 
   //categories
   ADD_CATEGORY,
@@ -162,6 +163,11 @@ function ReducerProducts(state = inicialState, action) {
           (product) => product.id !== action.payload[0]
         ),
       };
+    case POST_PRODUCT_STOCK:
+      return {
+        ...state,
+        order: action.payload
+      }
     ////////////////////////////////////   PRODUCTS   //////////////////////////////////////////
 
     ////////////////////////////////////   CATEGORIES   //////////////////////////////////////////
