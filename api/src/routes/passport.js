@@ -3,18 +3,9 @@ const LocalStrategy = require("passport-local").Strategy;
 const BearerStrategy = require("passport-http-bearer").Strategy;
 const { User } = require("../db.js");
 const jwt = require("jsonwebtoken");
+const { Op } = require("sequelize");
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
-const GitHubStrategy = require( 'passport-github2' ).Strategy;
-
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-  });
-  
-  passport.deserializeUser( async function(id, done) {
-    const usuario = await User.findByPk(id);
-    done(null, usuario)
-  });
-
+const FacebookStrategy = require( 'passport-facebook' ).Strategy;
 
 passport.use(
   new LocalStrategy( 
@@ -24,12 +15,16 @@ passport.use(
       if (!user) return done(null, false, "No se encontró el user");
       if (!user.compare(password))
         return done(null, false, "Contraseña incorrecta");
-      const { id, givenname, familyname, email: userEmail, role } = user;
+      const { id, givenname, familyname, email: userEmail, city, adress, phone, postal, role } = user;
       return done(null, {
         id,
         givenname,
         familyname,
         email: userEmail,
+        city,
+        adress,
+        phone,
+        postal,
         role,
       }); 
     }
@@ -41,12 +36,15 @@ passport.use(new GoogleStrategy({
   clientID: '328443840831-f6gnbi1skjvj8bih1r5bm388gu2g80st.apps.googleusercontent.com',
   clientSecret: 'seHWMC-hymiQVRNkRtlYtF42',
   callbackURL: "/auth/google/callback",
-  passReqToCallback   : true
+  session: false
 },
 async function(request, accessToken, refreshToken, profile, done) {
  const usuario = await User.findOrCreate({ 
    where: {
-     googleID: profile.id
+    [Op.or]: [{
+      googleID: profile.id},
+      {email: profile.emails[0].value}
+    ]
     },
     defaults: {
       givenname: profile.given_name,
@@ -55,27 +53,32 @@ async function(request, accessToken, refreshToken, profile, done) {
       googleID: profile.id,
     }
   }); done(null, usuario[0])
-}
+}                            
 ));
 
 
-passport.use(new GitHubStrategy({
-  clientID: "0d14b759471f535ef16a",
-  clientSecret: "ebd4d25aefe97acc2b6c9fc09293534f7268dfc4",
-  callbackURL: "/auth/github/callback"
+passport.use(new FacebookStrategy({
+  clientID: "331736574540258",
+  clientSecret: "ffacf6d0f331622338d47715cd3eddaa",
+  callbackURL: "http://localhost:3001/auth/facebook/callback",
+  session: false,
+  profileFields: ['id', 'email', 'locale', 'name', 'verified'],
 },
 async function(accessToken, refreshToken, profile, done) {
   const usuario = await User.findOrCreate({ 
     where: {
-      githubID: profile.id
+      [Op.or]: [{
+        facebookID: profile.id},
+        {email: profile.emails[0].value}
+      ]
      },
      defaults: {
-      givenname: "profile.given_name",
-      familyname: "profile.family_name",
+       givenname: profile.name.givenName + (!!profile.name.middleName ? ` ${profile.name.middleName}` : ""),
+       familyname: profile.name.familyName,
        email: profile.emails[0].value,
-       githubID: profile.id,
+       facebookID: profile.id,
      }
-   }); done(null, usuario[0])
+   }); done(null, usuario[0]);
  }
  ));
 

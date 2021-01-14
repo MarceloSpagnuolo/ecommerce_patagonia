@@ -11,6 +11,7 @@ const NewReview = (props) => {
     const { reviews, user } = useSelector(state => state)
     useEffect(() => {
         dispatch(getReviews)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [reviews.length, updateReview])
 
     useEffect(() => {
@@ -23,6 +24,7 @@ const NewReview = (props) => {
                 id: review[0].id
             }])
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [reviews.length, updateReview])
 
     return (

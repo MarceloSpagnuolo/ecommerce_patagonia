@@ -8,7 +8,7 @@ const Table = (props) => {
 
     function handleClick(cat) {
 
-        var result = window.confirm("Want to delete?");
+        var result = window.confirm("¿Seguro desea eliminar esta categoría?");
         if (result) {
           props.deleteCategory(cat.id);
         }
@@ -21,7 +21,7 @@ const Table = (props) => {
             name: category.name,
             description: category.description
         })
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.onUpdate])
     return (
         <>

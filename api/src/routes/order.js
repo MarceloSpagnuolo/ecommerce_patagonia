@@ -2,32 +2,7 @@ const server = require("express").Router();
 const { DATE } = require("sequelize");
 const db = require("../db.js");
 const { Order, Order_products, User, Product } = db
-
-/*inc debería venir un array. Debemos contestar con un array del modelo.
-caso base: inc = ["algo", "otra cosa"] => response =  ["algo", "otra cosa"]
-caso inc es objeto = [{model: "algo"}] */
-
-/*
-function getIncludes(inc){
-    let response = [];
-    for(const value of inc){
-        if(typeof value === "string") {
-            response.push(db[value])
-            // puede ser que sea con punto (db.[inc])
-            } else {
-                let result = {
-                    model: db[value.model]
-                }
-                value.include && (result.include = getIncludes(value.include))
-                response.push(result);
-            }
-    }   
-    return response;
-}
-
-Esta función por ahora la comento pero va a ser la que eventualmente vamos a usar en todos los llamados
-get que tengan limit,where, etc. para hacerlas super dinámicas.
-*/
+const adminAuth = require("../utils/authMiddleware.js")
 
 server.get("/:userId/cart", async (req, res) => {
   const { userId } = req.params;
@@ -88,16 +63,27 @@ server.post("/:orderId/cart/:productId", async (req, res) => {
   });
 
   if(producto) {    //Si el producto ya está agregado al carrito
-    const cantidad = producto.quantity + quantity;
-    const sumado = await Order_products.update({
-      quantity: cantidad},
-      {where: {
-        orderId,
-        productId
+
+    const singleProduct = await Product.findOne({
+      where: {
+        id: productId
       }
     })
+
+    var cantidad = producto.quantity + quantity;
+    
+    cantidad = cantidad > singleProduct.stock ? singleProduct.stock : cantidad
+    
+      await Order_products.update({
+        quantity: cantidad},
+        {where: {
+          orderId,
+          productId
+        }
+      })
+    
   } else {    //Si el producto no estaba agregado al carrito
-    const agregado = await Order_products.create({
+    await Order_products.create({
       orderId,
       productId,
       quantity,
@@ -117,7 +103,7 @@ server.post("/:orderId/cart/:productId", async (req, res) => {
 
 ////////////////S44////////////////
 //// 'Get Orders' route = '/'
-server.get("/", async (req, res, next) => {
+server.get("/", adminAuth, async (req, res, next) => {
   //Get de todas o una orden específica con sus productos
   let { limit, offset, order, where, include } = req.query; //Destructuring del Query
   // order tiene que recibier un array con la columna entre comillas dobles
@@ -143,7 +129,7 @@ server.get("/", async (req, res, next) => {
 // get orders/filter se pasa el filtro de busqueda en el query. Acepta ?status=valor
 // siendo valor = "carrito", "creada", "procesando", "cancelada", "completa"
 // incluye Order con el modelo User y Products
-server.get("/filter/", async (req, res) => {
+server.get("/filter/", adminAuth, async (req, res) => {
   const { status } = req.query;
   let parametrosQuery;
 
@@ -178,7 +164,7 @@ server.get("/filter/", async (req, res) => {
 ///////////////////S47/////////////////
 //Considerando que se actualiza el carrito, se pide que obligatoriamente manden id, total, date y status
 //Si sólo quieren cambiar un parámetro, deben mandar todos manteniendo el valor los que no quieran que se cambien.
-//Puede devolver undefined si la oden a modificar no existe.
+//Puede devolver undefined si la orden a modificar no existe.
 server.put(`/:id`, async (req, res) => {
   const { id } = req.params;
 

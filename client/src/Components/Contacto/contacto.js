@@ -238,30 +238,30 @@ function Contacto() {
                 <div className="Contacto-Imagen">
                     <img src="http://localhost:3001/images/logocp.png" alt="img-logocp" />
                 </div>
-                <form autocomplete="off">
+                <form autoComplete="off">
                     <div className="Contacto-Form">
                         <div>
-                            <label for="name">Su Nombre</label><br></br>
+                            <label htmlFor="name">Su Nombre</label><br></br>
                             <input className="Contacto-Input" size={20} type="text" autoFocus="True" name="name" onChange={(e) => handleInput(e)} />
                         </div>
                         <div>
-                            <label for="email">Su Email</label><br></br>
+                            <label htmlFor="email">Su Email</label><br></br>
                             <input className="Contacto-Input" size={20} type="email" name="email" onChange={(e) => handleInput(e)} />
                         </div>
                         <div>
-                            <label for="phone">Su Teléfono</label><br></br>
+                            <label htmlFor="phone">Su Teléfono</label><br></br>
                             <input className="Contacto-Input" size={12} type="tel" name="phone" onChange={(e) => handleInput(e)} />
                         </div>
                     </div>
                     <div className="Contacto-Form">
                         <div>
-                            <label for="asunto">Asunto</label><br></br>
+                            <label htmlFor="asunto">Asunto</label><br></br>
                             <input size={57} className="Contacto-Input" type="text" name="asunto" onChange={(e) => handleInput(e)} />
                         </div>
                     </div>
                     <div className="Contacto-Form">
                         <div>
-                            <label for="mensaje">Su Mensaje</label><br></br>
+                            <label htmlFor="mensaje">Su Mensaje</label><br></br>
                             <textarea rows={10} cols={58} className="Contacto-Input" name="mensaje" onChange={(e) => handleInput(e)} />
                         </div>
                     </div>

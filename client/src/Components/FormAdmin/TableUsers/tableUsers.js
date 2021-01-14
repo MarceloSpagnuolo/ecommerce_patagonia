@@ -1,21 +1,29 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Redirect } from "react-router-dom";
+import React, { useEffect, useState  } from "react";
+import axios from "axios";
+import { useSelector, useDispatch} from "react-redux";
+// import { Redirect } from "react-router-dom";
 import { getUsers, putRoleUser } from "../../../store/actions";
 import "./tableUsers.css"
 
 
 const TableUser = () => {
+    const [cambio, setCambio] = useState(true)
     const { users, user } = useSelector((state) => state);
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getUsers());
-    }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [cambio]);
 
 
     const handleClick = (id, role) => {
         dispatch(putRoleUser(id, role))
+    }
+
+    const handleDelete = (id) => {
+        axios.delete(`http://localhost:3001/users/${id}`)
+        setCambio(!cambio)
     }
 
     return user.role === "admin" ? (
@@ -33,6 +41,7 @@ const TableUser = () => {
                         <th className="Th">Telefono</th>
                         <th className="Th">Rol</th>
                         <th className="Th">Cambiar Rol</th>
+                        <th className="Th">Eliminar Usuario</th>
                     </tr>
 
                 </thead>
@@ -55,6 +64,10 @@ const TableUser = () => {
                                             onClick={() => handleClick(us.id, { "role": "user" })}>Remover</button> : null
                                     : null}
                             </td>
+                            <td className="Td">
+                                {(us.id !== user.id) && (us.role !== "deleted")  ? 
+                                <div><button onClick={(() => handleDelete(us.id))} className="table-user-button">Eliminar</button></div> : null}
+                            </td>
                         </tr>
                     ))}
                 </tbody>
@@ -62,7 +75,7 @@ const TableUser = () => {
         </div>
     )
     : <div className="Authorized-Container">
-        <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" />
+        <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" alt=""/>
       </div>
 }
 

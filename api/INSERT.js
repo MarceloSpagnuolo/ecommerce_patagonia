@@ -108,13 +108,13 @@ VALUES ('2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00', 1, 1),
 
 INSERT INTO users (givenname, familyname, email, password, role, "createdAt", "updatedAt")
 
-VALUES ('Pepito', 'Pon', 'pepito22@gmail.com', '$2b$10$JYZBhXOEWO8VIJA8JLNSguKoGjM6Yiwm6yxmKaMWbnqvz0i0JLGyq', 'user','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
-('Ultimate', 'Marvel', 'Marve_16160@gmail.com', '$2b$10$ilKA0iNbUtT6b.YS5/nFxeAwzEPjsBCteYMJt9CBh3D8B6sgRNO7i', 'admin','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
-('Juan', 'Cho', 'talarga@gmail.com', '$2b$10$CfStvFoWhUXRUyfCNJ9KHOrhdKKKiDZWwDY5a0JpV/JpYZvVs/fb6', 'user','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
-('Tobey', 'Maguire', 'spider@gmail.com', '$2b$10$03.M75gYOUhqm.1hhGwIlOCocLJ9YQsWwj9w7KkQe74DP2360il5y', 'admin','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
-('Pepardo', 'Bondon', 'bondi@gmail.com', '$2b$10$3mlcCI1NkXCglnR/qcGrKemQzB.U7V8L8kAOQ.jdoYn5pPrigA4u.', 'user','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
-('Pepon', 'Sodom', 'pepon@gmail.com', '$2b$10$XjZEMZWtsnNetPOrQBWE3uRQYZHwD.tQrxZu3aIKfhpaxN./PG7S.', 'user','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
-('Armando', 'Esteban', 'quito@gmail.com', '$2b$10$x7PEB9lO8cNjJ.CZSS/wPeVd1uktD3vawwiwQJ9BApB6altR4haCK', 'user','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
+VALUES ('Pepito', 'Pon', 'pepito22@gmail.com', '$2b$10$v/Zn64JW2uuvyb05G7gIsuC/X4uPDzPLmP2s13uAxk8nNWrfsft.i', 'user','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
+('Ultimate', 'Marvel', 'Marve_16160@gmail.com', '$2b$10$eTyS510JPtLyfni.Z9W96uLUA8Avf3C9/Hiu4s0PgUsY/8cPBAt6q', 'admin','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
+('Alan', 'Brito', 'Delgado@gmail.com', '$2b$10$s6CR9Exw4f3LZK5BLw61KuFE6Hz6onUAfdnpz1dFO/EGSNicO5/fi', 'user','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
+('Tobey', 'Maguire', 'spider@gmail.com', '$2b$10$tULPveeuq.bCSho/IVyFeOxz6iqh87t8bbnnkVs42bU34GTnCXC36', 'admin','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
+('Pepardo', 'Bondon', 'bondi@gmail.com', '$2b$10$4F5TOvBCZ00W7p.7D78Xl.JyePPuIwIitdSOwyqwr53ik/WOkJd6K', 'user','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
+('Alberto', 'Carlos', 'Cantos@gmail.com', '$2b$10$xJ9cwZjEq/4UeOd36C4P9OVs/lTYm59O0NTfQ6Jx9Jp.DMTZ0diFC', 'user','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
+('Armando', 'Esteban', 'quito@gmail.com', '$2b$10$lgyC/juzBL8KPrEjGYd0JeQGVVjBDmObTwztUxAs45XUI0hR1bjia', 'user','2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('Admin', 'Admin', 'Admin@soyadmin.com', '$2b$10$KjH28ocxb6CGMIaSXUQxKuuyOct/9ldBOhwVxvnEuYWfSmXA6QGRK', 'admin', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00');
 
 INSERT INTO Orders (total, date, status, "createdAt", "updatedAt", "userId")

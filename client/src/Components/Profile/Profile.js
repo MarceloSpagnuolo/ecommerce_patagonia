@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import {
   updateUser,
-  getUserDetails,
   getUserByToken,
 } from "../../store/actions/index";
 import "./style.css";
@@ -45,25 +44,55 @@ export default function Profile() {
   }
 
   function handleInput(e) {
+    if (
+      e.target.name === "givenname" ||
+      e.target.name === "familyname" ||
+      e.target.name === "email"
+    ) {
+      if (e.target.value === "") {
+        alert("Este campo no puede estar vacio");
+      }
+    }
     setUsuario({ ...usuario, [e.target.name]: e.target.value });
   }
 
-  function handleCancel(value) {
-    setShow({ ...show, [value]: !show[value] });
-    setDisable(disable - 1);
+  function handleCancel(e, value) {
+    if (usuario.givenname === "" || usuario.familyname === "") {
+      e.preventDefault();
+      alert("Este campo no puede estar vacío");
+    } else if (
+      !/^([a-zA-Z0-9._+-]+)(@[a-zA-Z0-9-.]+)(\.)+(.[a-zA-Z]{2,4}){1,2}$/gm.test(
+        usuario.email
+      )
+    ) {
+      e.preventDefault();
+      alert("Email no válido");
+    } else {
+      setShow({ ...show, [value]: !show[value] });
+      setDisable(disable - 1);
+    }
   }
 
   async function handleSubmit(e, user) {
     e.preventDefault();
     dispatch(updateUser(user.id, user));
-    alert("Sus datos fueron actualizados");
     const res = await axios.get(`http://localhost:3001/auth/me`);
     dispatch(getUserByToken(res.data));
+    alert("Sus datos fueron actualizados");
   }
 
   function handleReset(e, user) {
     e.preventDefault();
     setDisplay(true);
+  }
+
+  function handleEliminar(id) {
+    var result = window.confirm("Si elimina su cuenta no podrá volver a entrar con este usuario. ¿Desea continuar con la operación?");
+if (result) {
+  axios.delete(`http://localhost:3001/users/${id}`)
+  localStorage.removeItem("userToken");
+  window.location.href = "/";
+}
   }
 
   return (
@@ -74,6 +103,7 @@ export default function Profile() {
             <img
               className="imgPstaProfile"
               src="http://localhost:3001/images/Imagencita.jpg"
+              alt=""
             />
           </div>
         </div>
@@ -100,6 +130,7 @@ export default function Profile() {
                   <img
                     className="UserProfileEditImg"
                     src="http://localhost:3001/images/BotonDeEditar.png"
+                    alt=""
                   ></img>
                   Editar
                 </span>
@@ -112,16 +143,17 @@ export default function Profile() {
                 <br></br>
                 <input
                   className="UserProfileInput"
-                  autocomplete="off"
+                  autoComplete="off"
                   size={40}
                   type="text"
                   name="givenname"
+                  pattern=".{1,}"
                   onChange={(e) => handleInput(e)}
                   value={usuario.givenname}
                 />
                 <button
                   className="UserProfileButtonAfterIf"
-                  onClick={() => handleCancel("givenname")}
+                  onClick={(e) => handleCancel(e, "givenname")}
                 >
                   Fijar Cambios
                 </button>
@@ -140,6 +172,7 @@ export default function Profile() {
                   <img
                     className="UserProfileEditImg"
                     src="http://localhost:3001/images/BotonDeEditar.png"
+                    alt=""
                   ></img>
                   Editar
                 </span>
@@ -152,7 +185,7 @@ export default function Profile() {
                 <br></br>
                 <input
                   className="UserProfileInput"
-                  autocomplete="off"
+                  autoComplete="off"
                   size={40}
                   type="text"
                   name="familyname"
@@ -161,7 +194,7 @@ export default function Profile() {
                 />
                 <button
                   className="UserProfileButtonAfterIf"
-                  onClick={() => handleCancel("familyname")}
+                  onClick={(e) => handleCancel(e, "familyname")}
                 >
                   Fijar Cambios
                 </button>
@@ -177,6 +210,7 @@ export default function Profile() {
                   <img
                     className="UserProfileEditImg"
                     src="http://localhost:3001/images/BotonDeEditar.png"
+                    alt=""
                   ></img>
                   Editar
                 </span>
@@ -189,7 +223,7 @@ export default function Profile() {
                 <br></br>
                 <input
                   className="UserProfileInput"
-                  autocomplete="off"
+                  autoComplete="off"
                   size={40}
                   type="email"
                   name="email"
@@ -198,7 +232,7 @@ export default function Profile() {
                 />
                 <button
                   className="UserProfileButtonAfterIf"
-                  onClick={() => handleCancel("email")}
+                  onClick={(e) => handleCancel(e, "email")}
                 >
                   Fijar Cambios
                 </button>
@@ -214,6 +248,7 @@ export default function Profile() {
                   <img
                     className="UserProfileEditImg"
                     src="http://localhost:3001/images/BotonDeEditar.png"
+                    alt=""
                   ></img>
                   Editar
                 </span>
@@ -226,7 +261,7 @@ export default function Profile() {
                 <br></br>
                 <input
                   className="UserProfileInput"
-                  autocomplete="off"
+                  autoComplete="off"
                   size={40}
                   type="text"
                   name="city"
@@ -235,7 +270,7 @@ export default function Profile() {
                 />
                 <button
                   className="UserProfileButtonAfterIf"
-                  onClick={() => handleCancel("city")}
+                  onClick={(e) => handleCancel(e, "city")}
                 >
                   Fijar Cambios
                 </button>
@@ -251,6 +286,7 @@ export default function Profile() {
                   <img
                     className="UserProfileEditImg"
                     src="http://localhost:3001/images/BotonDeEditar.png"
+                    alt=""
                   ></img>
                   Editar
                 </span>
@@ -263,7 +299,7 @@ export default function Profile() {
                 <br></br>
                 <input
                   className="UserProfileInput"
-                  autocomplete="off"
+                  autoComplete="off"
                   size={40}
                   type="text"
                   name="adress"
@@ -272,7 +308,7 @@ export default function Profile() {
                 />
                 <button
                   className="UserProfileButtonAfterIf"
-                  onClick={() => handleCancel("adress")}
+                  onClick={(e) => handleCancel(e, "adress")}
                 >
                   Fijar Cambios
                 </button>
@@ -288,6 +324,7 @@ export default function Profile() {
                   <img
                     className="UserProfileEditImg"
                     src="http://localhost:3001/images/BotonDeEditar.png"
+                    alt=""
                   ></img>
                   Editar
                 </span>
@@ -299,9 +336,8 @@ export default function Profile() {
                 </label>
                 <br></br>
                 <input
-                  className="UserProfileButton"
                   className="UserProfileInput"
-                  autocomplete="off"
+                  autoComplete="off"
                   size={40}
                   type="text"
                   name="phone"
@@ -310,7 +346,7 @@ export default function Profile() {
                 />
                 <button
                   className="UserProfileButtonAfterIf"
-                  onClick={() => handleCancel("phone")}
+                  onClick={(e) => handleCancel(e, "phone")}
                 >
                   Fijar Cambios
                 </button>
@@ -326,6 +362,7 @@ export default function Profile() {
                   <img
                     className="UserProfileEditImg"
                     src="http://localhost:3001/images/BotonDeEditar.png"
+                    alt=""
                   ></img>
                   Editar
                 </span>
@@ -337,9 +374,8 @@ export default function Profile() {
                 </label>
                 <br></br>
                 <input
-                  className="UserProfileButton"
                   className="UserProfileInput"
-                  autocomplete="off"
+                  autoComplete="off"
                   size={40}
                   type="text"
                   name="postal"
@@ -348,7 +384,7 @@ export default function Profile() {
                 />
                 <button
                   className="UserProfileButtonAfterIf"
-                  onClick={() => handleCancel("postal")}
+                  onClick={(e) => handleCancel(e, "postal")}
                 >
                   Fijar Cambios
                 </button>
@@ -371,9 +407,10 @@ export default function Profile() {
               >
                 Resetear Contraseña
               </button>
-            </div>
-          </div>
+            </div>            
+          </div>          
         </form>
+        <button className="UserActualizarButton" onClick={() => handleEliminar(user.id)}>Eliminar Cuenta</button>
       </div>
     </div>
   );

@@ -34,6 +34,10 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: true,
         },
+        facebookID: {
+            type: DataTypes.STRING,
+            allowNull: true, 
+        },
         photoURL: {
             type: DataTypes.STRING,
             allowNull: true,
@@ -55,7 +59,7 @@ module.exports = (sequelize) => {
             allowNull: true
         },
         role: {
-            type: DataTypes.ENUM('guest','user', 'admin'),
+            type: DataTypes.ENUM('deleted','user', 'admin'),
             allowNull: false,
             defaultValue: "user"
         }

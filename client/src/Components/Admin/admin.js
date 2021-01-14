@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./admin.css";
 
@@ -41,7 +41,7 @@ function Admin() {
     )
     : 
     <div className="Authorized-Container">
-        <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" />
+        <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" alt=""/>
     </div>
 };
 

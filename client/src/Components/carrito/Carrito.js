@@ -20,7 +20,7 @@ function Carrito() {
   useEffect(() => {
     var cal = 0;
     if (order.products) {
-      order.products.map((prod) => {
+      order.products.forEach((prod) => {
         cal += prod.Order_products.unitprice * prod.Order_products.quantity;
       });
     }
@@ -73,16 +73,10 @@ function Carrito() {
 
       {order.products && order.products.length > 0 ? (
         order.products.map((prod) => (
-          <div className='Carrito-Producto'>
-            <button
-              className='Carrito-Btn-Cancel'
-              onClick={() =>
-                deleteProduct(order.id, prod.id, prod.name, prod.volume)
-              }
-            >
-              X
-            </button>
-            <div className='Carrito-Detalles'>
+          <div key={prod.id} className="Carrito-Producto">
+            <button className="Carrito-Btn-Cancel"
+              onClick={() => deleteProduct(order.id, prod.id, prod.name, prod.volume)}>X</button>
+            <div className="Carrito-Detalles">
               <div>
                 <img
                   className='Carrito-Imagen'
@@ -118,15 +112,9 @@ function Carrito() {
                   {prod.Order_products.quantity}
                 </h3>
                 <button
-                  className='Carrito-Btn-Mas'
-                  onClick={() =>
-                    handleCantidad(
-                      order.id,
-                      prod.id,
-                      prod.Order_products.unitprice,
-                      1
-                    )
-                  }
+                  className="Carrito-Btn-Mas"
+                  onClick={() => handleCantidad(order.id, prod.id, prod.Order_products.unitprice, 1)}
+                  disabled={prod.stock <= prod.Order_products.quantity}
                 >
                   +
                 </button>

@@ -1,24 +1,58 @@
 const server = require("express").Router();
-const mailgunLoader = require("mailgun-js")
+const { sendEmail } = require("../mailmodel/sendEmail.js");
+const { passwordReset } = require("../mailmodel/passwordReset.js");
+const { dispatch } = require("../mailmodel/dispatch.js");
 
-const mailgun = mailgunLoader({
-    apiKey: "ee88a4918226f8f65ddd7b1d2b21a3f8-3d0809fb-f6bf0951",
-    domain: "sandbox2b110fa331aa4c138c477da2dc662ad1.mailgun.org"
-});
-
-const sendEmail = (to, from, subject, content) => {
     const data = {
-        to,
-        from,
-        subject,
-        text: content
+        to: "lu4huf@gmail.com",
+        total_compra: 2599,
+        address: "Laprida 1069, Leones, Córdoba",
+        username: "Marcelo Spagnuolo",
+        id: 456,
+        products: [
+            {
+                id: 1,
+                name: "Amber Lager 720 cm",
+                thumbnail: "http://localhost:3001/images/porter730.jpg",
+                description: "Color cobrizo anaranjado levemente opalescente, de espuma consistente",
+                Order_products: {
+                    quantity: 1,
+                    unitprice: 150
+                }
+            },
+            {
+                id: 2,
+                name: "Amber Lager 433 cm",
+                thumbnail: "http://localhost:3001/images/veraipa473.jpg",
+                description:"Color marron oscuro espuma color canela persistente y cremosa",
+                Order_products: {
+                    quantity: 3,
+                    unitprice: 130
+                }
+            },
+            {
+                id: 8,
+                name: "Hoppy Lager 720 cm",
+                thumbnail: "http://localhost:3001/images/sendero473.jpg",
+                description:"Color dorado profundo aspecto levemente opalescente, espuma blanca persistente",
+                Order_products: {
+                    quantity: 5,
+                    unitprice: 200
+                }
+            },
+        ]
     }
-    return mailgun.messages().send(data);
-};
 
-server.post('/vaca', async (req, res) => {
+    const data2 = {
+        id: 10,
+        name: "Pepito Flores",
+        to: "lu4huf@gmail.com"
+    }
+
+
+server.get('/vaca', async (req, res) => {
     try {
-        await sendEmail("alan.lsnake.93@gmail.com", "pelado@gil.com", "no quiero", "https://i.pinimg.com/564x/c9/c3/35/c9c335668d2c6c80f9b43ed07257dce4.jpg")
+        sendEmail(data)
         res.send("email, enviado")
     } catch (e) {
         console.log(e);
@@ -26,4 +60,23 @@ server.post('/vaca', async (req, res) => {
     }
 })
 
+server.get("/toro", async (req, res) => {
+    try {
+        passwordReset(data2)
+        res.send("email, enviado")
+    } catch (e) {
+        console.log(e);
+        res.status(500)
+    }
+})
+
+server.get("/perro", async (req,res) => {
+    try {
+        dispatch(data)
+        res.send("email, enviado")
+    } catch (e) {
+        console.log(e);
+        res.status(500)
+    }
+})
 module.exports = server;

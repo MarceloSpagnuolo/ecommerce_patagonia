@@ -14,66 +14,60 @@ import {
   copyCartToStore,
   copyUserToStore,
   getUserByToken,
-  postProductToCart,
-} from '../../store/actions/index.js';
-import Login from '../Login/login.js';
-import { LOGOUT } from '../../store/constants/constants.js';
+  postProductToCart
+} from "../../store/actions/index.js";
+import Login from "../Login/login.js";
+import { useLocation } from "react-router";
+
 
 function Home(props) {
   const dispatch = useDispatch();
   const [total, setTotal] = useState(0);
   const [show, setShow] = useState(false);
+  const [query, setQuery] = useState(useLocation().search)
+
+
 
   useEffect(() => {
-    if (!props.user.id) {
-      const token = localStorage.getItem('userToken');
-      if (!token) {
-        var localUser = JSON.parse(localStorage.getItem('guestUser'));
-        if (!localUser) {
-          const carrito = {
-            id: 0,
-            total: 0,
-            status: 'carrito',
-            date: Date.now(),
-          };
-          const usuario = {
-            id: 0,
-            givenname: 'Guest',
-            familyname: 'Guest',
-            role: 'guest',
-          };
-          localStorage.setItem('guestUser', JSON.stringify(usuario));
-          localStorage.setItem('guestCart', JSON.stringify(carrito));
-          localUser = JSON.parse(localStorage.getItem('guestUser'));
+    if(query.includes("token")) {
+      const oathStrategy = query.split("=")
+      props.getUserByToken(oathStrategy[1])
+    } else if (!props.user.id) {
+        const token = localStorage.getItem("userToken");
+        if (!token) {          
+          var localUser = JSON.parse(localStorage.getItem("guestUser"));
+          if (!localUser) {
+            const carrito = { id: 0, total: 0, status: "carrito", date: Date.now() };
+            const usuario = { id: 0, givenname: "Guest", familyname: "Guest", role: "guest" };
+            localStorage.setItem("guestUser", JSON.stringify(usuario));
+            localStorage.setItem("guestCart", JSON.stringify(carrito));
+            localUser = JSON.parse(localStorage.getItem("guestUser"));
+          }
+          const localCart = JSON.parse(localStorage.getItem("guestCart"));
+          props.copyUserToStore(localUser);
+          props.copyCartToStore(localCart);
+        } else {
+          props.getUserByToken(token);
         }
-        const localCart = JSON.parse(localStorage.getItem('guestCart'));
-        props.copyUserToStore(localUser);
-        props.copyCartToStore(localCart);
-      } else {
-        props.getUserByToken(token);
       }
-    }
-  }, []);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (props.user.id > 0) {
       props.getCartByUser(props.user.id);
     }
-  }, [props.user]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.user])
 
   useEffect(() => {
     // se borra si es usuario guest aunque no este logueado
     if (props.user.id > 0) {
       const localCart = JSON.parse(localStorage.getItem('guestCart'));
       if (localCart && localCart.products && localCart.products.length > 0) {
-        localCart.products.map((elem) => {
-          dispatch(
-            postProductToCart(props.order.id, elem.id, {
-              unitprice: elem.Order_products.unitprice,
-              quantity: elem.Order_products.quantity,
-            })
-          );
-        });
+        localCart.products.forEach((elem) => {
+          dispatch(postProductToCart(props.order.id, elem.id, { unitprice: elem.Order_products.unitprice, quantity: elem.Order_products.quantity }))
+        })
       }
       localStorage.removeItem('guestCart');
       localStorage.removeItem('guestUser');
@@ -83,7 +77,8 @@ function Home(props) {
     } else {
       setTotal(0);
     }
-  }, [props.order]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.order])
 
   function handleClick() {
     props.getProducts(12, 0);
