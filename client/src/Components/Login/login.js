@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { browserHistory } from 'react-router';
+// import { browserHistory } from 'react-router';
 import axios from "axios";
 import "./login.css";
 import { useDispatch } from "react-redux";
@@ -46,11 +46,11 @@ function Login({ guestId, show, onClose }, props) {
                 <section className="LoginDiv-Section">
                     <form>
                         <div className="LoginDiv-Campos">
-                            <label className="nameInput" for="email">Email registrado</label><br></br>
-                            <input autofocus="true" size={40} type="email" id="email" name="email" className="LoginDivInput-Campos" onChange={(e) => handleInput(e)} />
+                            <label className="nameInput" htmlFor="email">Email registrado</label><br></br>
+                            <input autoFocus={true} size={40} type="email" id="email" name="email" className="LoginDivInput-Campos" pattern={/^([a-zA-Z0-9._+-]+)(@[a-zA-Z0-9-.]+)(\.)+(.[a-zA-Z]{2,4}){1,2}$/gm} onChange={(e) => handleInput(e)} />
                         </div>
                         <div className="LoginDiv-Campos">
-                            <label className="nameInput" for="password">Contraseña</label><br></br>
+                            <label className="nameInput" htmlFor="password">Contraseña</label><br></br>
                             <input size={60} type="password" id="pass" name="password" className="LoginDivInput-Campos" onChange={(e) => handleInput(e)} />
                         </div>
                     </form>
@@ -78,7 +78,7 @@ function Login({ guestId, show, onClose }, props) {
                     <div className="LoginDiv-Footer loginEntrarSalir">
                         <button className="Login-Btn-Down" id="Login-Cancel" onClick={() => { onClose && onClose() }}>Cancelar</button>
                         <button className="Login-Btn-Down"
-                            title={(estado.email.length === 0 || estado.password.length === 0) && "Debe ingresar los datos de acceso"}
+                            title={(estado.email.length === 0 || estado.password.length === 0) ? "Debe ingresar los datos de acceso" : null}
                             id="Login-Entrar"
                             onClick={() => handleLogueo()}
                             disabled={estado.email.length === 0 || estado.password.length === 0}>Acceder</button>

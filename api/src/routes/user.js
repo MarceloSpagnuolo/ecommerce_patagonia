@@ -22,7 +22,17 @@ server.post("/", async (req, res) => {
     role,
   } = req.body;
 
-  (!givenname || !familyname || !role) && res.send("Falta valor givenname, familyname o role").status(400);
+  (!givenname || !familyname ) && res.send("Falta valor givenname o familyname").status(400);
+
+  if(!email || !(/^([a-zA-Z0-9._+-]+)(@[a-zA-Z0-9-.]+)(\.)+(.[a-zA-Z]{2,4}){1,2}$/gm.test(email))) {
+    return res.send("Email no válido").status(400)
+  }
+
+  if(!password) {
+   return res.send("Falta ingresar contraseña").status(400)
+  } else if(!(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/.test(password))) {
+   return res.send("Debe ingresar una contraseña válida!").status(400)
+  }
 
   try {
     const user = await User.create({
@@ -48,23 +58,35 @@ server.post("/", async (req, res) => {
 //Puede devolver undefined si no existe ningún usuario con ese id.
 server.put("/:id", async (req, res) => {
   const { id } = req.params;
+
+  if(!req.user) {
+    return res.send("Está intentando actualizar los datos sin estar logueado").status(400)
+  } else if(id != req.user.id) {
+    return res.send("Usuario a actualizar no coincide con el usuario logueado").status(400)
+  }
   const {
     givenname,
     familyname,
     email,
-    password,
     city,
     adress,
     phone,
     postal,
   } = req.body;
+  
+
+  (!givenname || !familyname ) && res.send("Falta valor givenname o familyname").status(400);
+  
+  if(!email || !(/^([a-zA-Z0-9._+-]+)(@[a-zA-Z0-9-.]+)(\.)+(.[a-zA-Z]{2,4}){1,2}$/gm.test(email))) {
+    console.log("entre aca 5")
+    return res.send("Email no válido").status(400)
+  }
 
   const user = await User.update(
     {
       givenname,
       familyname,
       email,
-      password,
       city,
       adress,
       phone,
@@ -252,6 +274,12 @@ server.post("/passwordReset", async (req, res) => {
   const { id } = req.user;
   const { password } = req.body;
 
+  if(!password) {
+    return res.send("La contraseña a cambiar no puede ser vacía").status(400)
+  } else if(!(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/.test(password))) {
+    return res.send("La contraseña debe contener una mínuscula, una mayúscula, un número y entre 6 y 15 caracteres")
+  }
+
   const passwordReset = await User.update(
     {
       password,
@@ -276,7 +304,9 @@ server.delete("/:id", async (req, res) => {
   const deletedUser = await User.update(
     {
       email: null,
-      role: "deleted"
+      role: "deleted",
+      googleID: null,
+      facebookID: null,
     },
     {
       where: {

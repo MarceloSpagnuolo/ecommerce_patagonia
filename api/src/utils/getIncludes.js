@@ -5,10 +5,10 @@ caso inc es objeto = [{model: "algo"}] */
 
 
 function getIncludes(inc){
-    console.log(inc, "SOY EL INC")
+    // console.log(inc, "SOY EL INC")
     let response = [];
     for(const value of inc){
-        console.log(value, "SOY EL VALUE")
+        // console.log(value, "SOY EL VALUE")
         if(typeof value === "string") {
             response.push(db[value])
             // puede ser que sea con punto (db.[inc])

@@ -65,7 +65,7 @@ server.get("/google/callback", function(req, res, next) {
 });
 
 // Estrategia de facebook
-server.get("/facebook", passport.authenticate("facebook"));
+server.get("/facebook", passport.authenticate("facebook", {scope: "email"}));
 
 
 // Callback de facebook

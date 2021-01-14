@@ -42,7 +42,15 @@ server.post("/:user_id/product/:product_id", async (req, res) => {
       userId: user_id,
     });
 
-    !review ? res.sendStatus(400) : res.json(review).status(200);
+    console.log("cree una nueva review")
+
+    const newReview = await Review.findOne({include: {
+      model: User
+    }, where: {
+      id: review.id
+    }})
+
+    !review ? res.sendStatus(400) : res.json(newReview).status(200);
   } catch (error) {
     res.send("Error al crear review").status(400)
   }

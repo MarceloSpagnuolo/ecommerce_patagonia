@@ -13,6 +13,7 @@ const UserReview = (props) => {
 
     useEffect(() => {
         dispatch(getReviews())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [reviews.length, state])
 
     function eliminaraRev(id) {
