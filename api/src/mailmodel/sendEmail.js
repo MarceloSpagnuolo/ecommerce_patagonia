@@ -30,7 +30,7 @@ function sendEmail(obj) {
   modelEmail = modelEmail.replace("%orderid%", obj.id)
   
   mailgun.messages().send({
-    from: 'ventas@patagonia.com',
+    from: 'Ecommerce Patagonia <ventas@patagonia.com>',
     to: obj.to, 
     subject: 'Confirmamos tu compra!',
     html: modelEmail
