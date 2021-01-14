@@ -3,6 +3,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const BearerStrategy = require("passport-http-bearer").Strategy;
 const { User } = require("../db.js");
 const jwt = require("jsonwebtoken");
+const { Op } = require("sequelize");
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 const FacebookStrategy = require( 'passport-facebook' ).Strategy;
 
@@ -40,8 +41,10 @@ passport.use(new GoogleStrategy({
 async function(request, accessToken, refreshToken, profile, done) {
  const usuario = await User.findOrCreate({ 
    where: {
-     googleID: profile.id
-     //usar un or con email también.
+    [Op.or]: [{
+      googleID: profile.id},
+      {email: profile.emails[0].value}
+    ]
     },
     defaults: {
       givenname: profile.given_name,
@@ -64,13 +67,15 @@ passport.use(new FacebookStrategy({
 async function(accessToken, refreshToken, profile, done) {
   const usuario = await User.findOrCreate({ 
     where: {
-      facebookID: profile.id
-      //usar un or con email también.
+      [Op.or]: [{
+        facebookID: profile.id},
+        {email: profile.emails[0].value}
+      ]
      },
      defaults: {
        givenname: profile.name.givenName + (!!profile.name.middleName ? ` ${profile.name.middleName}` : ""),
        familyname: profile.name.familyName,
-//       email: profile.emails[0].value,
+       email: profile.emails[0].value,
        facebookID: profile.id,
      }
    }); done(null, usuario[0]);
