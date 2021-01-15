@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Form, Field, ErrorMessage, Formik } from 'formik';
 import './BeerForm.css'
 import { connect } from 'react-redux';
-import { addProduct, modifyProduct } from '../../store/actions/index';
+import { addProduct, modifyProduct, getImages } from '../../store/actions/index';
 import Checkcat from "../../Components/FormAdmin/CheckCategories";
 import Multer from "../Multer/Multer.js"
 import { Redirect } from 'react-router-dom';
@@ -11,6 +11,13 @@ import { Redirect } from 'react-router-dom';
 const cerveza = "http://localhost:3001/images/nodisponible.jpg"
 
 const BeerForm = (props) => {
+    console.log(props.images, "SOY LAS IMAGENES")
+
+    useEffect(() => {
+        if(props.data){
+        props.getImages(props.data.id)}
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
     return props.user.role === "admin" ? (
         <Formik initialValues={props.data || {
@@ -42,9 +49,6 @@ const BeerForm = (props) => {
             }
             if (!values.stock || isNaN(values.stock)) {
                 errors.stock = 'Debe ingresar un numero'
-            }
-            if (!values.thumbnail) {
-                values.thumbnail = cerveza;
             }
 
             return errors;
@@ -120,7 +124,12 @@ const BeerForm = (props) => {
                     </div>
 
                     <div className="row"> Image
-                <Field name="thumbnail" className="input" />
+                <Field name="thumbnail" as="select" className="input">
+                <option value={cerveza}>{cerveza}</option>
+                {props.data && props.images.length > 0 && props.images.map(elem => (
+                    <option value={elem.path}>{elem.path}</option>
+                ))}
+                </Field>
                     </div>
 
                     {props.data ? <div>
@@ -149,13 +158,15 @@ function mapStateToProps(state) {
     return {
         products: state.products,
         user: state.user,
+        images: state.images
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         addProduct: (producto) => dispatch(addProduct(producto)),
-        modifyProduct: (id, producto) => dispatch(modifyProduct(id, producto))
+        modifyProduct: (id, producto) => dispatch(modifyProduct(id, producto)),
+        getImages: (id) => dispatch(getImages(id))
     };
 }
 
