@@ -41,6 +41,8 @@ import {
   GET_FULL_ORDERS,
   GET_ORDER_BY_ID,
   UPDATE_ORDER,
+  UPDATE_ONE_ORDER,
+  GET_ORDER_WITH_PRODUCTS,
 
   //review
   ADD_REVIEW,
@@ -118,6 +120,11 @@ function ReducerProducts(state = inicialState, action) {
         ...state,
         user: action.payload,
       };
+      case UPDATE_USER:
+        return {
+          ...state,
+          user: action.payload,
+        }
 
     ////////////////////////////////////   USERS   //////////////////////////////////////////
 
@@ -244,6 +251,16 @@ function ReducerProducts(state = inicialState, action) {
           }
         }),
       };
+    case UPDATE_ONE_ORDER:
+      return {
+        ...state,
+        order: action.payload
+      };
+    case GET_ORDER_WITH_PRODUCTS:
+      return {
+        ...state,
+        order: action.payload
+      }
     ////////////////////////////////////   ORDERS   //////////////////////////////////////////
 
     ////////////////////////////////////   REVIEWS   //////////////////////////////////////////

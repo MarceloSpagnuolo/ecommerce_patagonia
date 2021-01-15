@@ -14,7 +14,8 @@ import {
   copyCartToStore,
   copyUserToStore,
   getUserByToken,
-  postProductToCart
+  postProductToCart,
+  getOrderWithProducts
 } from "../../store/actions/index.js";
 import Login from "../Login/login.js";
 import { useLocation } from "react-router";
@@ -55,7 +56,16 @@ function Home(props) {
 
   useEffect(() => {
     if (props.user.id > 0) {
-      props.getCartByUser(props.user.id);
+      const orderCreada = JSON.parse(localStorage.getItem("OrderCreated"));
+      orderCreada && console.log(orderCreada.id, "Este es el id de la orden creada del localStorage")
+      if (!props.order.id && orderCreada) {
+        dispatch(getOrderWithProducts(orderCreada.id))
+        localStorage.removeItem("OrderCreated");
+      } else {
+        if(props.order && props.order.status !== "creada") {
+          props.getCartByUser(props.user.id);
+        } 
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.user])

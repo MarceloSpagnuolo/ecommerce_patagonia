@@ -204,7 +204,6 @@ server.post("/controlstock/:productId", async (req, res) => {
   const { productId } = req.params;
   const { quantity, orderId } = req.body;
   var cantidad;
-  var orden;
 
   const producto = await Product.findByPk(productId);
 
@@ -214,31 +213,44 @@ server.post("/controlstock/:productId", async (req, res) => {
     //Se resta la cantidad del stock existente
     const newStock = producto.stock - cantidad;
     //Se guarda el cambio de stocj en el modelo Product
+    if (cantidad > 0) {
     await Product.update(
       { stock: newStock },
       { where: {
         id: productId,
       }}
-    )
-    //Se update el quantity en Order_products si la cantidad es diferente de quantity
-    if (cantidad !== quantity) {
-      await Order_products.update({
-        quantity: cantidad,
+      )
+      if (cantidad !== quantity) {
+        await Order_products.update(
+          { quantity: cantidad },
+          { where: {
+            orderId,
+            productId
+          }}
+        )
+      }
+    } else {
+      await Order_products.destroy({
         where: {
-          orderId,
-          productId
+          productId,
+          orderId
         }
       })
     }
-    orden = await Order.findOne({
-      where: {
-        id: orderId
-      },
-      include: [ Product ]
-    })
 
+    //Se update el quantity en Order_products si la cantidad es diferente de quantity
+    
   }
-  !producto ? res.send("Producto no encontrado").status(404) : res.json(orden);
+
+  const orden = await Order.findOne({
+    where: {
+      id: orderId
+    },
+    include: [ Product ]
+  })
+
+  !producto || !orden ? res.send("Producto no encontrado").status(404) : res.json(orden);
+
 })
 
 module.exports = server;

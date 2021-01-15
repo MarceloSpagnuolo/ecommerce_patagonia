@@ -44,6 +44,8 @@ import {
   GET_FULL_ORDERS,
   GET_ORDER_BY_ID,
   UPDATE_ORDER,
+  UPDATE_ONE_ORDER,
+  GET_ORDER_WITH_PRODUCTS,
 
   //review
   ADD_REVIEW,
@@ -415,7 +417,7 @@ export const postProductStock = (productId, payload) => async (dispatch) => {
     const res = await axios.post(`${url}products/controlstock/${productId}`, payload)
     dispatch({
       type: POST_PRODUCT_STOCK,
-      paylaod: res.data
+      payload: res.data
     })
   } catch(e) {
     dispatch({
@@ -702,10 +704,10 @@ export const getOrderById = (orderId) => async (dispatch) => {
 
 //Moificar order /:id UPDATE_ORDER
 export const updateOrder = (id, payload) => async (dispatch) => {
-  console.log(payload, 'antes de la llamada');
+  
   try {
     const res = await axios.put(`${url}orders/${id}`, payload);
-    console.log(res, res.data, 'despyess de la llamada');
+    
     dispatch({
       type: UPDATE_ORDER,
       payload: res.data,
@@ -717,6 +719,36 @@ export const updateOrder = (id, payload) => async (dispatch) => {
     });
   }
 };
+
+export const updateOneOrder = (orderId, payload) => async (dispatch) => {
+  try {
+    const res = await axios.put(`${url}orders/${orderId}`, payload);
+    dispatch({
+      type: UPDATE_ONE_ORDER,
+      payload: res.data,
+    })
+  } catch(e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: 'Problemas al modificar la order',
+    });
+  }
+}
+
+export const getOrderWithProducts = (orderId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${url}orders/${orderId}/recupera`);
+    dispatch({
+      type: GET_ORDER_WITH_PRODUCTS,
+      payload: res.data
+    })
+  } catch(e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: 'Problemas al recuperar la orden',
+    });
+  }
+}
 
 ////////////////////////////   ORDERS   //////////////////////////////////////
 
