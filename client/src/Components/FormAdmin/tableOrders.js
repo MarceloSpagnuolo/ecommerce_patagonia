@@ -17,7 +17,6 @@ function TableOrders(props) {
     const [update, setUpdate] = useState("")
     const [a, setA] = useState("")
     const { orders, user } = useSelector(state => state)
-    // console.log(orders, "aoisjdoiajsd", estado)
     useEffect(() => {
         dispatch(getFullOrders());
         // eslint-disable-next-line react-hooks/exhaustive-deps

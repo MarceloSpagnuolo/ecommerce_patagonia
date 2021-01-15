@@ -40,6 +40,7 @@ import {
   GET_FULL_ORDERS,
   GET_ORDER_BY_ID,
   UPDATE_ORDER,
+  GET_ORDER_BY_STATUS,
 
 
   //review
@@ -261,6 +262,8 @@ function ReducerProducts(state = inicialState, action) {
 
     case GET_FULL_ORDERS:
       return { ...state, orders: action.payload };
+    case GET_ORDER_BY_STATUS:
+      return { ...state, orders: action.payload };
     case GET_ORDER_BY_ID:
       return { ...state, orders: action.payload };
     case UPDATE_ORDER:
@@ -275,6 +278,7 @@ function ReducerProducts(state = inicialState, action) {
           }
         }),
       };
+      
     ////////////////////////////////////   ORDERS   //////////////////////////////////////////
 
 

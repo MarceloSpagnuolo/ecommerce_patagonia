@@ -16,6 +16,9 @@ import TableUser from "./Components/FormAdmin/TableUsers/tableUsers.js";
 import Unauthorized from "./Components/Unauthorized/unauthorized.js";
 import Contacto from "./Components/Contacto/contacto.js";
 import Profile from "./Components/Profile/Profile.js";
+import Pago from "./Components/404/Pago";
+import Bien from "./Components/404/Bien";
+import Mal from "./Components/404/Mal";
 
 
 
@@ -25,6 +28,9 @@ function App() {
       <Navegation />
       <Route exact path="/" component={Home} />
       <Route path="/products" component={Catalogo} />
+      <Route path="/as" component={Pago} />
+      <Route path="/bien" component={Bien} />
+      <Route path="/mal" component={Mal} />
       <Route exact path="/product/:id" component={ProductDetails} />
       <Route path="/admin/relations" component={Relationship} />
       <Route exact path="/admin/products" component={ComponentFormFather} />

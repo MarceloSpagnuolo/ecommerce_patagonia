@@ -42,6 +42,7 @@ import {
   //orders
   GET_FULL_ORDERS,
   GET_ORDER_BY_ID,
+  GET_ORDER_BY_STATUS,
   UPDATE_ORDER,
 
 
@@ -663,6 +664,22 @@ export const getFullOrders = () => async (dispatch) => {
     });
   }
 };
+export const getOrderByStatus = (uId, pId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${url}orders/${uId}/products/${pId}`);
+
+    dispatch({
+      type: GET_ORDER_BY_STATUS,
+      payload: res.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "vaca, sera posible que este mensaje lo haya seteado yo?",
+    });
+  }
+};
+
 
 //Trae todas las ordenes de un usuario
 export const getOrderById = (orderId) => async (dispatch) => {
@@ -757,7 +774,7 @@ export const deleteReview = (id) => async (dispatch) => {
   try {
     const res = await axios.delete(`${url}reviews/removeReview/${id}`)
     dispatch({
-      type: DELETE_REVIEW ,
+      type: DELETE_REVIEW,
       payload: res.data
     })
   } catch (e) {

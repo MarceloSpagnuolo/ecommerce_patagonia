@@ -40,6 +40,7 @@ export const COPY_CART_TO_STORE = "COPY_CART_TO_STORE";
 export const GET_FULL_ORDERS = "GET_FULL_ORDERS";
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
 export const UPDATE_ORDER = "UPDATE_ORDER";
+export const GET_ORDER_BY_STATUS = "GET_ORDER_BY_STATUS";
 
 //reviews
 export const ADD_REVIEW = "ADD_REVIEW";

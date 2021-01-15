@@ -78,7 +78,6 @@ server.put("/:id", async (req, res) => {
   (!givenname || !familyname ) && res.send("Falta valor givenname o familyname").status(400);
   
   if(!email || !(/^([a-zA-Z0-9._+-]+)(@[a-zA-Z0-9-.]+)(\.)+(.[a-zA-Z]{2,4}){1,2}$/gm.test(email))) {
-    console.log("entre aca 5")
     return res.send("Email no válido").status(400)
   }
 
@@ -291,7 +290,7 @@ server.post("/passwordReset", async (req, res) => {
       returning: true,
     }
   );
-  const token = jwt.sign(passwordReset[1][0].toJSON(), "secreto")
+  const token = jwt.sign(passwordReset[1][0].toJSON(), "secreto", {expiresIn: 900})
 
   !passwordReset ? res.sendStatus(400) : res.json(token);
 });

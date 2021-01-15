@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./style.css";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { postProductToCart, getProductById, getReviews } from '../../store/actions/index.js';
+import { postProductToCart, getProductById, getReviews, getOrderByStatus } from '../../store/actions/index.js';
 import { useHistory } from "react-router-dom";
 import ReviewStars from "../Review/ReviewStarts";
 import UserReview from "../Review/UserReview";
@@ -19,7 +19,8 @@ const Product = (props) => {
   const [neview, setNeview] = useState(false)
   const history = useHistory();
   const dispatch = useDispatch();
-  const { order, reviews, user } = useSelector(state => state);
+  const { order, reviews, user, orders } = useSelector(state => state);
+
   useEffect(() => {
     props.match.params.id && props.getProductById(props.match.params.id)
     dispatch(getReviews())
@@ -30,7 +31,6 @@ const Product = (props) => {
   useEffect(() => {
     const review = !!reviews && reviews.length > 0 && reviews.filter((r) => r.productId === props.products.id)
     const rev = !!reviews && reviews.length > 0 && reviews.filter(r => user.id === r.userId && props.products.id === r.productId);
-
     let num = 0;
     !!review && review.length > 0 && review.forEach(m => {
       return num = parseInt(m.rate) + num
@@ -41,6 +41,14 @@ const Product = (props) => {
     if (final > 0) setA(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reviews])
+
+  useEffect(() => {
+    if (!!user && props.products.id) {
+      dispatch(getOrderByStatus(user.id, props.products.id))
+    }
+    // eslinorderst-disable-next-line react-hooks/exhaustive-deps
+  }, [user, props.products.id])
+
 
   function addCart() {
     dispatch(postProductToCart(order.id, props.products.id, { unitprice: props.products.price, quantity: count }));
@@ -109,18 +117,16 @@ const Product = (props) => {
             disabled={props.products.stock === 0} id="addToCart">Agregar al carrito</button>
         </div>
       </div>
-      <div className="addComent">
-        {user.role !== "admin" &&  user.role !== "user" ? null :
+      {orders === null ? null : <div className="addComent">
+        {(user.role !== "admin" && user.role !== "user") ? null :
           !!r[0] && r[0].id ?
             <button className="addComentAction" onClick={() => { setEdite(!edite) }}>Edite su comentario</button>
-        : <button className="addComentAction" onClick={() => { setNeview(!neview) }}>Escriba su comentario</button>
-      }
+            : <button className="addComentAction" onClick={() => { setNeview(!neview) }}>Escriba su comentario</button>
+        }
 
-      {neview ? <div className="div-newReview"><NewReview set={setNeview} id={props.products.id} /> </div> : null}
-      {edite ? <div className="div-newReview"><NewReview set={setEdite} data={ r[0]} id={props.products.id} /> </div> : null}
-
-
-      </div>
+        {neview ? <div className="div-newReview"><NewReview set={setNeview} id={props.products.id} /> </div> : null}
+        {edite ? <div className="div-newReview"><NewReview set={setEdite} data={r[0]} id={props.products.id} /> </div> : null}
+      </div>}
       <UserReview id={props.products.id} />
     </>
   );
