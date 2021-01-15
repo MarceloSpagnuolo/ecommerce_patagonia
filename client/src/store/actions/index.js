@@ -47,6 +47,7 @@ import {
   UPDATE_ORDER,
   UPDATE_ONE_ORDER,
   GET_ORDER_WITH_PRODUCTS,
+  CANCEL_ORDER,
 
   //review
   ADD_REVIEW,
@@ -752,6 +753,8 @@ export const updateOneOrder = (orderId, payload) => async (dispatch) => {
   }
 }
 
+//Recupera una orden creada, la transforma nuevamente en carrito
+//y recupera el stock de la misma
 export const getOrderWithProducts = (orderId) => async (dispatch) => {
   try {
     const res = await axios.get(`${url}orders/${orderId}/recupera`);
@@ -763,6 +766,21 @@ export const getOrderWithProducts = (orderId) => async (dispatch) => {
     dispatch({
       type: ERROR_MESSAGE,
       message: 'Problemas al recuperar la orden',
+    });
+  }
+}
+
+export const cancelOrder = (orderId) => async (dispatch) => {
+  try {
+    const res = await axios.put(`${url}orders/${orderId}/cancela`);
+    dispatch({
+      type: CANCEL_ORDER,
+      payload: res.data
+    })
+  } catch(e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: 'Problemas al cancelar la orden',
     });
   }
 }

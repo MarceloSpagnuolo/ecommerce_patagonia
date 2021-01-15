@@ -23,10 +23,10 @@ function sendEmail(obj) {
   }, "<div>")
 
   dataTemplate += "</div>"
-  modelEmail = modelEmail.replace("%transactionamount%", obj.total_compra)
+  modelEmail = modelEmail.replace("%transactionamount%", obj.total)
   modelEmail = modelEmail.replace("%listProducts%", dataTemplate)
   modelEmail = modelEmail.replace("%address%", obj.address.toUpperCase())
-  modelEmail = modelEmail.replace("%username%", obj.username.toUpperCase())
+  modelEmail = modelEmail.replace("%username%", obj.givenname.toUpperCase())
   modelEmail = modelEmail.replace("%orderid%", obj.id)
   
   mailgun.messages().send({
@@ -42,7 +42,7 @@ function sendEmail(obj) {
     }
   });
 
-  return modelEmail;
+  return;
 }
 module.exports = {
   sendEmail

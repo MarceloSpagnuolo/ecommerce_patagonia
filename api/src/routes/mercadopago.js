@@ -7,7 +7,7 @@ const mercadopago = require('mercadopago');
 
 // Agrega credenciales
 mercadopago.configure({
-    access_token: 'APP_USR-6623451607855904-111502-1f258ab308efb0fb26345a2912a3cfa5-672708410'
+    access_token: process.env.MERCADO_PAGO_TOKEN
 });
 
 server.post("/checkout/:id", async (req, res) => {
@@ -32,8 +32,8 @@ server.post("/checkout/:id", async (req, res) => {
         },
         external_reference: Order.id.toString(),
         back_urls: {
-            success: `http://localhost:3001/mepa/callback`,
-            failure: `http://localhost:3001/mepa/callback`,
+            success: `${process.env.URL_BACK}/mepa/callback`,
+            failure: `${process.env.URL_BACK}/mepa/callback`,
         },
         auto_return: "approved",
     };
@@ -45,17 +45,39 @@ server.get("/callback", async (req, res) => {
     console.log(req.query, "mercaadiiiiiinn!")
     if (req.query.collection_status !== 'null') {
         const { body } = await mercadopago.payment.get(req.query.collection_id)
-        console.log(body,"soy, budy")
+        console.log(body, "soy, budy")
         if (req.query.collection_status === "approved") {
             try {
-                const OrderTik = await confirmedOrder({ id: req.query.external_reference, total: body.transaction_amount })
-                sendEmail(OrderTik)
-                res.redirect('http://localhost:3000/order/success');
+                // const OrderTik = await confirmedOrder({ id: req.query.external_reference, total: body.transaction_amount })
+                // sendEmail(OrderTik)
+                const Order = await oneOrder(req.query.external_reference);
+                const update = await Order.update(
+                    {
+                        status: "procesando"
+                    },
+                    {
+                        where: {
+                            id: req.query.external_reference,
+                        },
+                        returning: true,
+                    }
+                );
+                // const data = {
+                //     to: update.user.email,
+                //     total_compra: body.transaction_amount,
+                //     address: update.user.adress,
+                //     username: `${update.user.givenname} ${update.user.familyname}`,
+                //     id: id,
+                   
+                // }
+                console.log(update)
+                let car = sendEmail(update);
+                res.redirect(`${process.env.ULR_FRONT}/order/success`);
             } catch (error) {
                 res.status(200).json(error)
             }
         } else {
-            res.redirect('http://localhost:3000/order/rejected')
+            res.redirect(`${process.env.ULR_FRONT}/order/rejected`)
         }
     }
 })

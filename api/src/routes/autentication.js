@@ -59,7 +59,7 @@ server.get("/google/callback", function(req, res, next) {
       res.sendStatus(404);
     } else {
       const token = jwt.sign({id:user.id, givenname: user.givenname, familyname: user.familyname, email: user.email, city: user.city, adress: user.adress, phone: user.phone, postal: user.postal, role:user.role}, process.env.PASSPORT_SECRET);
-      res.redirect(`${process.env.URL_FRONT}/?token=${token}`);
+      res.redirect(`${process.env.ULR_FRONT}/?token=${token}`);
     }
   })(req, res, next);
 });
@@ -76,7 +76,7 @@ server.get("/facebook/callback", function(req, res, next) {
       res.sendStatus(404);
     } else {
       const token = jwt.sign({id:user.id, givenname: user.givenname, familyname: user.familyname, email: user.email, city: user.city, adress: user.adress, phone: user.phone, postal: user.postal, role:user.role}, process.env.PASSPORT_SECRET);
-      res.redirect(`${process.env.URL_FRONT}/?token=${token}`);
+      res.redirect(`${process.env.ULR_FRONT}/?token=${token}`);
     }
   })(req, res, next);
 });

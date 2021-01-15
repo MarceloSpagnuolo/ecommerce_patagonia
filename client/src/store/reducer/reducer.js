@@ -36,6 +36,7 @@ import {
   DEL_PRODUCT_TO_CART,
   EMPTY_ALL_PRODUCTS_OF_CART,
   COPY_CART_TO_STORE,
+  CANCEL_ORDER,
 
   //orders
   GET_FULL_ORDERS,
@@ -261,6 +262,11 @@ function ReducerProducts(state = inicialState, action) {
         order: action.payload
       };
     case GET_ORDER_WITH_PRODUCTS:
+      return {
+        ...state,
+        order: action.payload
+      }
+    case CANCEL_ORDER:
       return {
         ...state,
         order: action.payload
