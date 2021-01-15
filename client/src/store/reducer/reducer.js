@@ -44,6 +44,7 @@ import {
   UPDATE_ORDER,
   UPDATE_ONE_ORDER,
   GET_ORDER_WITH_PRODUCTS,
+  GET_ORDERS_BY_USER,
 
   //review
   ADD_REVIEW,
@@ -266,6 +267,11 @@ function ReducerProducts(state = inicialState, action) {
       return {
         ...state,
         order: action.payload
+      }
+    case GET_ORDERS_BY_USER:
+      return {
+        ...state,
+        orders: action.payload
       }
     ////////////////////////////////////   ORDERS   //////////////////////////////////////////
 

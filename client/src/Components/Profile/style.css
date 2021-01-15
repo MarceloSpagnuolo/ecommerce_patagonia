@@ -162,6 +162,15 @@
   cursor: not-allowed; 
 }
 
+.Profile-Table-Orders {
+  width: 100%;
+}
+
+#Profile-Table {
+  width: 100%;
+  background-color: white;
+}
+
 
 
 

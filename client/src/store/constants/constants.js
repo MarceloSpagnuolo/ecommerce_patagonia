@@ -42,6 +42,7 @@ export const UPDATE_ORDER = 'UPDATE_ORDER';
 export const UPDATE_ONE_ORDER = "UPDATE_ONE_ORDER";
 export const GET_ORDER_WITH_PRODUCTS = "GET_ORDER_WITH_PRODUCTS";
 export const CANCEL_ORDER = "CANCEL_ORDER;"
+export const GET_ORDERS_BY_USER = "GET_ORDERS_BY_USER";
 
 //reviews
 export const ADD_REVIEW = 'ADD_REVIEW';

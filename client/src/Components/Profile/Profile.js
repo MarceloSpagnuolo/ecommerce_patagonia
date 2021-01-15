@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import {
   updateUser,
   getUserByToken,
+  getOrdersByUser,
 } from "../../store/actions/index";
 import "./style.css";
 import Modal from "../Modal/Modal.js";
@@ -11,7 +13,7 @@ import ResetPassword from "./ResetPassword.js";
 
 export default function Profile() {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state);
+  const { user, orders } = useSelector((state) => state);
   const [disable, setDisable] = useState(0);
   const [display, setDisplay] = useState(false);
   const [show, setShow] = useState({
@@ -24,6 +26,10 @@ export default function Profile() {
     postal: true,
   });
   const [usuario, setUsuario] = useState({});
+
+  useEffect(() => {
+    dispatch(getOrdersByUser(user.id))
+  },[])
 
   useEffect(() => {
     setUsuario({
@@ -399,6 +405,13 @@ if (result) {
               >
                 Actualizar Datos
               </button>
+              <div className="UserDivButton">
+                <button
+                className="UserActualizarButton"
+                >
+                  Ver Ordenes
+                </button>
+              </div>
               <button
                 onClick={(e) => handleReset(e, usuario)}
                 className="UserResetearButton"
@@ -410,7 +423,37 @@ if (result) {
             </div>            
           </div>          
         </form>
+        <div>
         <button className="UserActualizarButton" onClick={() => handleEliminar(user.id)}>Eliminar Cuenta</button>
+        </div>
+              <div className="Profile-Table-Orders">
+                <table id="Profile-Table" className="table">
+                  <thead>
+                    <tr id="Tr" className="titulo">
+                      <th className="Th">Nro</th>
+                      <th className="Th">Fecha</th>
+                      <th className="Th">Total</th>
+                      <th className="Th">Estado</th>
+                      <th className="Th"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orders && orders.length > 0 && orders.map((elem) => (
+                      <tr id="Tr" key={elem.id} className="index">
+                        <td className="Td">{elem.id}</td>
+                        <td className="Td">{elem.date}</td>
+                        <td className="Td">{elem.total}</td>
+                        <td className="Td">{elem.status}</td>
+                        <td className="Td">
+                          <Link to={`/profile/orderdetail/${elem.id}`}>
+                            <button className="edit">Ver detalle</button>
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
       </div>
     </div>
   );

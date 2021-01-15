@@ -166,13 +166,15 @@ function Home(props) {
                   </div>
                 ) : (
                   <div className='divEntrarNav'>
-                    <span className='entrarNav'>
+                    <Link to="/profile">
+                    <span className='entrarNav' id="registroNav">
                       <img
                         className='iconEntrar'
                         src='https://cdn.discordapp.com/attachments/764979688446885898/797733755603124254/usuario_1.png'
                       />
                       {props.user.givenname}
                     </span>
+                    </Link>
                   </div>
                 )}
                 {props.user && props.user.role === 'guest' ? (
