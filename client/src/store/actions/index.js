@@ -47,6 +47,7 @@ import {
   UPDATE_ONE_ORDER,
   GET_ORDER_WITH_PRODUCTS,
   CANCEL_ORDER,
+  GET_ORDERS_BY_USER,
 
   //review
   ADD_REVIEW,
@@ -687,7 +688,7 @@ export const getFullOrders = () => async (dispatch) => {
   }
 };
 
-//Trae todas las ordenes de un usuario
+//Trae todas la orden con sus productos y el usuario por nro de orden
 export const getOrderById = (orderId) => async (dispatch) => {
   try {
     const res = await axios.get(`${url}orders/${orderId}`);
@@ -764,6 +765,21 @@ export const cancelOrder = (orderId) => async (dispatch) => {
     dispatch({
       type: ERROR_MESSAGE,
       message: 'Problemas al cancelar la orden',
+    });
+  }
+}
+
+export const getOrdersByUser = (userId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${url}orders/${userId}/user`);
+    dispatch({
+      type: GET_ORDERS_BY_USER,
+      payload: res.data
+    })
+  } catch(e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: 'Problemas al recuperar las órdenes',
     });
   }
 }

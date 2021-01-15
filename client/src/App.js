@@ -18,6 +18,7 @@ import Contacto from './Components/Contacto/contacto.js';
 import Profile from './Components/Profile/Profile.js';
 import ImageForm from './Components/Multer/Multer';
 import PlaceOrderScreen from './Components/PlaceOrder/placeOrder.js';
+import OrderUser from "./Components/Profile/orderDetailUsuario.js";
 
 function App() {
   return (
@@ -38,9 +39,10 @@ function App() {
       <Route exact path='/admin' component={Admin} />
       <Route exact path='/contacto' component={Contacto} />
       <Route exact path='/admin/users' component={TableUser} />
-      <Route exect path='/profile' component={Profile} />
+      <Route exact path='/profile' component={Profile} />
       <Route exact path='/placeorder' component={PlaceOrderScreen} />
       <Route exact path='/as' component={ImageForm} />
+      <Route exact path='/profile/orderdetail/:id' component={OrderUser} />
     </>
   );
 }
