@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './placeOrder.css';
-import { postProductStock, updateOneOrder, updateUser, getUserByToken } from "../../store/actions/index.js";
+import { postProductStock, updateOneOrder, updateUser, getUserByToken, cancelOrder } from "../../store/actions/index.js";
 import axios from "axios";
 import { useHistory } from "react-router-dom"
 
@@ -26,7 +26,6 @@ export default function PlaceOrderScreen() {
 
   useEffect(() => {
     usuario = localStorage.getItem("guestUser");
-    console.log(usuario);
     if (usuario) {
       alert("Debe ser un usuario registrado para realizar la compra");
       window.location.href = "/"
@@ -61,14 +60,6 @@ export default function PlaceOrderScreen() {
     }
   },[order])
 
-  function validar() {
-    if (!User.adress || !User.city || !User.phone || !User.postal ) {
-      return true
-    } else {
-      return false
-    }
-  }
-
     const toPayment = async (id) => {
       localStorage.removeItem("OrderCreated");
       const { data } = await axios.post(`http://localhost:3001/mepa/checkout/${id}`);
@@ -81,6 +72,15 @@ export default function PlaceOrderScreen() {
       const res = await axios.get(`http://localhost:3001/auth/me`);
       dispatch(getUserByToken(res.data));
       setEdit(false);
+    }
+
+    function handleCancel() {
+      let respuesta = window.confirm("¿Realmente desea cancelar la compra?");
+      if (respuesta) {
+        localStorage.removeItem("OrderCreated");
+        dispatch(cancelOrder(order.id));
+        window.location.href = "/"
+      }
     }
 
     function handleChange(e) {
@@ -211,7 +211,7 @@ export default function PlaceOrderScreen() {
               </li>
               <li>
                 <div className="Checkout-Botones">
-                <button className='Order-Confirmar'>
+                <button className='Order-Confirmar' onClick={() => handleCancel()}>
                   Cancelar compra
                 </button>
                 <button type="submit" className='Order-Confirmar' type='button'
