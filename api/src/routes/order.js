@@ -256,6 +256,21 @@ server.put(`/:id`, async (req, res) => {
   !orden ? res.sendStatus(400) : res.json(orden);
 });
 
+//Devulve todas las ordenes de un usuario
+server.get("/:userId/user", async (req, res) => {
+  const { userId } = req.params;
+
+  const ordenes = await Order.findAll({
+    where: {
+      userId
+    },
+    include: [ Product ]
+  })
+
+  !ordenes ? sendStatus(404) : res.send(ordenes).status(200);
+})
+
+
 ///////////////Ruta que busca por ID incluyendo user y product////////////
 
 server.get("/:orderId", async (req, res) => {

@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import {
   updateUser,
   getUserByToken,
+  getOrdersByUser,
 } from "../../store/actions/index";
-import "./style.css";
+import "./profile.css";
 import Modal from "../Modal/Modal.js";
 import ResetPassword from "./ResetPassword.js";
 
 export default function Profile() {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state);
+  const { user, orders } = useSelector((state) => state);
   const [disable, setDisable] = useState(0);
   const [display, setDisplay] = useState(false);
   const [show, setShow] = useState({
@@ -24,6 +26,10 @@ export default function Profile() {
     postal: true,
   });
   const [usuario, setUsuario] = useState({});
+
+  useEffect(() => {
+    user && user.id && dispatch(getOrdersByUser(user.id))
+  }, [user])
 
   useEffect(() => {
     setUsuario({
@@ -136,29 +142,29 @@ if (result) {
                 </span>
               </span>
             ) : (
-              <div className="UserProfileDivAfterIf">
-                <label for="name" className="UserProfileLabel">
-                  Nombre:
+                <div className="UserProfileDivAfterIf">
+                  <label for="name" className="UserProfileLabel">
+                    Nombre:
                 </label>
-                <br></br>
-                <input
-                  className="UserProfileInput"
-                  autoComplete="off"
-                  size={40}
-                  type="text"
-                  name="givenname"
-                  pattern=".{1,}"
-                  onChange={(e) => handleInput(e)}
-                  value={usuario.givenname}
-                />
-                <button
-                  className="UserProfileButtonAfterIf"
-                  onClick={(e) => handleCancel(e, "givenname")}
-                >
-                  Fijar Cambios
+                  <br></br>
+                  <input
+                    className="UserProfileInput"
+                    autoComplete="off"
+                    size={40}
+                    type="text"
+                    name="givenname"
+                    pattern=".{1,}"
+                    onChange={(e) => handleInput(e)}
+                    value={usuario.givenname}
+                  />
+                  <button
+                    className="UserProfileButtonAfterIf"
+                    onClick={(e) => handleCancel(e, "givenname")}
+                  >
+                    Fijar Cambios
                 </button>
-              </div>
-            )}
+                </div>
+              )}
             {show.familyname ? (
               <span
                 className="SpanEdit"
@@ -178,28 +184,28 @@ if (result) {
                 </span>
               </span>
             ) : (
-              <div className="UserProfileDivAfterIf">
-                <label className="UserProfileLabel" for="familyname">
-                  Apellido:
+                <div className="UserProfileDivAfterIf">
+                  <label className="UserProfileLabel" for="familyname">
+                    Apellido:
                 </label>
-                <br></br>
-                <input
-                  className="UserProfileInput"
-                  autoComplete="off"
-                  size={40}
-                  type="text"
-                  name="familyname"
-                  onChange={(e) => handleInput(e)}
-                  value={usuario.familyname}
-                />
-                <button
-                  className="UserProfileButtonAfterIf"
-                  onClick={(e) => handleCancel(e, "familyname")}
-                >
-                  Fijar Cambios
+                  <br></br>
+                  <input
+                    className="UserProfileInput"
+                    autoComplete="off"
+                    size={40}
+                    type="text"
+                    name="familyname"
+                    onChange={(e) => handleInput(e)}
+                    value={usuario.familyname}
+                  />
+                  <button
+                    className="UserProfileButtonAfterIf"
+                    onClick={(e) => handleCancel(e, "familyname")}
+                  >
+                    Fijar Cambios
                 </button>
-              </div>
-            )}
+                </div>
+              )}
             {show.email ? (
               <span onClick={() => handleClick("email")} className="SpanEdit">
                 <h3 className="UserProfileH3">Email:</h3>
@@ -216,28 +222,28 @@ if (result) {
                 </span>
               </span>
             ) : (
-              <div className="UserProfileDivAfterIf">
-                <label className="UserProfileLabel" for="email">
-                  Email:
+                <div className="UserProfileDivAfterIf">
+                  <label className="UserProfileLabel" for="email">
+                    Email:
                 </label>
-                <br></br>
-                <input
-                  className="UserProfileInput"
-                  autoComplete="off"
-                  size={40}
-                  type="email"
-                  name="email"
-                  onChange={(e) => handleInput(e)}
-                  value={usuario.email}
-                />
-                <button
-                  className="UserProfileButtonAfterIf"
-                  onClick={(e) => handleCancel(e, "email")}
-                >
-                  Fijar Cambios
+                  <br></br>
+                  <input
+                    className="UserProfileInput"
+                    autoComplete="off"
+                    size={40}
+                    type="email"
+                    name="email"
+                    onChange={(e) => handleInput(e)}
+                    value={usuario.email}
+                  />
+                  <button
+                    className="UserProfileButtonAfterIf"
+                    onClick={(e) => handleCancel(e, "email")}
+                  >
+                    Fijar Cambios
                 </button>
-              </div>
-            )}
+                </div>
+              )}
             {show.city ? (
               <span className="SpanEdit" onClick={() => handleClick("city")}>
                 <h3 className="UserProfileH3">Ciudad:</h3>
@@ -254,28 +260,28 @@ if (result) {
                 </span>
               </span>
             ) : (
-              <div className="UserProfileDivAfterIf">
-                <label className="UserProfileLabel" for="city">
-                  Ciudad:
+                <div className="UserProfileDivAfterIf">
+                  <label className="UserProfileLabel" for="city">
+                    Ciudad:
                 </label>
-                <br></br>
-                <input
-                  className="UserProfileInput"
-                  autoComplete="off"
-                  size={40}
-                  type="text"
-                  name="city"
-                  onChange={(e) => handleInput(e)}
-                  value={usuario.city}
-                />
-                <button
-                  className="UserProfileButtonAfterIf"
-                  onClick={(e) => handleCancel(e, "city")}
-                >
-                  Fijar Cambios
+                  <br></br>
+                  <input
+                    className="UserProfileInput"
+                    autoComplete="off"
+                    size={40}
+                    type="text"
+                    name="city"
+                    onChange={(e) => handleInput(e)}
+                    value={usuario.city}
+                  />
+                  <button
+                    className="UserProfileButtonAfterIf"
+                    onClick={(e) => handleCancel(e, "city")}
+                  >
+                    Fijar Cambios
                 </button>
-              </div>
-            )}
+                </div>
+              )}
             {show.adress ? (
               <span onClick={() => handleClick("adress")} className="SpanEdit">
                 <h3 className="UserProfileH3">Dirección:</h3>
@@ -292,28 +298,28 @@ if (result) {
                 </span>
               </span>
             ) : (
-              <div className="UserProfileDivAfterIf">
-                <label className="UserProfileLabel" for="adress">
-                  Dirección:
+                <div className="UserProfileDivAfterIf">
+                  <label className="UserProfileLabel" for="adress">
+                    Dirección:
                 </label>
-                <br></br>
-                <input
-                  className="UserProfileInput"
-                  autoComplete="off"
-                  size={40}
-                  type="text"
-                  name="adress"
-                  onChange={(e) => handleInput(e)}
-                  value={usuario.adress}
-                />
-                <button
-                  className="UserProfileButtonAfterIf"
-                  onClick={(e) => handleCancel(e, "adress")}
-                >
-                  Fijar Cambios
+                  <br></br>
+                  <input
+                    className="UserProfileInput"
+                    autoComplete="off"
+                    size={40}
+                    type="text"
+                    name="adress"
+                    onChange={(e) => handleInput(e)}
+                    value={usuario.adress}
+                  />
+                  <button
+                    className="UserProfileButtonAfterIf"
+                    onClick={(e) => handleCancel(e, "adress")}
+                  >
+                    Fijar Cambios
                 </button>
-              </div>
-            )}
+                </div>
+              )}
             {show.phone ? (
               <span className="SpanEdit" onClick={() => handleClick("phone")}>
                 <h3 className="UserProfileH3">Teléfono:</h3>
@@ -330,28 +336,28 @@ if (result) {
                 </span>
               </span>
             ) : (
-              <div className="UserProfileDivAfterIf">
-                <label className="UserProfileLabel" for="phone">
-                  Teléfono:
+                <div className="UserProfileDivAfterIf">
+                  <label className="UserProfileLabel" for="phone">
+                    Teléfono:
                 </label>
-                <br></br>
-                <input
-                  className="UserProfileInput"
-                  autoComplete="off"
-                  size={40}
-                  type="text"
-                  name="phone"
-                  onChange={(e) => handleInput(e)}
-                  value={usuario.phone}
-                />
-                <button
-                  className="UserProfileButtonAfterIf"
-                  onClick={(e) => handleCancel(e, "phone")}
-                >
-                  Fijar Cambios
+                  <br></br>
+                  <input
+                    className="UserProfileInput"
+                    autoComplete="off"
+                    size={40}
+                    type="text"
+                    name="phone"
+                    onChange={(e) => handleInput(e)}
+                    value={usuario.phone}
+                  />
+                  <button
+                    className="UserProfileButtonAfterIf"
+                    onClick={(e) => handleCancel(e, "phone")}
+                  >
+                    Fijar Cambios
                 </button>
-              </div>
-            )}
+                </div>
+              )}
             {show.postal ? (
               <span className="SpanEdit" onClick={() => handleClick("postal")}>
                 <h3 className="UserProfileH3">Postal:</h3>
@@ -368,28 +374,28 @@ if (result) {
                 </span>
               </span>
             ) : (
-              <div className="UserProfileDivAfterIf">
-                <label className="UserProfileLabel" for="postal">
-                  Postal:
+                <div className="UserProfileDivAfterIf">
+                  <label className="UserProfileLabel" for="postal">
+                    Postal:
                 </label>
-                <br></br>
-                <input
-                  className="UserProfileInput"
-                  autoComplete="off"
-                  size={40}
-                  type="text"
-                  name="postal"
-                  onChange={(e) => handleInput(e)}
-                  value={usuario.postal}
-                />
-                <button
-                  className="UserProfileButtonAfterIf"
-                  onClick={(e) => handleCancel(e, "postal")}
-                >
-                  Fijar Cambios
+                  <br></br>
+                  <input
+                    className="UserProfileInput"
+                    autoComplete="off"
+                    size={40}
+                    type="text"
+                    name="postal"
+                    onChange={(e) => handleInput(e)}
+                    value={usuario.postal}
+                  />
+                  <button
+                    className="UserProfileButtonAfterIf"
+                    onClick={(e) => handleCancel(e, "postal")}
+                  >
+                    Fijar Cambios
                 </button>
-              </div>
-            )}
+                </div>
+              )}
             <div className="UserDivButton">
               <button
                 onClick={(e) => handleSubmit(e, usuario)}
@@ -399,6 +405,13 @@ if (result) {
               >
                 Actualizar Datos
               </button>
+              <div className="UserDivButton">
+                <button
+                  className="UserActualizarButton"
+                >
+                  Ver Ordenes
+                </button>
+              </div>
               <button
                 onClick={(e) => handleReset(e, usuario)}
                 className="UserResetearButton"
@@ -407,10 +420,40 @@ if (result) {
               >
                 Resetear Contraseña
               </button>
-            </div>            
-          </div>          
+            </div>
+          </div>
         </form>
-        <button className="UserActualizarButton" onClick={() => handleEliminar(user.id)}>Eliminar Cuenta</button>
+        <div>
+          <button className="UserActualizarButton" onClick={() => handleEliminar(user.id)}>Eliminar Cuenta</button>
+        </div>
+        <div className="Profile-Table-Orders">
+          <table id="Profile-Table" className="table">
+            <thead>
+              <tr id="Tr" className="titulo">
+                <th className="Th">Nro</th>
+                <th className="Th">Fecha</th>
+                <th className="Th">Total</th>
+                <th className="Th">Estado</th>
+                <th className="Th"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders && orders.length > 0 && orders.map((elem) => (
+                <tr id="Tr" key={elem.id} className="index">
+                  <td className="Td">{elem.id}</td>
+                  <td className="Td">{elem.date}</td>
+                  <td className="Td">{elem.total}</td>
+                  <td className="Td">{elem.status}</td>
+                  <td className="Td">
+                    <Link to={`/profile/orderdetail/${elem.id}`}>
+                      <button className="edit">Ver detalle</button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
