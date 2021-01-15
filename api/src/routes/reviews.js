@@ -42,8 +42,6 @@ server.post("/:user_id/product/:product_id", async (req, res) => {
       userId: user_id,
     });
 
-    console.log("cree una nueva review")
-
     const newReview = await Review.findOne({include: {
       model: User
     }, where: {

@@ -55,7 +55,6 @@ server.get('/vaca', async (req, res) => {
         sendEmail(data)
         res.send("email, enviado")
     } catch (e) {
-        console.log(e);
         res.status(500)
     }
 })
@@ -65,7 +64,6 @@ server.get("/toro", async (req, res) => {
         passwordReset(data2)
         res.send("email, enviado")
     } catch (e) {
-        console.log(e);
         res.status(500)
     }
 })
@@ -75,7 +73,6 @@ server.get("/perro", async (req,res) => {
         dispatch(data)
         res.send("email, enviado")
     } catch (e) {
-        console.log(e);
         res.status(500)
     }
 })

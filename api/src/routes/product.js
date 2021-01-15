@@ -151,16 +151,6 @@ server.put("/:id", adminAuth, async (req, res) => {
     thumbnail,
   } = req.body;
 
-
-  // var comprobacion =
-  //   typeof name === "string" &&
-  //   typeof appearance === "string" &&      //ERROR parseInt() BUG JAVASCRIPT, COMPROBACION EN FRONT
-  //   typeof description === "string" &&     //DEVUELVE NaN PERO typeof LO TOMA COMO "number"
-  //   typeof parseInt(price) === "number" &&         //viene como string por body entonces lo parseamos
-  //   typeof parseInt(stock) === "number" &&
-  //   (volume === "355 cc" || volume === "473 cc" || volume === "730 cc") &&
-  //   typeof thumbnail === "string";
-
   const product = await Product.update(
     {
       name,
@@ -200,5 +190,58 @@ server.delete("/:id", adminAuth, async (req, res) => {
 });
 
 ////////////////////// S27 //////////////////////
+
+server.post("/controlstock/:productId", async (req, res) => {
+  const { productId } = req.params;
+  const { quantity, orderId } = req.body;
+  var cantidad;
+
+  const producto = await Product.findByPk(productId);
+
+  if (producto) {
+    //Se establece la cantidad maxima por stock
+    cantidad = quantity > producto.stock ? producto.stock : quantity;
+    //Se resta la cantidad del stock existente
+    const newStock = producto.stock - cantidad;
+    //Se guarda el cambio de stocj en el modelo Product
+    if (cantidad > 0) {
+    await Product.update(
+      { stock: newStock },
+      { where: {
+        id: productId,
+      }}
+      )
+      if (cantidad !== quantity) {
+        await Order_products.update(
+          { quantity: cantidad },
+          { where: {
+            orderId,
+            productId
+          }}
+        )
+      }
+    } else {
+      await Order_products.destroy({
+        where: {
+          productId,
+          orderId
+        }
+      })
+    }
+
+    //Se update el quantity en Order_products si la cantidad es diferente de quantity
+    
+  }
+
+  const orden = await Order.findOne({
+    where: {
+      id: orderId
+    },
+    include: [ Product ]
+  })
+
+  !producto || !orden ? res.send("Producto no encontrado").status(404) : res.json(orden);
+
+})
 
 module.exports = server;

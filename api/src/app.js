@@ -27,15 +27,7 @@ server.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
-
-server.use(cookieSession({
-  maxAge: 24 * 60 * 60 * 1000,
-  keys: ["secretooo"]
-}))
-
 server.use(passport.initialize());
-
-server.use(passport.session())
 
 server.all('*', function(req,res,next) {
   passport.authenticate('bearer', function(error,user){

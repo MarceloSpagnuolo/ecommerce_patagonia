@@ -78,7 +78,6 @@ server.put("/:id", async (req, res) => {
   (!givenname || !familyname ) && res.send("Falta valor givenname o familyname").status(400);
   
   if(!email || !(/^([a-zA-Z0-9._+-]+)(@[a-zA-Z0-9-.]+)(\.)+(.[a-zA-Z]{2,4}){1,2}$/gm.test(email))) {
-    console.log("entre aca 5")
     return res.send("Email no válido").status(400)
   }
 
@@ -182,36 +181,6 @@ server.post("/:userId/cart", async (req, res) => {
 
   !orderProduct ? res.sendStatus(400) : res.json(orderProduct);
 });
-
-//////////////METODO ANTERIOR/////////////
-//   const order = await Order.findByPk(orderId);
-//   console.log(order, "esto es null??");
-//   const product = await Product.findByPk(productId);
-//   console.log(product);
-
-//   await order.addProduct(product, { through: { quantity, unitprice } });
-//   const pepito = await Order.findAll({
-//     include: {
-//       model: Product,
-//     },
-//   });
-//   console.log(pepito, "pepito prueba");
-//   !pepito ? res.sendStatus(404) : res.json(pepito);
-// });
-
-//////////////////// S39 //////////////////////////
-
-// Por ahora devuelve todos los items de todas las Order que tienen status "carrito".
-// La tarea dice que debe devolver el ULTIMO Order abierto (sea lo que signifique eso). Se puede discutir a ver que
-// es lo que se interpreta por "el último Order abierto" para ver que cosa más específica queremos devolver.
-
-/////////// Solo los productos /////////////
-/* 
-   Hay otro modelo que trae unicamente los productos en el res.data,
-   por espacio no se agrega abajo pero esta guardado por si surge
-   la necesidad.
-   Se recomienda optar en la practica por el que resulte mas conveniente.
-*/
 
 ///////////////// S40 ///////////////////
 // Es un delete normal. El res.Json devuelve el item

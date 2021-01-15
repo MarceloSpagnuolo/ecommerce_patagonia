@@ -33,14 +33,6 @@ server.post("/login", function (req, res, next) {
   })(req, res, next);
 });
 
-
-/////////////////////////////S64//////////////////
-// Ruta Logout. req.logout() borra las cookies relacionadas al login. No toca localstorage ni nada del jwt.
-server.get("/logout", function (req, res, next) {
-  req.logout();
-  res.redirect("/");
-});
-
 ////////////////////////S75///////////////////////
 //login de google
 server.get(
