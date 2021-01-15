@@ -45,16 +45,17 @@ server.get("/callback", async (req, res) => {
     console.log(req.query, "mercaadiiiiiinn!")
     if (req.query.collection_status !== 'null') {
         const { body } = await mercadopago.payment.get(req.query.collection_id)
+        console.log(body,"soy, budy")
         if (req.query.collection_status === "approved") {
             try {
-                const OrderTik = await confirmedOrder({ id: req.query.external_reference })
+                const OrderTik = await confirmedOrder({ id: req.query.external_reference, total: body.transaction_amount })
                 sendEmail(OrderTik)
-                res.redirect('http://localhost:3000/bien');
+                res.redirect('http://localhost:3000/order/success');
             } catch (error) {
                 res.status(200).json(error)
             }
         } else {
-            res.redirect('http://localhost:3000/mal')
+            res.redirect('http://localhost:3000/order/rejected')
         }
     }
 })

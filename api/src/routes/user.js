@@ -73,7 +73,6 @@ server.put("/:id", async (req, res) => {
     phone,
     postal,
   } = req.body;
-  
 
   (!givenname || !familyname ) && res.send("Falta valor givenname o familyname").status(400);
   

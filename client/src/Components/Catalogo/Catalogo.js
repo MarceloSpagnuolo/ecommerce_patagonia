@@ -128,7 +128,7 @@ function Catalogo(props) {
       <div className="Catalogo-Products-Pagination">
         <div id="Catalogo-ProductCard-Container">
 
-          {props.products.length > 0 ? props.products.map((prod) => (
+          {!!props.products && props.products.length > 0 ? props.products.map((prod) => (
             <div key={prod.id}>
 
               <ProductCard

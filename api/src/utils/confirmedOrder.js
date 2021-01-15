@@ -1,14 +1,26 @@
 const oneOrder = require("./oneOrder")
 
-async function confirmedOrder({ id }) {
+async function confirmedOrder({ id, total }) {
     const Order = await oneOrder(id);
+    const update = await Order.update(
+        {
+            status: "procesando"
+        },
+        {
+            where: {
+                id,
+            },
+            returning: true,
+        }
+    );
+    console.log(update.user.givenname, "ñsñaasñañsña")
     const data = {
-        to: "lu4huf@gmail.com",  //Order.user.email
-        total_compra: 2599,
-        address: "Laprida 1069, Leones, Córdoba",
-        username: "Marcelo Spagnuolo", //`${Order.user.givenname} ${Order.user.familyname}`
+        to: update.user.email,  //Order.user.email
+        total_compra: total,
+        address: update.user.adress,
+        username: `${update.user.givenname} ${update.user.familyname}`,
         id: id,
-        products: 
+        products:
             Order.products.map((product) => ({
                 id: product.id,
                 name: product.name,
@@ -20,7 +32,6 @@ async function confirmedOrder({ id }) {
                 }
             }))
     }
-    console.log(data)
     return data
 }
 

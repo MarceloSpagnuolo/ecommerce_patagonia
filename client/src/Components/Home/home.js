@@ -9,7 +9,7 @@ function Home() {
     <div className="divHome">
 
       <Carrusel />
-      <div className="vaca">
+      <div className="divHomeImg">
         <img src="http://localhost:3001/images/trazo4.gif" alt="" />
       </div>
       <div className="home-manifiesto">

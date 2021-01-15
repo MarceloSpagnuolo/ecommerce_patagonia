@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import SearchBar from "../SearchBar/SearchBar.js";
-import "./styles.css";
-import { connect, useDispatch } from "react-redux";
+import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import SearchBar from '../SearchBar/SearchBar.js';
+import './styles.css';
+import { connect, useDispatch } from 'react-redux';
 import {
   getCategories,
   getProducts,
@@ -14,7 +14,8 @@ import {
   copyCartToStore,
   copyUserToStore,
   getUserByToken,
-  postProductToCart
+  postProductToCart,
+  getOrderWithProducts
 } from "../../store/actions/index.js";
 import Login from "../Login/login.js";
 import { useLocation } from "react-router";
@@ -55,7 +56,16 @@ function Home(props) {
 
   useEffect(() => {
     if (props.user.id > 0) {
-      props.getCartByUser(props.user.id);
+      const orderCreada = JSON.parse(localStorage.getItem("OrderCreated"));
+      orderCreada && console.log(orderCreada.id, "Este es el id de la orden creada del localStorage")
+      if (!props.order.id && orderCreada) {
+        dispatch(getOrderWithProducts(orderCreada.id))
+        localStorage.removeItem("OrderCreated");
+      } else {
+        if(props.order && props.order.status !== "creada") {
+          props.getCartByUser(props.user.id);
+        } 
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.user])
@@ -63,14 +73,14 @@ function Home(props) {
   useEffect(() => {
     // se borra si es usuario guest aunque no este logueado
     if (props.user.id > 0) {
-      const localCart = JSON.parse(localStorage.getItem("guestCart"));
+      const localCart = JSON.parse(localStorage.getItem('guestCart'));
       if (localCart && localCart.products && localCart.products.length > 0) {
         localCart.products.forEach((elem) => {
           dispatch(postProductToCart(props.order.id, elem.id, { unitprice: elem.Order_products.unitprice, quantity: elem.Order_products.quantity }))
         })
       }
-      localStorage.removeItem("guestCart");
-      localStorage.removeItem("guestUser");
+      localStorage.removeItem('guestCart');
+      localStorage.removeItem('guestUser');
     }
     if (props.order.products) {
       setTotal(props.order.products.length);
@@ -86,81 +96,123 @@ function Home(props) {
   }
 
   function salir() {
-    localStorage.removeItem("userToken");
-    window.location.href = "/";
+    localStorage.removeItem('userToken');
+    localStorage.removeItem('shippingAdrress');
+    window.location.href = '/';
   }
 
   return (
     <>
-      <div className="home">
-        <Link to="/">
+      <div className='home'>
+        <Link to='/'>
           <img
-            className="logo"
-            src="https://seeklogo.com/images/P/patagonia-cerveza-logo-E4330326F4-seeklogo.com.png"
-            alt="img-logo"
+            className='logo'
+            src='https://seeklogo.com/images/P/patagonia-cerveza-logo-E4330326F4-seeklogo.com.png'
           />
         </Link>
-        <div className="segundo">
-          <h1 className="titleEcom">ECOMMERCE PATAGONIA</h1>
-          <nav className="navegacion">
-            <div className="prueba-nav">
-              <Link className="btnMenu" to="/">
+        <div className='segundo'>
+          <h1 className='titleEcom'>ECOMMERCE PATAGONIA</h1>
+          <nav className='navegacion'>
+            <div className='prueba-nav'>
+              <Link className='btnMenu' to='/'>
                 <span>Inicio</span>
               </Link>
             </div>
-            <div className="prueba-nav">
-            </div>
-            <div className="prueba-nav">
+            <div className='prueba-nav'></div>
+            <div className='prueba-nav'>
               <Link
-                className="btnMenu"
-                to="/products/?page=1"
+                className='btnMenu'
+                to='/products/?page=1'
                 onClick={() => handleClick()}
               >
                 <span>Productos</span>
               </Link>
             </div>
-            <div className="prueba-nav">
-              <Link className="btnMenu" to="/contacto">
+            <div className='prueba-nav'>
+              <Link className='btnMenu' to='/contacto'>
                 <span>Contáctenos</span>
               </Link>
             </div>
-            {props.user && props.user.role === "admin" ?
-              <Link className="btnMenu" to="/admin">
+            {props.user && props.user.role === 'admin' ? (
+              <Link className='btnMenu' to='/admin'>
                 <span>Admin</span>
               </Link>
-              : <Link className="nununu" to="/admin">
+            ) : (
+              <Link className='nununu' to='/admin'>
                 <span>Admin</span>
-              </Link>}
-            <div className="ss-home">
-
-              <Link to="/cart">
+              </Link>
+            )}
+            <div className='ss-home'>
+              <Link to='/cart'>
                 <img
-                  className="Navegation-Imagen-Carrito"
-                  src="https://cdn.discordapp.com/attachments/764979688446885898/792228021385691136/icons8-carrito-de-compras-64.png"
-                  alt="img-carrito"
+                  className='Navegation-Imagen-Carrito'
+                  src='https://cdn.discordapp.com/attachments/764979688446885898/792228021385691136/icons8-carrito-de-compras-64.png'
                 />
                 {total > 0 && (
-                  <span className="Navegation-Cantidad">{total}</span>
+                  <span className='Navegation-Cantidad'>{total}</span>
                 )}
               </Link>
               <SearchBar />
-              <div className="megaDivNav">
-                {props.user.role === "guest" ?
-                  <div className="divEntrarNav">
-                    <span className="entrarNav" onClick={() => setShow(true)}><img className="iconEntrar" src="https://cdn.discordapp.com/attachments/764979688446885898/797733755603124254/usuario_1.png" alt="" />Entrar
-                  </span>
+              <div className='megaDivNav'>
+                {props.user.role === 'guest' ? (
+                  <div className='divEntrarNav'>
+                    <span className='entrarNav' onClick={() => setShow(true)}>
+                      <img
+                        className='iconEntrar'
+                        src='https://cdn.discordapp.com/attachments/764979688446885898/797733755603124254/usuario_1.png'
+                      />
+                      Entrar
+                    </span>
                   </div>
-                  : <Link to="/profile"><div className="divEntrarNav" ><span className="entrarNav"><img className="iconEntrar" src="https://cdn.discordapp.com/attachments/764979688446885898/797733755603124254/usuario_1.png" alt="" />{props.user.givenname}</span></div></Link>}
-                {props.user && props.user.role === "guest" ?
-                  <div className="divRegistroNav"><Link to="/registro"><span id="registroNav"><img className="iconRegis" src="https://cdn.discordapp.com/attachments/764979688446885898/797734641536598026/agregar-usuario_1.png" alt="" />Registrarse</span></Link></div>
-                  : <div className="divRegistroNav"><span id="registroNav" onClick={() => salir()}><img className="iconRegis" src="https://cdn.discordapp.com/attachments/764979688446885898/797944797762551818/logout_1.png" alt="" />Salir</span></div>}
+                ) : (
+                  <Link to="/profile">
+                  <div className='divEntrarNav'>
+                    <span className='entrarNav'>
+                      <img
+                        className='iconEntrar'
+                        src='https://cdn.discordapp.com/attachments/764979688446885898/797733755603124254/usuario_1.png'
+                      />
+                      {props.user.givenname}
+                    </span>
+                  </div>
+                  </Link>
+                )}
+                {props.user && props.user.role === 'guest' ? (
+                  <div className='divRegistroNav'>
+                    <Link to='/registro'>
+                      <span id='registroNav'>
+                        <img
+                          className='iconRegis'
+                          src='https://cdn.discordapp.com/attachments/764979688446885898/797734641536598026/agregar-usuario_1.png'
+                        />
+                        Registrarse
+                      </span>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className='divRegistroNav'>
+                    <span id='registroNav' onClick={() => salir()}>
+                      <img
+                        className='iconRegis'
+                        src='https://cdn.discordapp.com/attachments/764979688446885898/797944797762551818/logout_1.png'
+                      />
+                      Salir
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </nav>
         </div>
       </div>
       <div>
-        {props.user && <Login guestId={props.user.id} show={show} onClose={() => setShow((p) => !p)} />}
+        {props.user && (
+          <Login
+            guestId={props.user.id}
+            show={show}
+            onClose={() => setShow((p) => !p)}
+          />
+        )}
       </div>
     </>
   );
