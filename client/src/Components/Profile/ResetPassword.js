@@ -36,7 +36,7 @@ export default function ResetPassword(props) {
       }}
       onSubmit={async (values) => {
 
-        const res = await axios.post(`http://localhost:3001/users/passwordReset`, values);
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/users/passwordReset`, values);
         dispatch(getUserByToken(res.data))
         props.seteadora(false)
       }}

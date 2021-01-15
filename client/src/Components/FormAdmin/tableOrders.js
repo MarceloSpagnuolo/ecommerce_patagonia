@@ -52,11 +52,11 @@ function TableOrders(props) {
     return user.role === "admin" ? (
         <div className="divContaianerOrders">
             <div className="divImgOrder">
-                <div className="imgTiOrders"><img src="http://localhost:3001/images/fondoOrders.gif" alt=""/></div>
+                <div className="imgTiOrders"><img src={`${process.env.REACT_APP_API_URL}/images/fondoOrders.gif`} alt=""/></div>
             </div>
 
             <div className="buttonContainerOrder">
-                <div className="mnj"><img src="http://localhost:3001/images/fondoVERT.gif" alt=""/></div>
+                <div className="mnj"><img src={`${process.env.REACT_APP_API_URL}/images/fondoVERT.gif`} alt=""/></div>
                 <div className="mj"><span><p className="pepsito">Estados</p></span></div>
                 <div className="buttonsContainerStatus">
                     <button onClick={() => status("todos")}>todos</button>
@@ -134,7 +134,7 @@ function TableOrders(props) {
         </div>
     )
     : <div className="Authorized-Container">
-        <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" alt=""/>
+        <img className="Authorized-Imagen" src={`${process.env.REACT_APP_API_URL}/images/401.jpg`} alt=""/>
       </div>
 }
 

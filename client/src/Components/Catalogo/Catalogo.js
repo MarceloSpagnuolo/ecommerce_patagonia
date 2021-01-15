@@ -27,7 +27,7 @@ function Catalogo(props) {
       //Manda a llamar directamente la ruta que trae la cantidad de
       //productos es esa categoria
 
-      axios.get("http://localhost:3001/products/count/" + categ)
+      axios.get(`${process.env.REACT_APP_API_URL}/products/count/` + categ)
         .then((res) => {
           //Setea en count la cantidad de productos de la categoría
           setCount(res.data.count);
@@ -38,7 +38,7 @@ function Catalogo(props) {
       //Si no se están mostrando los productos por categoría, manda a llamar
       //la misma ruta pero con el prefijo "all" que indica que se necesita
       //que se cuenten todos los productos
-      axios.get("http://localhost:3001/products/count/all")
+      axios.get(`${process.env.REACT_APP_API_URL}/products/count/all`)
         .then((res) => {
           //Setea count con todos los productos
           setCount(res.data.count);

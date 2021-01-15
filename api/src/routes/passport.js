@@ -33,8 +33,8 @@ passport.use(
 
  
 passport.use(new GoogleStrategy({
-  clientID: '328443840831-f6gnbi1skjvj8bih1r5bm388gu2g80st.apps.googleusercontent.com',
-  clientSecret: 'seHWMC-hymiQVRNkRtlYtF42',
+  clientID: process.env.GOOGLE_ID,
+  clientSecret: process.env.GOOGLE_SECRET,
   callbackURL: "/auth/google/callback",
   session: false
 },
@@ -58,9 +58,9 @@ async function(request, accessToken, refreshToken, profile, done) {
 
 
 passport.use(new FacebookStrategy({
-  clientID: "331736574540258",
-  clientSecret: "ffacf6d0f331622338d47715cd3eddaa",
-  callbackURL: "http://localhost:3001/auth/facebook/callback",
+  clientID: process.env.FACEBOOK_ID,
+  clientSecret: process.env.FACEBOOK_SECRET,
+  callbackURL: `/auth/facebook/callback`,
   session: false,
   profileFields: ['id', 'email', 'locale', 'name', 'verified'],
 },
@@ -85,7 +85,7 @@ async function(accessToken, refreshToken, profile, done) {
 
 passport.use(
   new BearerStrategy((token, done) => {
-    jwt.verify(token, "secreto", function (error, user) {
+    jwt.verify(token, process.env.PASSPORT_SECRET, function (error, user) {
       if (error) return done(error);
       return done(null, user ? user : false);
     });

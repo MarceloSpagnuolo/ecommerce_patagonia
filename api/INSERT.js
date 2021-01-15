@@ -1,4 +1,5 @@
 const { conn } = require("./src/db");
+const url = process.env.URL_BACK
 
 const query = () =>
   conn.query(`

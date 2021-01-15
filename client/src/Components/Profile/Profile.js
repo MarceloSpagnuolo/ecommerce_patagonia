@@ -76,7 +76,7 @@ export default function Profile() {
   async function handleSubmit(e, user) {
     e.preventDefault();
     dispatch(updateUser(user.id, user));
-    const res = await axios.get(`http://localhost:3001/auth/me`);
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/me`);
     dispatch(getUserByToken(res.data));
     alert("Sus datos fueron actualizados");
   }
@@ -89,7 +89,7 @@ export default function Profile() {
   function handleEliminar(id) {
     var result = window.confirm("Si elimina su cuenta no podrá volver a entrar con este usuario. ¿Desea continuar con la operación?");
 if (result) {
-  axios.delete(`http://localhost:3001/users/${id}`)
+  axios.delete(`${process.env.REACT_APP_API_URL}/users/${id}`)
   localStorage.removeItem("userToken");
   window.location.href = "/";
 }
@@ -102,7 +102,7 @@ if (result) {
           <div className="UserProfileRegistroImagen1">
             <img
               className="imgPstaProfile"
-              src="http://localhost:3001/images/Imagencita.jpg"
+              src={`${process.env.REACT_APP_API_URL}/images/Imagencita.jpg`}
               alt=""
             />
           </div>
@@ -129,7 +129,7 @@ if (result) {
                 <span className="SpanEditar">
                   <img
                     className="UserProfileEditImg"
-                    src="http://localhost:3001/images/BotonDeEditar.png"
+                    src={`${process.env.REACT_APP_API_URL}/images/BotonDeEditar.png`}
                     alt=""
                   ></img>
                   Editar
@@ -171,7 +171,7 @@ if (result) {
                 <span className="SpanEditar">
                   <img
                     className="UserProfileEditImg"
-                    src="http://localhost:3001/images/BotonDeEditar.png"
+                    src={`${process.env.REACT_APP_API_URL}/images/BotonDeEditar.png`}
                     alt=""
                   ></img>
                   Editar
@@ -209,7 +209,7 @@ if (result) {
                 <span className="SpanEditar">
                   <img
                     className="UserProfileEditImg"
-                    src="http://localhost:3001/images/BotonDeEditar.png"
+                    src={`${process.env.REACT_APP_API_URL}/images/BotonDeEditar.png`}
                     alt=""
                   ></img>
                   Editar
@@ -247,7 +247,7 @@ if (result) {
                 <span className="SpanEditar">
                   <img
                     className="UserProfileEditImg"
-                    src="http://localhost:3001/images/BotonDeEditar.png"
+                    src={`${process.env.REACT_APP_API_URL}/images/BotonDeEditar.png`}
                     alt=""
                   ></img>
                   Editar
@@ -285,7 +285,7 @@ if (result) {
                 <span className="SpanEditar">
                   <img
                     className="UserProfileEditImg"
-                    src="http://localhost:3001/images/BotonDeEditar.png"
+                    src={`${process.env.REACT_APP_API_URL}/images/BotonDeEditar.png`}
                     alt=""
                   ></img>
                   Editar
@@ -323,7 +323,7 @@ if (result) {
                 <span className="SpanEditar">
                   <img
                     className="UserProfileEditImg"
-                    src="http://localhost:3001/images/BotonDeEditar.png"
+                    src={`${process.env.REACT_APP_API_URL}/images/BotonDeEditar.png`}
                     alt=""
                   ></img>
                   Editar
@@ -361,7 +361,7 @@ if (result) {
                 <span className="SpanEditar">
                   <img
                     className="UserProfileEditImg"
-                    src="http://localhost:3001/images/BotonDeEditar.png"
+                    src={`${process.env.REACT_APP_API_URL}/images/BotonDeEditar.png`}
                     alt=""
                   ></img>
                   Editar

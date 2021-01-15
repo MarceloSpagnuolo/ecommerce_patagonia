@@ -159,7 +159,7 @@ function Carrito() {
           <header className='Modal-Header'>Eliminar un producto</header>
           <section className='Modal-Section'>
             <img
-              src='http://localhost:3001/images/question.png'
+              src={`${process.env.REACT_APP_API_URL}/images/question.png`}
               className='Modal-Imagen'
               alt='img-pregunta'
             />
@@ -182,7 +182,7 @@ function Carrito() {
           <header className='Modal-Header'>Vaciar el Carrito</header>
           <section className='Modal-Section'>
             <img
-              src='http://localhost:3001/images/exclamation.png'
+              src={`${process.env.REACT_APP_API_URL}/images/exclamation.png`}
               className='Modal-Imagen'
               alt='img-exclamacion'
             />

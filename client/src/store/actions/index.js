@@ -65,7 +65,7 @@ import {
 } from '../constants/constants.js';
 const jwt = require('jsonwebtoken');
 
-const url = 'http://localhost:3001/';
+const url = `${process.env.REACT_APP_API_URL}/`;
 
 ////////////////////////////   USERS   //////////////////////////////////////
 
@@ -77,7 +77,7 @@ export const createUser = (payload) => async (dispatch) => {
       const { email, password } = payload;
       const datos = { email, password };
       const newToken = await axios.post(
-        'http://localhost:3001/auth/login',
+        `${process.env.REACT_APP_API_URL}/auth/login`,
         datos
       );
       if (newToken) {

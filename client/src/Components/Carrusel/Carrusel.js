@@ -29,16 +29,16 @@ const Carrusel = () => {
                     <input type="radio" name="radio-btn" id="radio4" />
                     {/* imagenes slider */}
                     <Link to="product/8" className="slide-h first">
-                        <img src="http://localhost:3001/images/patagonia_larguer.jpg" alt="" />
+                        <img src={`${process.env.REACT_APP_API_URL}/images/patagonia_larguer.jpg`} alt="" />
                     </Link>
                     <div className="slide-h">
-                        <img src="http://localhost:3001/images/weise.jpg" alt="" />
+                        <img src={`${process.env.REACT_APP_API_URL}/images/weise.jpg`} alt="" />
                     </div>
                     <Link to="product/27" className="slide-h">
-                        <img src="http://localhost:3001/images/sendero_sur.jpg" alt="" />
+                        <img src={`${process.env.REACT_APP_API_URL}/images/sendero_sur.jpg`} alt="" />
                     </Link>
                     <Link to="products/?page=1" className="slide-h">
-                        <img src="http://localhost:3001/images/Variedad_patagonia2.jpg" alt="" />
+                        <img src={`${process.env.REACT_APP_API_URL}/images/Variedad_patagonia2.jpg`} alt="" />
                     </Link>
                     {/* navegacion automatica start */}
                     <div className="navigation-auto">

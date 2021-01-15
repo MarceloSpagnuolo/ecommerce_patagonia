@@ -12,13 +12,13 @@ function Admin() {
             <div className="Admin-Container">
                 <Link to="admin/products">
                     <div className="Admin-Content-Photo">
-                        <img className="Admin-Imagen" src="http://localhost:3001/images/products.jpg" alt="img-admin-products" />
+                        <img className="Admin-Imagen" src={`${process.env.REACT_APP_API_URL}/images/products.jpg`} alt="img-admin-products" />
                         <span className="Admin-Titulo">PRODUCTOS</span>
                     </div>
                 </Link>
                 <Link to="admin/categories" >
                     <div className="Admin-Content-Photo">
-                        <img className="Admin-Imagen" src="http://localhost:3001/images/categories.jpg" alt="img-admin-categories" />
+                        <img className="Admin-Imagen" src={`${process.env.REACT_APP_API_URL}/images/categories.jpg`} alt="img-admin-categories" />
                         <span className="Admin-Titulo">CATEGORIAS</span>
                     </div>
                 </Link>
@@ -26,13 +26,13 @@ function Admin() {
             <div className="Admin-Container">
                 <Link to="admin/orders">
                     <div className="Admin-Content-Photo">
-                        <img className="Admin-Imagen" src="http://localhost:3001/images/orders.jpg" alt="img-admin-orders" />
+                        <img className="Admin-Imagen" src={`${process.env.REACT_APP_API_URL}/images/orders.jpg`} alt="img-admin-orders" />
                         <span className="Admin-Titulo">ORDENES</span>
                     </div>
                 </Link>
                 <Link to="admin/users">
                     <div className="Admin-Content-Photo">
-                        <img className="Admin-Imagen" src="http://localhost:3001/images/users.jpg" alt="img-admin-users" />
+                        <img className="Admin-Imagen" src={`${process.env.REACT_APP_API_URL}/images/users.jpg`} alt="img-admin-users" />
                         <span className="Admin-Titulo">USUARIOS</span>
                     </div>
                 </Link>
@@ -41,7 +41,7 @@ function Admin() {
     )
     : 
     <div className="Authorized-Container">
-        <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" alt=""/>
+        <img className="Authorized-Imagen" src={`${process.env.REACT_APP_API_URL}/images/401.jpg`} alt=""/>
     </div>
 };
 
