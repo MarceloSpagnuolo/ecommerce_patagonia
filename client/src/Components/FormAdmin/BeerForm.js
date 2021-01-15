@@ -8,7 +8,7 @@ import Multer from "../Multer/Multer.js"
 import { Redirect } from 'react-router-dom';
 
 
-const cerveza = "http://localhost:3001/images/nodisponible.jpg"
+const cerveza = `${process.env.REACT_APP_API_URL}/images/nodisponible.jpg`
 
 const BeerForm = (props) => {
     console.log(props.images, "SOY LAS IMAGENES")

@@ -61,7 +61,7 @@
     width: 25%;
     height: 66%;
     box-shadow: 0px 0px 30px 30px rgb(22, 61, 52) inset;
-    background: url(http://localhost:3001/images/lateral1.jpg) no-repeat center/100%;
+    background: url(https://cdn.discordapp.com/attachments/786686488938414080/799555943284998165/lateral1.jpg) no-repeat center/100%;
 }
 
 .Registro-Imagen2 {
@@ -69,7 +69,7 @@
     width: 25%;
     height: 66%;
     box-shadow: 0px 0px 20px 30px rgb(22, 61, 52) inset;
-    background: url(http://localhost:3001/images/lateral2.jpg) no-repeat center/100%;
+    background: url(https://cdn.discordapp.com/attachments/786686488938414080/799555938516336650/lateral2.jpg) no-repeat center/100%;
 }
 
 #Registro-Btn-Submit {

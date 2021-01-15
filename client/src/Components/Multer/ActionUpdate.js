@@ -14,7 +14,7 @@ export const uploadAction = async (image) => {
   }
 
   try {
-    await axios.post('http://localhost:3001/multer/subir', fd, config);
+    await axios.post(`${process.env.REACT_APP_API_URL}/multer/subir`, fd, config);
   } catch (err) {
     console.log(err);
   }

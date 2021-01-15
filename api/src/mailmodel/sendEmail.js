@@ -1,8 +1,8 @@
 var fs = require("fs")
 const mailgunLoader = require("mailgun-js")
 const mailgun = mailgunLoader({
-    apiKey: "4f95edc4f3482ddd9e81b49785cd9e39-28d78af2-10910db6",
-    domain: "sandboxb74872ac5dad4a46ab7984b0df64bba0.mailgun.org"
+  apiKey: process.env.MAILGUN_KEY,
+  domain: process.env.MAILGUN_SECRET,
 });
 
 function sendEmail(obj) {
@@ -13,7 +13,7 @@ function sendEmail(obj) {
 
   var dataTemplate = obj.products.reduce(function (acc, product) {
     return `${acc}<a class="imagen" href="${process.env.CALLBACK_URL_BASE || 
-        'http://localhost:3000'}/product/${product.id}" style="display: inline-grid;margin: .5em 1em; text-decoration: none; color:#000000;font-weight: 600;">
+        `http://localhost:3000`}/product/${product.id}" style="display: inline-grid;margin: .5em 1em; text-decoration: none; color:#000000;font-weight: 600;">
     <p style="margin-bottom: .5em; text-transform: capitalize;">${product.name}</p>
     <img  style="height: 8em; width: 8em; border-radius: 10%; border: goldenrod solid .2em;"
      src="${product.thumbnail}" />

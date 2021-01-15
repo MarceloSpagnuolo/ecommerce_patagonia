@@ -71,14 +71,14 @@ export default function PlaceOrderScreen() {
 
     const toPayment = async (id) => {
       localStorage.removeItem("OrderCreated");
-      const { data } = await axios.post(`http://localhost:3001/mepa/checkout/${id}`);
+      const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/mepa/checkout/${id}`);
       window.location = data.redirect;
     }
 
     async function handleCambios(e) {
       e.preventDefault();
       dispatch(updateUser(user.id, User));
-      const res = await axios.get(`http://localhost:3001/auth/me`);
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/me`);
       dispatch(getUserByToken(res.data));
       setEdit(false);
     }

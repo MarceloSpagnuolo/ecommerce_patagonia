@@ -25,7 +25,7 @@ function SearchBar(props) {
 				{/* Input buscador */}
 				<input className="se-input" name="Buscador" type="search" id='inlineFormInputGroup' placeholder='Busca algo aqui...' onChange={(e) => handlerInput(e)} />{' '}
 				<button className="button-search" variant='primary' type='submit'>
-					<img className="icon-S" src="http://localhost:3001/images/lupa2.ico" alt="img-lupa"></img>
+					<img className="icon-S" src={`${process.env.REACT_APP_API_URL}/images/lupa2.ico`} alt="img-lupa"></img>
 				</button>
 
 			</form>

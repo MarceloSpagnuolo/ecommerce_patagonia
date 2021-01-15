@@ -22,7 +22,7 @@ const TableUser = () => {
     }
 
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:3001/users/${id}`)
+        axios.delete(`${process.env.REACT_APP_API_URL}/users/${id}`)
         setCambio(!cambio)
     }
 
@@ -75,7 +75,7 @@ const TableUser = () => {
         </div>
     )
     : <div className="Authorized-Container">
-        <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" alt=""/>
+        <img className="Authorized-Imagen" src={`${process.env.REACT_APP_API_URL}/images/401.jpg`} alt=""/>
       </div>
 }
 
