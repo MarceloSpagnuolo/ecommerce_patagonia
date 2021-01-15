@@ -28,7 +28,6 @@ server.get("/:userId/cart", async (req, res) => {
 
 server.get("/:orderId/recupera", async (req, res) => {
   const { orderId } = req.params;
-  console.log(orderId, "De la ruta recupera");
   
   await Order.update(
       { status: "carrito" },
@@ -51,6 +50,34 @@ server.get("/:orderId/recupera", async (req, res) => {
         )
       })
     }
+
+  !orden ? res.sendStatus(404) : res.json(orden);
+})
+
+server.put("/:orderId/cancela", async (req, res) => {
+  const { orderId } = req.params;
+
+  await Order.update(
+    { status: "cancelada" },
+    { where: {
+    id: orderId
+    }}
+  )
+
+  const orden = await Order.findOne({
+    where: { id: orderId },
+    include: [ Product ]
+  })
+
+  if (orden && orden.products) {
+    orden.products.map( async (elem) => {
+      //var newSotck = elem.Order_products.quantity + elem.stock
+      await Product.update(
+        { stock: elem.stock + elem.Order_products.quantity },
+        { where: { id: elem.id }}
+      )
+    })
+  }
 
   !orden ? res.sendStatus(404) : res.json(orden);
 })
