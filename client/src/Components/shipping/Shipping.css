@@ -1,0 +1,21 @@
+.shipping__title {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(22, 61, 52);
+  text-align: center;
+}
+
+.shipping__form {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.shipping__form > div {
+  margin-bottom: 15px;
+}
+
+.shipping__form__input {
+  width: 100%;
+  font-size: 25px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

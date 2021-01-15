@@ -6,6 +6,7 @@ const adminAuth = require("../utils/authMiddleware.js")
 
 server.get("/:userId/cart", async (req, res) => {
   const { userId } = req.params;
+
   const order = await Order.findOne({
     where: {
       userId,
@@ -23,6 +24,62 @@ server.get("/:userId/cart", async (req, res) => {
     !newOrder ? res.sendStatus(400) : res.json(newOrder);
   }
   order && res.json(order);
+})
+
+server.get("/:orderId/recupera", async (req, res) => {
+  const { orderId } = req.params;
+  
+  await Order.update(
+      { status: "carrito" },
+      { where: {
+      id: orderId
+      }}
+    )
+
+    const orden = await Order.findOne({
+      where: { id: orderId },
+      include: [ Product ]
+    })
+
+    if (orden && orden.products) {
+      orden.products.map( async (elem) => {
+        //var newSotck = elem.Order_products.quantity + elem.stock
+        await Product.update(
+          { stock: elem.stock + elem.Order_products.quantity },
+          { where: { id: elem.id }}
+        )
+      })
+    }
+
+  !orden ? res.sendStatus(404) : res.json(orden);
+})
+
+server.put("/:orderId/cancela", async (req, res) => {
+  const { orderId } = req.params;
+
+  await Order.update(
+    { status: "cancelada" },
+    { where: {
+    id: orderId
+    }}
+  )
+
+  const orden = await Order.findOne({
+    where: { id: orderId },
+    include: [ Product ]
+  })
+
+  if (orden && orden.products) {
+    orden.products.map( async (elem) => {
+      //var newSotck = elem.Order_products.quantity + elem.stock
+      await Product.update(
+        { stock: elem.stock + elem.Order_products.quantity },
+        { where: { id: elem.id }}
+      )
+    })
+  }
+
+  !orden ? res.sendStatus(404) : res.json(orden);
 })
 
 //model order = total tiene default value al igual que carrito
@@ -186,7 +243,14 @@ server.put(`/:id`, async (req, res) => {
     }
   );
 
-  !update ? res.sendStatus(400) : res.json(update[1][0]);
+  const orden = Order.findOne({
+    where: {
+      id
+    },
+    include: [ Product ]
+  })
+
+  !orden ? res.sendStatus(400) : res.json(orden);
 });
 
 ///////////////Ruta que busca por ID incluyendo user y product////////////

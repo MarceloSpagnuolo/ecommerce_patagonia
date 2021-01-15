@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 import {
   //users
@@ -23,6 +23,7 @@ import {
   DELETE_PRODUCT_JOIN_CATEGORY,
   MODIFY_PRODUCT,
   DELETE_PRODUCT,
+  POST_PRODUCT_STOCK,
 
   //categories
   ADD_CATEGORY,
@@ -43,7 +44,9 @@ import {
   GET_FULL_ORDERS,
   GET_ORDER_BY_ID,
   UPDATE_ORDER,
-
+  UPDATE_ONE_ORDER,
+  GET_ORDER_WITH_PRODUCTS,
+  CANCEL_ORDER,
 
   //review
   ADD_REVIEW,
@@ -56,17 +59,15 @@ import {
   ADD_IMAGES,
   DELETE_IMAGES,
 
-
-
   //msj error
   ERROR_MESSAGE,
-} from "../constants/constants.js";
-const jwt = require("jsonwebtoken");
+  SHIPPING_ADDRESS,
+} from '../constants/constants.js';
+const jwt = require('jsonwebtoken');
 
-const url = "http://localhost:3001/";
+const url = 'http://localhost:3001/';
 
-
-////////////////////////////   USERS   ////////////////////////////////////// 
+////////////////////////////   USERS   //////////////////////////////////////
 
 //Crea un usuario y se loguea
 export const createUser = (payload) => async (dispatch) => {
@@ -75,20 +76,25 @@ export const createUser = (payload) => async (dispatch) => {
     if (res) {
       const { email, password } = payload;
       const datos = { email, password };
-      const newToken = await axios.post("http://localhost:3001/auth/login", datos);
+      const newToken = await axios.post(
+        'http://localhost:3001/auth/login',
+        datos
+      );
       if (newToken) {
-        localStorage.setItem("userToken", newToken.data);
-        axios.defaults.headers.common["Authorization"] = `Bearer ${newToken.data}`;
+        localStorage.setItem('userToken', newToken.data);
+        axios.defaults.headers.common[
+          'Authorization'
+        ] = `Bearer ${newToken.data}`;
       }
-    };
+    }
     dispatch({
       type: CREATE_USER,
       payload: res.data,
-    })
+    });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas para crear el usuario",
+      message: 'Problemas para crear el usuario',
     });
   }
 };
@@ -96,47 +102,47 @@ export const createUser = (payload) => async (dispatch) => {
 //Modificar el Rol del usuario
 export const putRoleUser = (id, payload) => async (dispatch) => {
   try {
-    const res = await axios.put(`${url}auth/promote/${id}`, payload)
+    const res = await axios.put(`${url}auth/promote/${id}`, payload);
     dispatch({
       type: PUT_ROLE_USER,
       payload: res.data,
-    })
+    });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas al cambiar el rol del usuario",
-    })
+      message: 'Problemas al cambiar el rol del usuario',
+    });
   }
 };
 
 //Trae todos los Usuarios ordenados por apellido
 export const getUsers = () => async (dispatch) => {
   try {
-    const res = await axios.get(`${url}users/?order=["familyname"]`)
+    const res = await axios.get(`${url}users/?order=["familyname"]`);
     dispatch({
       type: GET_USERS,
       payload: res.data,
-    })
+    });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas al traer los usuarios"
-    })
+      message: 'Problemas al traer los usuarios',
+    });
   }
 };
 
 //Trae un usuario especifico por id
 export const getUserById = (userId) => async (dispatch) => {
   try {
-    const res = await axios.get(`${url}users/${userId}`)
+    const res = await axios.get(`${url}users/${userId}`);
     dispatch({
       type: GET_USER_BY_ID,
       payload: res.data,
-    })
+    });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "No se encuentra el Usuario",
+      message: 'No se encuentra el Usuario',
     });
   }
 };
@@ -144,19 +150,18 @@ export const getUserById = (userId) => async (dispatch) => {
 //Trae el carrito de un usuario
 export const getUserCart = (userId) => async (dispatch) => {
   try {
-    const res = await axios.get(`${url}users/${userId}/cart`)
+    const res = await axios.get(`${url}users/${userId}/cart`);
     dispatch({
       type: GET_USER_CART,
       payload: res.data,
-    })
+    });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas para traer la órden de compra",
+      message: 'Problemas para traer la órden de compra',
     });
   }
 };
-
 
 //Devuelve el token del usuario
 export const login = (payload) => async (dispatch) => {
@@ -164,12 +169,12 @@ export const login = (payload) => async (dispatch) => {
     const res = await axios.post(`${url}auth/login`, payload);
     dispatch({
       type: LOGIN,
-      payload: res.data
-    })
+      payload: res.data,
+    });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "No se encuentra ese usuario",
+      message: 'No se encuentra ese usuario',
     });
   }
 };
@@ -177,17 +182,17 @@ export const login = (payload) => async (dispatch) => {
 //Devuelve el usuario del token
 export const getUserByToken = (payload) => async (dispatch) => {
   try {
-    localStorage.setItem("userToken", payload);
-    axios.defaults.headers.common["Authorization"] = `Bearer ${payload}`
-    const usuario = jwt.decode(payload)
+    localStorage.setItem('userToken', payload);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${payload}`;
+    const usuario = jwt.decode(payload);
     dispatch({
       type: GET_USER_BY_TOKEN,
-      payload: usuario
-    })
+      payload: usuario,
+    });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "No se encuentra el usuario"
+      message: 'No se encuentra el usuario',
     });
   }
 };
@@ -202,31 +207,29 @@ export const updateUser = (id, payload) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas al actualizar usuario",
+      message: 'Problemas al actualizar usuario',
     });
   }
-}
+};
 
 //Copia el GUESTUSER en el store
 export const copyUserToStore = (guestUser) => (dispatch) => {
   dispatch({
     type: COPY_USER_TO_STORE,
-    payload: guestUser
-  })
-}
+    payload: guestUser,
+  });
+};
 
-////////////////////////////   USERS   ////////////////////////////////////// 
+////////////////////////////   USERS   //////////////////////////////////////
 
-
-
-
-
-////////////////////////////   PRODUCTS   ////////////////////////////////////// 
+////////////////////////////   PRODUCTS   //////////////////////////////////////
 
 //Trae todos los productos
 export const getProducts = (limite, jump) => async (dispatch) => {
   try {
-    const res = await axios.get(`${url}products/?limit=${limite}&offset=${jump}&include="categories"&order=["name"]`);
+    const res = await axios.get(
+      `${url}products/?limit=${limite}&offset=${jump}&include="categories"&order=["name"]`
+    );
     dispatch({
       type: GET_PRODUCTS,
       payload: res.data,
@@ -234,7 +237,7 @@ export const getProducts = (limite, jump) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Error al mostrar productos",
+      message: 'Error al mostrar productos',
     });
   }
 };
@@ -250,9 +253,9 @@ export const addProduct = (payload) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Error al añadir producto",
+      message: 'Error al añadir producto',
     });
-  };
+  }
 
   // catIds.forEach(catId => {
   //     axios.put(`http://${url}/products/${productId}/category/${catId}`)
@@ -284,7 +287,7 @@ export const modifyProduct = (id, producto) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Error al actualizar producto",
+      message: 'Error al actualizar producto',
     });
   }
 };
@@ -295,20 +298,24 @@ export const deleteProduct = (id) => async (dispatch) => {
     const res = await axios.delete(`${url}products/${id}`);
     dispatch({
       type: DELETE_PRODUCT,
-      payload: [id, res.data]
+      payload: [id, res.data],
     });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Error al eliminar el producto",
+      message: 'Error al eliminar el producto',
     });
   }
 };
 
 // Trae LOS productos por la categoria
-export const getProductByCategory = (nameCat, limit, offset) => async (dispatch) => {
+export const getProductByCategory = (nameCat, limit, offset) => async (
+  dispatch
+) => {
   try {
-    const res = await axios.get(`${url}products/categoria/?nameCat=${nameCat}&limit=${limit}&offset=${offset}`);
+    const res = await axios.get(
+      `${url}products/categoria/?nameCat=${nameCat}&limit=${limit}&offset=${offset}`
+    );
     dispatch({
       type: GET_PRODUCTS_BY_CATEGORY,
       payload: res.data,
@@ -316,7 +323,7 @@ export const getProductByCategory = (nameCat, limit, offset) => async (dispatch)
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Error al encontrar los productos",
+      message: 'Error al encontrar los productos',
     });
   }
 };
@@ -332,7 +339,7 @@ export const searchProduct = (productName) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Error al buscar el producto",
+      message: 'Error al buscar el producto',
     });
   }
 };
@@ -348,7 +355,7 @@ export const getProductById = (id) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Ese id no existe",
+      message: 'Ese id no existe',
     });
   }
 };
@@ -364,7 +371,7 @@ export const getProductJoinCategory = () => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas al encontrar los productos con sus categorias",
+      message: 'Problemas al encontrar los productos con sus categorias',
     });
   }
 };
@@ -380,7 +387,7 @@ export const postProductJoinCategory = (idProd, idCat) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas al agregar categoria a un producto",
+      message: 'Problemas al agregar categoria a un producto',
     });
   }
 };
@@ -400,18 +407,30 @@ export const deleteProductJoinCategory = (idProd, idCat) => async (
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas al eliminar categoria de un producto",
+      message: 'Problemas al eliminar categoria de un producto',
     });
   }
 };
 
-////////////////////////////   PRODUCTS   ////////////////////////////////////// 
+//Controla y modifica el stock que necesita el checkout
+export const postProductStock = (productId, payload) => async (dispatch) => {
+  try {
+    const res = await axios.post(`${url}products/controlstock/${productId}`, payload)
+    dispatch({
+      type: POST_PRODUCT_STOCK,
+      payload: res.data
+    })
+  } catch(e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: 'Error al controlar stock',
+    });
+  }
+}
 
+////////////////////////////   PRODUCTS   //////////////////////////////////////
 
-
-
-
-////////////////////////////   CATEGORIES   ////////////////////////////////////// 
+////////////////////////////   CATEGORIES   //////////////////////////////////////
 
 //Trae todas las categorias
 export const getCategories = () => async (dispatch) => {
@@ -424,7 +443,7 @@ export const getCategories = () => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Error al mostrar categorías",
+      message: 'Error al mostrar categorías',
     });
   }
 };
@@ -440,7 +459,7 @@ export const addCategory = (payload) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Error al añadir categoría",
+      message: 'Error al añadir categoría',
     });
   }
 };
@@ -456,7 +475,7 @@ export const updateCategory = (id, category) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Error al actualizar una categoría",
+      message: 'Error al actualizar una categoría',
     });
   }
 };
@@ -467,40 +486,36 @@ export const deleteCategory = (id) => async (dispatch) => {
     const res = await axios.delete(`${url}categories/${id}`);
     dispatch({
       type: DELETE_CATEGORY,
-      payload: [id, res.data]
+      payload: [id, res.data],
     });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Error al eliminar la categoría",
+      message: 'Error al eliminar la categoría',
     });
   }
 };
 
-////////////////////////////   CATEGORIES   ////////////////////////////////////// 
+////////////////////////////   CATEGORIES   //////////////////////////////////////
 
-
-
-
-
-
-////////////////////////////   CART   ////////////////////////////////////// 
-
+////////////////////////////   CART   //////////////////////////////////////
 
 //Agrega productos al carrito Y modifica la cantidad del producto en el carrito
-export const postProductToCart = (orderId, productId, payload) => async (dispatch) => {
+export const postProductToCart = (orderId, productId, payload) => async (
+  dispatch
+) => {
   const { unitprice, quantity } = payload;
   var res;
   try {
     if (orderId === 0) {
-      var localCart = JSON.parse(localStorage.getItem("guestCart"));
+      var localCart = JSON.parse(localStorage.getItem('guestCart'));
       if (!localCart.products) {
-        localCart.products = []
+        localCart.products = [];
       }
       if (localCart.products.length === 0) {
         const producto = await axios.get(`${url}products/${productId}`);
         localCart.products.push(producto.data);
-        localCart.products[0].Order_products = { quantity, unitprice }
+        localCart.products[0].Order_products = { quantity, unitprice };
       } else {
         var isExist = false;
         for (let i = 0; i < localCart.products.length; i++) {
@@ -513,81 +528,86 @@ export const postProductToCart = (orderId, productId, payload) => async (dispatc
         if (!isExist) {
           const producto = await axios.get(`${url}products/${productId}`);
           localCart.products.push(producto.data);
-          localCart.products[localCart.products.length - 1].Order_products = { quantity, unitprice };
+          localCart.products[localCart.products.length - 1].Order_products = {
+            quantity,
+            unitprice,
+          };
         }
       }
-      localStorage.setItem("guestCart", JSON.stringify(localCart));
+      localStorage.setItem('guestCart', JSON.stringify(localCart));
       res = { data: localCart };
     } else {
-      res = await axios.post(`${url}orders/${orderId}/cart/${productId}`, payload)
+      res = await axios.post(
+        `${url}orders/${orderId}/cart/${productId}`,
+        payload
+      );
     }
     dispatch({
       type: POST_PRODUCT_TO_CART,
       payload: res.data,
-    })
+    });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "No se pudo agregar el producto al carrito",
+      message: 'No se pudo agregar el producto al carrito',
     });
   }
 };
-
 
 //Elimina un producto del carrito
 export const delProductToCart = (orderId, productId) => async (dispatch) => {
   var res;
   try {
     if (orderId === 0) {
-      var localCart = JSON.parse(localStorage.getItem("guestCart"));
-      localCart.products = localCart.products.filter((elem) => elem.id !== productId);
-      localStorage.setItem("guestCart", JSON.stringify(localCart));
+      var localCart = JSON.parse(localStorage.getItem('guestCart'));
+      localCart.products = localCart.products.filter(
+        (elem) => elem.id !== productId
+      );
+      localStorage.setItem('guestCart', JSON.stringify(localCart));
       res = { data: localCart };
     } else {
-      res = await axios.delete(`${url}orders/${orderId}/cart/${productId}`)
+      res = await axios.delete(`${url}orders/${orderId}/cart/${productId}`);
     }
     dispatch({
       type: DEL_PRODUCT_TO_CART,
       payload: res.data,
-    })
+    });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "No se encuentra el Producto en ese Carrito",
+      message: 'No se encuentra el Producto en ese Carrito',
     });
   }
 };
-
 
 //Vacia el carrito
 export const emptyAllProductsOfCart = (orderId) => async (dispatch) => {
   var res;
   try {
     if (orderId === 0) {
-      var localCart = JSON.parse(localStorage.getItem("guestCart"));
+      var localCart = JSON.parse(localStorage.getItem('guestCart'));
       localCart.products = [];
-      localStorage.setItem("guestCart", JSON.stringify(localCart));
+      localStorage.setItem('guestCart', JSON.stringify(localCart));
       res = { data: localCart };
     } else {
-      res = await axios.delete(`${url}orders/${orderId}/products`)
+      res = await axios.delete(`${url}orders/${orderId}/products`);
     }
     dispatch({
       type: EMPTY_ALL_PRODUCTS_OF_CART,
       payload: res.data,
-    })
+    });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "No se encuentran Productos es ese Carrito",
+      message: 'No se encuentran Productos es ese Carrito',
     });
   }
 };
 
-
 //Trae el carrito del usuario con sus productos agregados
 export const getCartByUser = (idUser) => async (dispatch) => {
   try {
-    const res = await axios.get(`${url}orders/${idUser}/cart`)
+    const res = await axios.get(`${url}orders/${idUser}/cart`);
     dispatch({
       type: GET_CART_BY_IDUSER,
       payload: res.data,
@@ -595,7 +615,7 @@ export const getCartByUser = (idUser) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas para acceder al carrito",
+      message: 'Problemas para acceder al carrito',
     });
   }
 };
@@ -611,15 +631,22 @@ export const postCreateCart = (idUser) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas para crear el carrito",
+      message: 'Problemas para crear el carrito',
     });
   }
 };
 
 //Cambia el stock de productos en el store
-export const putQuantity = (idUser, idOrder, idProduct, cant) => async (dispatch) => {
+export const putQuantity = (idUser, idOrder, idProduct, cant) => async (
+  dispatch
+) => {
   try {
-    const res = await axios.put(`${url}users/${idUser}/cart`, idOrder, idProduct, cant);
+    const res = await axios.put(
+      `${url}users/${idUser}/cart`,
+      idOrder,
+      idProduct,
+      cant
+    );
     dispatch({
       type: PUT_CHANGE_QUANTITY,
       payload: res.data,
@@ -627,7 +654,7 @@ export const putQuantity = (idUser, idOrder, idProduct, cant) => async (dispatch
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas para modificar la cantidad del producto",
+      message: 'Problemas para modificar la cantidad del producto',
     });
   }
 };
@@ -636,17 +663,13 @@ export const putQuantity = (idUser, idOrder, idProduct, cant) => async (dispatch
 export const copyCartToStore = (guestCart) => (dispatch) => {
   dispatch({
     type: COPY_CART_TO_STORE,
-    payload: guestCart
-  })
-}
+    payload: guestCart,
+  });
+};
 
-////////////////////////////   CART   ////////////////////////////////////// 
+////////////////////////////   CART   //////////////////////////////////////
 
-
-
-
-
-////////////////////////////   ORDERS   ////////////////////////////////////// 
+////////////////////////////   ORDERS   //////////////////////////////////////
 
 //Trae todas las ordenes de compras con sus usuarios y sus productos
 export const getFullOrders = () => async (dispatch) => {
@@ -659,7 +682,7 @@ export const getFullOrders = () => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas para traer las ordenes de compra",
+      message: 'Problemas para traer las ordenes de compra',
     });
   }
 };
@@ -671,51 +694,99 @@ export const getOrderById = (orderId) => async (dispatch) => {
     dispatch({
       type: GET_ORDER_BY_ID,
       payload: res.data,
-    })
+    });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas para traer la órden de compra",
+      message: 'Problemas para traer la órden de compra',
     });
   }
 };
 
 //Moificar order /:id UPDATE_ORDER
 export const updateOrder = (id, payload) => async (dispatch) => {
+  
   try {
     const res = await axios.put(`${url}orders/${id}`, payload);
+    
     dispatch({
       type: UPDATE_ORDER,
-      payload: res.data
+      payload: res.data,
     });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas al modificar la order",
+      message: 'Problemas al modificar la order',
+    });
+  }
+};
+
+export const updateOneOrder = (orderId, payload) => async (dispatch) => {
+  try {
+    const res = await axios.put(`${url}orders/${orderId}`, payload);
+    dispatch({
+      type: UPDATE_ONE_ORDER,
+      payload: res.data,
+    })
+  } catch(e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: 'Problemas al modificar la order',
     });
   }
 }
 
-////////////////////////////   ORDERS   ////////////////////////////////////// 
+//Recupera una orden creada, la transforma nuevamente en carrito
+//y recupera el stock de la misma
+export const getOrderWithProducts = (orderId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${url}orders/${orderId}/recupera`);
+    dispatch({
+      type: GET_ORDER_WITH_PRODUCTS,
+      payload: res.data
+    })
+  } catch(e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: 'Problemas al recuperar la orden',
+    });
+  }
+}
 
+export const cancelOrder = (orderId) => async (dispatch) => {
+  try {
+    const res = await axios.put(`${url}orders/${orderId}/cancela`);
+    dispatch({
+      type: CANCEL_ORDER,
+      payload: res.data
+    })
+  } catch(e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: 'Problemas al cancelar la orden',
+    });
+  }
+}
 
+////////////////////////////   ORDERS   //////////////////////////////////////
 
-
-
-////////////////////////////   REVIEW   ////////////////////////////////////// 
+////////////////////////////   REVIEW   //////////////////////////////////////
 
 //Agrega una review de un usuario a un producto
 export const addReview = (user_id, product_id, payload) => async (dispatch) => {
   try {
-    const res = await axios.post(`${url}reviews/${user_id}/product/${product_id}`, payload)
+    const res = await axios.post(
+      `${url}reviews/${user_id}/product/${product_id}`,
+      payload
+    );
     dispatch({
       type: ADD_REVIEW,
       payload: res.data,
-    })
+    });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Review no creada",
+      message: 'Review no creada',
     });
   }
 };
@@ -723,16 +794,16 @@ export const addReview = (user_id, product_id, payload) => async (dispatch) => {
 //Trae todas las reviews con sus usuarios
 export const getReviews = () => async (dispatch) => {
   try {
-    const res = await axios.get(`${url}reviews/?include="user"`)
+    const res = await axios.get(`${url}reviews/?include="user"`);
     dispatch({
       type: GET_REVIEWS,
-      payload: res.data
-    })
+      payload: res.data,
+    });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas al conseguir las reviews"
-    })
+      message: 'Problemas al conseguir las reviews',
+    });
   }
 };
 
@@ -742,39 +813,35 @@ export const updateReview = (id, payload) => async (dispatch) => {
     const res = await axios.put(`${url}reviews/${id}`, payload);
     dispatch({
       type: UPDATE_REVIEW,
-      payload: res.data
-    })
+      payload: res.data,
+    });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas al modifucar la review"
-    })
+      message: 'Problemas al modifucar la review',
+    });
   }
 };
 
 //DELETE_REVIEW
 export const deleteReview = (id) => async (dispatch) => {
   try {
-    const res = await axios.delete(`${url}reviews/removeReview/${id}`)
+    const res = await axios.delete(`${url}reviews/removeReview/${id}`);
     dispatch({
-      type: DELETE_REVIEW ,
-      payload: res.data
-    })
+      type: DELETE_REVIEW,
+      payload: res.data,
+    });
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas al conseguir las reviews"
-    })
+      message: 'Problemas al conseguir las reviews',
+    });
   }
-}
+};
 
-////////////////////////////   REVIEW   ////////////////////////////////////// 
+////////////////////////////   REVIEW   //////////////////////////////////////
 
-
-
-
-
-////////////////////////////   MULTER   ////////////////////////////////////// 
+////////////////////////////   MULTER   //////////////////////////////////////
 
 ///Trae todas las imagenes de un producto por id
 export const getImages = (id) => async (dispatch) => {
@@ -787,7 +854,7 @@ export const getImages = (id) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas al traer las imágenes",
+      message: 'Problemas al traer las imágenes',
     });
   }
 };
@@ -803,11 +870,10 @@ export const addImages = (payload, id) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas al añadir imágenes",
+      message: 'Problemas al añadir imágenes',
     });
   }
 };
-
 
 //Elimina imagen de producto por id
 export const deleteImages = (id) => async (dispatch) => {
@@ -820,11 +886,17 @@ export const deleteImages = (id) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,
-      message: "Problemas borrar una imagen",
+      message: 'Problemas borrar una imagen',
     });
   }
 };
 
-////////////////////////////   MULTER   ////////////////////////////////////// 
+////////////////////////////   MULTER   //////////////////////////////////////
 
-
+export const shippingAddress = (data) => (dispatch) => {
+  dispatch({
+    type: SHIPPING_ADDRESS,
+    payload: data,
+  });
+  localStorage.setItem('shippingAddress', JSON.stringify(data));
+};
