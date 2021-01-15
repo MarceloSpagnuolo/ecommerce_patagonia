@@ -3,6 +3,7 @@ const { DATE } = require("sequelize");
 const db = require("../db.js");
 const { Order, Order_products, User, Product } = db
 const adminAuth = require("../utils/authMiddleware.js")
+const oneOrder = require("../utils/oneOrder")
 
 server.get("/:userId/cart", async (req, res) => {
   const { userId } = req.params;
@@ -315,5 +316,30 @@ server.get("/:userId/products/:productId", async (req, res) => {
   })
   res.json(algo)
 })
+
+
+server.get("/algo/algo/:id", async (req,res) => {
+  
+  const {id } = req.params
+  
+  const Order = await oneOrder(id);
+                const update = await Order.update(
+                    {
+                        status: "procesando"
+                    },
+                    {
+                        where: {
+                            id: id,
+                        },
+                        returning: true,
+                    }
+                );
+
+console.log(Order.toJSON())
+
+!Order ? res.sendStatus(400) : res.send(Order)
+})
+
+
 
 module.exports = server;
