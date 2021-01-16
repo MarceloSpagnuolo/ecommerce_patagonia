@@ -1,4 +1,5 @@
 const { conn } = require("./src/db");
+const url = process.env.URL_BACK
 
 const query = () =>
   conn.query(`
@@ -31,7 +32,7 @@ VALUES ('Amber Lager', 'Color ambar, rojjos brillantes, espuma blanca.', 'Sabor 
 ('OCTUBREFEST', 'Color ambar cobrizo', 'Un sabor que parece empezar levemente dulce maltoso para terminar con un ﬁnal seco limpio.', 200, 5, '730 cc', 'true',  'https://ecommerce-patagonia.herokuapp.com/images/octubre730.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('OCTUBREFEST', 'Color ambar cobrizo', 'Un sabor que parece empezar levemente dulce maltoso para terminar con un ﬁnal seco limpio.', 160, 5, '473 cc', 'false', 'https://ecommerce-patagonia.herokuapp.com/images/octubre473.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('OCTUBREFEST', 'Color ambar cobrizo', 'Un sabor que parece empezar levemente dulce maltoso para terminar con un ﬁnal seco limpio.', 140, 0, '355 cc', 'false', 'https://ecommerce-patagonia.herokuapp.com/images/nodisponible.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
-('Sendero Sur', 'Color dorado claro', 'Su amargo medio, pero presente equilibra la suave maltosidad de nuestra malta Pilsen orgánica con el ligero aroma cítrico y afrutado del lúpulo, que recuerda a la cáscara de pomelo. El maqui aporta un final ligeramente seco y ácido.', 130, 30, '473 cc', 'false', 'https://ecommerce-patagonia.herokuapp.com//images/sendero473.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
+('Sendero Sur', 'Color dorado claro', 'Su amargo medio, pero presente equilibra la suave maltosidad de nuestra malta Pilsen orgánica con el ligero aroma cítrico y afrutado del lúpulo, que recuerda a la cáscara de pomelo. El maqui aporta un final ligeramente seco y ácido.', 130, 30, '473 cc', 'false', 'https://ecommerce-patagonia.herokuapp.com/images/sendero473.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('Abraso De OSO', 'Color dorado profundo aspecto levemente opalescente, espuma blanca persistente', 'De sabores a cereal, grano, con un toque dulce por la miel. Refrescante, de cuerpo medio-liviano.', 120, 30, '473 cc', 'false', 'https://ecommerce-patagonia.herokuapp.com/images/oso473.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00'),
 ('VeraIPA', 'Dorado/anaranjado profundo espuma blanca persistente, y opalescencia caracteristica', 'Muy suave lupulado en hervor que le da un amargor bajo, con intenso de sabor cítrico y a frutas tropicales, gracias al agregado de lúpulos aromáticos en Dry Hopping. De cuerpo medio y muy refrescante.', 125, 20, '473 cc', 'false', 'https://ecommerce-patagonia.herokuapp.com/images/veraipa473.jpg', '2017-08-09 07:00:00 -7:00', '2017-08-09 08:00:00 -7:00');
 

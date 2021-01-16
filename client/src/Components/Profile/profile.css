@@ -145,7 +145,7 @@
   overflow: hidden;
   /* background-color: rgb(22, 61, 52);
   box-shadow: -100px -50px 30px 30px rgb(22, 61, 52) inset;
-  background: url(http://localhost:3001/images/Imagencita.jpg) no-repeat left/115%; */
+  background: url(/images/Imagencita.jpg) no-repeat left/115%; */
 }
 
 .imgPstaProfile {
