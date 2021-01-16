@@ -33,7 +33,7 @@ module.exports = (sequelize) => {
     },
     thumbnail: {
       type: DataTypes.STRING,
-      valueDefalut: `${process.env.URL_BACK}/images/nodisponible.jpg`
+      valueDefalut: `${process.env.REACT_APP_API_URL}/images/nodisponible.jpg`
     }
   });
 };
