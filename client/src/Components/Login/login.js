@@ -6,6 +6,8 @@ import "./login.css";
 import { useDispatch } from "react-redux";
 import { getUserByToken } from "../../store/actions/index.js"
 
+const url = "https://ecommerce-patagonia.herokuapp.com";
+
 function Login({ guestId, show, onClose }, props) {
     const dispatch = useDispatch();
     const [estado, setEstado] = useState({
@@ -27,7 +29,7 @@ function Login({ guestId, show, onClose }, props) {
     const handleLogueo = async () => {
         try {
             //enviamos el mail y el password a la ruta /login
-            const newToken = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, estado)
+            const newToken = await axios.post(`${url}/auth/login`, estado)
             if (newToken) {  //si la ruta nos devolvió un token
                 dispatch(getUserByToken(newToken.data))
                 onClose();
@@ -64,15 +66,15 @@ function Login({ guestId, show, onClose }, props) {
                         <Link to="/registro" className="ToRegis" onClick={() => { onClose && onClose() }}>Registrarse</Link>
                     </div>
                     <div className="Login-Btn-Social btnGoogleLogin">
-                        <a href={`${process.env.REACT_APP_API_URL}/auth/google`} className="Login-Btn-Google">
+                        <a href={`${url}/auth/google`} className="Login-Btn-Google">
                             Acceder con Google
-                            <img src={`${process.env.REACT_APP_API_URL}/images/google.png`} className="Login-Logo-Btn googleIcon" alt="img-google" />
+                            <img src={`${url}/images/google.png`} className="Login-Logo-Btn googleIcon" alt="img-google" />
                         </a>
                     </div>
                     <div className="Login-Btn-Social btnFaceLogin" >
-                        <a href={`${process.env.REACT_APP_API_URL}/auth/facebook`} className="Login-Btn-Facebook">
+                        <a href={`${url}/auth/facebook`} className="Login-Btn-Facebook">
                             Acceder con Facebook
-                            <img src={`${process.env.REACT_APP_API_URL}/images/facebook.png`} className="Login-Logo-Btn faceIcon" alt="img-facebook" />
+                            <img src={`${url}/images/facebook.png`} className="Login-Logo-Btn faceIcon" alt="img-facebook" />
                         </a>
                     </div>
                     <div className="LoginDiv-Footer loginEntrarSalir">

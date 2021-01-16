@@ -7,8 +7,6 @@ const cors = require('cors');
 const passport = require("./routes/passport");
 const cookieSession = require("cookie-session")
 
-
-
 require('./db.js');
 
 const server = express();

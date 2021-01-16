@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./contacto.css";
 
+const url = "https://ecommerce-patagonia.herokuapp.com";
+
 function Contacto() {
     const [estado, setEstado] = useState({
         name: '',
@@ -27,7 +29,7 @@ function Contacto() {
                         <td className="Contacto-Td">
                             <div className="Contacto-Datos">
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Flecha" src={`${process.env.REACT_APP_API_URL}/images/flecha.png`} alt="img-flecha" />
+                                    <img className="Contacto-Icono-Flecha" src={`${url}/images/flecha.png`} alt="img-flecha" />
                                     <span>Alvarez Alejandro David</span>
                                 </div>
                             </div>
@@ -35,30 +37,30 @@ function Contacto() {
                         <td className="Contacto-Td">
                             <div className="Contacto-Datos">
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Github" src={`${process.env.REACT_APP_API_URL}/images/github.png`} alt="img-gitHub" />
+                                    <img className="Contacto-Icono-Github" src={`${url}/images/github.png`} alt="img-gitHub" />
                                     <span>GitHub: aalvag</span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Gmail" src={`${process.env.REACT_APP_API_URL}/images/gmail.png`} alt="img-gmail" />
+                                    <img className="Contacto-Icono-Gmail" src={`${url}/images/gmail.png`} alt="img-gmail" />
                                     <span>Gmail: </span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Facebook" src={`${process.env.REACT_APP_API_URL}/images/linkedin.png`} alt="img-linkedin" />
+                                    <img className="Contacto-Icono-Facebook" src={`${url}/images/linkedin.png`} alt="img-linkedin" />
                                     <span>Linkedin: </span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Instagram" src={`${process.env.REACT_APP_API_URL}/images/instagram.png`} alt="img-instagram" />
+                                    <img className="Contacto-Icono-Instagram" src={`${url}/images/instagram.png`} alt="img-instagram" />
                                     <span>Instagram: </span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Phone" src={`${process.env.REACT_APP_API_URL}/images/phone.png`} alt="img-whatsapp" />
+                                    <img className="Contacto-Icono-Phone" src={`${url}/images/phone.png`} alt="img-whatsapp" />
                                     <span>+54 11 23976209</span>
                                 </div>
                             </div></td>
                         <td className="Contacto-Td">
                             <div className="Contacto-Datos">
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Lugar" src={`${process.env.REACT_APP_API_URL}/images/lugar.png`} alt="img-ubicacion" />
+                                    <img className="Contacto-Icono-Lugar" src={`${url}/images/lugar.png`} alt="img-ubicacion" />
                                     <span>Buenos Aires, Argentina</span>
                                 </div>
                             </div>
@@ -68,7 +70,7 @@ function Contacto() {
                         <td className="Contacto-Td">
                             <div className="Contacto-Datos">
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Flecha" src={`${process.env.REACT_APP_API_URL}/images/flecha.png`} alt="img-flecha" />
+                                    <img className="Contacto-Icono-Flecha" src={`${url}/images/flecha.png`} alt="img-flecha" />
                                     <span>Casella Alan Daniel</span>
                                 </div>
                             </div>
@@ -76,23 +78,23 @@ function Contacto() {
                         <td className="Contacto-Td">
                             <div className="Contacto-Datos">
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Github" src={`${process.env.REACT_APP_API_URL}/images/github.png`} alt="img-github" />
+                                    <img className="Contacto-Icono-Github" src={`${url}/images/github.png`} alt="img-github" />
                                     <span>GitHub: AlanCasella</span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Gmail" src={`${process.env.REACT_APP_API_URL}/images/gmail.png`} alt="img-gmail" />
+                                    <img className="Contacto-Icono-Gmail" src={`${url}/images/gmail.png`} alt="img-gmail" />
                                     <span>Gmail: </span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Facebook" src={`${process.env.REACT_APP_API_URL}/images/linkedin.png`} alt="img-linkedin" />
+                                    <img className="Contacto-Icono-Facebook" src={`${url}/images/linkedin.png`} alt="img-linkedin" />
                                     <span>Linkedin: </span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Instagram" src={`${process.env.REACT_APP_API_URL}/images/instagram.png`} alt="img-instagram" />
+                                    <img className="Contacto-Icono-Instagram" src={`${url}/images/instagram.png`} alt="img-instagram" />
                                     <span>Instagram: </span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Phone" src={`${process.env.REACT_APP_API_URL}/images/phone.png`} alt="img-whatsapp" />
+                                    <img className="Contacto-Icono-Phone" src={`${url}/images/phone.png`} alt="img-whatsapp" />
                                     <span>+54 11 40912932</span>
                                 </div>
                             </div>
@@ -100,7 +102,7 @@ function Contacto() {
                         <td className="Contacto-Td">
                             <div className="Contacto-Datos">
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Lugar" src={`${process.env.REACT_APP_API_URL}/images/lugar.png`} alt="img-ubiacion" />
+                                    <img className="Contacto-Icono-Lugar" src={`${url}/images/lugar.png`} alt="img-ubiacion" />
                                     <span>CABA, Argentina</span>
                                 </div>
                             </div>
@@ -110,7 +112,7 @@ function Contacto() {
                         <td className="Contacto-Td">
                             <div className="Contacto-Datos">
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Flecha" src={`${process.env.REACT_APP_API_URL}/images/flecha.png`} alt="img-flecha" />
+                                    <img className="Contacto-Icono-Flecha" src={`${url}/images/flecha.png`} alt="img-flecha" />
                                     <span>Nieto Daniel Ignacio</span>
                                 </div>
                             </div>
@@ -118,23 +120,23 @@ function Contacto() {
                         <td className="Contacto-Td">
                             <div className="Contacto-Datos">
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Github" src={`${process.env.REACT_APP_API_URL}/images/github.png`} alt="img-github" />
+                                    <img className="Contacto-Icono-Github" src={`${url}/images/github.png`} alt="img-github" />
                                     <span>GitHub: Daniel-Ignacio-Nieto</span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Gmail" src={`${process.env.REACT_APP_API_URL}/images/gmail.png`} alt="img-gmail" />
+                                    <img className="Contacto-Icono-Gmail" src={`${url}/images/gmail.png`} alt="img-gmail" />
                                     <span>Gmail: </span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Facebook" src={`${process.env.REACT_APP_API_URL}/images/linkedin.png`} alt="img-linkedin" />
+                                    <img className="Contacto-Icono-Facebook" src={`${url}/images/linkedin.png`} alt="img-linkedin" />
                                     <span>Linkedin: </span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Instagram" src={`${process.env.REACT_APP_API_URL}/images/instagram.png`} alt="img-instagram" />
+                                    <img className="Contacto-Icono-Instagram" src={`${url}/images/instagram.png`} alt="img-instagram" />
                                     <span>Instagram: </span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Phone" src={`${process.env.REACT_APP_API_URL}/images/phone.png`} alt="img-whatsapp" />
+                                    <img className="Contacto-Icono-Phone" src={`${url}/images/phone.png`} alt="img-whatsapp" />
                                     <span>+54 351 5918511</span>
                                 </div>
                             </div>
@@ -142,7 +144,7 @@ function Contacto() {
                         <td className="Contacto-Td">
                             <div className="Contacto-Datos">
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Lugar" src={`${process.env.REACT_APP_API_URL}/images/lugar.png`} alt="img-ubiacion" />
+                                    <img className="Contacto-Icono-Lugar" src={`${url}/images/lugar.png`} alt="img-ubiacion" />
                                     <span>Córdoba, Argentina</span>
                                 </div>
                             </div>
@@ -152,7 +154,7 @@ function Contacto() {
                         <td className="Contacto-Td">
                             <div className="Contacto-Datos">
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Flecha" src={`${process.env.REACT_APP_API_URL}/images/flecha.png`} alt="img-flecha" />
+                                    <img className="Contacto-Icono-Flecha" src={`${url}/images/flecha.png`} alt="img-flecha" />
                                     <span>Salazar Eliezer</span>
                                 </div>
                             </div>
@@ -160,23 +162,23 @@ function Contacto() {
                         <td className="Contacto-Td">
                             <div className="Contacto-Datos">
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Github" src={`${process.env.REACT_APP_API_URL}/images/github.png`} alt="img-github" />
+                                    <img className="Contacto-Icono-Github" src={`${url}/images/github.png`} alt="img-github" />
                                     <span>GitHub: babinobass</span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Gmail" src={`${process.env.REACT_APP_API_URL}/images/gmail.png`} alt="img-gmail" />
+                                    <img className="Contacto-Icono-Gmail" src={`${url}/images/gmail.png`} alt="img-gmail" />
                                     <span>Gmail: </span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Facebook" src={`${process.env.REACT_APP_API_URL}/images/linkedin.png`} alt="img-linkedin" />
+                                    <img className="Contacto-Icono-Facebook" src={`${url}/images/linkedin.png`} alt="img-linkedin" />
                                     <span>Linkedin: </span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Instagram" src={`${process.env.REACT_APP_API_URL}/images/instagram.png`} alt="img-instagram" />
+                                    <img className="Contacto-Icono-Instagram" src={`${url}/images/instagram.png`} alt="img-instagram" />
                                     <span>Instagram: </span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Phone" src={`${process.env.REACT_APP_API_URL}/images/phone.png`} alt="img-whatsapp" />
+                                    <img className="Contacto-Icono-Phone" src={`${url}/images/phone.png`} alt="img-whatsapp" />
                                     <span>+54 311 27656812</span>
                                 </div>
                             </div>
@@ -184,7 +186,7 @@ function Contacto() {
                         <td className="Contacto-Td">
                             <div className="Contacto-Datos">
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Lugar" src={`${process.env.REACT_APP_API_URL}/images/lugar.png`} alt="img-ubiacion" />
+                                    <img className="Contacto-Icono-Lugar" src={`${url}/images/lugar.png`} alt="img-ubiacion" />
                                     <span>Buenos Aires, Argentina</span>
                                 </div>
                             </div>
@@ -194,7 +196,7 @@ function Contacto() {
                         <td className="Contacto-Td">
                             <div className="Contacto-Datos">
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Flecha" src={`${process.env.REACT_APP_API_URL}/images/flecha.png`} alt="img-flecha" />
+                                    <img className="Contacto-Icono-Flecha" src={`${url}/images/flecha.png`} alt="img-flecha" />
                                     <span>Spagnuolo Ricardo Marcelo</span>
                                 </div>
                             </div>
@@ -202,23 +204,23 @@ function Contacto() {
                         <td className="Contacto-Td">
                             <div className="Contacto-Datos">
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Github" src={`${process.env.REACT_APP_API_URL}/images/github.png`} alt="img-github" />
+                                    <img className="Contacto-Icono-Github" src={`${url}/images/github.png`} alt="img-github" />
                                     <span>GitHub: MarceloSpagnuolo</span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Gmail" src={`${process.env.REACT_APP_API_URL}/images/gmail.png`} alt="img-gmail" />
+                                    <img className="Contacto-Icono-Gmail" src={`${url}/images/gmail.png`} alt="img-gmail" />
                                     <span>Gmail: lu4huf@gmail.com</span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Facebook" src={`${process.env.REACT_APP_API_URL}/images/linkedin.png`} alt="img-linkedin" />
+                                    <img className="Contacto-Icono-Facebook" src={`${url}/images/linkedin.png`} alt="img-linkedin" />
                                     <span>Linkedin: Marcelo Spagnuolo</span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Instagram" src={`${process.env.REACT_APP_API_URL}/images/instagram.png`} alt="img-instagram" />
+                                    <img className="Contacto-Icono-Instagram" src={`${url}/images/instagram.png`} alt="img-instagram" />
                                     <span>Instagram: marcelospagnuolo</span>
                                 </div>
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Phone" src={`${process.env.REACT_APP_API_URL}/images/phone.png`} alt="img-whatsapp" />
+                                    <img className="Contacto-Icono-Phone" src={`${url}/images/phone.png`} alt="img-whatsapp" />
                                     <span>+54 351 6185440</span>
                                 </div>
                             </div>
@@ -226,7 +228,7 @@ function Contacto() {
                         <td className="Contacto-Td">
                             <div className="Contacto-Datos">
                                 <div className="Contacto-Renglon">
-                                    <img className="Contacto-Icono-Lugar" src={`${process.env.REACT_APP_API_URL}/images/lugar.png`} alt="img-flecha" />
+                                    <img className="Contacto-Icono-Lugar" src={`${url}/images/lugar.png`} alt="img-flecha" />
                                     <span>Leones, Córdoba, Argentina</span>
                                 </div>
                             </div>
@@ -236,7 +238,7 @@ function Contacto() {
             </table>
             <div className="Contacto-Body-Form">
                 <div className="Contacto-Imagen">
-                    <img src={`${process.env.REACT_APP_API_URL}/images/logocp.png`} alt="img-logocp" />
+                    <img src={`${url}/images/logocp.png`} alt="img-logocp" />
                 </div>
                 <form autoComplete="off">
                     <div className="Contacto-Form">
@@ -273,7 +275,7 @@ function Contacto() {
                     </div>
                 </form>
                 <div className="Contacto-Imagen">
-                    <img src={`${process.env.REACT_APP_API_URL}/images/logocp.png`} alt="img-logocp" />
+                    <img src={`${url}/images/logocp.png`} alt="img-logocp" />
                 </div>
             </div>
         </div>
