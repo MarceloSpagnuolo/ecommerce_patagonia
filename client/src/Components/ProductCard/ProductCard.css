@@ -23,8 +23,8 @@
   height: 224px;
   position: relative;
   left: -21px;
-  top: -72px;
-  object-fit: cover;
+  top: -60px;
+  object-fit:cover;
   border: solid transparent 1px;
   border-radius: 10px;
 }
@@ -140,8 +140,9 @@
   display: flex;
   flex-direction: row;
   padding: 10px;
-  position: relative;
-  left: -30px;
+  position: absolute;
+  left: -11px;
+  bottom: 57px;
 }
 
 .nameCategorias {

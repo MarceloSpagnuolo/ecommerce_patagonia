@@ -185,58 +185,6 @@ a:-webkit-any-link {
   border-radius: 0 0 10px 10px;
 }
 
-.Login-Btn-Google {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 20px;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-}
-
-.Login-Btn-Google:hover {
-  transition: all .4s;
-  background-color: green;
-  cursor: pointer;
-}
-
-.Login-Btn-Github {
-  background-color: black;
-  color: white;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 20px;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-}
-
-.Login-Btn-Github:hover {
-  transition: all .3s;
-  background-color: green;
-  cursor: pointer;
-}
-
-.Login-Btn-Down {
-  width: 150px;
-  height: 30px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 20px;
-}
-
-.Login-Logo-Btn {
-  width: 40px;
-  margin-right: 10px;
-}
-
-.Login-Section {
-  margin-bottom: 30px;
-}
-
-.Login-Btn-Social {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 20px;
-}
-
 .Login-Leyenda {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 18px;
@@ -249,35 +197,6 @@ a:-webkit-any-link {
   margin-right: 8px;
 }
 
-#Login-Cancel {
-  width: 50%;
-  height: 40px;
-  border-radius: 0 0 0 10px;
-  background-color: lightpink;
-  border: none;
-}
-
-#Login-Cancel:hover {
-  background-color: red;
-  color: white;
-  cursor: pointer;
-  transition: all .4s;
-}
-
-#Login-Entrar {
-  width: 50%;
-  height: 40px;
-  border-radius: 0 0 10px 0;
-  background-color: lightgreen;
-  border: none;
-}
-
-#Login-Entrar:hover {
-  transition: all .4s;
-  cursor: pointer;
-  background-color: green;
-  color: white;
-}
 
 #Login-Entrar:disabled {
   background-color: lightgrey;

@@ -61,7 +61,7 @@ server.post("/:id", async (req, res) => {
     
     const path = Object.keys(req.body);
 
-    const newPath = "http://localhost:3001/images/cervezas/" + path
+    const newPath = `${process.env.URL_BACK}/images/cervezas/` + path
 
     const images = await Image.create({
 

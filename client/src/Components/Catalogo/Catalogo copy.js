@@ -23,7 +23,7 @@ function Catalogo(props) {
 
 useEffect(() => {
   //debería contar o todos los productos o por categoria
-  axios.get("http://localhost:3001/products/count")  
+  axios.get(`${process.env.REACT_APP_API_URL}/products/count`)  
      .then((res) => {
    setCount(res.data.count)
   })

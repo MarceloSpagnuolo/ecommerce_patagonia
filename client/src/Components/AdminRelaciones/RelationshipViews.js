@@ -13,6 +13,7 @@ const RelationshipViews = (props) => {
         //Axios backend listar
         props.getProductJoinCategory()
         props.getCategories()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])  
 
     const seteadora = (set, state) => {

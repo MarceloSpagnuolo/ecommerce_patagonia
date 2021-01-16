@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { delProductToCart, postProductToCart, emptyAllProductsOfCart } from "../../store/actions";
-import "./Carrito.css";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  delProductToCart,
+  postProductToCart,
+  emptyAllProductsOfCart,
+} from '../../store/actions';
+import './Carrito.css';
+import { Link } from "react-router-dom";
 
 function Carrito() {
   const [total, setTotal] = useState(0);
-  const { order } = useSelector(state => state);
+  const { order, user } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [modal1, setModal1] = useState(false);
   const [modal2, setModal2] = useState(false);
@@ -15,23 +20,19 @@ function Carrito() {
   useEffect(() => {
     var cal = 0;
     if (order.products) {
-      order.products.map((prod) => {
+      order.products.forEach((prod) => {
         cal += prod.Order_products.unitprice * prod.Order_products.quantity;
       });
     }
     setTotal(cal);
   }, [order]);
 
-  // useEffect(() => {
-  //     dispatch(getCartByUser(idUserCurrent))
-  //     !order && order.length === 0 && dispatch(postCreateCart(idUserCurrent))
-  // },[]);
   function handleCantidad(orderId, prodId, unitprice, quantity) {
-    dispatch(postProductToCart(orderId, prodId, { unitprice, quantity }))
+    dispatch(postProductToCart(orderId, prodId, { unitprice, quantity }));
   }
 
   function deleteProduct(orderId, prodId, prodName, prodVol) {
-    setProdu({ orderId, prodId, prodName, prodVol })
+    setProdu({ orderId, prodId, prodName, prodVol });
     setModal1(true);
   }
 
@@ -50,7 +51,7 @@ function Carrito() {
   }
 
   function confirmEmptyCart() {
-    dispatch(emptyAllProductsOfCart(cart))
+    dispatch(emptyAllProductsOfCart(cart));
     setModal2(false);
   }
 
@@ -58,92 +59,148 @@ function Carrito() {
     setModal2(false);
   }
 
+  function handleContinuar() {
+    //corroborar stock
+    //cambia el stock
+    //cambia el estado de la order a creada
+    //pone el total en la order
+    //redireccionar
+  }
+
   return (
-    <div className="Carrito-Container">
+    <div className='Carrito-Container'>
       <h1>Carrito de Compras</h1>
 
-      {order.products && order.products.length > 0 ?
+      {order.products && order.products.length > 0 ? (
         order.products.map((prod) => (
-          <div className="Carrito-Producto">
+          <div key={prod.id} className="Carrito-Producto">
             <button className="Carrito-Btn-Cancel"
               onClick={() => deleteProduct(order.id, prod.id, prod.name, prod.volume)}>X</button>
             <div className="Carrito-Detalles">
               <div>
-                <img className="Carrito-Imagen" src={prod.thumbnail} alt="img-carrito"></img>
+                <img
+                  className='Carrito-Imagen'
+                  src={prod.thumbnail}
+                  alt='img-carrito'
+                ></img>
               </div>
               <div>
-                <h3>{prod.name} {prod.volume}</h3>
+                <h3>
+                  {prod.name} {prod.volume}
+                </h3>
                 <h4>{prod.description}</h4>
               </div>
             </div>
 
-            <div className="Carrito-Cantidad-Precio">
-              <div className="Carrito-Boton-Cantidad">
+            <div className='Carrito-Cantidad-Precio'>
+              <div className='Carrito-Boton-Cantidad'>
                 <button
-                  className="Carrito-Btn-Menos"
-                  onClick={() => handleCantidad(order.id, prod.id, prod.Order_products.unitprice, -1)}
+                  className='Carrito-Btn-Menos'
+                  onClick={() =>
+                    handleCantidad(
+                      order.id,
+                      prod.id,
+                      prod.Order_products.unitprice,
+                      -1
+                    )
+                  }
                   disabled={prod.Order_products.quantity === 1}
                 >
                   -
                 </button>
-                <h3 className="Carrito-Cantidad">{prod.Order_products.quantity}</h3>
+                <h3 className='Carrito-Cantidad'>
+                  {prod.Order_products.quantity}
+                </h3>
                 <button
                   className="Carrito-Btn-Mas"
                   onClick={() => handleCantidad(order.id, prod.id, prod.Order_products.unitprice, 1)}
+                  disabled={prod.stock <= prod.Order_products.quantity}
                 >
                   +
                 </button>
               </div>
 
-              <h2>{parseFloat(prod.Order_products.unitprice * prod.Order_products.quantity).toFixed(2)}</h2>
+              <h2>
+                {parseFloat(
+                  prod.Order_products.unitprice * prod.Order_products.quantity
+                ).toFixed(2)}
+              </h2>
             </div>
           </div>
-        )) : <h1>Su Carrito de compras no contiene productos</h1>}
-      <div className="Carrito-Total">
+        ))
+      ) : (
+        <h1>Su Carrito de compras no contiene productos</h1>
+      )}
+      <div className='Carrito-Total'>
         <h2>Total</h2>
         <h2>{parseFloat(total).toFixed(2)}</h2>
       </div>
-      <div className="Carrito-Comprar">
-        <button onClick={() => emptyCart(order.id)}
-          className="Carrito-Continuar"
-          disabled={order.products && order.products.length === 0}>Vaciar carrito</button>
-        <button className="Carrito-Continuar"
-          disabled={order.products && order.products.length === 0}>Continuar compra</button>
+      <div className='Carrito-Comprar'>
+        <button
+          onClick={() => emptyCart(order.id)}
+          className='Carrito-Continuar'
+          disabled={order.products && order.products.length === 0}
+        >
+          Vaciar carrito
+        </button>
+        <Link to="/placeorder">
+        <button
+          className='Carrito-Continuar'
+          title={user.id === 0 ? "Debe ser un usuario registrado para continuar la compra" : null }
+          disabled={order.products && order.products.length === 0 || user.id === 0}
+          onClick={() => handleContinuar()}
+        >
+          Continuar compra
+        </button>
+        </Link>
       </div>
-      <div className="Modal-Container" id={modal1 ? "modal1" : null}>
-        <div className="Modal-Content">
-          <header className="Modal-Header">
-            Eliminar un producto
-          </header>
-          <section className="Modal-Section">
-            <img src="http://localhost:3001/images/question.png" className="Modal-Imagen" alt="img-pregunta" />
-            <h3>¿ Quiere Eliminar la {produ.prodName} de {produ.prodVol} ?</h3>
+      <div className='Modal-Container' id={modal1 ? 'modal1' : null}>
+        <div className='Modal-Content'>
+          <header className='Modal-Header'>Eliminar un producto</header>
+          <section className='Modal-Section'>
+            <img
+              src={`${process.env.REACT_APP_API_URL}/images/question.png`}
+              className='Modal-Imagen'
+              alt='img-pregunta'
+            />
+            <h3>
+              ¿ Quiere Eliminar la {produ.prodName} de {produ.prodVol} ?
+            </h3>
           </section>
-          <footer className="Modal-Footer">
-            <button className="Modal-Botones"
-              onClick={() => cancelDelProd()}>Cancelar</button>
-            <button className="Modal-Botones"
-              onClick={() => confirmDelProd()}>Eliminar</button>
+          <footer className='Modal-Footer'>
+            <button className='Modal-Botones' onClick={() => cancelDelProd()}>
+              Cancelar
+            </button>
+            <button className='Modal-Botones' onClick={() => confirmDelProd()}>
+              Eliminar
+            </button>
           </footer>
         </div>
       </div>
-      <div className="Modal-Container" id={modal2 ? "modal1" : null}>
-        <div className="Modal-Content">
-          <header className="Modal-Header">
-            Vaciar el Carrito
-          </header>
-          <section className="Modal-Section">
-            <img src="http://localhost:3001/images/exclamation.png" className="Modal-Imagen" alt="img-exclamacion" />
-            <div className="Modal-Leyenda">
+      <div className='Modal-Container' id={modal2 ? 'modal1' : null}>
+        <div className='Modal-Content'>
+          <header className='Modal-Header'>Vaciar el Carrito</header>
+          <section className='Modal-Section'>
+            <img
+              src={`${process.env.REACT_APP_API_URL}/images/exclamation.png`}
+              className='Modal-Imagen'
+              alt='img-exclamacion'
+            />
+            <div className='Modal-Leyenda'>
               <h3>Está por vaciar completamente su carrito</h3>
               <h3>¿ Desea continuar ?</h3>
             </div>
           </section>
-          <footer className="Modal-Footer">
-            <button className="Modal-Botones"
-              onClick={() => cancelEmptyCart()}>Cancelar</button>
-            <button className="Modal-Botones"
-              onClick={() => confirmEmptyCart()}>Vaciar Carrito</button>
+          <footer className='Modal-Footer'>
+            <button className='Modal-Botones' onClick={() => cancelEmptyCart()}>
+              Cancelar
+            </button>
+            <button
+              className='Modal-Botones'
+              onClick={() => confirmEmptyCart()}
+            >
+              Vaciar Carrito
+            </button>
           </footer>
         </div>
       </div>

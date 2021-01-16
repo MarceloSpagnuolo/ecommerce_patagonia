@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import {getUserByToken} from "../../store/actions/index.js"
 
@@ -26,7 +26,7 @@ export default function ResetPassword(props) {
           errors.password = "Debe ingresar su contraseña";
         } else if (!regPass) {
           errors.password =
-            "La contraseña debe tener entre 8 y 16 caracteres y al menos una mayúsucla, minúscula, número y caracter especial";
+            "La contraseña debe tener entre 8 y 16 caracteres y al menos una mayúsucla, minúscula y número";
         }
         if (values.password !== values.confirmPassword) {
           errors.confirmPassword = "Las contraseñas no coinciden";
@@ -36,14 +36,14 @@ export default function ResetPassword(props) {
       }}
       onSubmit={async (values) => {
 
-        const res = await axios.post(`http://localhost:3001/users/passwordReset`, values);
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/users/passwordReset`, values);
         dispatch(getUserByToken(res.data))
         props.seteadora(false)
       }}
     >
       {({ isSubmitting, isValid }) => (
         <>
-          <Form className="Registro-Form" autocomplete="off">
+          <Form className="Registro-Form" autoComplete="off">
             <div>
               <label className="Registro-Form-Label" htmlFor="Registro">
                 Nueva Contraseña:

@@ -13,6 +13,7 @@ const UserReview = (props) => {
 
     useEffect(() => {
         dispatch(getReviews())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [reviews.length, state])
 
     function eliminaraRev(id) {
@@ -23,8 +24,8 @@ const UserReview = (props) => {
         <>
             {!!review && review.length > 0 && review.map((m) => {
                 return (
-                    <div className="asdas" key={m.productId + "%" + m.userId}>
-                        <div className="userReview" ><h3>{m.user !== undefined ? m.user.givenname : "Anonimo"}</h3></div>
+                    <div className="asdas" id={m.user.role === "deleted" ? "uDelRev": ""}  key={m.productId + "%" + m.userId}>
+                        <div className="userReview" ><h3>{m.user !== undefined && m.user.role !== "deleted"  ? m.user.givenname : "Usuario Eliminado"}</h3></div>
                         <div className="userRateReview"> <ReviewStarts rate={m.rate} size={30} /></div>
                         <div className="userCommentReview"><p>{m.comment}</p></div>
                         <div className="userDateReview">{m.date}</div>

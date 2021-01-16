@@ -4,7 +4,7 @@ import CategoryForm from './CategoryForm'
 import { connect } from 'react-redux'
 import { getCategories } from "../../store/actions/index";
 import Modal from "../Modal/Modal.js";
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 
 
 const CategoryView = (props) => {
@@ -15,6 +15,7 @@ const CategoryView = (props) => {
     useEffect(() => {
         //Axios backend listar
         props.getCategories()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const seteadora = (set, state) => {
@@ -42,7 +43,7 @@ const CategoryView = (props) => {
         </>
     )
     : <div className="Authorized-Container">
-        <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" />
+        <img className="Authorized-Imagen" src={`${process.env.REACT_APP_API_URL}/images/401.jpg`} alt=""/>
       </div>
 }
 

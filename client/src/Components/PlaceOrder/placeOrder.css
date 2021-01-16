@@ -1,0 +1,125 @@
+.order {
+  display: flex;
+/*   flex-wrap: wrap; */
+  justify-content: space-between;
+  align-items: center;
+  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+.order.center {
+  justify-content: center;
+}
+.order.top {
+  align-items: flex-start;
+  background-color: rgb(22, 61, 52);
+  height: 100%;
+}
+.order.start {
+  justify-content: flex-start;
+}
+.Order-Container {
+  align-items: flex-start;
+  /* display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; */
+}
+
+.Order-Imagen {
+  height: 100px;
+  width: 100px;
+  border-radius: 10%;
+  border: 2px solid goldenrod;
+}
+
+.Order-Confirmar {
+  width: 200px;
+  height: 60px;
+  border: none;
+  background-color: goldenrod;
+  color: white;
+  font-size: 18px;
+  margin-top: 30px;
+  margin-left: 5px;
+  border-radius: 5px;
+}
+
+.Order-Confirmar:hover {
+  box-shadow: 3px 3px 10px black;
+  cursor: pointer;
+}
+
+.Order-Confirmar:disabled {
+  background-color: lightgray;
+  color: gray;
+  cursor: no-drop;
+  box-shadow: none;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.col-1 {
+  flex: 1 1 25rem;
+}
+.col-2 {
+  flex: 2 1 50rem;
+}
+
+/* Card */
+.card {
+  border: 0.1rem #c0c0c0 solid;
+  background-color: #f8f8f8;
+  border-radius: 0.5rem;
+  margin: 1rem;
+}
+.card-body {
+  padding: 1rem;
+}
+.card-body > * {
+  margin-bottom: 0.5rem;
+}
+
+.Order-Products {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.Order-Product-Name {
+  margin-top: -10px;
+}
+
+.Order-Products-List {
+  margin-bottom: 20px;
+  border-bottom: solid 1px gray;
+  padding-bottom: 5px;
+}
+
+.Order-Imagen-Container,
+.Order-Total-Container {
+  width: 20%;
+}
+
+.Order-Detail-Container {
+  width: 75%;
+  margin-left: 10px;
+}
+
+.Order-Datos {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Place-Input {
+  width: 70%;
+  font-size: 25px;
+}
+
+.Checkout-Botones {
+  display: flex;
+}

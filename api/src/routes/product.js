@@ -1,7 +1,7 @@
 const server = require("express").Router();
-const { Product, Category } = require("../db.js");
+const { Product, Category, Order_products, Order } = require("../db.js");
 const { Op } = require("sequelize");
-
+const adminAuth = require("../utils/authMiddleware.js");
 
 // Busca una cadena en el nombre o descripcion del producto \\\\\
 ///////////////Busqueda con count para hacer la paginación////////////
@@ -93,7 +93,7 @@ server.get("/:id", async (req, res) => {
 //////////////////////////////////////////////////
 
 ///////////////////delete producto/////////////////
-server.delete("/removeProduct/:id", async (req, res) => {
+server.delete("/removeProduct/:id", adminAuth, async (req, res) => {
   const { id } = req.params;
   const remove = await Product.destroy({
     where: {
@@ -109,7 +109,7 @@ server.delete("/removeProduct/:id", async (req, res) => {
 
 
 // Inserta un nuevo Producto ////////////////////
-server.post("/", async (req, res) => {
+server.post("/", adminAuth, async (req, res) => {
   const {
     name,
     appearance,
@@ -137,7 +137,7 @@ server.post("/", async (req, res) => {
 ////////////////////// S25 //////////////////////
 
 // Modifica un producto específico /////////////
-server.put("/:id", async (req, res) => {
+server.put("/:id", adminAuth, async (req, res) => {
   const { id } = req.params;
   const {
     name,
@@ -185,7 +185,7 @@ server.put("/:id", async (req, res) => {
 
 
 ////////////////////// S27 //////////////////////
-server.delete("/:id", async (req, res) => {
+server.delete("/:id", adminAuth, async (req, res) => {
   const { id } = req.params;
 
   const product = await Product.destroy({
@@ -199,5 +199,58 @@ server.delete("/:id", async (req, res) => {
 });
 
 ////////////////////// S27 //////////////////////
+
+server.post("/controlstock/:productId", async (req, res) => {
+  const { productId } = req.params;
+  const { quantity, orderId } = req.body;
+  var cantidad;
+
+  const producto = await Product.findByPk(productId);
+
+  if (producto) {
+    //Se establece la cantidad maxima por stock
+    cantidad = quantity > producto.stock ? producto.stock : quantity;
+    //Se resta la cantidad del stock existente
+    const newStock = producto.stock - cantidad;
+    //Se guarda el cambio de stocj en el modelo Product
+    if (cantidad > 0) {
+    await Product.update(
+      { stock: newStock },
+      { where: {
+        id: productId,
+      }}
+      )
+      if (cantidad !== quantity) {
+        await Order_products.update(
+          { quantity: cantidad },
+          { where: {
+            orderId,
+            productId
+          }}
+        )
+      }
+    } else {
+      await Order_products.destroy({
+        where: {
+          productId,
+          orderId
+        }
+      })
+    }
+
+    //Se update el quantity en Order_products si la cantidad es diferente de quantity
+    
+  }
+
+  const orden = await Order.findOne({
+    where: {
+      id: orderId
+    },
+    include: [ Product ]
+  })
+
+  !producto || !orden ? res.send("Producto no encontrado").status(404) : res.json(orden);
+
+})
 
 module.exports = server;

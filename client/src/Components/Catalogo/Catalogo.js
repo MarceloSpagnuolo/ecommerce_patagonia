@@ -27,7 +27,7 @@ function Catalogo(props) {
       //Manda a llamar directamente la ruta que trae la cantidad de
       //productos es esa categoria
 
-      axios.get("http://localhost:3001/products/count/" + categ)
+      axios.get(`${process.env.REACT_APP_API_URL}/products/count/` + categ)
         .then((res) => {
           //Setea en count la cantidad de productos de la categoría
           setCount(res.data.count);
@@ -38,12 +38,13 @@ function Catalogo(props) {
       //Si no se están mostrando los productos por categoría, manda a llamar
       //la misma ruta pero con el prefijo "all" que indica que se necesita
       //que se cuenten todos los productos
-      axios.get("http://localhost:3001/products/count/all")
+      axios.get(`${process.env.REACT_APP_API_URL}/products/count/all`)
         .then((res) => {
           //Setea count con todos los productos
           setCount(res.data.count);
         })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categ, props.location.search, props.history.location.pathname]) //se ejecuta cuando categ cambia
 
   useEffect(() => {
@@ -60,6 +61,7 @@ function Catalogo(props) {
 
     dispatch(getCategories());
     return function cleanup() { };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagina, categ, props.location.search, props.history.location.pathname]); // Este useEffect se ejecuta cuando cambia la página
 
   function handleClick(cat) {
@@ -80,6 +82,7 @@ function Catalogo(props) {
 
     dispatch(getCategories());
     return function cleanup() { };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagina, categ]); // Este useEffect se ejecuta cuando cambia la página
 
 
@@ -125,7 +128,7 @@ function Catalogo(props) {
       <div className="Catalogo-Products-Pagination">
         <div id="Catalogo-ProductCard-Container">
 
-          {props.products.length > 0 ? props.products.map((prod) => (
+          {!!props.products && props.products.length > 0 ? props.products.map((prod) => (
             <div key={prod.id}>
 
               <ProductCard

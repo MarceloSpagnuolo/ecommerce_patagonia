@@ -12,7 +12,7 @@ server.get("/me", async (req, res, next) => {
     if (req.user) {
       const { id } = req.user;
       const result = await User.findByPk(id);
-      return res.send(jwt.sign(result.toJSON(), "secreto"));
+      return res.send(jwt.sign(result.toJSON(), process.env.PASSPORT_SECRET));
     } else {
       return res.sendStatus(401);
     }
@@ -29,7 +29,7 @@ server.post("/login", function (req, res, next) {
   passport.authenticate("local", function (error, user, info) {
     if (error) return next(error);
     else if (!user) return res.status(401).send("no se encontró usuario");
-    else return res.send(jwt.sign(user, "secreto"));
+    else return res.send(jwt.sign(user,process.env.PASSPORT_SECRET));
   })(req, res, next);
 });
 
@@ -52,39 +52,34 @@ server.get(
 //redirect de google
 // Se puede re-redirecionar con la parte comentada de succesRedirect o FailureRedirect.
 // Por ahora sólo manda un mensaje de "llegaste al callback" para saber que se logueo correctamente.
-server.get(
-  "/google/callback",
-  passport.authenticate("google"),
-  (req, res) => {
-    res.send("llegaste al callback");
-  }
-  //     {
-  //         successRedirect: '/auth/success',
-  //         failureRedirect: '/auth/failed'
-  // })
-);
-
-// Rutas para usar en el re-redirecionamiento de la estrategia de google
-server.get("/failed", (req, res) => res.send("you failed to log in"));
-server.get("/success", function (req, res) {
-  res.send(`You logged in succesfully mr user`);
+server.get("/google/callback", function(req, res, next) {
+  passport.authorize("google", function (err, user) {
+    if (err) return next(err);
+    if (!user) {
+      res.sendStatus(404);
+    } else {
+      const token = jwt.sign({id:user.id, givenname: user.givenname, familyname: user.familyname, email: user.email, city: user.city, adress: user.adress, phone: user.phone, postal: user.postal, role:user.role}, process.env.PASSPORT_SECRET);
+      res.redirect(`${process.env.ULR_FRONT}/?token=${token}`);
+    }
+  })(req, res, next);
 });
 
+// Estrategia de facebook
+server.get("/facebook", passport.authenticate("facebook", {scope: "email"}));
 
 
-// Estrategia de Github
-server.get("/github", passport.authenticate("github", { scope: ["user"] }));
-
-
-// Callback de github
-server.get(
-  "/github/callback",
-  passport.authenticate("github", { failureRedirect: "/products" }),
-  function (req, res) {
-    // Successful authentication, redirect home.
-    res.redirect("/categories");
-  }
-);
+// Callback de facebook
+server.get("/facebook/callback", function(req, res, next) {
+  passport.authorize("facebook", function (err, user) {
+    if (err) return next(err);
+    if (!user) {
+      res.sendStatus(404);
+    } else {
+      const token = jwt.sign({id:user.id, givenname: user.givenname, familyname: user.familyname, email: user.email, city: user.city, adress: user.adress, phone: user.phone, postal: user.postal, role:user.role}, process.env.PASSPORT_SECRET);
+      res.redirect(`${process.env.ULR_FRONT}/?token=${token}`);
+    }
+  })(req, res, next);
+});
 ////////////////////////////////////////////////////////////////
 
 

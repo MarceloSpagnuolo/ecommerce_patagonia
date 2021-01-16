@@ -9,8 +9,8 @@ function Home() {
     <div className="divHome">
 
       <Carrusel />
-      <div className="vaca">
-        <img src="http://localhost:3001/images/trazo4.gif" alt="" />
+      <div className="divHomeImg">
+        <img src={`${process.env.REACT_APP_API_URL}/images/trazo4.gif`} alt="" />
       </div>
       <div className="home-manifiesto">
         <div className="home-titulo">NUESTRO MANIFIESTO</div>

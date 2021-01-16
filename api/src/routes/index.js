@@ -8,6 +8,7 @@ const orderRouter = require("./order");
 const reviewRouter = require("./reviews");
 const multerRouter = require("./multer")
 const authRouter = require("./autentication")
+const mercadoPagoRouter = require("./mercadopago")
 
 const router = Router();
 
@@ -22,5 +23,7 @@ router.use("/orders", orderRouter);
 router.use("/reviews", reviewRouter);
 router.use("/multer", multerRouter);
 router.use("/auth", authRouter)
+router.use("/mepa", mercadoPagoRouter)
+
 
 module.exports = router;

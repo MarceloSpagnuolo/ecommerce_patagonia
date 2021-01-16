@@ -10,7 +10,10 @@ const Destacado = () => {
     const [numero, setNumero] = useState(0)  //Con este estado controlamos el pocentaje  de avance de las imagenes
     const [num, setNum] = useState(4)        //Con este estado controlamos la cantidad de veces que puden clickiar a los lados
     const dispatch = useDispatch();
-    useEffect(() => { dispatch(getProducts(1000, 0)) }, []);
+    useEffect(() => {
+         dispatch(getProducts(1000, 0)) 
+         // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, []);
     const { products } = useSelector(state => state)
 
 
@@ -40,14 +43,14 @@ const Destacado = () => {
 
     return (
         <div className="divDestacado">
-            <img className="bannerDestacados" src="http://localhost:3001/images/productos_destacados.gif" alt="img-prodDestacados" />
+            <img className="bannerDestacados" src={`${process.env.REACT_APP_API_URL}/images/productos_destacados.gif`} alt="img-prodDestacados" />
 
             <div className="destacadoTitle"><p>Productos destacados</p></div>
 
             <div className="destacadoProducts">
                 {!!prod && prod.length > 0 && prod.map((p) => {
 
-                    return (<div className="minidivDestacado" style={valor} ><ProductCard
+                    return (<div key={(p.id)} className="minidivDestacado" style={valor} ><ProductCard
                         id={p.id}
                         name={p.name}
                         thumbnail={p.thumbnail}

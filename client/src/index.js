@@ -4,8 +4,12 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
+import axios from "axios"
 import store from "./store";
 import "./index.css"
+require('dotenv').config();
+
+axios.defaults.baseURL = process.env.REACT_APP_CLIENT_URL
 
 ReactDOM.render(
   <React.StrictMode>

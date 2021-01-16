@@ -2,35 +2,12 @@ const server = require("express").Router();
 const { DATE } = require("sequelize");
 const db = require("../db.js");
 const { Order, Order_products, User, Product } = db
-
-/*inc debería venir un array. Debemos contestar con un array del modelo.
-caso base: inc = ["algo", "otra cosa"] => response =  ["algo", "otra cosa"]
-caso inc es objeto = [{model: "algo"}] */
-
-/*
-function getIncludes(inc){
-    let response = [];
-    for(const value of inc){
-        if(typeof value === "string") {
-            response.push(db[value])
-            // puede ser que sea con punto (db.[inc])
-            } else {
-                let result = {
-                    model: db[value.model]
-                }
-                value.include && (result.include = getIncludes(value.include))
-                response.push(result);
-            }
-    }   
-    return response;
-}
-
-Esta función por ahora la comento pero va a ser la que eventualmente vamos a usar en todos los llamados
-get que tengan limit,where, etc. para hacerlas super dinámicas.
-*/
+const adminAuth = require("../utils/authMiddleware.js")
+const oneOrder = require("../utils/oneOrder")
 
 server.get("/:userId/cart", async (req, res) => {
   const { userId } = req.params;
+
   const order = await Order.findOne({
     where: {
       userId,
@@ -38,7 +15,7 @@ server.get("/:userId/cart", async (req, res) => {
     },
     include: [Product]
   })
-  if(!order) {
+  if (!order) {
     const newOrder = await Order.create({
       total: 0,
       date: Date.now(),
@@ -48,6 +25,62 @@ server.get("/:userId/cart", async (req, res) => {
     !newOrder ? res.sendStatus(400) : res.json(newOrder);
   }
   order && res.json(order);
+})
+
+server.get("/:orderId/recupera", async (req, res) => {
+  const { orderId } = req.params;
+  
+  await Order.update(
+      { status: "carrito" },
+      { where: {
+      id: orderId
+      }}
+    )
+
+    const orden = await Order.findOne({
+      where: { id: orderId },
+      include: [ Product ]
+    })
+
+    if (orden && orden.products) {
+      orden.products.map( async (elem) => {
+        //var newSotck = elem.Order_products.quantity + elem.stock
+        await Product.update(
+          { stock: elem.stock + elem.Order_products.quantity },
+          { where: { id: elem.id }}
+        )
+      })
+    }
+
+  !orden ? res.sendStatus(404) : res.json(orden);
+})
+
+server.put("/:orderId/cancela", async (req, res) => {
+  const { orderId } = req.params;
+
+  await Order.update(
+    { status: "cancelada" },
+    { where: {
+    id: orderId
+    }}
+  )
+
+  const orden = await Order.findOne({
+    where: { id: orderId },
+    include: [ Product ]
+  })
+
+  if (orden && orden.products) {
+    orden.products.map( async (elem) => {
+      //var newSotck = elem.Order_products.quantity + elem.stock
+      await Product.update(
+        { stock: elem.stock + elem.Order_products.quantity },
+        { where: { id: elem.id }}
+      )
+    })
+  }
+
+  !orden ? res.sendStatus(404) : res.json(orden);
 })
 
 //model order = total tiene default value al igual que carrito
@@ -87,17 +120,30 @@ server.post("/:orderId/cart/:productId", async (req, res) => {
     }
   });
 
-  if(producto) {    //Si el producto ya está agregado al carrito
-    const cantidad = producto.quantity + quantity;
-    const sumado = await Order_products.update({
-      quantity: cantidad},
-      {where: {
-        orderId,
-        productId
+  if (producto) {    //Si el producto ya está agregado al carrito
+
+    const singleProduct = await Product.findOne({
+      where: {
+        id: productId
       }
     })
+
+    var cantidad = producto.quantity + quantity;
+
+    cantidad = cantidad > singleProduct.stock ? singleProduct.stock : cantidad
+
+    await Order_products.update({
+      quantity: cantidad
+    },
+      {
+        where: {
+          orderId,
+          productId
+        }
+      })
+
   } else {    //Si el producto no estaba agregado al carrito
-    const agregado = await Order_products.create({
+    await Order_products.create({
       orderId,
       productId,
       quantity,
@@ -109,15 +155,15 @@ server.post("/:orderId/cart/:productId", async (req, res) => {
     where: {
       id: orderId
     },
-    include: [ Product ]
+    include: [Product]
   })
-  
+
   !order ? res.sendStatus(400) : res.json(order).status(200);
 });
 
 ////////////////S44////////////////
 //// 'Get Orders' route = '/'
-server.get("/", async (req, res, next) => {
+server.get("/", adminAuth, async (req, res, next) => {
   //Get de todas o una orden específica con sus productos
   let { limit, offset, order, where, include } = req.query; //Destructuring del Query
   // order tiene que recibier un array con la columna entre comillas dobles
@@ -127,14 +173,14 @@ server.get("/", async (req, res, next) => {
   // /products/?where={"id":5}
   where && (where = JSON.parse(where));
   // /products/?where={%22id%22:5}&include=[%22categories%22] El valor de include debe ir en minúscula y plural
-//   if(include) {
-//        (include = JSON.parse(include));
-//        include = getIncludes(include)
-//     }
-    include && (include = JSON.parse(include));
+  //   if(include) {
+  //        (include = JSON.parse(include));
+  //        include = getIncludes(include)
+  //     }
+  include && (include = JSON.parse(include));
 
   const orders = await Order.findAll({ limit, offset, order, where, include }) //Pasamos a findAll todos los argumentos
-    
+
   !orders ? res.sendStatus(400) : res.json(orders).status(200);
 });
 
@@ -143,13 +189,13 @@ server.get("/", async (req, res, next) => {
 // get orders/filter se pasa el filtro de busqueda en el query. Acepta ?status=valor
 // siendo valor = "carrito", "creada", "procesando", "cancelada", "completa"
 // incluye Order con el modelo User y Products
-server.get("/filter/", async (req, res) => {
+server.get("/filter/", adminAuth, async (req, res) => {
   const { status } = req.query;
   let parametrosQuery;
 
   !status ?
     parametrosQuery = {
-        order: ['id'],
+      order: ['id'],
       include: [
         {
           model: User,
@@ -159,9 +205,9 @@ server.get("/filter/", async (req, res) => {
         },
       ],
     }
-  : 
+    :
     parametrosQuery = {
-        order: ['id'],
+      order: ['id'],
       where: { status },
       include: [
         {
@@ -169,7 +215,7 @@ server.get("/filter/", async (req, res) => {
         },
         { model: Product },
       ],
-    }; 
+    };
 
   const orderFilter = await Order.findAll(parametrosQuery);
   !orderFilter ? res.sendStatus(400) : res.json(orderFilter).status(200);
@@ -178,13 +224,13 @@ server.get("/filter/", async (req, res) => {
 ///////////////////S47/////////////////
 //Considerando que se actualiza el carrito, se pide que obligatoriamente manden id, total, date y status
 //Si sólo quieren cambiar un parámetro, deben mandar todos manteniendo el valor los que no quieran que se cambien.
-//Puede devolver undefined si la oden a modificar no existe.
+//Puede devolver undefined si la orden a modificar no existe.
 server.put(`/:id`, async (req, res) => {
   const { id } = req.params;
 
   const { total, date, status } = req.body;
 
-  (!date || !id || !total || !status) && res.send("Falta valor date, id, total o status").status(400);
+  (!date || !id  || !status) && res.send("Falta valor date, id, total o status").status(400);
 
   const update = await Order.update(
     {
@@ -200,8 +246,30 @@ server.put(`/:id`, async (req, res) => {
     }
   );
 
-  !update ? res.sendStatus(400) : res.json(update[1][0]);
+  const orden = await Order.findOne({
+    where: {
+      id
+    },
+    include: [ Product ]
+  })
+
+  !orden ? res.sendStatus(400) : res.json(orden);
 });
+
+//Devulve todas las ordenes de un usuario
+server.get("/:userId/user", async (req, res) => {
+  const { userId } = req.params;
+
+  const ordenes = await Order.findAll({
+    where: {
+      userId
+    },
+    include: [ Product ]
+  })
+
+  !ordenes ? sendStatus(404) : res.send(ordenes).status(200);
+})
+
 
 ///////////////Ruta que busca por ID incluyendo user y product////////////
 
@@ -229,7 +297,7 @@ server.delete("/:orderId/cart/:productId", async (req, res) => {
     where: {
       id: orderId
     },
-    include: [ Product ]
+    include: [Product]
   })
   !order ? res.sendStatus(400) : res.json(order);
 });
@@ -246,9 +314,47 @@ server.delete("/:orderId/products", async (req, res) => {
     where: {
       id: orderId
     },
-    include: [ Product ]
+    include: [Product]
   })
   !order ? res.sendStatus(400) : res.json(order);
 });
+
+//////// nueva ruta porque soy vago parar hacerlo enn front
+server.get("/:userId/products/:productId", async (req, res) => {
+  const { userId, productId } = req.params;
+
+  const algo = await Order.findOne({
+    where: {
+      userId, status: "completa"
+    },
+    include: [{ model: Product, where: {id: productId}}]
+  })
+  res.json(algo)
+})
+
+
+server.get("/algo/algo/:id", async (req,res) => {
+  
+  const {id } = req.params
+  
+  const Order = await oneOrder(id);
+                const update = await Order.update(
+                    {
+                        status: "procesando"
+                    },
+                    {
+                        where: {
+                            id: id,
+                        },
+                        returning: true,
+                    }
+                );
+
+console.log(Order.toJSON())
+
+!Order ? res.sendStatus(400) : res.send(Order)
+})
+
+
 
 module.exports = server;
