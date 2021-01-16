@@ -10,7 +10,7 @@ const { Image } = require("../db.js");
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         // cb(null, '../images/cervezas');
-        cb(null, path.join(__dirname, "../images/cervezas")); //ruta donde se va a guardar la imagen
+        cb(null, path.join(__dirname, "./images/cervezas")); //ruta donde se va a guardar la imagen
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname); //le asignamos como nombre a los archivos su nombre original "originalname"
@@ -61,7 +61,11 @@ server.post("/:id", async (req, res) => {
     
     const path = Object.keys(req.body);
 
+<<<<<<< HEAD
     const newPath = `${process.env.URL_BACK}/images/cervezas/` + path
+=======
+    const newPath = `${process.env.REACT_APP_API_URL}/images/cervezas/` + path
+>>>>>>> cf79ba5a69094a264823d40e6d3fdcc8db344c79
 
     const images = await Image.create({
 
