@@ -68,11 +68,7 @@ import {
 } from '../constants/constants.js';
 const jwt = require('jsonwebtoken');
 
-<<<<<<< HEAD
 const url = `${process.env.REACT_APP_API_URL}/`;
-=======
-//const url = `${process.env.REACT_APP_API_URL}/`;
->>>>>>> cf79ba5a69094a264823d40e6d3fdcc8db344c79
 
 ////////////////////////////   USERS   //////////////////////////////////////
 
@@ -695,11 +691,7 @@ export const getFullOrders = () => async (dispatch) => {
 };
 export const getOrderByStatus = (uId, pId) => async (dispatch) => {
   try {
-<<<<<<< HEAD
-    const res = await axios.get(`${url}orders/${uId}/products/${pId}`);
-=======
     const res = await axios.get(`/orders/${uId}/products/${pId}`);
->>>>>>> cf79ba5a69094a264823d40e6d3fdcc8db344c79
 
     dispatch({
       type: GET_ORDER_BY_STATUS,

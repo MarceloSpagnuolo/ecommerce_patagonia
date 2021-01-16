@@ -61,11 +61,7 @@ server.post("/:id", async (req, res) => {
     
     const path = Object.keys(req.body);
 
-<<<<<<< HEAD
     const newPath = `${process.env.URL_BACK}/images/cervezas/` + path
-=======
-    const newPath = `${process.env.REACT_APP_API_URL}/images/cervezas/` + path
->>>>>>> cf79ba5a69094a264823d40e6d3fdcc8db344c79
 
     const images = await Image.create({
 
