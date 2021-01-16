@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import axios from "axios"
 import store from "./store";
 import "./index.css";
-import dotenv from "dot env";
+import dotenv from "dotenv";
 require('dotenv').config();
 
 axios.defaults.baseURL = process.env.REACT_APP_CLIENT_URL || "http://localhost:3001" 
