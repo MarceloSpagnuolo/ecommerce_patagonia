@@ -1,8 +1,8 @@
 var fs = require("fs")
 const mailgunLoader = require("mailgun-js")
 const mailgun = mailgunLoader({
-    apiKey: "4f95edc4f3482ddd9e81b49785cd9e39-28d78af2-10910db6",
-    domain: "sandboxb74872ac5dad4a46ab7984b0df64bba0.mailgun.org"
+  apiKey: process.env.MAILGUN_KEY,
+  domain: process.env.MAILGUN_SECRET,
 });
 
 function sendEmail(obj) {
@@ -10,28 +10,28 @@ function sendEmail(obj) {
     if (err) console.error(err);
     return data
   })
-
   var dataTemplate = obj.products.reduce(function (acc, product) {
-    return `${acc}<a class="imagen" href="${process.env.CALLBACK_URL_BASE || 
-        'http://localhost:3000'}/product/${product.id}" style="display: inline-grid;margin: .5em 1em; text-decoration: none; color:#000000;font-weight: 600;">
-    <p style="margin-bottom: .5em; text-transform: capitalize;">${product.name}</p>
-    <img  style="height: 8em; width: 8em; border-radius: 10%; border: goldenrod solid .2em;"
-     src="${product.thumbnail}" />
-    <p style="display: block;margin: .5em;">$ ${product.Order_products.unitprice}</p>
-    <p style="display: block;margin: .25em;">Cantidad: ${product.Order_products.quantity}</p> 
-        </a>`
-  }, "<div>")
-
-  dataTemplate += "</div>"
-  modelEmail = modelEmail.replace("%transactionamount%", obj.total_compra)
-  modelEmail = modelEmail.replace("%listProducts%", dataTemplate)
-  modelEmail = modelEmail.replace("%address%", obj.address.toUpperCase())
-  modelEmail = modelEmail.replace("%username%", obj.username.toUpperCase())
-  modelEmail = modelEmail.replace("%orderid%", obj.id)
+    return `${acc}<a class="imagen" href="${process.env.ULR_FRONT || 
+      `http://localhost:3000`}/product/${product.id}" style="display: inline-grid;margin: .5em 1em; text-decoration: none; color:#000000;font-weight: 600;">
+      <p style="margin-bottom: .5em; text-transform: capitalize;">${product.name}</p>
+      <img  style="height: 8em; width: 8em; border-radius: 10%; border: goldenrod solid .2em;"
+      src="${product.thumbnail}" />
+      <p style="display: block;margin: .5em;">$ ${product.Order_products.unitprice}</p>
+      <p style="display: block;margin: .25em;">Cantidad: ${product.Order_products.quantity}</p> 
+      </a>`
+    }, "<div>")
+    
+    dataTemplate += "</div>"
+    modelEmail = modelEmail.replace("%transactionamount%", obj.total)
+    modelEmail = modelEmail.replace("%listProducts%", dataTemplate)
+    modelEmail = modelEmail.replace("%address%", obj.user.adress.toUpperCase())
+    modelEmail = modelEmail.replace("%username%", (obj.user.givenname.toUpperCase() + " " + obj.user.familyname.toUpperCase()))
+    modelEmail = modelEmail.replace("%orderid%", obj.id)
   
+    
   mailgun.messages().send({
     from: 'Ecommerce Patagonia <ventas@patagonia.com>',
-    to: obj.to, 
+    to: obj.user.email, 
     subject: 'Confirmamos tu compra!',
     html: modelEmail
   }, function (err, info) {
@@ -42,7 +42,7 @@ function sendEmail(obj) {
     }
   });
 
-  return modelEmail;
+  return;
 }
 module.exports = {
   sendEmail

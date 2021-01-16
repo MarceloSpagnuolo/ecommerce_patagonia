@@ -43,11 +43,13 @@ import {
   //orders
   GET_FULL_ORDERS,
   GET_ORDER_BY_ID,
+  GET_ORDER_BY_STATUS,
   UPDATE_ORDER,
   UPDATE_ONE_ORDER,
   GET_ORDER_WITH_PRODUCTS,
   CANCEL_ORDER,
   GET_ORDERS_BY_USER,
+
 
   //review
   ADD_REVIEW,
@@ -66,7 +68,7 @@ import {
 } from '../constants/constants.js';
 const jwt = require('jsonwebtoken');
 
-const url = 'http://localhost:3001/';
+const url = `${process.env.REACT_APP_API_URL}/`;
 
 ////////////////////////////   USERS   //////////////////////////////////////
 
@@ -78,7 +80,7 @@ export const createUser = (payload) => async (dispatch) => {
       const { email, password } = payload;
       const datos = { email, password };
       const newToken = await axios.post(
-        'http://localhost:3001/auth/login',
+        `${process.env.REACT_APP_API_URL}/auth/login`,
         datos
       );
       if (newToken) {
@@ -687,6 +689,22 @@ export const getFullOrders = () => async (dispatch) => {
     });
   }
 };
+export const getOrderByStatus = (uId, pId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${url}orders/${uId}/products/${pId}`);
+
+    dispatch({
+      type: GET_ORDER_BY_STATUS,
+      payload: res.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: ERROR_MESSAGE,
+      message: "vaca, sera posible que este mensaje lo haya seteado yo?",
+    });
+  }
+};
+
 
 //Trae todas la orden con sus productos y el usuario por nro de orden
 export const getOrderById = (orderId) => async (dispatch) => {
@@ -769,6 +787,7 @@ export const cancelOrder = (orderId) => async (dispatch) => {
   }
 }
 
+//Trae todas las ordenes de un usuario
 export const getOrdersByUser = (userId) => async (dispatch) => {
   try {
     const res = await axios.get(`${url}orders/${userId}/user`);
@@ -783,6 +802,7 @@ export const getOrdersByUser = (userId) => async (dispatch) => {
     });
   }
 }
+
 
 ////////////////////////////   ORDERS   //////////////////////////////////////
 
@@ -845,8 +865,8 @@ export const deleteReview = (id) => async (dispatch) => {
     const res = await axios.delete(`${url}reviews/removeReview/${id}`);
     dispatch({
       type: DELETE_REVIEW,
-      payload: res.data,
-    });
+      payload: res.data
+    })
   } catch (e) {
     dispatch({
       type: ERROR_MESSAGE,

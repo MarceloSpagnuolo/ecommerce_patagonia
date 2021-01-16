@@ -1,8 +1,8 @@
 var fs = require("fs")
 const mailgunLoader = require("mailgun-js")
 const mailgun = mailgunLoader({
-    apiKey: "4f95edc4f3482ddd9e81b49785cd9e39-28d78af2-10910db6",
-    domain: "sandboxb74872ac5dad4a46ab7984b0df64bba0.mailgun.org"
+  apiKey: process.env.MAILGUN_KEY,
+  domain: process.env.MAILGUN_SECRET,
 });
 
 

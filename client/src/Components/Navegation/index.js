@@ -165,6 +165,7 @@ function Home(props) {
                     </span>
                   </div>
                 ) : (
+                  <Link to="/profile">
                   <div className='divEntrarNav'>
                     <Link to="/profile">
                     <span className='entrarNav' id="registroNav">
@@ -176,6 +177,7 @@ function Home(props) {
                     </span>
                     </Link>
                   </div>
+                  </Link>
                 )}
                 {props.user && props.user.role === 'guest' ? (
                   <div className='divRegistroNav'>

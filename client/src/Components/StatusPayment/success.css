@@ -1,0 +1,45 @@
+.Success-Container {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-image: url('https://dguasch.com/img/banner/cervezas.jpg');
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+    padding-bottom: 29px;
+    padding-top: 10px;
+}
+
+.Success-SubContainer {
+    background-color: white;
+    border-radius: 100px;
+    opacity: 0.9;
+}
+
+.Success-Txt {
+    padding: 20px;
+    justify-content: center;
+    display: flex;
+}
+
+.Success-Container-btn {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+.Success-btn {
+    padding: 10px;
+    margin: 10px 100px 10px 100px;
+    background-color: rgb(21 79 66);
+    color: white;
+    border-radius: 5px;
+}
+
+.Success-btn:hover {
+    background-color: rgb(33 113 95);
+    box-shadow: black 3px 3px 7px;}
+
+.Success-Title {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
