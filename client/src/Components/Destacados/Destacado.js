@@ -3,6 +3,7 @@ import ProductCard from "../ProductCard/ProductCard";
 import { useDispatch, useSelector } from "react-redux"
 import { getProducts } from "../../store/actions/index"
 import "./Destacado.css";
+require('dotenv').config();
 
 
 

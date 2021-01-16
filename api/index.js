@@ -21,6 +21,7 @@ const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 const { query } = require('./INSERT');
 const multer = require('multer');
+require('dotenv').config();
 var upload = multer({ dest: './src/images/cervezas' });
 // Syncing all the models at once.
 const force = true;
@@ -28,7 +29,7 @@ conn.sync({ force }).then(() => {
   if (force) {
     query();
   }
-  server.listen(3001, () => {
+  server.listen(process.env.PORT, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
 });
