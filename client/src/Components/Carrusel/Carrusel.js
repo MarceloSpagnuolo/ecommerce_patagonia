@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import "./Carrusel.css";
-import dotenv from "dotenv";
-require('dotenv').config();
+require("dotenv").config();
 
 const Carrusel = () => {
     const [counter, setCounter] = useState(1)
