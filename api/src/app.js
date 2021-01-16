@@ -52,7 +52,7 @@ server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 });
 
 //multer
-server.use(express.static('https://ecommerce-patagonia.herokuapp.com//images/cervezas'));
+server.use(express.static(`${process.env.REACT_APP_API_URL}//images/cervezas`));
 
 
 module.exports = server;
