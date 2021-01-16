@@ -6,10 +6,11 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import axios from "axios"
 import store from "./store";
-import "./index.css"
+import "./index.css";
+import dotenv from "dot env";
 require('dotenv').config();
 
-axios.defaults.baseURL = process.env.REACT_APP_CLIENT_URL
+axios.defaults.baseURL = process.env.REACT_APP_CLIENT_URL || "http://localhost:3001" 
 
 ReactDOM.render(
   <React.StrictMode>
