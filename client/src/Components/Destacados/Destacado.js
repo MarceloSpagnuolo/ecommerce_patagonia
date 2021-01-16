@@ -43,7 +43,7 @@ const Destacado = () => {
 
     return (
         <div className="divDestacado">
-            <img className="bannerDestacados" src="http://localhost:3001/images/productos_destacados.gif" alt="img-prodDestacados" />
+            <img className="bannerDestacados" src={`${process.env.REACT_APP_API_URL}/images/productos_destacados.gif`} alt="img-prodDestacados" />
 
             <div className="destacadoTitle"><p>Productos destacados</p></div>
 

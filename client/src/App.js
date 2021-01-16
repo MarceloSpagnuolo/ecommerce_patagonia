@@ -18,6 +18,8 @@ import Contacto from './Components/Contacto/contacto.js';
 import Profile from './Components/Profile/Profile.js';
 import ImageForm from './Components/Multer/Multer';
 import PlaceOrderScreen from './Components/PlaceOrder/placeOrder.js';
+import Success from "./Components/StatusPayment/success";
+import Rejected from "./Components/StatusPayment/rejected"
 import OrderUser from "./Components/Profile/orderDetailUsuario.js";
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
       <Navegation />
       <Route exact path='/' component={Home} />
       <Route path='/products' component={Catalogo} />
+      <Route path='/order/success' component={Success} />
+      <Route path='/order/rejected' component={Rejected} />
       <Route exact path='/product/:id' component={ProductDetails} />
       <Route path='/admin/relations' component={Relationship} />
       <Route exact path='/admin/products' component={ComponentFormFather} />

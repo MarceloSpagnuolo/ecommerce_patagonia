@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
         status: {
             type: DataTypes.ENUM("carrito", "creada", "procesando", "cancelada", "completa"),
             defaultValue: "carrito"
-        }
+        },
     });
 };
 

@@ -12,7 +12,7 @@ server.get("/me", async (req, res, next) => {
     if (req.user) {
       const { id } = req.user;
       const result = await User.findByPk(id);
-      return res.send(jwt.sign(result.toJSON(), "secreto"));
+      return res.send(jwt.sign(result.toJSON(), process.env.PASSPORT_SECRET));
     } else {
       return res.sendStatus(401);
     }
@@ -29,7 +29,7 @@ server.post("/login", function (req, res, next) {
   passport.authenticate("local", function (error, user, info) {
     if (error) return next(error);
     else if (!user) return res.status(401).send("no se encontró usuario");
-    else return res.send(jwt.sign(user, "secreto"));
+    else return res.send(jwt.sign(user,process.env.PASSPORT_SECRET));
   })(req, res, next);
 });
 
@@ -58,8 +58,8 @@ server.get("/google/callback", function(req, res, next) {
     if (!user) {
       res.sendStatus(404);
     } else {
-      const token = jwt.sign({id:user.id, givenname: user.givenname, familyname: user.familyname, email: user.email, city: user.city, adress: user.adress, phone: user.phone, postal: user.postal, role:user.role}, "secreto");
-      res.redirect(`http://localhost:3000/?token=${token}`);
+      const token = jwt.sign({id:user.id, givenname: user.givenname, familyname: user.familyname, email: user.email, city: user.city, adress: user.adress, phone: user.phone, postal: user.postal, role:user.role}, process.env.PASSPORT_SECRET);
+      res.redirect(`${process.env.ULR_FRONT}/?token=${token}`);
     }
   })(req, res, next);
 });
@@ -75,8 +75,8 @@ server.get("/facebook/callback", function(req, res, next) {
     if (!user) {
       res.sendStatus(404);
     } else {
-      const token = jwt.sign({id:user.id, givenname: user.givenname, familyname: user.familyname, email: user.email, city: user.city, adress: user.adress, phone: user.phone, postal: user.postal, role:user.role}, "secreto");
-      res.redirect(`http://localhost:3000/?token=${token}`);
+      const token = jwt.sign({id:user.id, givenname: user.givenname, familyname: user.familyname, email: user.email, city: user.city, adress: user.adress, phone: user.phone, postal: user.postal, role:user.role}, process.env.PASSPORT_SECRET);
+      res.redirect(`${process.env.ULR_FRONT}/?token=${token}`);
     }
   })(req, res, next);
 });

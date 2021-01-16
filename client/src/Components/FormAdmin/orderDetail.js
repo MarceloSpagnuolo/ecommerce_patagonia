@@ -61,7 +61,7 @@ const Order = (props) => {
 
     ) :
     <div className="Authorized-Container">
-        <img className="Authorized-Imagen" src="http://localhost:3001/images/401.jpg" alt="imagen401"/>
+        <img className="Authorized-Imagen" src={`${process.env.REACT_APP_API_URL}/images/401.jpg`} alt="imagen401"/>
     </div>
 }
 

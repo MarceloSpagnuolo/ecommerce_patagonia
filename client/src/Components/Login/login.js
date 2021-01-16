@@ -27,7 +27,7 @@ function Login({ guestId, show, onClose }, props) {
     const handleLogueo = async () => {
         try {
             //enviamos el mail y el password a la ruta /login
-            const newToken = await axios.post("http://localhost:3001/auth/login", estado)
+            const newToken = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, estado)
             if (newToken) {  //si la ruta nos devolvió un token
                 dispatch(getUserByToken(newToken.data))
                 onClose();
@@ -64,15 +64,15 @@ function Login({ guestId, show, onClose }, props) {
                         <Link to="/registro" className="ToRegis" onClick={() => { onClose && onClose() }}>Registrarse</Link>
                     </div>
                     <div className="Login-Btn-Social btnGoogleLogin">
-                        <a href="http://localhost:3001/auth/google" className="Login-Btn-Google">
+                        <a href={`${process.env.REACT_APP_API_URL}/auth/google`} className="Login-Btn-Google">
                             Acceder con Google
-                            <img src="http://localhost:3001/images/google.png" className="Login-Logo-Btn googleIcon" alt="img-google" />
+                            <img src={`${process.env.REACT_APP_API_URL}/images/google.png`} className="Login-Logo-Btn googleIcon" alt="img-google" />
                         </a>
                     </div>
                     <div className="Login-Btn-Social btnFaceLogin" >
-                        <a href="http://localhost:3001/auth/facebook" className="Login-Btn-Facebook">
+                        <a href={`${process.env.REACT_APP_API_URL}/auth/facebook`} className="Login-Btn-Facebook">
                             Acceder con Facebook
-                            <img src="http://localhost:3001/images/facebook.png" className="Login-Logo-Btn faceIcon" alt="img-facebook" />
+                            <img src={`${process.env.REACT_APP_API_URL}/images/facebook.png`} className="Login-Logo-Btn faceIcon" alt="img-facebook" />
                         </a>
                     </div>
                     <div className="LoginDiv-Footer loginEntrarSalir">

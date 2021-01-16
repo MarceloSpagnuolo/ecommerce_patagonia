@@ -3,6 +3,7 @@ const { DATE } = require("sequelize");
 const db = require("../db.js");
 const { Order, Order_products, User, Product } = db
 const adminAuth = require("../utils/authMiddleware.js")
+const oneOrder = require("../utils/oneOrder")
 
 server.get("/:userId/cart", async (req, res) => {
   const { userId } = req.params;
@@ -14,7 +15,7 @@ server.get("/:userId/cart", async (req, res) => {
     },
     include: [Product]
   })
-  if(!order) {
+  if (!order) {
     const newOrder = await Order.create({
       total: 0,
       date: Date.now(),
@@ -119,7 +120,7 @@ server.post("/:orderId/cart/:productId", async (req, res) => {
     }
   });
 
-  if(producto) {    //Si el producto ya está agregado al carrito
+  if (producto) {    //Si el producto ya está agregado al carrito
 
     const singleProduct = await Product.findOne({
       where: {
@@ -128,17 +129,19 @@ server.post("/:orderId/cart/:productId", async (req, res) => {
     })
 
     var cantidad = producto.quantity + quantity;
-    
+
     cantidad = cantidad > singleProduct.stock ? singleProduct.stock : cantidad
-    
-      await Order_products.update({
-        quantity: cantidad},
-        {where: {
+
+    await Order_products.update({
+      quantity: cantidad
+    },
+      {
+        where: {
           orderId,
           productId
         }
       })
-    
+
   } else {    //Si el producto no estaba agregado al carrito
     await Order_products.create({
       orderId,
@@ -152,9 +155,9 @@ server.post("/:orderId/cart/:productId", async (req, res) => {
     where: {
       id: orderId
     },
-    include: [ Product ]
+    include: [Product]
   })
-  
+
   !order ? res.sendStatus(400) : res.json(order).status(200);
 });
 
@@ -170,14 +173,14 @@ server.get("/", adminAuth, async (req, res, next) => {
   // /products/?where={"id":5}
   where && (where = JSON.parse(where));
   // /products/?where={%22id%22:5}&include=[%22categories%22] El valor de include debe ir en minúscula y plural
-//   if(include) {
-//        (include = JSON.parse(include));
-//        include = getIncludes(include)
-//     }
-    include && (include = JSON.parse(include));
+  //   if(include) {
+  //        (include = JSON.parse(include));
+  //        include = getIncludes(include)
+  //     }
+  include && (include = JSON.parse(include));
 
   const orders = await Order.findAll({ limit, offset, order, where, include }) //Pasamos a findAll todos los argumentos
-    
+
   !orders ? res.sendStatus(400) : res.json(orders).status(200);
 });
 
@@ -192,7 +195,7 @@ server.get("/filter/", adminAuth, async (req, res) => {
 
   !status ?
     parametrosQuery = {
-        order: ['id'],
+      order: ['id'],
       include: [
         {
           model: User,
@@ -202,9 +205,9 @@ server.get("/filter/", adminAuth, async (req, res) => {
         },
       ],
     }
-  : 
+    :
     parametrosQuery = {
-        order: ['id'],
+      order: ['id'],
       where: { status },
       include: [
         {
@@ -212,7 +215,7 @@ server.get("/filter/", adminAuth, async (req, res) => {
         },
         { model: Product },
       ],
-    }; 
+    };
 
   const orderFilter = await Order.findAll(parametrosQuery);
   !orderFilter ? res.sendStatus(400) : res.json(orderFilter).status(200);
@@ -227,7 +230,7 @@ server.put(`/:id`, async (req, res) => {
 
   const { total, date, status } = req.body;
 
-  (!date || !id || !total || !status) && res.send("Falta valor date, id, total o status").status(400);
+  (!date || !id  || !status) && res.send("Falta valor date, id, total o status").status(400);
 
   const update = await Order.update(
     {
@@ -294,7 +297,7 @@ server.delete("/:orderId/cart/:productId", async (req, res) => {
     where: {
       id: orderId
     },
-    include: [ Product ]
+    include: [Product]
   })
   !order ? res.sendStatus(400) : res.json(order);
 });
@@ -311,9 +314,47 @@ server.delete("/:orderId/products", async (req, res) => {
     where: {
       id: orderId
     },
-    include: [ Product ]
+    include: [Product]
   })
   !order ? res.sendStatus(400) : res.json(order);
 });
+
+//////// nueva ruta porque soy vago parar hacerlo enn front
+server.get("/:userId/products/:productId", async (req, res) => {
+  const { userId, productId } = req.params;
+
+  const algo = await Order.findOne({
+    where: {
+      userId, status: "completa"
+    },
+    include: [{ model: Product, where: {id: productId}}]
+  })
+  res.json(algo)
+})
+
+
+server.get("/algo/algo/:id", async (req,res) => {
+  
+  const {id } = req.params
+  
+  const Order = await oneOrder(id);
+                const update = await Order.update(
+                    {
+                        status: "procesando"
+                    },
+                    {
+                        where: {
+                            id: id,
+                        },
+                        returning: true,
+                    }
+                );
+
+console.log(Order.toJSON())
+
+!Order ? res.sendStatus(400) : res.send(Order)
+})
+
+
 
 module.exports = server;

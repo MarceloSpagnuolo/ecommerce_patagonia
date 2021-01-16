@@ -88,7 +88,7 @@ function Login(guestId) {
                 loginContentDivButtonEl.innerHTML = "Acceder con Google";
                 
                 const loginContenDivButtonImageEl = document.createElement('img');
-                loginContenDivButtonImageEl.src = "http://localhost:3001/images/google.png";
+                loginContenDivButtonImageEl.src = `${process.env.REACT_APP_API_URL}/images/google.png`;
                 loginContenDivButtonImageEl.className = "Login-Logo-Btn";
                 
                 loginContentDivButtonEl.appendChild(loginContenDivButtonImageEl);
@@ -99,7 +99,7 @@ function Login(guestId) {
                 loginContentDivButton2El.innerHTML = "Acceder con Facebook";
 
                 const loginContentDivButton2ImageEl = document.createElement('img');
-                loginContentDivButton2ImageEl.src = "http://localhost:3001/images/facebook.png";
+                loginContentDivButton2ImageEl.src = `${process.env.REACT_APP_API_URL}/images/facebook.png`;
                 loginContentDivButton2ImageEl.className = "Login-Logo-Btn";
 
                 loginContentDivButton2El.appendChild(loginContentDivButton2ImageEl);

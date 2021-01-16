@@ -289,7 +289,7 @@ server.post("/passwordReset", async (req, res) => {
       returning: true,
     }
   );
-  const token = jwt.sign(passwordReset[1][0].toJSON(), "secreto")
+  const token = jwt.sign(passwordReset[1][0].toJSON(), process.env.PASSPORT_SECRET)
 
   !passwordReset ? res.sendStatus(400) : res.json(token);
 });
