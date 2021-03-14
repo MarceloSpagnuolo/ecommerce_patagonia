@@ -4,83 +4,78 @@
 
 # Henry
 
-## Objetivos del Proyecto
+This project was done as part of Henry’s educational bootcamp.
 
-- Construir una App JavaScript desde cero.
-- Afirmar y conectar los conceptos aprendidos en la carrera.
-- Aprender mejores prácticas.
-- Aprender y practicar el workflow de GIT.
-- Utilizar Metodologías Ágiles.
-- Trabajar en equipo.
+## Objetives
 
-## BoilerPlate
-
-El boilerplate cuenta con dos carpetas: `api` y `client`. En estas carpetas estará el código del back-end y el front-end respectivamente.
-
-En `api` vas a tener que crear un archivo llamado: `.env` que tenga la siguiente forma:
-
-```
-DB_USER=usuariodepostgres
-DB_PASSWORD=passwordDePostgres
-DB_HOST=localhost
-```
-
-Tenés que reemplazar `usuariodepostgres` y `passwordDePostgres` con tus propias credenciales para conectarte a postgres. Este archivo va ser ignorado por github, ya que contiene información sensible (las credenciales).
-
-El contenido de `client` fue creado usando: Create React App.
+- Built a Javascript App from zero.
+- Strengthen the concepts studied during the past 2 months.
+- Learn good coding practices.
+- Learn git workflow.
+- Learn Scrum method.
+- Work as a team..
 
 ## FEATURES
 
-### Usuarios no Autenticados
+### Guest Users
 
-Un Visitante anónimo debería poder navegar tu e-commerce, ver y buscar productos.
+Guest can work with the app. They have access to:
 
-Como un Guest podrás acceder a...
-
-- PRODUCTOS:
+- PRODUCTS:
 
 ![productos](./img/catalogo.jpg)
 ![productos](./img/destacados.jpg)
 
-- CARRITO:
+- SHOPPING CART:
 
 ![carrito](./img/carrito.jpg)
 
-- GESTION DE CUENTA:
+- ACCOUNT CREATION:
 
 ![registro](./img/registro.jpg)
 
-### Usuarios Autenticados
+### Created Users
 
-###### Como un Usuario Autenticado podrás acceder a...
+As a user you have access to:
 
-- GESTION DE CUENTA:
+- PROFILE:
+
+![profile](./img/profile.jpg)
+
 - REVIEWS:
+
+![reviews](./img/reviews.jpg)
 
 ### Admin
 
-Los usuarios administradores pueden manejar el sitio, los productos que se listan y los items que están disponibles.
+As an admin you can rune the site, list available items, orders, users and categories.
 
-###### Como un administrador yo quiero...
+- CONTROL PANEL:
 
-- GESTION DE PRODUCTOS:
+![controlpanel](./img/controlpanel.jpg)
 
-
-- GESTION DE ORDENES:
+- ORDERS PANEL:
 
 ![ordenes](./img/adminorders.jpg)
 
-- GESTION DE USUARIOS:
+- USERS PANEL:
 
-### Validación de Datos
+![controluser](./img/controluser.jpg)
 
-Cuando crees los modelos, debes considerar los tipos de datos que vas a recibir, qué cosas van a ser requeridas y cómo vas a devolver los errores a los usuarios.
-Algunas constrains qué deberás implementar:
+## Technologies Used
 
-- Productos:
-- Usuarios:
-- Ordenes:
-- Reviews:
+- React
+- Redux
+- Axios
+- PostgresQL
+- Sequelize
+- NodeJs
+- Express
+- Bcrypt
+- Passport
+- Mailgun
+- JsonWebToken
+- Multer
 
 ## CONTRIBUTORS
 
